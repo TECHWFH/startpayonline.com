@@ -1,0 +1,129 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stamp Duty Calculator by Anurag Rai</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; margin: auto; max-width: 900px; }
+    h2 { text-align: center; color: red; margin-bottom: 20px; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select { width: 100%; padding: 10px; margin-top: 5px; font-size: 16px; }
+    .output { background: #eef9f1; padding: 15px; margin-top: 20px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; }
+    .highlight { background-color: #d1ffd1; padding: 8px; }
+    .red { color: red; font-weight: bold; font-size: 18px; }
+    .flex-container { display: flex; gap: 20px; flex-wrap: wrap; }
+    .box { flex: 1 1 400px; background: #fff; padding: 15px; border-radius: 6px; border: 1px solid #ccc; }
+    #logo-container { text-align: center; margin-bottom: 20px; }
+    #logo-container img { width: 120px; border-radius: 20px; cursor: pointer; }
+    @media (max-width: 600px) {
+      input, select { font-size: 14px; }
+      .output { font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="logo-container">
+  <a href="#calc"><img src="icon.png" alt="Stamp Duty Icon"></a>
+</div>
+
+<h2 id="calc">
+  Stamp Duty Calculator by Anurag Rai | 📞 9340726600<br>
+  🛠 Technical Support Consultant<br>
+  🏗 Combined View
+</h2>
+
+<label>Amount of Land Premium (₹)</label>
+<input type="number" id="premium" value="13041680" oninput="calculate()">
+
+<label>Total Area (Sq. Meter)</label>
+<input type="number" id="area" value="1780.7" oninput="calculate()">
+
+<label>Rate per Sq. Meter (₹)</label>
+<input type="number" id="rate" value="18000" oninput="calculate()">
+
+<label>Do You Want to Avail Exemption?</label>
+<select id="exempt" onchange="calculate()">
+  <option value="no">No (कोई छूट नहीं)</option>
+  <option value="yes">Yes (सिर्फ Stamp Duty में छूट)</option>
+</select>
+
+<label>Vendor Fees (%)</label>
+<select id="vendorPercent" onchange="calculate()">
+  <option value="1">1%</option>
+  <option value="2">2%</option>
+  <option value="3" selected>3%</option>
+  <option value="4">4%</option>
+  <option value="5">5%</option>
+  <option value="6">6%</option>
+  <option value="7">7%</option>
+  <option value="8">8%</option>
+  <option value="9">9%</option>
+  <option value="10">10%</option>
+</select>
+
+<div class="flex-container">
+  <div class="box">
+    <h3>📌 Based on <u>Land Premium</u></h3>
+    <div class="output">
+      <p>📄 Stamp Duty @5%: ₹ <span id="lp_stamp">0</span></p>
+      <p>➕ Upkar @10%: ₹ <span id="lp_upkar">0</span></p>
+      <p>Total Duty: ₹ <span id="lp_totalDuty">0</span></p>
+      <p>🧾 Reg Fee (3/4 Stamp): ₹ <span id="lp_regFee">0</span></p>
+      <p>📊 Vendor Fee: ₹ <span id="lp_vendorFee">0</span></p>
+      <p class="red">💰 Total Payable: ₹ <span id="lp_totalPayable">0</span></p>
+    </div>
+  </div>
+
+  <div class="box">
+    <h3>📌 Based on <u>Total Guideline Amount</u></h3>
+    <div class="output">
+      <p>📄 Stamp Duty @5%: ₹ <span id="gl_stamp">0</span></p>
+      <p>➕ Upkar @10%: ₹ <span id="gl_upkar">0</span></p>
+      <p>Total Duty: ₹ <span id="gl_totalDuty">0</span></p>
+      <p>🧾 Reg Fee (3/4 Stamp): ₹ <span id="gl_regFee">0</span></p>
+      <p>📊 Vendor Fee: ₹ <span id="gl_vendorFee">0</span></p>
+      <p class="red">💰 Total Payable: ₹ <span id="gl_totalPayable">0</span></p>
+    </div>
+  </div>
+</div>
+
+<script>
+function roundup(v){return Math.ceil(v);}
+function calculate(){
+let p=parseFloat(document.getElementById("premium").value)||0;
+let a=parseFloat(document.getElementById("area").value)||0;
+let r=parseFloat(document.getElementById("rate").value)||0;
+let e=document.getElementById("exempt").value;
+let vp=parseFloat(document.getElementById("vendorPercent").value)||0;
+
+let lps=roundup(p*0.05),lpu=roundup(lps*0.1),lpt=lps+lpu;
+let lpr=roundup(lps*0.75),lpv=roundup(lpr*(vp/100));
+let lpp=(e==="yes")?lpr+lpv:lpt+lpr+lpv;
+
+let g=roundup(a*r),gls=roundup(g*0.05),glu=roundup(gls*0.1),glt=gls+glu;
+let gr=roundup(gls*0.75),gv=roundup(gr*(vp/100));
+let gtp=(e==="yes")?gr+gv:glt+gr+gv;
+
+document.getElementById("lp_stamp").innerText=lps.toLocaleString();
+document.getElementById("lp_upkar").innerText=lpu.toLocaleString();
+document.getElementById("lp_totalDuty").innerText=lpt.toLocaleString();
+document.getElementById("lp_regFee").innerText=lpr.toLocaleString();
+document.getElementById("lp_vendorFee").innerText=lpv.toLocaleString();
+document.getElementById("lp_totalPayable").innerText=lpp.toLocaleString();
+
+document.getElementById("gl_stamp").innerText=gls.toLocaleString();
+document.getElementById("gl_upkar").innerText=glu.toLocaleString();
+document.getElementById("gl_totalDuty").innerText=glt.toLocaleString();
+document.getElementById("gl_regFee").innerText=gr.toLocaleString();
+document.getElementById("gl_vendorFee").innerText=gv.toLocaleString();
+document.getElementById("gl_totalPayable").innerText=gtp.toLocaleString();
+}
+window.onload=calculate;
+</script>
+
+</body>
+</html>
