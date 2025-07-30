@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stamp Duty Calculator by Anurag Rai</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #33EB33;
+      color: white;
+      text-align: center;
+      padding: 12px 8px;
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 1.4em;
+      box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+    }
+    header span {
+      display: block;
+    }
+    .section {
+      background: #ffffff;
+      margin: 20px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      margin-bottom: 12px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #5635E9;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .tooltip {
+      border-bottom: 1px dotted black;
+      cursor: help;
+      position: relative;
+    }
+    .tooltip::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      background: #333;
+      color: #fff;
+      padding: 5px 8px;
+      font-size: 12px;
+      border-radius: 5px;
+      top: -30px;
+      left: 0;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+      z-index: 999;
+    }
+    .tooltip:hover::after {
+      opacity: 1;
+    }
+    .result {
+      background: #EDE60C;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 15px;
+    }
+    .inWords {
+      font-weight: bold;
+      color: #F5276C;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  Stamp Duty Calculator by Anurag Rai<br>
+  ☎ <a href="https://wa.me/919340726600" style="color:white;text-decoration:underline;">9340726600</a><br>
+  🛠 Technical Support Consultant
+</header>
+
+<div class="section">
+  <h3 style="color:#F5276C;">🔴 Equitable Mortgage (EM) Calculator</h3>
+  <label>Secured Amount (₹)</label>
+  <input type="number" id="securedAmount" oninput="showWords('securedAmount','emWords')">
+  <div class="inWords" id="emWords"></div>
+
+  <label>Vendor Fee (%)</label>
+  <select id="vendorEM">
+    <option value="0">0%</option>
+    <option value="0.1">0.10%</option>
+    <option value="0.2">0.20%</option>
+    <option value="0.25">0.25%</option>
+    <option value="0.5">0.50%</option>
+    <option value="1">1%</option>
+    <option value="2">2%</option>
+    <option value="3">3%</option>
+    <option value="4">4%</option>
+    <option value="5">5%</option>
+    <option value="6">6%</option>
+    <option value="7">7%</option>
+    <option value="8">8%</option>
+    <option value="9">9%</option>
+    <option value="10">10%</option>
+  </select>
+
+  <button onclick="calcEM()">Calculate</button>
+  <div class="result" id="emResult"></div>
+</div>
+
+<div class="section">
+  <h3 style="color:#5635E9;">🔷 Conveyance / Plot Duty Calculator</h3>
+  <label>Consideration Amount (₹)</label>
+  <input type="number" id="consideration" oninput="showWords('consideration','plotWords')">
+
+  <label>Market Value as per Guideline (₹)</label>
+  <input type="number" id="marketValue">
+  <div class="inWords" id="plotWords"></div>
+
+  <label>Stamp Duty Already Paid (₹)</label>
+  <input type="number" id="stampPaid" value="0">
+
+  <label>Registration Fee Already Paid (₹)</label>
+  <input type="number" id="regPaid" value="0">
+
+  <label>Vendor Fee (%)</label>
+  <select id="vendorPlot">
+    <option value="0">0%</option>
+    <option value="0.1">0.10%</option>
+    <option value="0.2">0.20%</option>
+    <option value="0.25">0.25%</option>
+    <option value="0.5">0.50%</option>
+    <option value="1">1%</option>
+    <option value="2">2%</option>
+    <option value="3">3%</option>
+    <option value="4">4%</option>
+    <option value="5">5%</option>
+    <option value="6">6%</option>
+    <option value="7">7%</option>
+    <option value="8">8%</option>
+    <option value="9">9%</option>
+    <option value="10">10%</option>
+  </select>
+
+  <button onclick="calcPlot()">Calculate</button>
+  <div class="result" id="plotResult"></div>
+</div>
+
+<script>
+function toWords(n) {
+  if (n >= 10000000) return Math.floor(n/10000000) + " Crore";
+  if (n >= 100000) return Math.floor(n/100000) + " Lakh";
+  if (n >= 1000) return Math.floor(n/1000) + " Thousand";
+  return n;
+}
+function showWords(input, out) {
+  const val = parseFloat(document.getElementById(input).value) || 0;
+  document.getElementById(out).innerText = val ? "In Words: " + toWords(val) : "";
+}
+
+function calcEM() {
+  let amt = parseFloat(document.getElementById("securedAmount").value) || 0;
+  let vendor = parseFloat(document.getElementById("vendorEM").value) || 0;
+  let govt = Math.round(amt * 0.0025);
+  let janpad = Math.round(amt * 0.0025);
+  let reg = 1000;
+  let vendorAmt = Math.round(amt * vendor / 100);
+  let total = govt + janpad + reg + vendorAmt;
+
+  document.getElementById("emResult").innerHTML = `
+    <b class="tooltip" data-tooltip="सरकारी स्टाम्प ड्यूटी (0.25%)">Govt. Stamp Duty:</b> ₹${govt}<br>
+    <b class="tooltip" data-tooltip="जनपद ड्यूटी (0.25%)">Janpad Duty:</b> ₹${janpad}<br>
+    <b>Registration Fee:</b> ₹${reg}<br>
+    <b>Vendor Fee:</b> ₹${vendorAmt}<br>
+    <b>Total Consultant Fees:</b> ₹${total}
+  `;
+}
+
+function calcPlot() {
+  let cons = parseFloat(document.getElementById("consideration").value) || 0;
+  let market = parseFloat(document.getElementById("marketValue").value) || 0;
+  let base = Math.max(cons, market);
+  let paidStamp = parseFloat(document.getElementById("stampPaid").value) || 0;
+  let paidReg = parseFloat(document.getElementById("regPaid").value) || 0;
+  let vendor = parseFloat(document.getElementById("vendorPlot").value) || 0;
+
+  let govt = Math.round(base * 0.05);
+  let muni = Math.round(base * 0.03);
+  let janpad = Math.round(base * 0.01);
+  let upkar = Math.round(govt * 0.10);
+  let stamp = govt + muni + janpad + upkar;
+  let reg = Math.round(base * 0.03);
+  let vendorAmt = Math.round(base * vendor / 100);
+  let stampDue = stamp - paidStamp;
+  let regDue = reg - paidReg;
+  let total = stampDue + regDue + vendorAmt;
+
+  document.getElementById("plotResult").innerHTML = `
+    <b class="tooltip" data-tooltip="सरकारी स्टाम्प ड्यूटी (5%)">Govt. Stamp Duty:</b> ₹${govt}<br>
+    <b class="tooltip" data-tooltip="नगर निगम शुल्क (3%)">Municipal Duty:</b> ₹${muni}<br>
+    <b class="tooltip" data-tooltip="जनपद शुल्क (1%)">Janpad Duty:</b> ₹${janpad}<br>
+    <b class="tooltip" data-tooltip="उपकार (Govt Duty का 10%)">Upkar:</b> ₹${upkar}<br>
+    <b>Total Stamp Duty:</b> ₹${stamp}<br>
+    <b>Registration Fee:</b> ₹${reg}<br>
+    <b>Vendor Fee:</b> ₹${vendorAmt}<br>
+    <b>Total Consultant Fees:</b> ₹${total}
+  `;
+}
+</script>
+
+</body>
+</html>
