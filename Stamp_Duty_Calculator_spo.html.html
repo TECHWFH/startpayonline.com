@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stamp Duty Calculator by Anurag Rai</title>
+  <link rel="icon" type="image/png" href="icon.png">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; margin: auto; max-width: 1000px; }
+    header { text-align: center; color: red; font-size: 20px; font-weight: bold; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select { width: 100%; padding: 10px; margin-top: 5px; font-size: 16px; }
+    .output, .result { background: #eef9f1; padding: 15px; margin-top: 20px; border-radius: 6px; border: 1px solid #ccc; font-size: 16px; }
+    .highlight { background-color: #d1ffd1; padding: 8px; }
+    .red { color: red; font-weight: bold; font-size: 18px; }
+    .flex-container { display: flex; gap: 20px; flex-wrap: wrap; }
+    .box { flex: 1 1 400px; background: #fff; padding: 15px; border-radius: 6px; border: 1px solid #ccc; margin-bottom: 30px; }
+    .tooltip { border-bottom: 1px dotted black; cursor: help; position: relative; }
+    .tooltip::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      background: #333;
+      color: #fff;
+      padding: 5px 8px;
+      font-size: 12px;
+      border-radius: 5px;
+      top: -30px;
+      left: 0;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: 0.3s;
+      z-index: 999;
+    }
+    .tooltip:hover::after { opacity: 1; }
+    #icon-link { display: block; text-align: center; margin-bottom: 20px; }
+    #icon-link img { width: 100px; cursor: pointer; border-radius: 15px; }
+  </style>
+</head>
+<body>
+
+<a id="icon-link" href="#calculator">
+  <img src="icon.png" alt="Stamp Duty Icon">
+</a>
+
+<header id="calculator">
+  Stamp Duty Calculator by Anurag Rai<br>
+  📞 <a href="https://wa.me/919340726600" style="color:red;text-decoration:underline;">9340726600</a><br>
+  🛠 Technical Support Consultant
+</header>
+<!-- EM Calculator -->
+<div class="box">
+  <h3 class="red">🔴 <span class="tooltip" data-tooltip="संपार्श्विक बंधक">Equitable Mortgage</span> (EM) Calculator</h3>
+  <label><span class="tooltip" data-tooltip="सुरक्षित राशि">Secured Amount</span> (₹)</label>
+  <input type="number" id="securedAmount" oninput="showWords('securedAmount','emWords')">
+  <div class="highlight" id="emWords"></div>
+
+  <label><span class="tooltip" data-tooltip="विक्रेता शुल्क">Vendor Fee</span> (%)</label>
+  <select id="vendorEM">
+    <option value="0">0%</option><option value="0.1">0.10%</option><option value="0.25">0.25%</option>
+    <option value="0.5">0.50%</option><option value="1">1%</option><option value="2">2%</option>
+    <option value="5">5%</option><option value="10">10%</option>
+  </select>
+  <button onclick="calcEM()">Calculate</button>
+  <div class="result" id="emResult"></div>
+</div>
+
+<!-- Plot Calculator -->
+<div class="box">
+  <h3 class="red">🔷 <span class="tooltip" data-tooltip="बिक्री या भूखंड शुल्क">Conveyance / Plot</span> Duty Calculator</h3>
+  <label><span class="tooltip" data-tooltip="मूल्य">Consideration Amount</span> (₹)</label>
+  <input type="number" id="consideration" oninput="showWords('consideration','plotWords')">
+
+  <label><span class="tooltip" data-tooltip="मार्केट वैल्यू">Market Value as per Guideline</span> (₹)</label>
+  <input type="number" id="marketValue">
+  <div class="highlight" id="plotWords"></div>
+
+  <label><span class="tooltip" data-tooltip="भुगतान की गई स्टाम्प ड्यूटी">Stamp Duty Already Paid</span> (₹)</label>
+  <input type="number" id="stampPaid" value="0">
+
+  <label><span class="tooltip" data-tooltip="पंजीकरण शुल्क पहले से भुगतान">Registration Fee Already Paid</span> (₹)</label>
+  <input type="number" id="regPaid" value="0">
+
+  <label><span class="tooltip" data-tooltip="विक्रेता शुल्क">Vendor Fee</span> (%)</label>
+  <select id="vendorPlot">
+    <option value="0">0%</option><option value="0.1">0.10%</option><option value="0.25">0.25%</option>
+    <option value="0.5">0.50%</option><option value="1">1%</option><option value="2">2%</option>
+    <option value="5">5%</option><option value="10">10%</option>
+  </select>
+  <button onclick="calcPlot()">Calculate</button>
+  <div class="result" id="plotResult"></div>
+</div>
+
+<!-- Premium/Guideline Calculator -->
+<div class="box">
+  <h3 class="red">📝 Combined Guideline / Premium Calculator</h3>
+  <label><span class="tooltip" data-tooltip="भूमि प्रीमियम राशि">Amount of Land Premium</span> (₹)</label>
+  <input type="number" id="premium" value="13041680" oninput="calculate()">
+
+  <label><span class="tooltip" data-tooltip="कुल क्षेत्र">Total Area</span> (Sq. Meter)</label>
+  <input type="number" id="area" value="1780.7" oninput="calculate()">
+
+  <label><span class="tooltip" data-tooltip="दरों के अनुसार">Rate per Sq. Meter</span> (₹)</label>
+  <input type="number" id="rate" value="18000" oninput="calculate()">
+
+  <label><span class="tooltip" data-tooltip="छूट">Do You Want to Avail Exemption?</span></label>
+  <select id="exempt" onchange="calculate()">
+    <option value="no">No (कोई छूट नहीं)</option>
+    <option value="yes">Yes (सिर्फ Stamp Duty में छूट)</option>
+  </select>
+
+  <label><span class="tooltip" data-tooltip="विक्रेता फीस प्रतिशत">Vendor Fees (%)</span></label>
+  <select id="vendorPercent" onchange="calculate()">
+    <option value="1">1%</option><option value="2">2%</option><option value="3" selected>3%</option>
+    <option value="4">4%</option><option value="5">5%</option>
+  </select>
+
+  <div class="flex-container">
+    <div class="box">
+      <h3>📌 Based on <u>Land Premium</u></h3>
+      <div class="output">
+        <p>📄 Stamp Duty @5%: ₹ <span id="lp_stamp">0</span></p>
+        <p>➕ Upkar @10%: ₹ <span id="lp_upkar">0</span></p>
+        <p>Total Duty: ₹ <span id="lp_totalDuty">0</span></p>
+        <p>🧾 Reg Fee (3/4 Stamp): ₹ <span id="lp_regFee">0</span></p>
+        <p>📊 Vendor Fee: ₹ <span id="lp_vendorFee">0</span></p>
+        <p class="red">💰 Total Payable: ₹ <span id="lp_totalPayable">0</span></p>
+      </div>
+    </div>
+
+    <div class="box">
+      <h3>📌 Based on <u>Total Guideline Amount</u></h3>
+      <div class="output">
+        <p>📄 Stamp Duty @5%: ₹ <span id="gl_stamp">0</span></p>
+        <p>➕ Upkar @10%: ₹ <span id="gl_upkar">0</span></p>
+        <p>Total Duty: ₹ <span id="gl_totalDuty">0</span></p>
+        <p>🧾 Reg Fee (3/4 Stamp): ₹ <span id="gl_regFee">0</span></p>
+        <p>📊 Vendor Fee: ₹ <span id="gl_vendorFee">0</span></p>
+        <p class="red">💰 Total Payable: ₹ <span id="gl_totalPayable">0</span></p>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+function toWords(n) {
+  if (n >= 10000000) return Math.floor(n/10000000) + " Crore";
+  if (n >= 100000) return Math.floor(n/100000) + " Lakh";
+  if (n >= 1000) return Math.floor(n/1000) + " Thousand";
+  return n;
+}
+
+function showWords(input, out) {
+  const val = parseFloat(document.getElementById(input).value) || 0;
+  document.getElementById(out).innerText = val ? "In Words: " + toWords(val) : "";
+}
+
+function calcEM() {
+  let amt = parseFloat(document.getElementById("securedAmount").value) || 0;
+  let vendor = parseFloat(document.getElementById("vendorEM").value) || 0;
+  let govt = Math.round(amt * 0.0025);
+  let janpad = Math.round(amt * 0.0025);
+  let reg = 1000;
+  let vendorAmt = Math.round(amt * vendor / 100);
+  let total = govt + janpad + reg + vendorAmt;
+  document.getElementById("emResult").innerHTML = `
+    <b class="tooltip" data-tooltip="सरकारी स्टाम्प ड्यूटी (0.25%)">Govt. Stamp Duty:</b> ₹${govt}<br>
+    <b class="tooltip" data-tooltip="जनपद ड्यूटी (0.25%)">Janpad Duty:</b> ₹${janpad}<br>
+    <b>Registration Fee:</b> ₹${reg}<br>
+    <b>Vendor Fee:</b> ₹${vendorAmt}<br>
+    <b>Total Consultant Fees:</b> ₹${total}
+  `;
+}
+
+function calcPlot() {
+  let cons = parseFloat(document.getElementById("consideration").value) || 0;
+  let market = parseFloat(document.getElementById("marketValue").value) || 0;
+  let base = Math.max(cons, market);
+  let paidStamp = parseFloat(document.getElementById("stampPaid").value) || 0;
+  let paidReg = parseFloat(document.getElementById("regPaid").value) || 0;
+  let vendor = parseFloat(document.getElementById("vendorPlot").value) || 0;
+
+  let govt = Math.round(base * 0.05);
+  let muni = Math.round(base * 0.03);
+  let janpad = Math.round(base * 0.01);
+  let upkar = Math.round(govt * 0.10);
+  let stamp = govt + muni + janpad + upkar;
+  let reg = Math.round(base * 0.03);
+  let vendorAmt = Math.round(base * vendor / 100);
+  let stampDue = stamp - paidStamp;
+  let regDue = reg - paidReg;
+  let total = stampDue + regDue + vendorAmt;
+
+  document.getElementById("plotResult").innerHTML = `
+    <b class="tooltip" data-tooltip="सरकारी स्टाम्प ड्यूटी (5%)">Govt. Stamp Duty:</b> ₹${govt}<br>
+    <b class="tooltip" data-tooltip="नगर निगम शुल्क (3%)">Municipal Duty:</b> ₹${muni}<br>
+    <b class="tooltip" data-tooltip="जनपद शुल्क (1%)">Janpad Duty:</b> ₹${janpad}<br>
+    <b class="tooltip" data-tooltip="उपकार (Govt Duty का 10%)">Upkar:</b> ₹${upkar}<br>
+    <b>Total Stamp Duty:</b> ₹${stamp}<br>
+    <b>Registration Fee:</b> ₹${reg}<br>
+    <b>Vendor Fee:</b> ₹${vendorAmt}<br>
+    <b>Total Consultant Fees:</b> ₹${total}
+  `;
+}
+
+function roundup(v) { return Math.ceil(v); }
+
+function calculate() {
+  let p = parseFloat(document.getElementById("premium").value) || 0;
+  let a = parseFloat(document.getElementById("area").value) || 0;
+  let r = parseFloat(document.getElementById("rate").value) || 0;
+  let e = document.getElementById("exempt").value;
+  let vp = parseFloat(document.getElementById("vendorPercent").value) || 0;
+
+  let lps = roundup(p * 0.05), lpu = roundup(lps * 0.1), lpt = lps + lpu;
+  let lpr = roundup(lps * 0.75), lpv = roundup(lpr * (vp / 100));
+  let lpp = (e === "yes") ? lpr + lpv : lpt + lpr + lpv;
+
+  let g = roundup(a * r), gls = roundup(g * 0.05), glu = roundup(gls * 0.1), glt = gls + glu;
+  let gr = roundup(gls * 0.75), gv = roundup(gr * (vp / 100));
+  let gtp = (e === "yes") ? gr + gv : glt + gr + gv;
+
+  document.getElementById("lp_stamp").innerText = lps.toLocaleString();
+  document.getElementById("lp_upkar").innerText = lpu.toLocaleString();
+  document.getElementById("lp_totalDuty").innerText = lpt.toLocaleString();
+  document.getElementById("lp_regFee").innerText = lpr.toLocaleString();
+  document.getElementById("lp_vendorFee").innerText = lpv.toLocaleString();
+  document.getElementById("lp_totalPayable").innerText = lpp.toLocaleString();
+
+  document.getElementById("gl_stamp").innerText = gls.toLocaleString();
+  document.getElementById("gl_upkar").innerText = glu.toLocaleString();
+  document.getElementById("gl_totalDuty").innerText = glt.toLocaleString();
+  document.getElementById("gl_regFee").innerText = gr.toLocaleString();
+  document.getElementById("gl_vendorFee").innerText = gv.toLocaleString();
+  document.getElementById("gl_totalPayable").innerText = gtp.toLocaleString();
+}
+
+window.onload = calculate;
+</script>
+</body>
+</html>
