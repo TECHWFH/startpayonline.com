@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GST Calculator</title>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 40px auto;
+      max-width: 600px;
+      padding: 20px;
+      background-color: #f7f7f7;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    .top-header {
+      color: red;
+      font-size: 15px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #1565c0;
+      text-align: center;
+    }
+    label, input, select {
+      font-size: 16px;
+      display: block;
+      margin: 10px 0;
+      width: 100%;
+    }
+    input[type="number"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+    }
+    button {
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .calculate-btn {
+      display: none;
+    }
+    .web-btn {
+      background-color: #0000FF;
+      color: white;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      padding: 12px;
+      font-size: 16px;
+      border-radius: 5px;
+      width: 100%;
+      margin-top: 15px;
+    }
+    .type-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .type-buttons button {
+      flex: 1;
+      background-color: red;
+      color: white;
+    }
+    .result {
+      margin-top: 20px;
+      background: #e3f2fd;
+      padding: 15px;
+      border-left: 5px solid #2196f3;
+      border-radius: 5px;
+    }
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .footer a {
+      color: #1565c0;
+      text-decoration: underline;
+    }
+    .terms {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-header">
+    📌 by Anurag Rai | ☎ 9340726600 | 🛠 Technical Support Consultant
+  </div>
+
+  <h2>GST Calculator</h2>
+
+  <label for="amount" title="राशि दर्ज करें">Amount(s) (Rs/-):</label>
+<div id="amountContainer">
+  <input type="number" class="amount" placeholder="Enter amount" min="0">
+</div>
+<button onclick="addAmountField()" style="background-color:#4CAF50; color:white;">+ Add Another Amount</button>
+
+  <label for="gst" title="GST दर चुनें">GST Rate (%):</label>
+  <select id="gst">
+    <option value="">N/A</option>
+    <option value="5">5%</option>
+    <option value="12">12%</option>
+    <option value="18" selected>18%</option>
+    <option value="28">28%</option>
+  </select>
+
+  <label for="customGst" title="यदि चाहें तो अपनी दर चुनें">Or enter custom GST rate (%):</label>
+<input type="number" id="customGst" placeholder="Enter custom GST rate" min="0">
+
+  <label title="किस प्रकार की गणना करनी है चुनें">Calculation Type:</label>
+  <div class="type-buttons">
+    <button onclick="setType('exclusive')">Add GST</button>
+    <button onclick="setType('inclusive')">Remove GST</button>
+  </div>
+  <input type="hidden" id="type" value="exclusive">
+
+  <a href="https://startpayonline.com/" target="_blank" class="web-btn">🌐 Visit StartPayOnline</a>
+  <button onclick="window.print()">🖨️ Export / Print</button>
+
+  <div class="result" id="result" style="display:none;"></div>
+
+<!-- GST BILL FORMAT -->
+<div id="gstInvoice" style="display:none; margin-top: 30px; background-color: white; border: 1px solid #ccc; padding: 20px;">
+  <h3 style="text-align:center;">🧾 GST INVOICE</h3>
+  <table style="width:100%; border-collapse: collapse; font-size: 14px;">
+    <thead>
+      <tr>
+        <th style="border:1px solid #ccc; padding:5px;">S. No.</th>
+        <th style="border:1px solid #ccc; padding:5px;">Product / Service</th>
+        <th style="border:1px solid #ccc; padding:5px;">HSN / SAC</th>
+        <th style="border:1px solid #ccc; padding:5px;">Qty</th>
+        <th style="border:1px solid #ccc; padding:5px;">Rate</th>
+        <th style="border:1px solid #ccc; padding:5px;">GST %</th>
+        <th style="border:1px solid #ccc; padding:5px;">Amount</th>
+      </tr>
+    </thead>
+    <tbody id="invoiceBody">
+      <!-- JS will populate -->
+    </tbody>
+  </table>
+  <div style="margin-top: 15px; text-align:right;">
+    <strong>Total Amount:</strong> Rs/- <span id="invoiceTotal">0.00</span><br>
+    <strong>GST Amount:</strong> Rs/- <span id="invoiceGST">0.00</span>
+  </div>
+</div>
+
+<div class="footer">
+    📞 Need Help? <a href="https://wa.me/919340726600" target="_blank">📲 Call/WhatsApp: 9340726600</a>
+    <div class="terms">* Terms & Conditions apply *</div>
+  </div>
+
+  <script>
+    function setType(type) {
+      document.getElementById('type').value = type;
+      calculateGST();
+    }
+
+    function calculateGST() {
+      const amountFields = document.querySelectorAll('.amount');
+      let amount = 0;
+      amountFields.forEach(field => {
+        const val = parseFloat(field.value);
+        if (!isNaN(val)) amount += val;
+      });
+      let gst = document.getElementById('gst').value;
+      const customGst = parseFloat(document.getElementById('customGst').value);
+      const type = document.getElementById('type').value;
+
+      gst = parseFloat(gst);
+      if (!isNaN(customGst) && customGst > 0) {
+        gst = customGst;
+      }
+
+      if (isNaN(amount) || amount <= 0 || isNaN(gst)) {
+        alert("Please enter a valid amount and GST rate.");
+        return;
+      }
+
+      let gstAmount, total;
+      let html = "";
+
+      if (type === 'exclusive') {
+        gstAmount = (amount * gst) / 100;
+        total = amount + gstAmount;
+        html += `<strong>GST Amount:</strong> Rs/- ${gstAmount.toFixed(2)}<br>`;
+        html += `<strong>Total Amount (with GST):</strong> Rs/- ${total.toFixed(2)}`;
+      } else {
+        gstAmount = (amount * gst) / (100 + gst);
+        const base = amount - gstAmount;
+        html += `<strong>Base Amount (without GST):</strong> Rs/- ${base.toFixed(2)}<br>`;
+        html += `<strong>GST Amount:</strong> Rs/- ${gstAmount.toFixed(2)}`;
+      }
+
+      document.getElementById('result').innerHTML = html;
+      document.getElementById('result').style.display = 'block';
+
+      // Populate GST invoice
+      const invoiceBody = document.getElementById('invoiceBody');
+      invoiceBody.innerHTML = '';
+      let sn = 1;
+      amountFields.forEach(field => {
+        const val = parseFloat(field.value);
+        if (!isNaN(val)) {
+          invoiceBody.innerHTML += `<tr>
+            <td style='border:1px solid #ccc; padding:5px;'>${sn++}</td>
+            <td style='border:1px solid #ccc; padding:5px;'>Service / Product</td>
+            <td style='border:1px solid #ccc; padding:5px;'>9983</td>
+            <td style='border:1px solid #ccc; padding:5px;'>1</td>
+            <td style='border:1px solid #ccc; padding:5px;'>${val.toFixed(2)}</td>
+            <td style='border:1px solid #ccc; padding:5px;'>${gst}</td>
+            <td style='border:1px solid #ccc; padding:5px;'>${val.toFixed(2)}</td>
+          </tr>`;
+        }
+      });
+      document.getElementById('invoiceTotal').textContent = total.toFixed(2);
+      document.getElementById('invoiceGST').textContent = gstAmount.toFixed(2);
+      document.getElementById('gstInvoice').style.display = 'block';
+    }
+  
+    function addAmountField() {
+      const container = document.getElementById('amountContainer');
+      const input = document.createElement('input');
+      input.type = 'number';
+      input.className = 'amount';
+      input.placeholder = 'Enter amount';
+      input.min = '0';
+      input.style.marginTop = '10px';
+      container.appendChild(input);
+    }
+  </script>
+</body>
+</html>
