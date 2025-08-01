@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GST Calculator</title>
+  <style>
+    body {
+      font-family: Arial;
+      margin: 40px auto;
+      max-width: 600px;
+      padding: 20px;
+      background-color: #f7f7f7;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+    .top-header {
+      color: red;
+      font-size: 15px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h2 {
+      color: #1565c0;
+      text-align: center;
+    }
+    label, input, select {
+      font-size: 16px;
+      display: block;
+      margin: 10px 0;
+      width: 100%;
+    }
+    input[type="number"] {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+    }
+    button {
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 15px;
+    }
+    .calculate-btn {
+      background-color: #388e3c;
+      color: white;
+    }
+    .type-buttons {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .type-buttons button {
+      flex: 1;
+      background-color: red;
+      color: white;
+    }
+    .result {
+      margin-top: 20px;
+      background: #e3f2fd;
+      padding: 15px;
+      border-left: 5px solid #2196f3;
+      border-radius: 5px;
+    }
+    .footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .footer a {
+      color: #1565c0;
+      text-decoration: underline;
+    }
+    .terms {
+      text-align: center;
+      font-size: 12px;
+      color: #888;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="top-header">
+    📌 by Anurag Rai | ☎ 9340726600 | 🛠 Technical Support Consultant
+  </div>
+
+  <h2>GST Calculator</h2>
+
+  <label for="amount" title="राशि दर्ज करें">Amount (Rs/-):</label>
+  <input type="number" id="amount" placeholder="Enter base or total amount" min="0">
+
+  <label for="gst" title="GST दर चुनें">GST Rate (%):</label>
+  <select id="gst">
+    <option value="5">5%</option>
+    <option value="12">12%</option>
+    <option value="18" selected>18%</option>
+    <option value="28">28%</option>
+  </select>
+
+  <label for="customGst" title="यदि चाहें तो अपनी दर दर्ज करें">Or enter custom GST rate (%):</label>
+  <input type="number" id="customGst" placeholder="Enter custom GST rate" min="0">
+
+  <label title="किस प्रकार की गणना करनी है चुनें">Calculation Type:</label>
+  <div class="type-buttons">
+    <button onclick="setType('exclusive')">Add GST</button>
+    <button onclick="setType('inclusive')">Remove GST</button>
+  </div>
+  <input type="hidden" id="type" value="exclusive">
+
+  <button class="calculate-btn" onclick="calculateGST()">Calculate</button>
+  <button onclick="window.print()">🖨️ Export / Print</button>
+
+  <div class="result" id="result" style="display:none;"></div>
+
+  <div class="footer">
+    📞 Need Help? <a href="https://wa.me/919340726600" target="_blank">📲 Call/WhatsApp: 9340726600</a>
+    <div class="terms">* Terms & Conditions apply *</div>
+  </div>
+
+  <script>
+    function setType(type) {
+      document.getElementById('type').value = type;
+    }
+
+    function calculateGST() {
+      const amount = parseFloat(document.getElementById('amount').value);
+      let gst = parseFloat(document.getElementById('gst').value);
+      const customGst = parseFloat(document.getElementById('customGst').value);
+      const type = document.getElementById('type').value;
+
+      if (!isNaN(customGst) && customGst > 0) {
+        gst = customGst;
+      }
+
+      if (isNaN(amount) || amount <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+      }
+
+      let gstAmount, total;
+      let html = "";
+
+      if (type === 'exclusive') {
+        gstAmount = (amount * gst) / 100;
+        total = amount + gstAmount;
+        html += `<strong>GST Amount:</strong> Rs/- ${gstAmount.toFixed(2)}<br>`;
+        html += `<strong>Total Amount (with GST):</strong> Rs/- ${total.toFixed(2)}`;
+      } else {
+        gstAmount = (amount * gst) / (100 + gst);
+        const base = amount - gstAmount;
+        html += `<strong>Base Amount (without GST):</strong> Rs/- ${base.toFixed(2)}<br>`;
+        html += `<strong>GST Amount:</strong> Rs/- ${gstAmount.toFixed(2)}`;
+      }
+
+      document.getElementById('result').innerHTML = html;
+      document.getElementById('result').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
