@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>Land Calculator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial; background: #f4f4f4; padding: 20px; margin: auto; max-width: 750px; }
+    .header {
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      color: red;
+      margin-bottom: 15px;
+    }
+    .section {
+      background: white;
+      padding: 20px;
+      border-radius: 6px;
+      box-shadow: 0 0 6px rgba(0,0,0,0.1);
+    }
+    label, select, input {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+    input, select {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px;
+      margin-top: 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      width: 100%;
+    }
+    .output {
+      background: #e8f5e9;
+      border-left: 5px solid #388e3c;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 14px;
+      font-weight: bold;
+      color: red;
+    }
+    .footer a {
+      color: #0d47a1;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+    .terms {
+      text-align: center;
+      font-size: 12px;
+      color: #555;
+      margin-top: 10px;
+    }
+    .print-btn {
+      background: #1565c0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  📌 by Anurag Rai | ☎ 9340726600 | 🛠 Technical Support Consultant
+</div>
+
+<div class="section" id="calcSection">
+  <label>Calculation Mode</label>
+  <select id="modeSelect" onchange="toggleMode()">
+    <option value="lw">Length × Width</option>
+    <option value="area">Total Area Only</option>
+  </select>
+
+  <div id="lengthWidthInputs">
+    <label>Length</label>
+    <input type="number" id="length" placeholder="लंबाई">
+
+    <label>Width</label>
+    <input type="number" id="width" placeholder="चौड़ाई">
+
+    <label>Unit</label>
+    <select id="lwUnit">
+      <option value="sqft">वर्ग फुट (Square Foot)</option>
+      <option value="sqm">वर्ग मीटर (Square Meter)</option>
+      <option value="acre">एकड़ (Acre)</option>
+      <option value="hectare">हेक्टेयर (Hectare)</option>
+    </select>
+  </div>
+
+  <div id="areaInput" style="display:none;">
+    <label>Total Area</label>
+    <input type="number" id="areaValue" placeholder="कुल क्षेत्रफल">
+
+    <label>Unit</label>
+    <select id="areaUnit">
+      <option value="sqft">वर्ग फुट (Square Foot)</option>
+      <option value="sqm">वर्ग मीटर (Square Meter)</option>
+      <option value="acre">एकड़ (Acre)</option>
+      <option value="hectare">हेक्टेयर (Hectare)</option>
+    </select>
+  </div>
+
+  <button onclick="calculateUnified()">🔍 Calculate</button>
+  <div class="output" id="resultBox">परिणाम यहाँ दिखेगा...</div>
+  <button class="print-btn" onclick="printSummary()">🖨️ Export / Print PDF Summary</button>
+</div>
+
+<div class="footer">
+  📞 Need Help? Call/WhatsApp: <a href="https://wa.me/919340726600" target="_blank">9340726600</a>
+  <div class="terms">* Terms & Conditions apply *</div>
+</div>
+
+<script>
+function toggleMode() {
+  const mode = document.getElementById("modeSelect").value;
+  document.getElementById("lengthWidthInputs").style.display = (mode === "lw") ? "block" : "none";
+  document.getElementById("areaInput").style.display = (mode === "area") ? "block" : "none";
+}
+
+function calculateUnified() {
+  const mode = document.getElementById("modeSelect").value;
+  let sqm = 0;
+  let resultHTML = "";
+
+  if (mode === "lw") {
+    const len = parseFloat(document.getElementById("length").value);
+    const wid = parseFloat(document.getElementById("width").value);
+    const unit = document.getElementById("lwUnit").value;
+    if (isNaN(len) || isNaN(wid) || len <= 0 || wid <= 0) {
+      document.getElementById("resultBox").innerHTML = "⚠️ कृपया सही लंबाई और चौड़ाई दर्ज करें।";
+      return;
+    }
+    const area = len * wid;
+    if (unit === "sqft") sqm = area * 0.092903;
+    else if (unit === "sqm") sqm = area;
+    else if (unit === "acre") sqm = area * 4046.86;
+    else if (unit === "hectare") sqm = area * 10000;
+    resultHTML += `🔹 Input Area (${unit}): <b>${area.toFixed(2)}</b><br>`;
+  } else {
+    const area = parseFloat(document.getElementById("areaValue").value);
+    const unit = document.getElementById("areaUnit").value;
+    if (isNaN(area) || area <= 0) {
+      document.getElementById("resultBox").innerHTML = "⚠️ कृपया सही कुल क्षेत्रफल दर्ज करें।";
+      return;
+    }
+    if (unit === "sqft") sqm = area * 0.092903;
+    else if (unit === "sqm") sqm = area;
+    else if (unit === "acre") sqm = area * 4046.86;
+    else if (unit === "hectare") sqm = area * 10000;
+    resultHTML += `🔹 Input Area (${unit}): <b>${area.toFixed(2)}</b><br>`;
+  }
+
+  const sqft = sqm * 10.764;
+  const acre = sqm / 4046.86;
+  const hectare = sqm / 10000;
+
+  resultHTML += `
+    🟢 Square Meter: <b>${sqm.toFixed(2)}</b><br>
+    🔵 Square Foot: <b>${sqft.toFixed(2)}</b><br>
+    🌾 Acre: <b>${acre.toFixed(4)}</b><br>
+    🌿 Hectare: <b>${hectare.toFixed(4)}</b>`;
+  document.getElementById("resultBox").innerHTML = resultHTML;
+}
+
+function printSummary() {
+  const printContents = document.getElementById('calcSection').innerHTML;
+  const originalContents = document.body.innerHTML;
+  document.body.innerHTML = printContents;
+  window.print();
+  document.body.innerHTML = originalContents;
+  location.reload();
+}
+</script>
+
+</body>
+</html>
