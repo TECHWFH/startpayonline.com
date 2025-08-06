@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>📐 Land + Construction Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f2f2f2;
+    }
+    .container {
+      max-width: 1024px;
+      margin: auto;
+      padding: 20px;
+      background: white;
+    }
+    h2 {
+      text-align: center;
+      color: red;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    .label {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .section {
+      border: 1px dashed #aaa;
+      padding: 15px;
+      margin-bottom: 20px;
+      background: #f9f9f9;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: green;
+      color: white;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      text-align: center;
+      padding: 10px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      color: red;
+      font-weight: bold;
+    }
+    .footer span {
+      color: darkblue;
+    }
+    .output {
+      background: #e6ffe6;
+      padding: 15px;
+      margin-top: 20px;
+      font-size: 17px;
+      border-radius: 5px;
+    }
+    @media print {
+      button, select, input { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📌 by Anurag Rai | ☎ 9340726600 | 🛠 Technical Support Consultant</h2>
+
+    <div id="plotContainer"></div>
+
+    <button onclick="addPlot()">➕ Add Plot Section</button>
+    <button onclick="calculateAll()">🔍 Calculate All</button>
+
+    <div class="output" id="resultArea"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Plot Area Drop Down</th>
+          <th>Length Sq foot</th>
+          <th>Width Sq foot</th>
+          <th>Final Plot Area Size</th>
+          <th>AMOUNT Per sq foot Rate</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="areaTable"></tbody>
+      <tfoot>
+        <tr>
+          <td><strong>Total</strong></td>
+          <td id="totalLength">0</td>
+          <td id="totalWidth">0</td>
+          <td id="totalArea">0</td>
+          <td></td>
+          <td id="totalAmount">0</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <div class="footer">
+      🖨️ <button onclick="window.print()">Export / Print PDF Summary</button><br><br>
+      📞 Need Help? Call/WhatsApp: <span>9340726600</span><br>
+      <small>* Terms & Conditions apply *</small>
+    </div>
+  </div>
+
+  <script>
+    let plotCount = 0;
+
+    function addPlot() {
+      plotCount++;
+      const div = document.createElement('div');
+      div.className = 'section';
+      div.id = 'plot-' + plotCount;
+      div.innerHTML = `
+        <label class="label">Plot #${plotCount}</label>
+        <select>
+          <option value="Building Plot Area">Building Plot Area</option>
+          <option value="Add Balcony Plot Area">Add Balcony Plot Area</option>
+          <option value="Add Cantilever Plot Area">Add Cantilever Plot Area</option>
+          <option value="Add Step Stair Plot Area">Add Step Stair Plot Area</option>
+          <option value="Slab Area">Slab Area</option>
+          <option value="Beam Running Feet/Foot">Beam Running Feet/Foot</option>
+          <option value="Lintel Beam">Lintel Beam</option>
+          <option value="Labour Rate Per Unit">Labour Rate Per Unit</option>
+        </select>
+        <label class="label">Length (ft)</label>
+        <input type="number" id="len-${plotCount}" placeholder="Length">
+        <label class="label">Width (ft)</label>
+        <input type="number" id="wid-${plotCount}" placeholder="Width">
+        <label class="label">Amount Per sq ft (Rs)</label>
+        <input type="number" id="amt-${plotCount}" placeholder="Amount per sq ft">
+      `;
+      document.getElementById('plotContainer').appendChild(div);
+    }
+
+    function calculateAll() {
+      const table = document.getElementById('areaTable');
+      table.innerHTML = '';
+      let totalLength = 0, totalWidth = 0, totalArea = 0, totalAmount = 0;
+
+      for (let i = 1; i <= plotCount; i++) {
+        const len = parseFloat(document.getElementById(`len-${i}`)?.value) || 0;
+        const wid = parseFloat(document.getElementById(`wid-${i}`)?.value) || 0;
+        const amt = parseFloat(document.getElementById(`amt-${i}`)?.value) || 0;
+        const area = len * wid;
+        const amount = area * amt;
+
+        const item = document.querySelector(`#plot-${i} select`).value || `Plot #${i}`;
+
+        table.innerHTML += `<tr>
+          <td>${item}</td>
+          <td>${len}</td>
+          <td>${wid}</td>
+          <td>${area.toFixed(2)}</td>
+          <td>${amt}</td>
+          <td>${amount.toFixed(2)}</td>
+        </tr>`;
+
+        totalLength += len;
+        totalWidth += wid;
+        totalArea += area;
+        totalAmount += amount;
+      }
+
+      document.getElementById('totalLength').innerText = totalLength.toFixed(2);
+      document.getElementById('totalWidth').innerText = totalWidth.toFixed(2);
+      document.getElementById('totalArea').innerText = totalArea.toFixed(2);
+      document.getElementById('totalAmount').innerText = totalAmount.toFixed(2);
+    }
+
+    window.onload = addPlot;
+  </script>
+</body>
+</html>
