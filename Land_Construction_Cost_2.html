@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <title>📐 ft.in Format Calculator</title>
+  <style>
+    body { font-family: Arial; padding: 20px; background: #f8f8f8; }
+    h2 { color: darkred; text-align: center; }
+    input[type="number"] { width: 100px; padding: 6px; margin: 4px; }
+    table { width: 100%; border-collapse: collapse; background: #fff; margin-top: 20px; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: center; }
+    tfoot td { font-weight: bold; color: red; }
+    .controls { text-align: center; margin-bottom: 20px; }
+    button { padding: 8px 14px; margin: 5px; cursor: pointer; }
+    .remove-btn { background: red; color: white; border: none; padding: 5px 10px; }
+  </style>
+</head>
+<body>
+
+<h2>📏 Land + Construction Calculator (ft.in Input)</h2>
+
+<div class="controls">
+  <label>Full Rate (₹/sq.ft):</label>
+  <input type="number" id="fullRateInput" value="230" oninput="recalculate()">
+  <br><br>
+  <button onclick="addPlot()">➕ Add Plot Section</button>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>Length (ft.in)</th>
+      <th>Width (ft.in)</th>
+      <th>Area (sq.ft)</th>
+      <th>Rate (Half)</th>
+      <th>Total (Half)</th>
+      <th>Rate (Full)</th>
+      <th>Total (Full)</th>
+      <th>❌</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody"></tbody>
+  <tfoot>
+    <tr>
+      <td>Total</td>
+      <td id="totalLength">0.00 ft</td>
+      <td id="totalWidth">0.00 ft</td>
+      <td id="totalArea">0.00</td>
+      <td></td>
+      <td id="totalHalf">0.00</td>
+      <td></td>
+      <td id="totalFull">0.00</td>
+      <td></td>
+    </tr>
+  </tfoot>
+</table>
+
+<script>
+let plotCount = 0;
+
+function addPlot() {
+  plotCount++;
+  const tr = document.createElement("tr");
+  tr.id = `plot-${plotCount}`;
+  tr.innerHTML = `
+    <td><input value="Plot ${plotCount}" style="width: 100px;"></td>
+    <td><input type="number" id="len-${plotCount}" step="0.01" placeholder="ft.in" oninput="recalculate()"></td>
+    <td><input type="number" id="wid-${plotCount}" step="0.01" placeholder="ft.in" oninput="recalculate()"></td>
+    <td id="area-${plotCount}">0.00</td>
+    <td id="rateHalf-${plotCount}">0.00</td>
+    <td id="totalHalf-${plotCount}">0.00</td>
+    <td id="rateFull-${plotCount}">0.00</td>
+    <td id="totalFull-${plotCount}">0.00</td>
+    <td><button class="remove-btn" onclick="removePlot(${plotCount})">X</button></td>
+  `;
+  document.getElementById("tableBody").appendChild(tr);
+  recalculate();
+}
+
+function removePlot(id) {
+  const row = document.getElementById(`plot-${id}`);
+  if (row) row.remove();
+  recalculate();
+}
+
+function recalculate() {
+  const fullRate = parseFloat(document.getElementById("fullRateInput").value) || 0;
+  const halfRate = fullRate / 2;
+
+  let totalLength = 0, totalWidth = 0, totalArea = 0, totalHalf = 0, totalFull = 0;
+  let firstDone = false;
+
+  for (let i = 1; i <= plotCount; i++) {
+    const row = document.getElementById(`plot-${i}`);
+    if (!row) continue;
+
+    const len = parseFloat(document.getElementById(`len-${i}`).value) || 0;
+    const wid = parseFloat(document.getElementById(`wid-${i}`).value) || 0;
+
+    const len_ft = Math.floor(len);
+    const len_in = (len - len_ft) * 12;
+    const lengthInFeet = len_ft + len_in / 12;
+
+    const wid_ft = Math.floor(wid);
+    const wid_in = (wid - wid_ft) * 12;
+    const widthInFeet = wid_ft + wid_in / 12;
+
+    const area = lengthInFeet * widthInFeet;
+    const rateToUse = firstDone ? halfRate : fullRate;
+
+    const halfVal = area * halfRate;
+    const fullVal = area * rateToUse;
+
+    document.getElementById(`area-${i}`).innerText = area.toFixed(2);
+    document.getElementById(`rateHalf-${i}`).innerText = halfRate.toFixed(2);
+    document.getElementById(`rateFull-${i}`).innerText = rateToUse.toFixed(2);
+    document.getElementById(`totalHalf-${i}`).innerText = halfVal.toFixed(2);
+    document.getElementById(`totalFull-${i}`).innerText = fullVal.toFixed(2);
+
+    totalLength += lengthInFeet;
+    totalWidth += widthInFeet;
+    totalArea += area;
+    totalHalf += halfVal;
+    totalFull += fullVal;
+
+    firstDone = true;
+  }
+
+  document.getElementById("totalLength").innerText = totalLength.toFixed(2) + " ft";
+  document.getElementById("totalWidth").innerText = totalWidth.toFixed(2) + " ft";
+  document.getElementById("totalArea").innerText = totalArea.toFixed(2);
+  document.getElementById("totalHalf").innerText = totalHalf.toFixed(2);
+  document.getElementById("totalFull").innerText = totalFull.toFixed(2);
+}
+</script>
+
+</body>
+</html>
