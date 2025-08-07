@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plot Area & Cost Calculator</title>
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --border-color: #ddd;
+            --header-bg: #e9ecef;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .sidebar {
+            flex: 1;
+            min-width: 280px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .main-content {
+            flex: 2.5;
+            min-width: 500px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        h1, h2, h3 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-group input[type="number"], .input-group select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+        }
+        .input-group .radio-group label {
+            display: inline-block;
+            margin-right: 10px;
+            font-weight: normal;
+        }
+        .info-box {
+            background-color: #e7f3fe;
+            border-left: 4px solid var(--primary-color);
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .calc-section {
+            flex: 1;
+            min-width: 240px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px 10px;
+            border: 1px solid var(--border-color);
+            text-align: left;
+        }
+        th {
+            background-color: var(--header-bg);
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .total-row {
+            font-weight: bold;
+            background-color: var(--header-bg);
+        }
+        /* Style for disabled fields */
+        input:disabled {
+            background-color: #eee;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🏗️ Plot Area & Cost Calculator</h1>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2>Input Parameters</h2>
+
+            <div class="input-group">
+                <label>Input Method</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="inputMethod" value="dims" checked> By Dimensions</label>
+                    <label><input type="radio" name="inputMethod" value="area"> By Total Area</label>
+                </div>
+            </div>
+
+            <h3>Initial Plot Details</h3>
+            <div class="input-group">
+                <label for="initialLength">Initial Length (ft)</label>
+                <input type="number" id="initialLength" value="75">
+            </div>
+            <div class="input-group">
+                <label for="initialWidth">Initial Width (ft)</label>
+                <input type="number" id="initialWidth" value="33.6">
+            </div>
+            <div class="input-group">
+                <label for="initialArea">Initial Plot Area (sq.ft)</label>
+                <input type="number" id="initialArea" value="2520" disabled>
+                 <div id="infoBox" class="info-box" style="display: none;"></div>
+            </div>
+
+            <h3>Costing Details</h3>
+            <div class="input-group">
+                <label for="rateFull">Amount Per Sq ft (Full Rate)</label>
+                <input type="number" id="rateFull" value="230">
+            </div>
+
+            <h3>Additions (Length & Width)</h3>
+            <div class="input-group">
+                <label for="lBalcony">Balcony Length to Add (ft)</label>
+                <input type="number" id="lBalcony" value="4">
+            </div>
+            <div class="input-group">
+                <label for="wBalcony">Balcony Width to Add (ft)</label>
+                <input type="number" id="wBalcony" value="4">
+            </div>
+            <div class="input-group">
+                <label for="lCantilever">Cantilever Length to Add (ft)</label>
+                <input type="number" id="lCantilever" value="1">
+            </div>
+            <div class="input-group">
+                <label for="wCantilever">Cantilever Width to Add (ft)</label>
+                <input type="number" id="wCantilever" value="1">
+            </div>
+
+        </div>
+
+        <div class="main-content">
+            <div class="calc-section">
+                <h2>Area Calculation Summary</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Length (ft)</th>
+                            <th>Width (ft)</th>
+                            <th>Area (sq.ft)</th>
+                            <th>Difference (sq.ft)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Building/built-up Plot Area</td>
+                            <td id="res_L0"></td>
+                            <td id="res_W0"></td>
+                            <td id="res_Area0"></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><b>Add Balcony Plot Area</b></td>
+                            <td id="res_L_add_bal"></td>
+                            <td id="res_W_add_bal"></td>
+                            <td>-</td>
+                            <td id="res_diff_bal"></td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><i>Total Plot Area 1</i></td>
+                            <td id="res_L_after_bal"></td>
+                            <td id="res_W_after_bal"></td>
+                            <td id="res_Area_after_bal"></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td><b>Add Cantilever Plot Area</b></td>
+                            <td id="res_L_add_can"></td>
+                            <td id="res_W_add_can"></td>
+                            <td>-</td>
+                            <td id="res_diff_can"></td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><i>Final Plot Area</i></td>
+                            <td id="res_L_final"></td>
+                            <td id="res_W_final"></td>
+                            <td id="res_Area_final"></td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="calc-section">
+                <h2>Details Summary (Cost)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Full Amount</th>
+                            <th>Half Amount</th>
+                            <th>Per Sq ft Rate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Building/built-up Plot Area</td>
+                            <td id="cost_full_build"></td>
+                            <td id="cost_half_build"></td>
+                            <td id="rate_build"></td>
+                        </tr>
+                        <tr>
+                            <td>Add Balcony Plot Area</td>
+                            <td id="cost_full_bal"></td>
+                            <td id="cost_half_bal"></td>
+                            <td id="rate_bal"></td>
+                        </tr>
+                         <tr>
+                            <td>Add Cantilever Plot Area</td>
+                            <td id="cost_full_can"></td>
+                            <td id="cost_half_can"></td>
+                            <td id="rate_can"></td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><b>GRAND TOTAL</b></td>
+                            <td id="cost_total_full"></td>
+                            <td id="cost_total_half"></td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const inputs = document.querySelectorAll('input[type="number"], input[type="radio"]');
+    inputs.forEach(input => input.addEventListener('input', calculateAll));
+
+    // Handle radio button changes for input method
+    document.querySelectorAll('input[name="inputMethod"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const useDims = this.value === 'dims';
+            document.getElementById('initialLength').disabled = !useDims;
+            document.getElementById('initialWidth').disabled = !useDims;
+            document.getElementById('initialArea').disabled = useDims;
+            document.getElementById('infoBox').style.display = useDims ? 'none' : 'block';
+            calculateAll();
+        });
+    });
+
+    // Helper function for formatting currency
+    const formatCurrency = (value) => {
+        return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
+    };
+
+    const formatNumber = (value, decimals = 2) => {
+        return value.toLocaleString('en-IN', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    };
+
+    function calculateAll() {
+        // --- 1. Read all input values ---
+        const useDims = document.querySelector('input[name="inputMethod"]:checked').value === 'dims';
+
+        let L0 = parseFloat(document.getElementById('initialLength').value) || 0;
+        let W0 = parseFloat(document.getElementById('initialWidth').value) || 0;
+        let Area0 = parseFloat(document.getElementById('initialArea').value) || 0;
+        
+        // Synchronize initial values based on input method
+        if (useDims) {
+            Area0 = L0 * W0;
+            document.getElementById('initialArea').value = Area0.toFixed(2);
+        } else {
+            if (Area0 > 0) {
+                L0 = Math.sqrt(Area0);
+                W0 = Math.sqrt(Area0);
+                document.getElementById('initialLength').value = L0.toFixed(2);
+                document.getElementById('initialWidth').value = W0.toFixed(2);
+                document.getElementById('infoBox').innerHTML = `Assuming a square plot, L & W are <b>${L0.toFixed(2)} ft</b> each.`;
+            } else {
+                L0 = W0 = 0;
+                document.getElementById('initialLength').value = 0;
+                document.getElementById('initialWidth').value = 0;
+                document.getElementById('infoBox').innerHTML = `Enter a valid area.`;
+            }
+        }
+
+
+        const rateFull = parseFloat(document.getElementById('rateFull').value) || 0;
+        const lBalcony = parseFloat(document.getElementById('lBalcony').value) || 0;
+        const wBalcony = parseFloat(document.getElementById('wBalcony').value) || 0;
+        const lCantilever = parseFloat(document.getElementById('lCantilever').value) || 0;
+        const wCantilever = parseFloat(document.getElementById('wCantilever').value) || 0;
+
+        // --- 2. Perform Area Calculations ---
+        const lAfterBal = L0 + lBalcony;
+        const wAfterBal = W0 + wBalcony;
+        const areaAfterBal = lAfterBal * wAfterBal;
+        const diffBalcony = areaAfterBal - Area0;
+
+        const lFinal = lAfterBal + lCantilever;
+        const wFinal = wAfterBal + wCantilever;
+        const areaFinal = lFinal * wFinal;
+        const diffCantilever = areaFinal - areaAfterBal;
+
+        // --- 3. Perform Cost Calculations ---
+        const rateHalf = rateFull / 2;
+
+        const costFullBuild = Area0 * rateFull;
+        const costHalfBuild = costFullBuild; // As per original logic
+
+        const costFullBal = diffBalcony * rateFull;
+        const costHalfBal = diffBalcony * rateHalf;
+
+        const costFullCan = diffCantilever * rateFull;
+        const costHalfCan = diffCantilever * rateHalf;
+
+        const totalFullCost = costFullBuild + costFullBal + costFullCan;
+        const totalHalfCost = costHalfBuild + costHalfBal + costHalfCan;
+
+        // --- 4. Update the HTML (Area Table) ---
+        document.getElementById('res_L0').textContent = formatNumber(L0);
+        document.getElementById('res_W0').textContent = formatNumber(W0);
+        document.getElementById('res_Area0').textContent = formatNumber(Area0);
+
+        document.getElementById('res_L_add_bal').textContent = `+${formatNumber(lBalcony)}`;
+        document.getElementById('res_W_add_bal').textContent = `+${formatNumber(wBalcony)}`;
+        document.getElementById('res_diff_bal').textContent = formatNumber(diffBalcony);
+
+        document.getElementById('res_L_after_bal').textContent = formatNumber(lAfterBal);
+        document.getElementById('res_W_after_bal').textContent = formatNumber(wAfterBal);
+        document.getElementById('res_Area_after_bal').textContent = formatNumber(areaAfterBal);
+
+        document.getElementById('res_L_add_can').textContent = `+${formatNumber(lCantilever)}`;
+        document.getElementById('res_W_add_can').textContent = `+${formatNumber(wCantilever)}`;
+        document.getElementById('res_diff_can').textContent = formatNumber(diffCantilever);
+
+        document.getElementById('res_L_final').textContent = formatNumber(lFinal);
+        document.getElementById('res_W_final').textContent = formatNumber(wFinal);
+        document.getElementById('res_Area_final').textContent = formatNumber(areaFinal);
+
+        // --- 5. Update the HTML (Cost Table) ---
+        document.getElementById('cost_full_build').textContent = formatCurrency(costFullBuild);
+        document.getElementById('cost_half_build').textContent = formatCurrency(costHalfBuild);
+        document.getElementById('rate_build').textContent = formatNumber(rateFull);
+
+        document.getElementById('cost_full_bal').textContent = formatCurrency(costFullBal);
+        document.getElementById('cost_half_bal').textContent = formatCurrency(costHalfBal);
+        document.getElementById('rate_bal').textContent = formatNumber(rateHalf);
+        
+        document.getElementById('cost_full_can').textContent = formatCurrency(costFullCan);
+        document.getElementById('cost_half_can').textContent = formatCurrency(costHalfCan);
+        document.getElementById('rate_can').textContent = formatNumber(rateHalf);
+
+        document.getElementById('cost_total_full').textContent = formatCurrency(totalFullCost);
+        document.getElementById('cost_total_half').textContent = formatCurrency(totalHalfCost);
+    }
+
+    // Initial calculation on page load
+    calculateAll();
+});
+</script>
+
+</body>
+</html>
