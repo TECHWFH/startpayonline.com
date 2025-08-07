@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ज़मीन गणना ऐप</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f0f4f8; /* A light, soft blue background */
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-gray-100 min-h-screen p-4 sm:p-6 lg:p-8 font-sans">
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl sm:text-4xl font-bold text-center mb-6 text-indigo-800">🏗️ ज़मीन गणना ऐप</h1>
+    
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Input Section -->
+      <div class="lg:col-span-1 space-y-6">
+        <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200">
+          <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b-2 border-indigo-200 pb-2">इनपुट और दरें</h2>
+          <div>
+            <label class="block text-sm font-medium text-gray-500 mb-1">Building/built-up Plot Rate (₹/sq.ft)</label>
+            <input type="number" id="mainRateInput" value="230" class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0">
+          </div>
+          <div class="mt-4">
+            <label class="block text-sm font-medium text-gray-500 mb-1">Balcony Plot Rate (₹/sq.ft)</label>
+            <input type="number" id="balconyRateInput" value="115" class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0">
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200">
+          <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b-2 border-indigo-200 pb-2">प्लॉट विवरण</h2>
+          <h3 class="font-semibold text-gray-700 mb-2">Building/built-up Plot Area</h3>
+          <div>
+            <label class="block text-sm font-medium text-gray-500 mb-1">लंबाई (ft)</label>
+            <input type="number" id="mainLengthInput" value="75" class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0">
+          </div>
+          <div class="mt-2">
+            <label class="block text-sm font-medium text-gray-500 mb-1">चौड़ाई (ft)</label>
+            <input type="number" id="mainWidthInput" value="33.6" class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0">
+          </div>
+          <h3 class="font-semibold text-gray-700 mt-4 mb-2">Add Balcony Plot Area</h3>
+          <div>
+            <label class="block text-sm font-medium text-gray-500 mb-1">लंबाई (ft)</label>
+            <input type="number" id="balconyLengthInput" value="4" class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0">
+          </div>
+          <div class="mt-2">
+            <label class="block text-sm font-medium text-gray-500 mb-1">चौड़ाई (ft)</label>
+            <input type="number" id="balconyWidthInput" value="4" class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0">
+          </div>
+          <h3 class="font-semibold text-gray-700 mt-4 mb-2">Add Cantilever Plot Area</h3>
+          <div>
+            <label class="block text-sm font-medium text-gray-500 mb-1">लंबाई (ft)</label>
+            <input type="number" id="cantileverLengthInput" value="1" class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0">
+          </div>
+          <div class="mt-2">
+            <label class="block text-sm font-medium text-gray-500 mb-1">चौड़ाई (ft)</label>
+            <input type="number" id="cantileverWidthInput" value="1" class="w-full rounded-lg border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" placeholder="0">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Output Section -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200">
+          <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b-2 border-indigo-200 pb-2">गणना सारांश</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-indigo-100 text-indigo-800">
+                  <th class="p-3 text-left">आइटम</th>
+                  <th class="p-3 text-left">लंबाई (ft)</th>
+                  <th class="p-3 text-left">चौड़ाई (ft)</th>
+                  <th class="p-3 text-left">क्षेत्रफल (sq.ft)</th>
+                </tr>
+              </thead>
+              <tbody id="calculation-summary-body">
+                <!-- Data will be inserted here by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="bg-white p-4 rounded-xl shadow-lg border border-gray-200">
+          <h2 class="text-xl font-bold mb-4 text-indigo-700 border-b-2 border-indigo-200 pb-2">लागत सारांश</h2>
+          <div class="overflow-x-auto">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-indigo-100 text-indigo-800">
+                  <th class="p-3 text-left">आइटम</th>
+                  <th class="p-3 text-left" id="fullRateHeader">पूरी दर</th>
+                  <th class="p-3 text-left" id="halfRateHeader">आधी दर</th>
+                  <th class="p-3 text-left">प्रति वर्ग फुट</th>
+                </tr>
+              </thead>
+              <tbody id="cost-summary-body">
+                <!-- Data will be inserted here by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Helper function to format numbers for display
+  const formatNumber = (num, decimals = 2) => {
+    if (isNaN(num)) return '0.00';
+    return (num || 0).toLocaleString('en-IN', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+  };
+
+  // Helper function to format currency
+  const formatCurrency = (num) => {
+    if (isNaN(num)) return '₹0.00';
+    return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(num || 0);
+  };
+
+  // Function to calculate area from length and width
+  const calculateArea = (length, width) => (parseFloat(length) || 0) * (parseFloat(width) || 0);
+
+  // Main function to update all calculations and display
+  const updateCalculations = () => {
+    // Get values from input fields
+    const mainRate = parseFloat(document.getElementById('mainRateInput').value) || 0;
+    const balconyRate = parseFloat(document.getElementById('balconyRateInput').value) || 0;
+
+    const mainLength = parseFloat(document.getElementById('mainLengthInput').value) || 0;
+    const mainWidth = parseFloat(document.getElementById('mainWidthInput').value) || 0;
+    const balconyLength = parseFloat(document.getElementById('balconyLengthInput').value) || 0;
+    const balconyWidth = parseFloat(document.getElementById('balconyWidthInput').value) || 0;
+    const cantileverLength = parseFloat(document.getElementById('cantileverLengthInput').value) || 0;
+    const cantileverWidth = parseFloat(document.getElementById('cantileverWidthInput').value) || 0;
+    
+    // --- Calculations based on user's logic ---
+    const mainArea = calculateArea(mainLength, mainWidth);
+    const balconyArea = calculateArea(balconyLength, balconyWidth);
+    const cantileverArea = calculateArea(cantileverLength, cantileverWidth);
+
+    // Sum of lengths and widths for total areas
+    const totalLength_1 = mainLength + balconyLength;
+    const totalWidth_1 = mainWidth + balconyWidth;
+    const totalArea_1 = calculateArea(totalLength_1, totalWidth_1);
+
+    const totalLength_2 = totalLength_1 + cantileverLength;
+    const totalWidth_2 = totalWidth_1 + cantileverWidth;
+    const totalArea_2 = calculateArea(totalLength_2, totalWidth_2);
+
+    const finalTotalArea = totalArea_2;
+
+    // Costs
+    const mainCostFull = mainArea * mainRate;
+    const balconyCostFull = balconyArea * mainRate;
+    const balconyCostHalf = balconyArea * balconyRate;
+    const cantileverCostFull = cantileverArea * mainRate;
+    const cantileverCostHalf = cantileverArea * balconyRate;
+    
+    // Grand Totals
+    const grandTotalFull = mainCostFull + balconyCostFull + cantileverCostFull;
+    const grandTotalHalf = (mainArea * (mainRate / 2)) + balconyCostHalf + cantileverCostHalf;
+
+    // --- Update the UI ---
+
+    // Update table headers with current rates
+    document.getElementById('fullRateHeader').textContent = `पूरी दर (₹${formatNumber(mainRate, 0)}/sq.ft)`;
+    document.getElementById('halfRateHeader').textContent = `आधी दर (₹${formatNumber(balconyRate, 0)}/sq.ft)`;
+
+    // Update Calculation Summary table
+    const calculationSummaryBody = document.getElementById('calculation-summary-body');
+    calculationSummaryBody.innerHTML = `
+      <tr class="border-b">
+        <td class="p-3 font-semibold">Building/built-up Plot Area</td>
+        <td class="p-3">${formatNumber(mainLength)}</td>
+        <td class="p-3">${formatNumber(mainWidth)}</td>
+        <td class="p-3">${formatNumber(mainArea)}</td>
+      </tr>
+      <tr class="border-b">
+        <td class="p-3">Add Balcony Plot Area</td>
+        <td class="p-3">${formatNumber(balconyLength)}</td>
+        <td class="p-3">${formatNumber(balconyWidth)}</td>
+        <td class="p-3">${formatNumber(balconyArea)}</td>
+      </tr>
+      <tr class="font-bold border-b bg-indigo-50 text-indigo-700">
+        <td class="p-3">Total Plot Area</td>
+        <td class="p-3">${formatNumber(totalLength_1)}</td>
+        <td class="p-3">${formatNumber(totalWidth_1)}</td>
+        <td class="p-3 text-lg">${formatNumber(totalArea_1)}</td>
+      </tr>
+      <tr class="border-b">
+        <td class="p-3">Add Cantilever Plot Area</td>
+        <td class="p-3">${formatNumber(cantileverLength)}</td>
+        <td class="p-3">${formatNumber(cantileverWidth)}</td>
+        <td class="p-3">${formatNumber(cantileverArea)}</td>
+      </tr>
+      <tr class="font-bold border-b bg-indigo-50 text-indigo-700">
+        <td class="p-3">Total Plot Area 1</td>
+        <td class="p-3">${formatNumber(totalLength_2)}</td>
+        <td class="p-3">${formatNumber(totalWidth_2)}</td>
+        <td class="p-3 text-lg">${formatNumber(totalArea_2)}</td>
+      </tr>
+      <tr class="font-bold border-b bg-green-50 text-green-700">
+        <td class="p-3">Final Plot Area</td>
+        <td class="p-3">${formatNumber(totalLength_2)}</td>
+        <td class="p-3">${formatNumber(totalWidth_2)}</td>
+        <td class="p-3 text-lg">${formatNumber(finalTotalArea)}</td>
+      </tr>
+    `;
+
+    // Update Cost Summary table
+    const costSummaryBody = document.getElementById('cost-summary-body');
+    costSummaryBody.innerHTML = `
+      <tr class="border-b">
+        <td class="p-3 font-semibold">Building/built-up Plot Area</td>
+        <td class="p-3">${formatCurrency(mainCostFull)}</td>
+        <td class="p-3">${formatCurrency(mainCostFull)}</td>
+        <td class="p-3">${formatNumber(mainRate, 0)}</td>
+      </tr>
+      <tr class="border-b">
+        <td class="p-3">Add Balcony Plot Area</td>
+        <td class="p-3">${formatCurrency(balconyCostFull)}</td>
+        <td class="p-3">${formatCurrency(balconyCostHalf)}</td>
+        <td class="p-3">${formatNumber(balconyRate, 0)}</td>
+      </tr>
+      <tr class="border-b">
+        <td class="p-3">Add Cantilever Plot Area</td>
+        <td class="p-3">${formatCurrency(cantileverCostFull)}</td>
+        <td class="p-3">${formatCurrency(cantileverCostHalf)}</td>
+        <td class="p-3"> - </td>
+      </tr>
+      <tr class="font-bold bg-indigo-500 text-white">
+        <td class="p-3">GRAND TOTAL</td>
+        <td class="p-3">${formatCurrency(grandTotalFull)}</td>
+        <td class="p-3">${formatCurrency(grandTotalHalf)}</td>
+        <td class="p-3"> - </td>
+      </tr>
+    `;
+  };
+
+  // Attach event listeners to all inputs to trigger recalculation on change
+  document.addEventListener('DOMContentLoaded', () => {
+    const inputs = document.querySelectorAll('input[type="number"]');
+    inputs.forEach(input => {
+      input.addEventListener('input', updateCalculations);
+    });
+
+    // Run the initial calculation on page load
+    updateCalculations();
+  });
+</script>
+
+</body>
+</html>
