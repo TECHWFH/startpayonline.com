@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Invoice with Auto GST & PAN</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    h2 {
+      text-align: center;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 5px;
+      margin: 2px 0;
+      box-sizing: border-box;
+      font-size: 14px;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .col-50 {
+      flex: 0 0 48%;
+    }
+    .col-100 {
+      flex: 0 0 100%;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 8px;
+      text-align: center;
+    }
+    .button {
+      margin: 5px 0;
+      padding: 10px;
+      cursor: pointer;
+      border: none;
+      color: white;
+      font-weight: bold;
+    }
+    .add-btn {
+      background-color: green;
+    }
+    .remove-btn {
+      background-color: red;
+    }
+    .print-btn {
+      background-color: #007bff;
+      float: right;
+    }
+    .right {
+      text-align: right;
+    }
+    @media print {
+      .button, .print-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h2>GST Invoice</h2>
+  <div class="row">
+    <div class="col-50">
+      <label>Firm Name:</label>
+      <input type="text" value="Example StartPay Online" />
+    </div>
+    <div class="col-50 right">
+      <label>Invoice No:</label>
+      <input type="text" value="INV-001" />
+      <label>Date:</label>
+      <input type="date" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-50">
+      <label>GSTIN:</label>
+      <input type="text" id="gstin" value="23ABCDE1234F1Z5" oninput="extractPAN()" />
+    </div>
+    <div class="col-50">
+      <label>PAN:</label>
+      <input type="text" id="pan" readonly />
+    </div>
+  </div>
+  <div class="col-100">
+    <label>Address:</label>
+    <textarea rows="2" style="resize: vertical;"></textarea>
+  </div>
+  <div class="col-100">
+    <label>Customer Name:</label>
+    <input type="text" placeholder="Enter Customer Name" />
+  </div>
+
+  <table id="invoiceTable">
+    <thead>
+      <tr>
+        <th>S.No</th>
+        <th>Description</th>
+        <th>HSN/SAC</th>
+        <th>Qty</th>
+        <th>Rate</th>
+        <th>GST %</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+  <button class="button add-btn" onclick="addRow()">+ Add Product</button>
+  <button class="button remove-btn" onclick="removeRow()">− Remove Last</button>
+
+  <div class="col-100">
+    <p><strong>Taxable Value:</strong> Rs/- <span id="taxableValue">0.00</span></p>
+    <p><strong>GST (18%):</strong> Rs/- <span id="gstValue">0.00</span></p>
+    <p><strong>Total Invoice Amount:</strong> Rs/- <span id="totalInvoice">0.00</span></p>
+    <p><strong>Total Invoice Amount (in Words):</strong><br/><span id="amountInWords"></span></p>
+  </div>
+
+  <h4>Terms and Conditions</h4>
+  <ul>
+    <li>Price inclusive of all taxes</li>
+    <li>Payment: 100% Advance</li>
+    <li>Goods & Services sold will not be taken back</li>
+    <li>In case of any dispute, jurisdiction: <input type="text" placeholder="Enter jurisdiction" /></li>
+    <li>Terms as per RMPL or RAM MOHAN PVT LTD</li>
+  </ul>
+
+  <h4>Bank Details</h4>
+  <div class="row">
+    <div class="col-50">
+      <label>Firm Name:</label>
+      <input type="text" value="ABCD PVT LTD" />
+    </div>
+    <div class="col-50">
+      <label>Account Number:</label>
+      <input type="text" value="999********7887" />
+    </div>
+    <div class="col-50">
+      <label>IFSC Code:</label>
+      <input type="text" value="TOB00595656" />
+    </div>
+    <div class="col-50">
+      <label>Bank Name:</label>
+      <input type="text" value="TEST Bank" />
+    </div>
+    <div class="col-100">
+      <label>Branch Name:</label>
+      <input type="text" value="BHOPAL, BHOPAL" />
+    </div>
+  </div>
+
+  <p><strong>Authorised Signatory</strong><br/>(Sign & Stamp)</p>
+  <p><strong>Receiver's Signature:</strong></p>
+  <p>If you have any questions about this invoice, contact Mob. No. – <input type="text" placeholder="Enter 10-digit mobile" /></p>
+  <p>* This is a computer-generated invoice and does not require signature *</p>
+  <p>📞 Need Help? Call/WhatsApp: 9340726600<br/>🌐 Visit StartPayOnline</p>
+
+  <button class="button print-btn" onclick="window.print()">🖨️ Print Invoice</button>
+
+  <script>
+    function addRow() {
+      const table = document.getElementById("invoiceTable").getElementsByTagName("tbody")[0];
+      const row = table.insertRow();
+      const cells = ["S.No", "Description", "HSN/SAC", "Qty", "Rate", "GST", "Amount"];
+      for (let i = 0; i < cells.length; i++) {
+        const cell = row.insertCell();
+        if (i === 0) {
+          cell.textContent = table.rows.length;
+        } else if (i === 6) {
+          cell.textContent = "0.00";
+        } else {
+          const input = document.createElement("input");
+          input.type = "number";
+          input.oninput = calculateTotal;
+          cell.appendChild(input);
+        }
+      }
+      calculateTotal();
+    }
+
+    function removeRow() {
+      const table = document.getElementById("invoiceTable").getElementsByTagName("tbody")[0];
+      if (table.rows.length > 0) {
+        table.deleteRow(-1);
+      }
+      calculateTotal();
+    }
+
+    function extractPAN() {
+      const gstin = document.getElementById("gstin").value;
+      const pan = gstin.substring(2, 12);
+      document.getElementById("pan").value = pan;
+    }
+
+    function calculateTotal() {
+      const table = document.getElementById("invoiceTable").getElementsByTagName("tbody")[0];
+      let taxable = 0;
+      for (let row of table.rows) {
+        const qty = parseFloat(row.cells[3].children[0]?.value) || 0;
+        const rate = parseFloat(row.cells[4].children[0]?.value) || 0;
+        const gst = parseFloat(row.cells[5].children[0]?.value) || 0;
+        const amount = qty * rate;
+        const gstAmount = (amount * gst) / 100;
+        const totalAmount = amount + gstAmount;
+        row.cells[6].textContent = totalAmount.toFixed(2);
+        taxable += amount;
+      }
+      const gstVal = (taxable * 0.18);
+      const total = taxable + gstVal;
+      document.getElementById("taxableValue").textContent = taxable.toFixed(2);
+      document.getElementById("gstValue").textContent = gstVal.toFixed(2);
+      document.getElementById("totalInvoice").textContent = total.toFixed(2);
+      document.getElementById("amountInWords").textContent = convertNumberToWords(total.toFixed(0)) + " Rupees Only /-";
+    }
+
+    function convertNumberToWords(amount) {
+      const words = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+        "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen",
+        "Sixteen", "Seventeen", "Eighteen", "Nineteen", "Twenty"];
+      const tens = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+
+      function inWords(num) {
+        if (num <= 20) return words[num];
+        if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 ? " " + words[num % 10] : "");
+        if (num < 1000) return words[Math.floor(num / 100)] + " Hundred" + (num % 100 ? " " + inWords(num % 100) : "");
+        if (num < 100000) return inWords(Math.floor(num / 1000)) + " Thousand" + (num % 1000 ? " " + inWords(num % 1000) : "");
+        if (num < 10000000) return inWords(Math.floor(num / 100000)) + " Lakh" + (num % 100000 ? " " + inWords(num % 100000) : "");
+        return inWords(Math.floor(num / 10000000)) + " Crore" + (num % 10000000 ? " " + inWords(num % 10000000) : "");
+      }
+      return inWords(parseInt(amount));
+    }
+
+    window.onload = () => {
+      extractPAN();
+      addRow();
+    };
+  </script>
+</body>
+</html>
