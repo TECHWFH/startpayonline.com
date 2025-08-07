@@ -1,0 +1,135 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plot Area Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .row {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 15px;
+    }
+    label {
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input, select {
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    .output {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Plot Area Calculator</h2>
+
+    <div class="row">
+      <label for="length">Length (ft.in)</label>
+      <input type="number" id="length" step="0.01" placeholder="e.g., 75">
+    </div>
+
+    <div class="row">
+      <label for="width">Width (ft.in)</label>
+      <input type="number" id="width" step="0.01" placeholder="e.g., 33.6">
+    </div>
+
+    <div class="row">
+      <label for="rate">Rate per Sq.ft (Rs/-)</label>
+      <input type="number" id="rate" step="0.01" value="230">
+    </div>
+
+    <button onclick="calculate()">Calculate</button>
+
+    <div class="output" id="outputArea"></div>
+    <div class="output" id="outputAmount"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Component</th>
+          <th>Length</th>
+          <th>Width</th>
+          <th>Area (sq.ft)</th>
+        </tr>
+      </thead>
+      <tbody id="resultTable">
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function calculate() {
+      let length = parseFloat(document.getElementById("length").value);
+      let width = parseFloat(document.getElementById("width").value);
+      let rate = parseFloat(document.getElementById("rate").value);
+
+      if (isNaN(length) || isNaN(width) || isNaN(rate)) {
+        alert("Please enter valid numbers.");
+        return;
+      }
+
+      let area = length * width;
+      let amount = area * rate;
+
+      document.getElementById("outputArea").innerText = `Total Area: ${area.toFixed(2)} sq.ft`;
+      document.getElementById("outputAmount").innerText = `Total Amount: Rs/- ${amount.toFixed(2)}`;
+
+      let tableBody = `
+        <tr>
+          <td>Building / Build-up</td>
+          <td>${length}</td>
+          <td>${width}</td>
+          <td>${area.toFixed(2)}</td>
+        </tr>
+      `;
+
+      document.getElementById("resultTable").innerHTML = tableBody;
+    }
+  </script>
+</body>
+</html>
