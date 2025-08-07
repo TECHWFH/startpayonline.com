@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Plot Calculator</title>
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #f8f9fa;
+            --text-color: #212529;
+            --border-color: #dee2e6;
+            --header-bg: #e9ecef;
+            --highlight-red: #d9534f; /* Professional Red Color */
+            --card-shadow: 0 4px 8px rgba(0, 0, 0, 0.07);
+            --card-radius: 8px;
+        }
+
+        /* General Body Styles */
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 2rem;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            transition: padding 0.3s ease;
+        }
+
+        /* Main Layout Container */
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        /* Card Style for Sections */
+        .card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: var(--card-radius);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        /* Sidebar for Inputs */
+        .sidebar {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        /* Main Content for Results */
+        .main-content {
+            flex: 2.5;
+            min-width: 450px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        .calc-section {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            margin-top: 0;
+            color: var(--text-color);
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        h2 {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .highlight-red {
+            color: var(--highlight-red);
+            font-weight: bold;
+        }
+
+        /* Form & Input Styles */
+        .input-group {
+            margin-bottom: 1rem;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        .input-group input[type="number"] {
+            width: 100%;
+            padding: 0.75rem;
+            box-sizing: border-box;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .input-group input[type="number"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+        }
+        .radio-group label {
+            margin-right: 1rem;
+            font-weight: normal;
+        }
+        .info-box {
+            background-color: #e7f3fe;
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin-top: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        input:disabled {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+
+        /* Collapsible Dropdown Styles */
+        details {
+            border: 1px solid var(--border-color);
+            border-radius: var(--card-radius);
+            margin-bottom: 1rem;
+        }
+        details[open] {
+            border-color: var(--primary-color);
+        }
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.75rem 1rem;
+            list-style: none; /* Hide default arrow */
+            position: relative;
+        }
+        summary::after { /* Custom Arrow */
+            content: '▼';
+            position: absolute;
+            right: 1rem;
+            font-size: 0.8em;
+            transition: transform 0.2s;
+        }
+        details[open] summary::after {
+            transform: rotate(180deg);
+        }
+        .details-content {
+            padding: 0 1rem 1rem 1rem;
+        }
+
+        /* Table Styles */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: left;
+            word-break: break-word;
+        }
+        th {
+            background-color: var(--header-bg);
+            font-weight: 600;
+        }
+        .total-row {
+            background-color: var(--header-bg);
+        }
+
+        /* --- MOBILE RESPONSIVE STYLES --- */
+        @media (max-width: 992px) {
+            .container, .main-content {
+                flex-direction: column;
+            }
+            .sidebar, .main-content {
+                min-width: 100%;
+            }
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            h1 { font-size: 1.5rem; }
+            .card { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🏗️ Professional Plot Calculator</h1>
+
+    <div class="container">
+        <div class="sidebar card">
+            <h2>Input Parameters</h2>
+
+            <div class="input-group">
+                <label>Input Method</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="inputMethod" value="dims" checked> By Dimensions</label>
+                    <label><input type="radio" name="inputMethod" value="area"> By Total Area</label>
+                </div>
+            </div>
+
+            <h3>Initial Plot Details</h3>
+            <div class="input-group">
+                <label for="initialLength">Initial Length (ft)</label>
+                <input type="number" id="initialLength" value="75">
+            </div>
+            <div class="input-group">
+                <label for="initialWidth">Initial Width (ft)</label>
+                <input type="number" id="initialWidth" value="33.6">
+            </div>
+            <div class="input-group">
+                <label for="initialArea">Initial Plot Area (sq.ft)</label>
+                <input type="number" id="initialArea" value="2520" disabled>
+                 <div id="infoBox" class="info-box" style="display: none;"></div>
+            </div>
+
+            <h3>Costing Details</h3>
+            <div class="input-group">
+                <label for="rateFull">Amount Per Sq ft (Full Rate)</label>
+                <input type="number" id="rateFull" value="230">
+            </div>
+
+            <h3>Additions (Length & Width)</h3>
+            <details>
+                <summary>Add Balcony Plot Area</summary>
+                <div class="details-content">
+                    <div class="input-group">
+                        <label for="lBalcony">Balcony Length to Add (ft)</label>
+                        <input type="number" id="lBalcony" value="4">
+                    </div>
+                    <div class="input-group">
+                        <label for="wBalcony">Balcony Width to Add (ft)</label>
+                        <input type="number" id="wBalcony" value="4">
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Add Cantilever Plot Area</summary>
+                <div class="details-content">
+                    <div class="input-group">
+                        <label for="lCantilever">Cantilever Length to Add (ft)</label>
+                        <input type="number" id="lCantilever" value="1">
+                    </div>
+                    <div class="input-group">
+                        <label for="wCantilever">Cantilever Width to Add (ft)</label>
+                        <input type="number" id="wCantilever" value="1">
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Add Step Stair Plot Area</summary>
+                <div class="details-content">
+                    <div class="input-group">
+                        <label for="lStair">Stair Length to Add (ft)</label>
+                        <input type="number" id="lStair" value="10">
+                    </div>
+                    <div class="input-group">
+                        <label for="wStair">Stair Width to Add (ft)</label>
+                        <input type="number" id="wStair" value="4">
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Add Other Plot Area</summary>
+                <div class="details-content">
+                    <div class="input-group">
+                        <label for="lOther">Other Length to Add (ft)</label>
+                        <input type="number" id="lOther" value="0">
+                    </div>
+                    <div class="input-group">
+                        <label for="wOther">Other Width to Add (ft)</label>
+                        <input type="number" id="wOther" value="0">
+                    </div>
+                </div>
+            </details>
+
+            <h3>Additions (Direct Area/Length)</h3>
+            <details>
+                <summary>Add Slab Area (sq.ft)</summary>
+                <div class="details-content">
+                    <div class="input-group">
+                        <label for="slabArea">Slab Area (sq.ft)</label>
+                        <input type="number" id="slabArea" value="0">
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Add Beam Running Feet (ft)</summary>
+                <div class="details-content">
+                    <div class="input-group">
+                        <label for="beamFoot">Beam Running Feet (ft)</label>
+                        <input type="number" id="beamFoot" value="0">
+                    </div>
+                </div>
+            </details>
+            <details>
+                <summary>Add Lintel Beam (sq.ft)</summary>
+                <div class="details-content">
+                    <div class="input-group">
+                        <label for="lintelBeam">Lintel Beam (sq.ft)</label>
+                        <input type="number" id="lintelBeam" value="0">
+                    </div>
+                </div>
+            </details>
+
+        </div>
+
+        <div class="main-content">
+            <div class="calc-section card">
+                <h2>Area Calculation Summary</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Length (ft)</th>
+                            <th>Width (ft)</th>
+                            <th>Area (sq.ft)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Building/built-up Plot Area</td>
+                            <td id="res_L0"></td>
+                            <td id="res_W0"></td>
+                            <td id="res_Area0"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Add Balcony</b></td>
+                            <td id="res_L_bal"></td>
+                            <td id="res_W_bal"></td>
+                            <td id="res_Area_bal"></td>
+                        </tr>
+                         <tr>
+                            <td><b>Add Cantilever</b></td>
+                            <td id="res_L_can"></td>
+                            <td id="res_W_can"></td>
+                            <td id="res_Area_can"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Add Step Stair</b></td>
+                            <td id="res_L_stair"></td>
+                            <td id="res_W_stair"></td>
+                            <td id="res_Area_stair"></td>
+                        </tr>
+                        <tr>
+                            <td><b>Add Other Area</b></td>
+                            <td id="res_L_other"></td>
+                            <td id="res_W_other"></td>
+                            <td id="res_Area_other"></td>
+                        </tr>
+                        <tr>
+                            <td>Slab Area (Direct)</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td id="res_Area_slab"></td>
+                        </tr>
+                        <tr>
+                            <td>Beam Running Feet</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td id="res_Area_beam"></td>
+                        </tr>
+                        <tr>
+                            <td>Lintel Beam</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td id="res_Area_lintel"></td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><i class="highlight-red">Total Plot Area</i></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td id="res_Area_final"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="calc-section card">
+                <h2>Details Summary (Cost)</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Amount (Full Rate)</th>
+                            <th>Amount (Half Rate)</th>
+                            <th>Rate (sq.ft)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Building/built-up Plot Area</td>
+                            <td id="cost_full_build"></td>
+                            <td id="cost_half_build"></td>
+                            <td id="rate_build"></td>
+                        </tr>
+                        <tr>
+                            <td>Add Balcony Area</td>
+                            <td id="cost_full_bal"></td>
+                            <td id="cost_half_bal"></td>
+                            <td id="rate_bal"></td>
+                        </tr>
+                         <tr>
+                            <td>Add Cantilever Area</td>
+                            <td id="cost_full_can"></td>
+                            <td id="cost_half_can"></td>
+                            <td id="rate_can"></td>
+                        </tr>
+                         <tr>
+                            <td>Add Step Stair Area</td>
+                            <td id="cost_full_stair"></td>
+                            <td id="cost_half_stair"></td>
+                            <td id="rate_stair"></td>
+                        </tr>
+                        <tr>
+                            <td>Add Other Area</td>
+                            <td id="cost_full_other"></td>
+                            <td id="cost_half_other"></td>
+                            <td id="rate_other"></td>
+                        </tr>
+                        <tr>
+                            <td>Slab Area</td>
+                            <td id="cost_full_slab"></td>
+                            <td id="cost_half_slab"></td>
+                            <td id="rate_slab"></td>
+                        </tr>
+                        <tr>
+                            <td>Beam Running Feet</td>
+                            <td id="cost_full_beam"></td>
+                            <td id="cost_half_beam"></td>
+                            <td id="rate_beam"></td>
+                        </tr>
+                        <tr>
+                            <td>Lintel Beam</td>
+                            <td id="cost_full_lintel"></td>
+                            <td id="cost_half_lintel"></td>
+                            <td id="rate_lintel"></td>
+                        </tr>
+                        <tr class="total-row">
+                            <td><b>GRAND TOTAL</b></td>
+                            <td id="cost_total_full"></td>
+                            <td id="cost_total_half"></td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    const inputs = document.querySelectorAll('input[type="number"], input[type="radio"]');
+    inputs.forEach(input => input.addEventListener('input', calculateAll));
+
+    document.querySelectorAll('input[name="inputMethod"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const useDims = this.value === 'dims';
+            document.getElementById('initialLength').disabled = !useDims;
+            document.getElementById('initialWidth').disabled = !useDims;
+            document.getElementById('initialArea').disabled = useDims;
+            document.getElementById('infoBox').style.display = useDims ? 'none' : 'block';
+            calculateAll();
+        });
+    });
+
+    const formatCurrency = (value) => new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR' }).format(value);
+    const formatNumber = (value, decimals = 2) => value.toLocaleString('en-IN', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+
+    function calculateAll() {
+        const useDims = document.querySelector('input[name="inputMethod"]:checked').value === 'dims';
+        let L0 = parseFloat(document.getElementById('initialLength').value) || 0;
+        let W0 = parseFloat(document.getElementById('initialWidth').value) || 0;
+        let Area0 = parseFloat(document.getElementById('initialArea').value) || 0;
+
+        if (useDims) {
+            Area0 = L0 * W0;
+            document.getElementById('initialArea').value = Area0.toFixed(2);
+        } else {
+            if (Area0 > 0) {
+                // Assuming a square plot if only area is given
+                const side = Math.sqrt(Area0);
+                L0 = W0 = side;
+                document.getElementById('initialLength').value = L0.toFixed(2);
+                document.getElementById('initialWidth').value = W0.toFixed(2);
+                document.getElementById('infoBox').innerHTML = `Assuming a square plot, L & W are <b>${L0.toFixed(2)} ft</b> each.`;
+            } else {
+                L0 = W0 = 0;
+                document.getElementById('initialLength').value = 0;
+                document.getElementById('initialWidth').value = 0;
+                document.getElementById('infoBox').innerHTML = `Enter a valid area.`;
+            }
+        }
+
+        const rateFull = parseFloat(document.getElementById('rateFull').value) || 0;
+        const rateHalf = rateFull / 2;
+
+        // Calculate areas for additions
+        const lBalcony = parseFloat(document.getElementById('lBalcony').value) || 0;
+        const wBalcony = parseFloat(document.getElementById('wBalcony').value) || 0;
+        const areaBalcony = lBalcony * wBalcony;
+
+        const lCantilever = parseFloat(document.getElementById('lCantilever').value) || 0;
+        const wCantilever = parseFloat(document.getElementById('wCantilever').value) || 0;
+        const areaCantilever = lCantilever * wCantilever;
+
+        const lStair = parseFloat(document.getElementById('lStair').value) || 0;
+        const wStair = parseFloat(document.getElementById('wStair').value) || 0;
+        const areaStair = lStair * wStair;
+
+        const lOther = parseFloat(document.getElementById('lOther').value) || 0;
+        const wOther = parseFloat(document.getElementById('wOther').value) || 0;
+        const areaOther = lOther * wOther;
+
+        const areaSlab = parseFloat(document.getElementById('slabArea').value) || 0;
+        const areaBeam = parseFloat(document.getElementById('beamFoot').value) || 0;
+        const areaLintel = parseFloat(document.getElementById('lintelBeam').value) || 0;
+        
+        // Calculate total area
+        const areaFinal = Area0 + areaBalcony + areaCantilever + areaStair + areaOther + areaSlab + areaBeam + areaLintel;
+
+        // Calculate costs
+        const costFullBuild = Area0 * rateFull;
+        const costHalfBuild = Area0 * rateFull;
+        const costFullBal = areaBalcony * rateFull;
+        const costHalfBal = areaBalcony * rateHalf;
+        const costFullCan = areaCantilever * rateFull;
+        const costHalfCan = areaCantilever * rateHalf;
+        const costFullStair = areaStair * rateFull;
+        const costHalfStair = areaStair * rateHalf;
+        const costFullOther = areaOther * rateFull;
+        const costHalfOther = areaOther * rateHalf;
+        const costFullSlab = areaSlab * rateFull;
+        const costHalfSlab = areaSlab * rateHalf;
+        const costFullBeam = areaBeam * rateFull;
+        const costHalfBeam = areaBeam * rateHalf;
+        const costFullLintel = areaLintel * rateFull;
+        const costHalfLintel = areaLintel * rateHalf;
+        
+        const totalFullCost = costFullBuild + costFullBal + costFullCan + costFullStair + costFullOther + costFullSlab + costFullBeam + costFullLintel;
+        const totalHalfCost = costHalfBuild + costHalfBal + costHalfCan + costHalfStair + costHalfOther + costHalfSlab + costHalfBeam + costHalfLintel;
+
+        // Update Area Calculation Summary table
+        document.getElementById('res_L0').textContent = formatNumber(L0);
+        document.getElementById('res_W0').textContent = formatNumber(W0);
+        document.getElementById('res_Area0').textContent = formatNumber(Area0);
+
+        document.getElementById('res_L_bal').textContent = formatNumber(lBalcony);
+        document.getElementById('res_W_bal').textContent = formatNumber(wBalcony);
+        document.getElementById('res_Area_bal').textContent = formatNumber(areaBalcony);
+
+        document.getElementById('res_L_can').textContent = formatNumber(lCantilever);
+        document.getElementById('res_W_can').textContent = formatNumber(wCantilever);
+        document.getElementById('res_Area_can').textContent = formatNumber(areaCantilever);
+
+        document.getElementById('res_L_stair').textContent = formatNumber(lStair);
+        document.getElementById('res_W_stair').textContent = formatNumber(wStair);
+        document.getElementById('res_Area_stair').textContent = formatNumber(areaStair);
+
+        document.getElementById('res_L_other').textContent = formatNumber(lOther);
+        document.getElementById('res_W_other').textContent = formatNumber(wOther);
+        document.getElementById('res_Area_other').textContent = formatNumber(areaOther);
+        
+        document.getElementById('res_Area_slab').textContent = formatNumber(areaSlab);
+        document.getElementById('res_Area_beam').textContent = formatNumber(areaBeam);
+        document.getElementById('res_Area_lintel').textContent = formatNumber(areaLintel);
+
+        document.getElementById('res_Area_final').textContent = formatNumber(areaFinal);
+
+        // Update Details Summary (Cost) table
+        document.getElementById('cost_full_build').textContent = formatCurrency(costFullBuild);
+        document.getElementById('cost_half_build').textContent = formatCurrency(costHalfBuild);
+        document.getElementById('rate_build').textContent = formatNumber(rateFull);
+
+        document.getElementById('cost_full_bal').textContent = formatCurrency(costFullBal);
+        document.getElementById('cost_half_bal').textContent = formatCurrency(costHalfBal);
+        document.getElementById('rate_bal').textContent = formatNumber(rateHalf);
+
+        document.getElementById('cost_full_can').textContent = formatCurrency(costFullCan);
+        document.getElementById('cost_half_can').textContent = formatCurrency(costHalfCan);
+        document.getElementById('rate_can').textContent = formatNumber(rateHalf);
+
+        document.getElementById('cost_full_stair').textContent = formatCurrency(costFullStair);
+        document.getElementById('cost_half_stair').textContent = formatCurrency(costHalfStair);
+        document.getElementById('rate_stair').textContent = formatNumber(rateHalf);
+
+        document.getElementById('cost_full_other').textContent = formatCurrency(costFullOther);
+        document.getElementById('cost_half_other').textContent = formatCurrency(costHalfOther);
+        document.getElementById('rate_other').textContent = formatNumber(rateHalf);
+        
+        document.getElementById('cost_full_slab').textContent = formatCurrency(costFullSlab);
+        document.getElementById('cost_half_slab').textContent = formatCurrency(costHalfSlab);
+        document.getElementById('rate_slab').textContent = formatNumber(rateHalf);
+        
+        document.getElementById('cost_full_beam').textContent = formatCurrency(costFullBeam);
+        document.getElementById('cost_half_beam').textContent = formatCurrency(costHalfBeam);
+        document.getElementById('rate_beam').textContent = formatNumber(rateHalf);
+        
+        document.getElementById('cost_full_lintel').textContent = formatCurrency(costFullLintel);
+        document.getElementById('cost_half_lintel').textContent = formatCurrency(costHalfLintel);
+        document.getElementById('rate_lintel').textContent = formatNumber(rateHalf);
+
+        document.getElementById('cost_total_full').textContent = formatCurrency(totalFullCost);
+        document.getElementById('cost_total_half').textContent = formatCurrency(totalHalfCost);
+    }
+
+    // Initial calculation
+    calculateAll();
+});
+</script>
+
+</body>
+</html>
