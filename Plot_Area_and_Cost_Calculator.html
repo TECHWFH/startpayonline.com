@@ -46,7 +46,7 @@
   <div class="bg-white p-3 rounded shadow">
     <h2 class="font-bold mb-2">इनपुट पैरामीटर्स</h2>
 
-    <label class="block text-sm">प्रति वर्ग फुट दर (पूरी)</label>
+    <label class="block text-sm">प्रति वर्ग फुट दर (पूरी) (राशि)</label>
     <input type="number" id="rateFull" value="300" class="border p-2 w-full mb-2">
 
     <label class="block text-sm">शुरुआती लंबाई (ft)</label>
@@ -84,7 +84,7 @@
 
     <div class="canvas-wrap">
       <!-- responsive canvas: will scale on high-DPI too -->
-      <canvas id="plotCanvas" style="width:100%; height:280px; display:block;"></canvas>
+      <canvas id="plotCanvas" style="width:100%; height:320px; display:block;"></canvas>
       <div class="legend" id="legend"></div>
     </div>
 
@@ -120,11 +120,11 @@
 </div>
 
 <script>
-/* ========== Responsive Canvas Setup ========== */
-function setupHiDPICanvas(canvas, widthPx, heightPx) {
-  // make canvas size responsive to container width while maintaining aspect ratio
+/* ========== HiDPI responsive canvas helper ========== */
+function setupHiDPICanvas(canvas, heightPx) {
   const ratio = window.devicePixelRatio || 1;
-  const styleWidth = canvas.clientWidth || widthPx;
+  // style width is current element width in CSS px
+  const styleWidth = canvas.clientWidth || 760;
   const styleHeight = heightPx;
   canvas.width = Math.round(styleWidth * ratio);
   canvas.height = Math.round(styleHeight * ratio);
@@ -134,13 +134,12 @@ function setupHiDPICanvas(canvas, widthPx, heightPx) {
   return ctx;
 }
 
-/* ========== Main App ========== */
 document.addEventListener('DOMContentLoaded', () => {
   // format helpers
   const formatRsSingle = v => (isNaN(v) ? '₹ 0.00' : '₹ ' + (v||0).toLocaleString('en-IN',{minimumFractionDigits:2, maximumFractionDigits:2}));
   const formatNum = (v, d=2) => (isNaN(v) ? '0.00' : (v||0).toLocaleString('en-IN',{minimumFractionDigits:d, maximumFractionDigits:d}));
 
-  // DOM
+  // DOM refs
   const rateFullEl = document.getElementById('rateFull');
   const lenEl = document.getElementById('initialLength');
   const widEl = document.getElementById('initialWidth');
@@ -154,18 +153,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // canvas
   const canvas = document.getElementById('plotCanvas');
-  let ctx = setupHiDPICanvas(canvas, 760, 280);
+  let ctx = setupHiDPICanvas(canvas, 320);
 
-  // color setup: base dark red and lighter tints for outer layers
+  // colors: base dark red and lighter tints for outer layers
   const baseColor = '#CC0000';
-  const colors = [
-    baseColor,
-    '#d24b4b',
-    '#e17676',
-    '#f2b0b0',
-    '#fadede',
-    '#fceaea'
-  ];
+  const colors = [ baseColor, '#d24b4b', '#e17676', '#f2b0b0', '#fadede', '#fceaea' ];
 
   // add dynamic field
   function addDynamicField() {
@@ -192,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
   addBtn.addEventListener('click', addDynamicField);
   printBtn.addEventListener('click', () => window.print());
   [rateFullEl, lenEl, widEl].forEach(el => el.addEventListener('input', updateAll));
-  window.addEventListener('resize', () => { ctx = setupHiDPICanvas(canvas, canvas.clientWidth, 280); updateAll(); });
+  window.addEventListener('resize', () => { ctx = setupHiDPICanvas(canvas, 320); updateAll(); });
 
   function updateAll() {
     const rateFull = parseFloat(rateFullEl.value) || 0;
@@ -201,8 +193,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let wid = parseFloat(widEl.value) || 0;
     const initialArea = len * wid;
 
-    // tables
+    // tables build
     let areaHtml = `<tr><td>Initial Plot</td><td>${formatNum(len)}</td><td>${formatNum(wid)}</td><td>${formatNum(initialArea)}</td><td>-</td></tr>`;
+    // initial row: half column ALSO shows full amount (as requested earlier)
     let costHtml = `<tr><td>Initial Plot</td><td>${formatRsSingle(initialArea * rateFull)}</td><td>${formatRsSingle(initialArea * rateFull)}</td><td>₹ ${formatNum(rateFull,0)}</td></tr>`;
 
     let prevArea = initialArea;
@@ -212,13 +205,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const layers = [];
     layers.push({name:'Initial Plot', length: len, width: wid});
 
-    // dynamic fields in order
     const dynDivs = Array.from(dynContainer.children);
     dynDivs.forEach((div) => {
       const stepName = div.querySelector('.step-name').textContent;
       const pl = parseFloat(div.querySelector('.dyn-l').value) || 0;
       const pw = parseFloat(div.querySelector('.dyn-w').value) || 0;
-      // per-side -> total add both sides
       const addLen = pl * 2;
       const addWid = pw * 2;
       len += addLen;
@@ -243,69 +234,49 @@ document.addEventListener('DOMContentLoaded', () => {
     areaBody.innerHTML = areaHtml;
     costBody.innerHTML = costHtml;
 
-    // draw
     drawLayersOnCanvas(layers);
   }
 
   function drawLayersOnCanvas(layers) {
-    // ensure HiDPI canvas sized
-    ctx = setupHiDPICanvas(canvas, canvas.clientWidth, 280);
+    // prepare HiDPI canvas
+    ctx = setupHiDPICanvas(canvas, 320);
     ctx.clearRect(0,0,canvas.width,canvas.height);
-    // scale calculation: choose orientation so that longer dimension maps to canvas height (portrait-preference)
-    // take outermost layer
-    const outer = layers[layers.length - 1];
+
+    // compute max dims
     const maxLen = Math.max(...layers.map(l => l.length));
     const maxWid = Math.max(...layers.map(l => l.width));
-    // padding in pixels
     const pad = 36;
-    // compute available px area (in CSS px, since ctx already transformed)
+    // CSS px available (canvas.clientWidth, canvas.style.height)
     const availW = canvas.clientWidth - pad*2;
-    const availH = (parseInt(canvas.style.height) || 280) - pad*2;
+    const availH = (parseInt(canvas.style.height) || 320) - pad*2;
 
-    // We want portrait-feel if length >= width: give priority to height scaling
-    // If length >= width -> scaleY = availH / length, scaleX = availW / width; scale = min(scaleX, scaleY)
-    // But ensure rectangle visually tends to portrait when length >> width.
-    let scaleByHeight = availH / maxLen; // treating length as vertical (so portrait)
-    let scaleByWidth = availW / maxLen;  // treating length as horizontal (landscape)
-    // We'll consider two mappings: map length->height (portrait) or length->width (landscape).
-    // Decide based on which mapping gives better fit while preferring portrait when length >= width.
-    let usePortrait = maxLen >= maxWid;
-    // compute scale if length->height:
+    // prefer portrait when length >= width
+    const usePortrait = maxLen >= maxWid;
     const scalePortrait = Math.min(availH / maxLen, availW / maxWid);
-    // compute scale if length->width (landscape):
     const scaleLandscape = Math.min(availW / maxLen, availH / maxWid);
-
     const scale = usePortrait ? scalePortrait : scaleLandscape;
 
-    // center
     const centerX = canvas.clientWidth / 2;
-    const centerY = (parseInt(canvas.style.height) || 280) / 2;
+    const centerY = (parseInt(canvas.style.height) || 320) / 2;
 
-    // draw outer layers first (below), inner last
+    // draw outer-to-inner with colors: outer first (below)
     legendDiv.innerHTML = '';
     for (let i = layers.length - 1, li = 0; i >= 0; i--, li++) {
       const layer = layers[i];
       const color = colors[li % colors.length];
-      const wPx = layer.length * scale;
-      const hPx = layer.width * scale;
-      // To make portrait when mapping length->vertical: we will map length to height (hPx = length*scale) and width to width (wPx = width*scale).
-      // But above we computed wPx as length*scale and hPx as width*scale — adjust mapping for portrait mode:
-      // If usePortrait, treat layer.length => height; layer.width => width
-      let drawW = layer.width * scale;
-      let drawH = layer.length * scale;
-      if (!usePortrait) {
-        // standard mapping: length => width, width => height
-        drawW = layer.length * scale;
-        drawH = layer.width * scale;
-      }
+      // mapping: if portrait -> length = vertical (height), width = horizontal (width)
+      let drawW = usePortrait ? layer.width * scale : layer.length * scale;
+      let drawH = usePortrait ? layer.length * scale : layer.width * scale;
       const x = centerX - drawW/2;
       const y = centerY - drawH/2;
-      ctx.lineWidth = 3;
+
+      // stroke big, base color darker for innermost (we draw outermost first)
+      ctx.lineWidth = (i === 0) ? 3 : 2; // slightly thicker for base
       ctx.strokeStyle = color;
       ctx.globalAlpha = 0.95;
       ctx.strokeRect(x, y, drawW, drawH);
 
-      // legend item (outermost first)
+      // legend
       const legItem = document.createElement('div');
       legItem.className = 'legend-item';
       const dot = document.createElement('span');
@@ -319,29 +290,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     ctx.globalAlpha = 1.0;
 
-    // directions: place around the outermost rectangle
-    const outerLayer = layers[layers.length - 1];
-    let outerW = usePortrait ? outerLayer.width * scale : outerLayer.length * scale;
-    let outerH = usePortrait ? outerLayer.length * scale : outerLayer.width * scale;
+    // Directions labels — DARK BLACK color
+    const outer = layers[layers.length - 1];
+    const outerW = usePortrait ? outer.width * scale : outer.length * scale;
+    const outerH = usePortrait ? outer.length * scale : outer.width * scale;
     const ox = centerX - outerW/2;
     const oy = centerY - outerH/2;
-    ctx.fillStyle = '#000000'; // dark black labels
-    ctx.font = '14px Arial';
 
-    // North (top / back)
+    ctx.fillStyle = '#000000';
+    ctx.font = '14px Arial';
     ctx.textAlign = 'center';
     ctx.fillText('North (बैक साइड)', centerX, oy - 10);
-    // South (bottom / front)
     ctx.fillText('South (फ्रंट साइड)', centerX, oy + outerH + 18);
-    // East (left side)
     ctx.textAlign = 'right';
-    ctx.fillText('East (लेफ्ट साइड)', ox - 8, centerY + 4);
-    // West (right side)
+    ctx.fillText('East (लेफ्ट साइड)', ox - 10, centerY + 6);
     ctx.textAlign = 'left';
-    ctx.fillText('West (राइट साइड)', ox + outerW + 8, centerY + 4);
+    ctx.fillText('West (राइट साइड)', ox + outerW + 10, centerY + 6);
   }
 
-  // initial listeners
+  // initial run
   updateAll();
 });
 </script>
