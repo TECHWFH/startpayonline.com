@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>प्लॉट क्षेत्रफल और लागत कैलकुलेटर</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+    body { font-family: Arial, sans-serif; background: #f0f4f8; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { border: 1px solid #ccc; padding: 6px; text-align: left; }
+    th { background: #ffcdd2; }
+    .total-row { background: #ddd; font-weight: bold; }
+    .final-total-row { background: linear-gradient(to right, blue, red); color: white; font-weight: bold; }
+    .remove-btn { color: red; cursor: pointer; font-weight: bold; }
+</style>
+</head>
+<body class="p-4">
+
+<h1 class="text-2xl font-bold text-center mb-4">🏗️ प्लॉट क्षेत्रफल और लागत कैलकुलेटर</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="bg-white p-4 rounded shadow">
+        <h2 class="font-bold mb-2">इनपुट पैरामीटर्स</h2>
+        <label>प्रति वर्ग फुट दर (पूरी)</label>
+        <input type="number" id="rateFull" value="300" class="border p-1 w-full mb-2">
+
+        <label>शुरुआती लंबाई (ft)</label>
+        <input type="number" id="initialLength" value="75" class="border p-1 w-full mb-2">
+
+        <label>शुरुआती चौड़ाई (ft)</label>
+        <input type="number" id="initialWidth" value="33.6" class="border p-1 w-full mb-2">
+
+        <h3 class="font-bold mt-4 mb-2">अतिरिक्त प्लॉट क्षेत्र (प्रति-साइड मानें)</h3>
+        <div id="dynamic-inputs-container" class="space-y-2"></div>
+
+        <div class="flex gap-2 mt-2">
+            <select id="addItemSelect" class="border p-1 flex-grow">
+                <option value="बालकनी (प्रति-साइड 4 ft)">बालकनी (प्रति-साइड 4 ft)</option>
+                <option value="कैण्टिलीवर (प्रति-साइड 1 ft)">कैण्टिलीवर (प्रति-साइड 1 ft)</option>
+                <option value="स्लैब (प्रति-साइड)">स्लैब (प्रति-साइड)</option>
+                <option value="लिंटल बीम (प्रति-साइड)">लिंटल बीम (प्रति-साइड)</option>
+                <option value="सीढ़ी (प्रति-साइड)">सीढ़ी (प्रति-साइड)</option>
+                <option value="बीम फुट (प्रति-साइड)">बीम फुट (प्रति-साइड)</option>
+                <option value="अन्य (प्रति-साइड)">अन्य (प्रति-साइड)</option>
+                <option value="प्लॉट 1 (प्रति-साइड)">प्लॉट 1 (प्रति-साइड)</option>
+                <option value="प्लॉट 2 (प्रति-साइड)">प्लॉट 2 (प्रति-साइड)</option>
+            </select>
+            <button id="addItemBtn" class="bg-blue-500 text-white px-2">+</button>
+        </div>
+    </div>
+
+    <div class="bg-white p-4 rounded shadow md:col-span-2">
+        <h2 class="font-bold">Area Calculation Summary</h2>
+        <table>
+            <thead>
+                <tr><th>आइटम</th><th>लंबाई (ft)</th><th>चौड़ाई (ft)</th><th>क्षेत्रफल (sq.ft)</th><th>अंतर (sq.ft)</th></tr>
+            </thead>
+            <tbody id="area-summary-body"></tbody>
+        </table>
+
+        <h2 class="font-bold mt-4">Details Summary (Cost)</h2>
+        <table>
+            <thead>
+                <tr><th>आइटम</th><th>पूरी राशि</th><th>आधी राशि</th><th>प्रति वर्ग फुट दर</th></tr>
+            </thead>
+            <tbody id="cost-summary-body"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const formatRs = (value) => {
+        if (isNaN(value)) return '₹ 0.00';
+        return '₹ ' + (value || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
+    const formatNumber = (value, decimals = 2) => {
+        if (isNaN(value)) return '0.00';
+        return (value || 0).toLocaleString('en-IN', { minimumFractionDigits: decimals, maximumFractionDigits: decimals });
+    };
+
+    document.getElementById('addItemBtn').addEventListener('click', () => {
+        const name = document.getElementById('addItemSelect').value;
+        const def = name.includes("4 ft") ? 4 : (name.includes("1 ft") ? 1 : 0);
+        const container = document.getElementById('dynamic-inputs-container');
+        const div = document.createElement('div');
+        div.className = "border p-2 rounded bg-gray-50";
+        div.innerHTML = `<div class="flex justify-between items-center mb-1">
+                            <strong>${name}</strong>
+                            <span class="remove-btn">❌</span>
+                         </div>
+                         <label>प्रति-साइड वृद्धि (ft) लंबाई</label>
+                         <input type="number" class="dyn-l border p-1 w-full mb-1" value="${def}">
+                         <label>प्रति-साइड वृद्धि (ft) चौड़ाई</label>
+                         <input type="number" class="dyn-w border p-1 w-full" value="${def}">`;
+        container.appendChild(div);
+        div.querySelectorAll('input').forEach(inp => inp.addEventListener('input', updateAll));
+        div.querySelector('.remove-btn').addEventListener('click', () => { div.remove(); updateAll(); });
+        updateAll();
+    });
+
+    document.querySelectorAll('input').forEach(inp => inp.addEventListener('input', updateAll));
+
+    function updateAll(){
+        const rateFull = parseFloat(document.getElementById('rateFull').value) || 0;
+        const rateHalf = rateFull / 2;
+        let len = parseFloat(document.getElementById('initialLength').value) || 0;
+        let wid = parseFloat(document.getElementById('initialWidth').value) || 0;
+        let area = len * wid;
+        let htmlArea = `<tr><td>Initial Plot</td><td>${formatNumber(len)}</td><td>${formatNumber(wid)}</td><td>${formatNumber(area)}</td><td>-</td></tr>`;
+        let htmlCost = `<tr><td>Initial Plot</td><td>${formatRs(area * rateFull)}</td><td>${formatRs(area * rateFull)}</td><td>${formatRs(rateFull)}</td></tr>`;
+        let prevArea = area;
+        let totalFull = area * rateFull;
+        let totalHalf = area * rateFull;
+
+        document.querySelectorAll('#dynamic-inputs-container > div').forEach((div) => {
+            const stepName = div.querySelector('strong').textContent;
+            const pl = parseFloat(div.querySelector('.dyn-l').value) || 0;
+            const pw = parseFloat(div.querySelector('.dyn-w').value) || 0;
+            len += pl*2;
+            wid += pw*2;
+            const newArea = len * wid;
+            const diff = newArea - prevArea;
+            prevArea = newArea;
+            htmlArea += `<tr><td>${stepName}</td><td>+${pl*2}</td><td>+${pw*2}</td><td>-</td><td>${formatNumber(diff)}</td></tr>`;
+            htmlArea += `<tr class="total-row"><td>Total After ${stepName}</td><td>${formatNumber(len)}</td><td>${formatNumber(wid)}</td><td>${formatNumber(newArea)}</td><td>-</td></tr>`;
+            totalFull += diff * rateFull;
+            totalHalf += diff * rateHalf;
+            htmlCost += `<tr><td>${stepName}</td><td>${formatRs(diff * rateFull)}</td><td>${formatRs(diff * rateHalf)}</td><td>${formatRs(rateFull)}</td></tr>`;
+        });
+
+        htmlArea += `<tr class="final-total-row"><td>Final Plot</td><td>${formatNumber(len)}</td><td>${formatNumber(wid)}</td><td>${formatNumber(len*wid)}</td><td>-</td></tr>`;
+        htmlCost += `<tr class="total-row"><td>GRAND TOTAL</td><td>${formatRs(totalFull)}</td><td>${formatRs(totalHalf)}</td><td>-</td></tr>`;
+
+        document.getElementById('area-summary-body').innerHTML = htmlArea;
+        document.getElementById('cost-summary-body').innerHTML = htmlCost;
+    }
+
+    updateAll();
+});
+</script>
+
+</body>
+</html>

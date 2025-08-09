@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>प्लॉट क्षेत्रफल और लागत कैलकुलेटर — डायग्राम सहित</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { font-family: Arial, sans-serif; background: #f0f4f8; margin:0; padding:16px; }
+  table { width:100%; border-collapse:collapse; margin-top:10px; }
+  th, td { border:1px solid #ccc; padding:6px; text-align:left; font-size:13px; }
+  th { background:#ffcdd2; }
+  .total-row { background:#ddd; font-weight:bold; }
+  .final-total-row { background: linear-gradient(to right, #1e3a8a, #dc2626); color:white; font-weight:bold; }
+  .remove-btn { color:red; cursor:pointer; font-weight:bold; }
+  .canvas-wrap { background:white; border:1px solid #eee; padding:8px; border-radius:6px; text-align:center; }
+  .legend { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:6px; font-size:13px; }
+  .legend-item { display:flex; gap:6px; align-items:center; }
+  .dot { width:18px; height:10px; display:inline-block; border-radius:3px; }
+  /* Responsive tweaks */
+  @media (max-width: 768px) {
+    body { padding:10px; }
+    .no-print { font-size:13px; }
+    th, td { font-size:12px; padding:5px; }
+    .dot { width:14px; height:8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Top Header -->
+<div class="no-print text-center font-bold text-[#FF0000] p-2 bg-white rounded-lg mx-auto mb-3 max-w-full">
+    by Anurag Rai | ☎ 9340726600 | 🛠 Technical Support Consultant
+</div>
+
+<!-- Print Button -->
+<div class="no-print text-center mb-3">
+    <button id="printBtn" class="bg-indigo-600 text-white px-4 py-2 rounded shadow">🖨️ Print / Export PDF</button>
+</div>
+
+<h1 class="text-xl font-bold text-center mb-3">🏗️ प्लॉट क्षेत्रफल और लागत कैलकुलेटर</h1>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+  <!-- Inputs -->
+  <div class="bg-white p-3 rounded shadow">
+    <h2 class="font-bold mb-2">इनपुट पैरामीटर्स</h2>
+
+    <label class="block text-sm">प्रति वर्ग फुट दर (पूरी)</label>
+    <input type="number" id="rateFull" value="300" class="border p-2 w-full mb-2">
+
+    <label class="block text-sm">शुरुआती लंबाई (ft)</label>
+    <input type="number" id="initialLength" value="50" class="border p-2 w-full mb-2">
+
+    <label class="block text-sm">शुरुआती चौड़ाई (ft)</label>
+    <input type="number" id="initialWidth" value="20" class="border p-2 w-full mb-2">
+
+    <h3 class="font-bold mt-3 mb-1">अतिरिक्त प्लॉट क्षेत्र (प्रति-साइड मानें)</h3>
+    <p class="text-sm text-gray-700 mb-2">
+      <strong>नोट:</strong> जो मान आप यहाँ डालेंगे वह <b>प्रति-साइड (per-side)</b> माना जाएगा — अर्थात् आगे और पीछे / बाएँ और दायाँ दोनों तरफ उतना जोड़ा जाएगा।
+    </p>
+
+    <div id="dynamic-inputs-container" class="space-y-2 mb-2"></div>
+
+    <div class="flex gap-2">
+      <select id="addItemSelect" class="border p-2 flex-grow">
+        <option value="बालकनी (प्रति-s)">बालकनी (प्रति-s)</option>
+        <option value="कैण्टिलीवर (प्रति-s)">कैण्टिलीवर (प्रति-s)</option>
+        <option value="स्लैब (प्रति-s)">स्लैब (प्रति-s)</option>
+        <option value="लिंटल बीम (प्रति-s)">लिंटल बीम (प्रति-s)</option>
+        <option value="सीढ़ी (प्रति-s)">सीढ़ी (प्रति-s)</option>
+        <option value="बीम फुट (प्रति-s)">बीम फुट (प्रति-s)</option>
+        <option value="अन्य (प्रति-s)">अन्य (प्रति-s)</option>
+        <option value="प्लॉट 1 (प्रति-s)">प्लॉट 1 (प्रति-s)</option>
+        <option value="प्लॉट 2 (प्रति-s)">प्लॉट 2 (प्रति-s)</option>
+      </select>
+      <button id="addItemBtn" class="bg-blue-600 text-white px-3 rounded">+</button>
+    </div>
+  </div>
+
+  <!-- Canvas + Tables -->
+  <div class="bg-white p-3 rounded shadow lg:col-span-2">
+    <h2 class="font-semibold text-sm mb-2">Plot Diagram</h2>
+
+    <div class="canvas-wrap">
+      <!-- responsive canvas: will scale on high-DPI too -->
+      <canvas id="plotCanvas" style="width:100%; height:280px; display:block;"></canvas>
+      <div class="legend" id="legend"></div>
+    </div>
+
+    <div class="mt-3 overflow-x-auto">
+      <h3 class="font-bold">Area Calculation Summary</h3>
+      <table>
+        <thead><tr><th>आइटम</th><th>लंबाई (ft)</th><th>चौड़ाई (ft)</th><th>क्षेत्रफल (sq.ft)</th><th>अंतर (sq.ft)</th></tr></thead>
+        <tbody id="area-summary-body"></tbody>
+      </table>
+
+      <h3 class="font-bold mt-3">Details Summary (Cost)</h3>
+      <table>
+        <thead><tr><th>आइटम</th><th>पूरी राशि</th><th>आधी राशि</th><th>प्रति वर्ग फुट दर</th></tr></thead>
+        <tbody id="cost-summary-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer Buttons -->
+<div class="no-print mt-4 p-3 bg-gray-100 rounded-lg text-center flex justify-center gap-3 flex-wrap">
+  <a class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded flex items-center gap-2" href="https://wa.me/919340726600?text=Hello%2C%20I%20need%20assistance%20regarding%20the%20plot%20area%20calculator." target="_blank">
+    <img src="https://img.icons8.com/color/48/000000/whatsapp.png" alt="WhatsApp" style="width:18px;height:18px;">
+    Need Help? WhatsApp: 9340726600
+  </a>
+  <a class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded flex items-center gap-2" href="https://startpayonline.com/" target="_blank">
+    🌐 Visit StartPayOnline
+  </a>
+</div>
+<div class="no-print text-center text-xs text-gray-500 mt-2">
+  <p>📩 Auto WhatsApp Message | <span style="color:#cc0000;">* Terms & Conditions apply *</span></p>
+</div>
+
+<script>
+/* ========== Responsive Canvas Setup ========== */
+function setupHiDPICanvas(canvas, widthPx, heightPx) {
+  // make canvas size responsive to container width while maintaining aspect ratio
+  const ratio = window.devicePixelRatio || 1;
+  const styleWidth = canvas.clientWidth || widthPx;
+  const styleHeight = heightPx;
+  canvas.width = Math.round(styleWidth * ratio);
+  canvas.height = Math.round(styleHeight * ratio);
+  canvas.style.height = styleHeight + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(ratio,0,0,ratio,0,0);
+  return ctx;
+}
+
+/* ========== Main App ========== */
+document.addEventListener('DOMContentLoaded', () => {
+  // format helpers
+  const formatRsSingle = v => (isNaN(v) ? '₹ 0.00' : '₹ ' + (v||0).toLocaleString('en-IN',{minimumFractionDigits:2, maximumFractionDigits:2}));
+  const formatNum = (v, d=2) => (isNaN(v) ? '0.00' : (v||0).toLocaleString('en-IN',{minimumFractionDigits:d, maximumFractionDigits:d}));
+
+  // DOM
+  const rateFullEl = document.getElementById('rateFull');
+  const lenEl = document.getElementById('initialLength');
+  const widEl = document.getElementById('initialWidth');
+  const addBtn = document.getElementById('addItemBtn');
+  const sel = document.getElementById('addItemSelect');
+  const dynContainer = document.getElementById('dynamic-inputs-container');
+  const areaBody = document.getElementById('area-summary-body');
+  const costBody = document.getElementById('cost-summary-body');
+  const legendDiv = document.getElementById('legend');
+  const printBtn = document.getElementById('printBtn');
+
+  // canvas
+  const canvas = document.getElementById('plotCanvas');
+  let ctx = setupHiDPICanvas(canvas, 760, 280);
+
+  // color setup: base dark red and lighter tints for outer layers
+  const baseColor = '#CC0000';
+  const colors = [
+    baseColor,
+    '#d24b4b',
+    '#e17676',
+    '#f2b0b0',
+    '#fadede',
+    '#fceaea'
+  ];
+
+  // add dynamic field
+  function addDynamicField() {
+    const name = sel.value;
+    const def = name.includes('बालकनी') ? 4 : (name.includes('कैण्टिलीवर') ? 1 : 0);
+    const wrapper = document.createElement('div');
+    wrapper.className = 'border p-2 rounded bg-gray-50';
+    wrapper.innerHTML = `
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <strong class="step-name" style="font-size:14px;">${name}</strong>
+        <span class="remove-btn" style="font-size:16px;">❌</span>
+      </div>
+      <label style="font-size:13px;">प्रति-साइड वृद्धि (ft) लंबाई</label>
+      <input type="number" class="dyn-l border p-1 w-full mb-1" value="${def}">
+      <label style="font-size:13px;">प्रति-साइड वृद्धि (ft) चौड़ाई</label>
+      <input type="number" class="dyn-w border p-1 w-full" value="${def}">
+    `;
+    dynContainer.appendChild(wrapper);
+    wrapper.querySelectorAll('input').forEach(i => i.addEventListener('input', updateAll));
+    wrapper.querySelector('.remove-btn').addEventListener('click', () => { wrapper.remove(); updateAll(); });
+    updateAll();
+  }
+
+  addBtn.addEventListener('click', addDynamicField);
+  printBtn.addEventListener('click', () => window.print());
+  [rateFullEl, lenEl, widEl].forEach(el => el.addEventListener('input', updateAll));
+  window.addEventListener('resize', () => { ctx = setupHiDPICanvas(canvas, canvas.clientWidth, 280); updateAll(); });
+
+  function updateAll() {
+    const rateFull = parseFloat(rateFullEl.value) || 0;
+    const rateHalf = rateFull / 2;
+    let len = parseFloat(lenEl.value) || 0;
+    let wid = parseFloat(widEl.value) || 0;
+    const initialArea = len * wid;
+
+    // tables
+    let areaHtml = `<tr><td>Initial Plot</td><td>${formatNum(len)}</td><td>${formatNum(wid)}</td><td>${formatNum(initialArea)}</td><td>-</td></tr>`;
+    let costHtml = `<tr><td>Initial Plot</td><td>${formatRsSingle(initialArea * rateFull)}</td><td>${formatRsSingle(initialArea * rateFull)}</td><td>₹ ${formatNum(rateFull,0)}</td></tr>`;
+
+    let prevArea = initialArea;
+    let totalFull = initialArea * rateFull;
+    let totalHalf = initialArea * rateFull;
+
+    const layers = [];
+    layers.push({name:'Initial Plot', length: len, width: wid});
+
+    // dynamic fields in order
+    const dynDivs = Array.from(dynContainer.children);
+    dynDivs.forEach((div) => {
+      const stepName = div.querySelector('.step-name').textContent;
+      const pl = parseFloat(div.querySelector('.dyn-l').value) || 0;
+      const pw = parseFloat(div.querySelector('.dyn-w').value) || 0;
+      // per-side -> total add both sides
+      const addLen = pl * 2;
+      const addWid = pw * 2;
+      len += addLen;
+      wid += addWid;
+      const newArea = len * wid;
+      const diff = newArea - prevArea;
+      prevArea = newArea;
+
+      areaHtml += `<tr><td>${stepName}</td><td>+${formatNum(addLen)}</td><td>+${formatNum(addWid)}</td><td>-</td><td>${formatNum(diff)}</td></tr>`;
+      areaHtml += `<tr class="total-row"><td>Total After ${stepName}</td><td>${formatNum(len)}</td><td>${formatNum(wid)}</td><td>${formatNum(newArea)}</td><td>-</td></tr>`;
+
+      totalFull += diff * rateFull;
+      totalHalf += diff * rateHalf;
+      costHtml += `<tr><td>${stepName}</td><td>${formatRsSingle(diff * rateFull)}</td><td>${formatRsSingle(diff * rateHalf)}</td><td>₹ ${formatNum(rateFull,0)}</td></tr>`;
+
+      layers.push({name: stepName, length: len, width: wid});
+    });
+
+    areaHtml += `<tr class="final-total-row"><td>Final Plot</td><td>${formatNum(len)}</td><td>${formatNum(wid)}</td><td>${formatNum(len*wid)}</td><td>-</td></tr>`;
+    costHtml += `<tr class="total-row"><td>GRAND TOTAL</td><td>${formatRsSingle(totalFull)}</td><td>${formatRsSingle(totalHalf)}</td><td>-</td></tr>`;
+
+    areaBody.innerHTML = areaHtml;
+    costBody.innerHTML = costHtml;
+
+    // draw
+    drawLayersOnCanvas(layers);
+  }
+
+  function drawLayersOnCanvas(layers) {
+    // ensure HiDPI canvas sized
+    ctx = setupHiDPICanvas(canvas, canvas.clientWidth, 280);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    // scale calculation: choose orientation so that longer dimension maps to canvas height (portrait-preference)
+    // take outermost layer
+    const outer = layers[layers.length - 1];
+    const maxLen = Math.max(...layers.map(l => l.length));
+    const maxWid = Math.max(...layers.map(l => l.width));
+    // padding in pixels
+    const pad = 36;
+    // compute available px area (in CSS px, since ctx already transformed)
+    const availW = canvas.clientWidth - pad*2;
+    const availH = (parseInt(canvas.style.height) || 280) - pad*2;
+
+    // We want portrait-feel if length >= width: give priority to height scaling
+    // If length >= width -> scaleY = availH / length, scaleX = availW / width; scale = min(scaleX, scaleY)
+    // But ensure rectangle visually tends to portrait when length >> width.
+    let scaleByHeight = availH / maxLen; // treating length as vertical (so portrait)
+    let scaleByWidth = availW / maxLen;  // treating length as horizontal (landscape)
+    // We'll consider two mappings: map length->height (portrait) or length->width (landscape).
+    // Decide based on which mapping gives better fit while preferring portrait when length >= width.
+    let usePortrait = maxLen >= maxWid;
+    // compute scale if length->height:
+    const scalePortrait = Math.min(availH / maxLen, availW / maxWid);
+    // compute scale if length->width (landscape):
+    const scaleLandscape = Math.min(availW / maxLen, availH / maxWid);
+
+    const scale = usePortrait ? scalePortrait : scaleLandscape;
+
+    // center
+    const centerX = canvas.clientWidth / 2;
+    const centerY = (parseInt(canvas.style.height) || 280) / 2;
+
+    // draw outer layers first (below), inner last
+    legendDiv.innerHTML = '';
+    for (let i = layers.length - 1, li = 0; i >= 0; i--, li++) {
+      const layer = layers[i];
+      const color = colors[li % colors.length];
+      const wPx = layer.length * scale;
+      const hPx = layer.width * scale;
+      // To make portrait when mapping length->vertical: we will map length to height (hPx = length*scale) and width to width (wPx = width*scale).
+      // But above we computed wPx as length*scale and hPx as width*scale — adjust mapping for portrait mode:
+      // If usePortrait, treat layer.length => height; layer.width => width
+      let drawW = layer.width * scale;
+      let drawH = layer.length * scale;
+      if (!usePortrait) {
+        // standard mapping: length => width, width => height
+        drawW = layer.length * scale;
+        drawH = layer.width * scale;
+      }
+      const x = centerX - drawW/2;
+      const y = centerY - drawH/2;
+      ctx.lineWidth = 3;
+      ctx.strokeStyle = color;
+      ctx.globalAlpha = 0.95;
+      ctx.strokeRect(x, y, drawW, drawH);
+
+      // legend item (outermost first)
+      const legItem = document.createElement('div');
+      legItem.className = 'legend-item';
+      const dot = document.createElement('span');
+      dot.className = 'dot';
+      dot.style.background = color;
+      legItem.appendChild(dot);
+      const txt = document.createElement('span');
+      txt.textContent = layer.name + ` (${Math.round(layer.length)}×${Math.round(layer.width)} ft)`;
+      legItem.appendChild(txt);
+      legendDiv.appendChild(legItem);
+    }
+    ctx.globalAlpha = 1.0;
+
+    // directions: place around the outermost rectangle
+    const outerLayer = layers[layers.length - 1];
+    let outerW = usePortrait ? outerLayer.width * scale : outerLayer.length * scale;
+    let outerH = usePortrait ? outerLayer.length * scale : outerLayer.width * scale;
+    const ox = centerX - outerW/2;
+    const oy = centerY - outerH/2;
+    ctx.fillStyle = '#000000'; // dark black labels
+    ctx.font = '14px Arial';
+
+    // North (top / back)
+    ctx.textAlign = 'center';
+    ctx.fillText('North (बैक साइड)', centerX, oy - 10);
+    // South (bottom / front)
+    ctx.fillText('South (फ्रंट साइड)', centerX, oy + outerH + 18);
+    // East (left side)
+    ctx.textAlign = 'right';
+    ctx.fillText('East (लेफ्ट साइड)', ox - 8, centerY + 4);
+    // West (right side)
+    ctx.textAlign = 'left';
+    ctx.fillText('West (राइट साइड)', ox + outerW + 8, centerY + 4);
+  }
+
+  // initial listeners
+  updateAll();
+});
+</script>
+
+</body>
+</html>
