@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Duty & Stamp Fee Calculators</title>
+    <style>
+        /* CSS Variables for a cleaner look */
+        :root {
+            --primary-color: #5635E9; /* गहरा नीला/बैंगनी */
+            --secondary-color: #22A7FC; /* आसमानी नीला */
+            --light-bg: #E6F4FF; /* हल्का नीला बैकग्राउंड */
+            --text-dark: #333333; /* गहरा टेक्स्ट */
+            --text-light: #FFFFFF; /* सफ़ेद टेक्स्ट */
+            --border-color: #CCCCCC; /* बॉर्डर का रंग */
+            --header-gradient: linear-gradient(to right, #0000FF, #FF0000); /* नीला-लाल ग्रेडिएंट */
+            --info-bg: #e0f7fa; /* हल्के नीले रंग का बैकग्राउंड */
+            --info-border: #00bcd4; /* हल्का नीला बॉर्डर */
+        }
+
+        /* Basic Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: var(--text-dark);
+            padding-top: 80px; /* Header spacing */
+            padding-bottom: 100px; /* Footer spacing */
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Header Section */
+        header {
+            background: var(--header-gradient);
+            color: var(--text-light);
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        header .title-block {
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 12px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--text-light);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        .info-box {
+            background-color: var(--info-bg);
+            border: 1px solid var(--info-border);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+        
+        .info-box ul {
+            padding-left: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input, select {
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            box-sizing: border-box; /* To ensure padding doesn't affect width */
+            margin-bottom: 10px; /* Add some space below each input/select */
+        }
+        
+        select {
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%235635E9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 10px top 50%;
+        }
+
+        .word-output {
+            display: block;
+            font-size: 14px;
+            color: darkgreen;
+            font-weight: bold;
+            margin-top: -5px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+
+        /* Button Styles */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        .action-btn {
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            flex: 1 1 45%; /* Flex-basis for wrapping on smaller screens */
+            border: none;
+            cursor: pointer;
+        }
+        .calculate-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 18px;
+        }
+        .calculate-btn:hover { background-color: #4528b3; }
+        .whatsapp-btn { background-color: #25D366; }
+        .whatsapp-btn:hover { background-color: #1EB85B; }
+        .call-btn { background-color: #007BFF; }
+        .call-btn:hover { background-color: #0056b3; }
+        .website-btn { background-color: #FF5722; }
+        .website-btn:hover { background-color: #e64a19; }
+        .print-btn { background-color: #6C757D; }
+        .print-btn:hover { background-color: #5a6268; }
+
+        /* Result Section */
+        .result {
+            margin-top: 20px;
+            background: var(--light-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .result p {
+            margin: 5px 0;
+        }
+        
+        .result h3 {
+            margin-top: 10px;
+            color: var(--primary-color);
+            font-size: 22px;
+        }
+        
+        .total-amount-red {
+            color: red;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #ffffff;
+            padding: 15px 0 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .footer-nav a, .footer-nav button {
+            color: var(--text-dark);
+            text-decoration: none;
+            text-align: center;
+            font-size: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: block;
+            flex: 1;
+        }
+        
+        .footer-nav span {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .footer-nav p {
+            font-size: 10px;
+            color: #888;
+            margin-top: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="title-block">
+        <h1>📊 स्टाम्प ड्यूटी और रजिस्ट्री फीस कैलकुलेटर</h1>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+    
+        <div class="info-box">
+            <h3>नियम और शुल्क (नियमानुसार)</h3>
+            <ul>
+                <li>**कन्वेंस/सेल डीड:** स्टाम्प ड्यूटी 7.5%, रजिस्ट्रेशन फीस 3% (कुल 10.5%)।</li>
+                <li>**गिफ्ट डीड (पारिवारिक सदस्य):** स्टाम्प ड्यूटी 1% (अधिकतम ₹1000), रजिस्ट्रेशन फीस 1%।</li>
+                <li>**गिफ्ट डीड (गैर-पारिवारिक सदस्य):** स्टाम्प ड्यूटी 5%, रजिस्ट्रेशन फीस 3%।</li>
+                <li>**लीज डीड:** कुल किराए और जमा राशि का 8% स्टाम्प ड्यूटी।</li>
+                <li>**कृषि भूमि:** स्टाम्प ड्यूटी 5%, रजिस्ट्रेशन फीस 3%।</li>
+                <li>**लोन एग्रीमेंट (गृह ऋण):** स्टाम्प ड्यूटी 0.25%, रजिस्ट्रेशन फीस ₹1000 (निश्चित)।</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>कन्वेंस / प्लॉट ड्यूटी कैलकुलेटर</h2>
+            <label for="conv-cons">प्रॉपरिटी की प्रतिफल राशि (₹)</label>
+            <input type="number" id="conv-cons" placeholder="उदा. 5000000" oninput="updateWords('conv-cons', 'conv-cons-words')">
+            <span class="word-output" id="conv-cons-words"></span>
+            <label for="conv-market">गाइडलाइन के अनुसार मार्केट वैल्यू (₹)</label>
+            <input type="number" id="conv-market" placeholder="उदा. 6000000" oninput="updateWords('conv-market', 'conv-market-words')">
+            <span class="word-output" id="conv-market-words"></span>
+            <label for="vendor-fee-percent">वेंडर फीस (%)</label>
+            <select id="vendor-fee-percent-conv"></select>
+            <button class="calculate-btn" onclick="calcConveyance()">कैलकुलेट करें</button>
+            <div class="result" id="conv-result"></div>
+        </div>
+
+        <div class="card">
+            <h2>गिफ्ट डीड (पारिवारिक) कैलकुलेटर</h2>
+            <p>परिवार के सदस्य (माता-पिता, बच्चे, पति/पत्नी, भाई-बहन) को उपहार देने के लिए</p>
+            <label for="gift-fam-value">प्रॉपरिटी वैल्यू (₹)</label>
+            <input type="number" id="gift-fam-value" placeholder="उदा. 500000" oninput="updateWords('gift-fam-value', 'gift-fam-words')">
+            <span class="word-output" id="gift-fam-words"></span>
+            <label for="vendor-fee-percent">वेंडर फीस (%)</label>
+            <select id="vendor-fee-percent-gift-fam"></select>
+            <button class="calculate-btn" onclick="calcGiftFamily()">कैलकुलेट करें</button>
+            <div class="result" id="gift-fam-result"></div>
+        </div>
+
+        <div class="card">
+            <h2>गिफ्ट डीड (गैर-पारिवारिक) कैलकुलेटर</h2>
+            <p>गैर-पारिवारिक सदस्यों को उपहार देने के लिए</p>
+            <label for="gift-non-fam-value">प्रॉपरिटी वैल्यू (₹)</label>
+            <input type="number" id="gift-non-fam-value" placeholder="उदा. 500000" oninput="updateWords('gift-non-fam-value', 'gift-non-fam-words')">
+            <span class="word-output" id="gift-non-fam-words"></span>
+            <label for="vendor-fee-percent">वेंडर फीस (%)</label>
+            <select id="vendor-fee-percent-gift-non-fam"></select>
+            <button class="calculate-btn" onclick="calcGiftNonFamily()">कैलकुलेट करें</button>
+            <div class="result" id="gift-non-fam-result"></div>
+        </div>
+        
+        <div class="card">
+            <h2>लीज डीड कैलकुलेटर</h2>
+            <label for="lease-rent">कुल किराया और जमा राशि (₹)</label>
+            <input type="number" id="lease-rent" placeholder="उदा. 120000" oninput="updateWords('lease-rent', 'lease-rent-words')">
+            <span class="word-output" id="lease-rent-words"></span>
+            <label for="vendor-fee-percent">वेंडर फीस (%)</label>
+            <select id="vendor-fee-percent-lease"></select>
+            <button class="calculate-btn" onclick="calcLease()">कैलकुलेट करें</button>
+            <div class="result" id="lease-result"></div>
+        </div>
+
+        <div class="card">
+            <h2>कृषि भूमि कैलकुलेटर</h2>
+            <label for="agri-value">प्रॉपरिटी वैल्यू (₹)</label>
+            <input type="number" id="agri-value" placeholder="उदा. 800000" oninput="updateWords('agri-value', 'agri-value-words')">
+            <span class="word-output" id="agri-value-words"></span>
+            <label for="vendor-fee-percent">वेंडर फीस (%)</label>
+            <select id="vendor-fee-percent-agri"></select>
+            <button class="calculate-btn" onclick="calcAgri()">कैलकुलेट करें</button>
+            <div class="result" id="agri-result"></div>
+        </div>
+
+        <div class="card">
+            <h2>लोन एग्रीमेंट (गृह ऋण) कैलकुलेटर</h2>
+            <label for="loan-amount">लोन राशि (₹)</label>
+            <input type="number" id="loan-amount" placeholder="उदा. 2000000" oninput="updateWords('loan-amount', 'loan-amount-words')">
+            <span class="word-output" id="loan-amount-words"></span>
+            <label for="vendor-fee-percent">वेंडर फीस (%)</label>
+            <select id="vendor-fee-percent-loan"></select>
+            <button class="calculate-btn" onclick="calcLoan()">कैलकुलेट करें</button>
+            <div class="result" id="loan-result"></div>
+        </div>
+
+        <div class="button-container">
+            <button class="action-btn whatsapp-btn" onclick="sendWhatsApp()">💬 ऑटो व्हाट्सएप</button>
+            <a href="tel:9340726600" class="action-btn call-btn">📞 कॉल करें</a>
+            <a href="https://sampada.mpigr.gov.in/#/VeiwGuidelineDetails" target="_blank" class="action-btn website-btn">📝 गाइडलाइन देखें</a>
+            <button class="action-btn print-btn" onclick="window.print()">🖨️ प्रिंट/पीडीएफ</button>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-nav">
+        <button onclick="window.print()">
+            <span>🖨️</span> प्रिंट/पीडीएफ
+        </button>
+        <a href="https://wa.me/919340726600">
+            <span>📞</span> मदद चाहिए?
+        </a>
+        <button onclick="sendWhatsApp()">
+            <span>📩</span> ऑटो व्हाट्सएप
+        </button>
+        <a href="https://sampada.mpigr.gov.in/" target="_blank">
+            <span>🌐</span> वेबसाइट पर जाएँ
+        </a>
+    </div>
+    <p>* नियम और शर्तें लागू *</p>
+</footer>
+
+<script>
+    // Populate the dropdown menu for vendor fees for all calculators
+    window.onload = function() {
+        const vendorFeeSelects = [
+            "vendor-fee-percent-conv",
+            "vendor-fee-percent-gift-fam",
+            "vendor-fee-percent-gift-non-fam",
+            "vendor-fee-percent-lease",
+            "vendor-fee-percent-agri",
+            "vendor-fee-percent-loan"
+        ];
+        
+        vendorFeeSelects.forEach(id => {
+            const selectElement = document.getElementById(id);
+            for (let i = 0.20; i <= 5.00; i += 0.10) {
+                let option = document.createElement("option");
+                option.value = i.toFixed(2);
+                option.text = i.toFixed(2) + "%";
+                selectElement.appendChild(option);
+            }
+            selectElement.value = "0.20"; // Set a default value
+        });
+    };
+
+    // Helper function to convert a number to words in English (Indian system)
+    function numberToWords(num) {
+        const a = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+        const b = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+        const g = ['', 'thousand', 'million', 'billion', 'trillion', 'quadrillion', 'quintillion'];
+
+        let n = num.toString().split('.')[0];
+        if (n === '0') return 'zero';
+        let str = '';
+        let numArr = n.split('').reverse();
+        let numArrLength = numArr.length;
+        let c = 0;
+
+        for (let i = 0; i < numArrLength; i += 3) {
+            let s = numArr.slice(i, i + 3).reverse().join('');
+            let n1 = parseInt(s, 10);
+            if (n1 !== 0) {
+                let p = '';
+                let d1 = n1 % 10;
+                let d2 = Math.floor(n1 / 10) % 10;
+                let d3 = Math.floor(n1 / 100) % 10;
+                
+                if (d3 !== 0) {
+                    p += a[d3] + 'hundred ';
+                }
+
+                if (d2 > 1) {
+                    p += b[d2] + ' ';
+                }
+                
+                if (d2 === 1) {
+                    p += a[d2 * 10 + d1];
+                } else if (d1 !== 0) {
+                    p += a[d1] + ' ';
+                }
+                
+                p += g[c] + ' ';
+                str = p + str;
+            }
+            c++;
+        }
+
+        return str.trim();
+    }
+    
+    // Helper function to convert a number to words in Hindi (Indian system)
+    function numberToHindiWords(num) {
+        const hindiUnits = ['', 'एक', 'दो', 'तीन', 'चार', 'पांच', 'छह', 'सात', 'आठ', 'नौ'];
+        const hindiTeens = ['दस', 'ग्यारह', 'बारह', 'तेरह', 'चौदह', 'पंद्रह', 'सोलह', 'सत्रह', 'अठारह', 'उन्नीस'];
+        const hindiTens = ['', 'दस', 'बीस', 'तीस', 'चालीस', 'पचास', 'साठ', 'सत्तर', 'अस्सी', 'नब्बे'];
+        const hindiGroups = ['', 'हजार', 'लाख', 'करोड़', 'अरब', 'खरब', 'नील', 'पद्म'];
+
+        if (num === 0) return 'शून्य';
+        let parts = [];
+        let groupIndex = 0;
+
+        // Special handling for the first group (up to 999)
+        let firstGroupValue = num % 1000;
+        if (firstGroupValue > 0) {
+            let words = [];
+            const hundreds = Math.floor(firstGroupValue / 100);
+            if (hundreds > 0) {
+                words.push(hindiUnits[hundreds] + ' सौ');
+            }
+            const tensUnits = firstGroupValue % 100;
+            if (tensUnits > 19) {
+                const tens = Math.floor(tensUnits / 10);
+                const units = tensUnits % 10;
+                words.push(hindiTens[tens] + (units > 0 ? ' ' + hindiUnits[units] : ''));
+            } else if (tensUnits >= 10) {
+                words.push(hindiTeens[tensUnits - 10]);
+            } else if (tensUnits > 0) {
+                words.push(hindiUnits[tensUnits]);
+            }
+            parts.unshift(words.join(' '));
+        }
+        num = Math.floor(num / 1000);
+        groupIndex = 1;
+
+        // Loop for groups of 2 digits (lakhs, crores, etc.)
+        while (num > 0) {
+            let groupValue = num % 100;
+            if (groupValue > 0) {
+                let words = [];
+                if (groupValue > 19) {
+                    const tens = Math.floor(groupValue / 10);
+                    const units = groupValue % 10;
+                    words.push(hindiTens[tens] + (units > 0 ? ' ' + hindiUnits[units] : ''));
+                } else if (groupValue >= 10) {
+                    words.push(hindiTeens[groupValue - 10]);
+                } else {
+                    words.push(hindiUnits[groupValue]);
+                }
+                words.push(hindiGroups[groupIndex]);
+                parts.unshift(words.join(' '));
+            }
+            num = Math.floor(num / 100);
+            groupIndex++;
+        }
+
+        return parts.join(' ').trim();
+    }
+    
+    // Function to update the words display
+    function updateWords(inputId, outputId) {
+        const input = document.getElementById(inputId);
+        const output = document.getElementById(outputId);
+        const num = parseFloat(input.value);
+        if (isNaN(num) || num <= 0) {
+            output.textContent = "";
+        } else {
+            const hindiWords = numberToHindiWords(num);
+            const englishWords = numberToWords(num);
+            output.textContent = `${hindiWords} रुपये / ${englishWords} rupees`;
+        }
+    }
+
+
+    // Calculation functions
+    function calcConveyance() {
+        let cons = parseFloat(document.getElementById("conv-cons").value) || 0;
+        let market = parseFloat(document.getElementById("conv-market").value) || 0;
+        let vendorFeePercent = parseFloat(document.getElementById("vendor-fee-percent-conv").value) || 0;
+        
+        let base = Math.max(cons, market);
+        
+        if (base === 0) {
+            document.getElementById("conv-result").innerHTML = "कृपया प्रतिफल राशि या मार्केट वैल्यू डालें।";
+            return;
+        }
+
+        let stamp = Math.round(base * 0.075); // 7.5% Stamp Duty
+        let reg = Math.round(base * 0.03); // 3% Registration Fee
+        let vendorFee = Math.round(base * (vendorFeePercent / 100)); // Vendor fee based on selected percentage
+        let total = stamp + reg + vendorFee;
+
+        const totalHindiWords = numberToHindiWords(total);
+        const totalEnglishWords = numberToWords(total);
+        
+        document.getElementById("conv-result").innerHTML = `
+            <p><b>स्टाम्प ड्यूटी (7.5%):</b> ₹${stamp.toLocaleString('en-IN')}</p>
+            <p><b>रजिस्ट्रेशन फीस / पंजीकरण शुल्क (3%):</b> ₹${reg.toLocaleString('en-IN')}</p>
+            <p><b>वेंडर फीस (${vendorFeePercent}%):</b> ₹${vendorFee.toLocaleString('en-IN')}</p>
+            <hr style="border-top: 1px solid var(--primary-color); margin: 10px 0;">
+            <h3 class="total-amount-red">कुल देय राशि: ₹${total.toLocaleString('en-IN')}</h3>
+            <p class="total-amount-red">${totalHindiWords} रुपये / ${totalEnglishWords} rupees</p>
+        `;
+    }
+
+    function calcGiftFamily() {
+        let value = parseFloat(document.getElementById("gift-fam-value").value) || 0;
+        let vendorFeePercent = parseFloat(document.getElementById("vendor-fee-percent-gift-fam").value) || 0;
+        
+        if (value === 0) {
+            document.getElementById("gift-fam-result").innerHTML = "कृपया प्रॉपरिटी वैल्यू डालें।";
+            return;
+        }
+        let stamp = Math.min(Math.round(value * 0.01), 1000); // 1% Stamp Duty, max ₹1000
+        let reg = Math.round(value * 0.01); // 1% Registration Fee
+        let vendorFee = Math.round(value * (vendorFeePercent / 100));
+        let total = stamp + reg + vendorFee;
+
+        const totalHindiWords = numberToHindiWords(total);
+        const totalEnglishWords = numberToWords(total);
+        
+        document.getElementById("gift-fam-result").innerHTML = `
+            <p><b>स्टाम्प ड्यूटी (1% या अधिकतम ₹1,000):</b> ₹${stamp.toLocaleString('en-IN')}</p>
+            <p><b>रजिस्ट्रेशन फीस / पंजीकरण शुल्क (1%):</b> ₹${reg.toLocaleString('en-IN')}</p>
+            <p><b>वेंडर फीस (${vendorFeePercent}%):</b> ₹${vendorFee.toLocaleString('en-IN')}</p>
+            <hr style="border-top: 1px solid var(--primary-color); margin: 10px 0;">
+            <h3 class="total-amount-red">कुल देय राशि: ₹${total.toLocaleString('en-IN')}</h3>
+            <p class="total-amount-red">${totalHindiWords} रुपये / ${totalEnglishWords} rupees</p>
+        `;
+    }
+
+    function calcGiftNonFamily() {
+        let value = parseFloat(document.getElementById("gift-non-fam-value").value) || 0;
+        let vendorFeePercent = parseFloat(document.getElementById("vendor-fee-percent-gift-non-fam").value) || 0;
+        
+        if (value === 0) {
+            document.getElementById("gift-non-fam-result").innerHTML = "कृपया प्रॉपरिटी वैल्यू डालें।";
+            return;
+        }
+        let stamp = Math.round(value * 0.05); // 5% Stamp Duty
+        let reg = Math.round(value * 0.03); // 3% Registration Fee
+        let vendorFee = Math.round(value * (vendorFeePercent / 100));
+        let total = stamp + reg + vendorFee;
+
+        const totalHindiWords = numberToHindiWords(total);
+        const totalEnglishWords = numberToWords(total);
+        
+        document.getElementById("gift-non-fam-result").innerHTML = `
+            <p><b>स्टाम्प ड्यूटी (5%):</b> ₹${stamp.toLocaleString('en-IN')}</p>
+            <p><b>रजिस्ट्रेशन फीस / पंजीकरण शुल्क (3%):</b> ₹${reg.toLocaleString('en-IN')}</p>
+            <p><b>वेंडर फीस (${vendorFeePercent}%):</b> ₹${vendorFee.toLocaleString('en-IN')}</p>
+            <hr style="border-top: 1px solid var(--primary-color); margin: 10px 0;">
+            <h3 class="total-amount-red">कुल देय राशि: ₹${total.toLocaleString('en-IN')}</h3>
+            <p class="total-amount-red">${totalHindiWords} रुपये / ${totalEnglishWords} rupees</p>
+        `;
+    }
+
+    function calcLease() {
+        let totalRent = parseFloat(document.getElementById("lease-rent").value) || 0;
+        let vendorFeePercent = parseFloat(document.getElementById("vendor-fee-percent-lease").value) || 0;
+        
+        if (totalRent === 0) {
+            document.getElementById("lease-result").innerHTML = "कृपया कुल किराया और जमा राशि डालें।";
+            return;
+        }
+        let stamp = Math.round(totalRent * 0.08); // 8% Stamp Duty
+        let vendorFee = Math.round(totalRent * (vendorFeePercent / 100));
+        let total = stamp + vendorFee;
+
+        const totalHindiWords = numberToHindiWords(total);
+        const totalEnglishWords = numberToWords(total);
+        
+        document.getElementById("lease-result").innerHTML = `
+            <p><b>स्टाम्प ड्यूटी (8%):</b> ₹${stamp.toLocaleString('en-IN')}</p>
+            <p><b>वेंडर फीस (${vendorFeePercent}%):</b> ₹${vendorFee.toLocaleString('en-IN')}</p>
+            <hr style="border-top: 1px solid var(--primary-color); margin: 10px 0;">
+            <h3 class="total-amount-red">कुल देय राशि: ₹${total.toLocaleString('en-IN')}</h3>
+            <p class="total-amount-red">${totalHindiWords} रुपये / ${totalEnglishWords} rupees</p>
+        `;
+    }
+
+    function calcAgri() {
+        let value = parseFloat(document.getElementById("agri-value").value) || 0;
+        let vendorFeePercent = parseFloat(document.getElementById("vendor-fee-percent-agri").value) || 0;
+
+        if (value === 0) {
+            document.getElementById("agri-result").innerHTML = "कृपया प्रॉपरिटी वैल्यू डालें।";
+            return;
+        }
+        let stamp = Math.round(value * 0.05); // 5% Stamp Duty
+        let reg = Math.round(value * 0.03); // 3% Registration Fee
+        let vendorFee = Math.round(value * (vendorFeePercent / 100));
+        let total = stamp + reg + vendorFee;
+
+        const totalHindiWords = numberToHindiWords(total);
+        const totalEnglishWords = numberToWords(total);
+        
+        document.getElementById("agri-result").innerHTML = `
+            <p><b>स्टाम्प ड्यूटी (5%):</b> ₹${stamp.toLocaleString('en-IN')}</p>
+            <p><b>रजिस्ट्रेशन फीस / पंजीकरण शुल्क (3%):</b> ₹${reg.toLocaleString('en-IN')}</p>
+            <p><b>वेंडर फीस (${vendorFeePercent}%):</b> ₹${vendorFee.toLocaleString('en-IN')}</p>
+            <hr style="border-top: 1px solid var(--primary-color); margin: 10px 0;">
+            <h3 class="total-amount-red">कुल देय राशि: ₹${total.toLocaleString('en-IN')}</h3>
+            <p class="total-amount-red">${totalHindiWords} रुपये / ${totalEnglishWords} rupees</p>
+        `;
+    }
+
+    function calcLoan() {
+        let amount = parseFloat(document.getElementById("loan-amount").value) || 0;
+        let vendorFeePercent = parseFloat(document.getElementById("vendor-fee-percent-loan").value) || 0;
+        
+        if (amount === 0) {
+            document.getElementById("loan-result").innerHTML = "कृपया लोन राशि डालें।";
+            return;
+        }
+        let stamp = Math.round(amount * 0.0025); // 0.25% Stamp Duty
+        let reg = 1000; // Fixed Registration Fee, updated to 1000
+        let vendorFee = Math.round(amount * (vendorFeePercent / 100));
+        let total = stamp + reg + vendorFee;
+
+        const totalHindiWords = numberToHindiWords(total);
+        const totalEnglishWords = numberToWords(total);
+        
+        document.getElementById("loan-result").innerHTML = `
+            <p><b>स्टाम्प ड्यूटी (0.25%):</b> ₹${stamp.toLocaleString('en-IN')}</p>
+            <p><b>रजिस्ट्रेशन फीस / पंजीकरण शुल्क (निश्चित):</b> ₹${reg.toLocaleString('en-IN')}</p>
+            <p><b>वेंडर फीस (${vendorFeePercent}%):</b> ₹${vendorFee.toLocaleString('en-IN')}</p>
+            <hr style="border-top: 1px solid var(--primary-color); margin: 10px 0;">
+            <h3 class="total-amount-red">कुल देय राशि: ₹${total.toLocaleString('en-IN')}</h3>
+            <p class="total-amount-red">${totalHindiWords} रुपये / ${totalEnglishWords} rupees</p>
+        `;
+    }
+
+    // व्हाट्सएप पर रिजल्ट भेजने का फंक्शन
+    function sendWhatsApp() {
+        const results = [
+            "**कन्वेंस / प्लॉट ड्यूटी**\n" + document.getElementById("conv-result").innerText,
+            "**गिफ्ट डीड (पारिवारिक)**\n" + document.getElementById("gift-fam-result").innerText,
+            "**गिफ्ट डीड (गैर-पारिवारिक)**\n" + document.getElementById("gift-non-fam-result").innerText,
+            "**लीज डीड**\n" + document.getElementById("lease-result").innerText,
+            "**कृषि भूमि**\n" + document.getElementById("agri-result").innerText,
+            "**लोन एग्रीमेंट**\n" + document.getElementById("loan-result").innerText
+        ].filter(text => !text.includes("कृपया") && text.length > 20).join("\n\n---\n\n");
+        
+        if (results.length > 0) {
+            let message = "नमस्ते, यह मेरे कैलकुलेशन का विवरण है:\n\n---\n\n" + results;
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/919340726600?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        } else {
+            alert("कृपया पहले कोई भी ड्यूटी कैलकुलेट करें।");
+        }
+    }
+</script>
+
+</body>
+</html>
