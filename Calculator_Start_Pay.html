@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StartPay Legal Duty & Finance Calculator</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+:root {
+    --primary-color: #5635E9;
+    --secondary-color: #22A7FC;
+    --light-bg: #E6F4FF;
+    --text-dark: #333333;
+    --text-light: #FFFFFF;
+    --border-color: #CCCCCC;
+    --header-gradient: linear-gradient(to right, #0000FF, #FF0000);
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding-top: 90px;
+    background-color: #f0f4f8;
+}
+
+header {
+    background: var(--header-gradient);
+    color: var(--text-light);
+    padding: 15px;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+header h1 { font-size: 18px; margin:0; }
+header p { font-size: 12px; margin-top:4px; opacity:0.9; }
+
+.tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #ffffff;
+    position: sticky;
+    top: 70px;
+    z-index: 900;
+}
+
+.tabs button {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+    margin: 2px;
+}
+
+.tabs button:hover { background-color: var(--primary-color); color:#fff; }
+.tabs button.active { background-color: var(--primary-color); color:#fff; }
+
+.tabcontent {
+    display: none;
+    padding: 20px;
+}
+
+iframe {
+    width: 100%;
+    height: 700px;
+    border: none;
+}
+
+/* Action buttons under each tab */
+.action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap:10px;
+    margin-top: 15px;
+}
+
+.action-buttons button, .action-buttons a {
+    flex: 1 1 45%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    text-align:center;
+    font-weight:bold;
+    color:white;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+.add-btn { background-color: #28a745; }
+.add-btn:hover { background-color: #218838; }
+.remove-btn { background-color: #dc3545; }
+.remove-btn:hover { background-color: #c82333; }
+.print-btn { background-color: #6C757D; }
+.print-btn:hover { background-color: #5a6268; }
+.whatsapp-btn { background-color: #25D366; }
+.whatsapp-btn:hover { background-color: #1EB85B; }
+.call-btn { background-color: #007BFF; }
+.call-btn:hover { background-color: #0056b3; }
+.website-btn { background-color: #FF5722; }
+.website-btn:hover { background-color: #e64a19; }
+
+/* Footer */
+footer {
+    background:#fff;
+    padding:10px 0;
+    box-shadow:0 -2px 10px rgba(0,0,0,0.1);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width:100%;
+    z-index:1000;
+}
+.footer-nav {
+    display:flex;
+    justify-content:space-around;
+    flex-wrap:wrap;
+}
+.footer-nav a, .footer-nav button {
+    text-decoration:none;
+    font-size:12px;
+    text-align:center;
+    flex:1;
+    background:none;
+    border:none;
+    cursor:pointer;
+}
+.footer-nav span { font-size:20px; display:block; margin-bottom:4px; }
+.footer-nav p { font-size:10px; color:#888; text-align:center; margin-top:2px; }
+
+</style>
+</head>
+<body>
+
+<header>
+    <h1>📊 StartPay Legal Duty & Finance Calculator</h1>
+    <p>by Anurag Rai | ☎ 9340726600 | 🛠 Technical Support Consultant</p>
+</header>
+
+<div class="tabs">
+    <button class="tablinks" onclick="openTab(event,'tab1')">Stamp Duty Calculator (EM Updated)</button>
+    <button class="tablinks" onclick="openTab(event,'tab2')">Stamp Duty Calculator</button>
+    <button class="tablinks" onclick="openTab(event,'tab3')">Equitable Mortgage (EM) Calculator</button>
+    <button class="tablinks" onclick="openTab(event,'tab4')">Stamp Duty Calculator (with ICON Clickable)</button>
+    <button class="tablinks" onclick="openTab(event,'tab5')">Plot_Area_and Cost_Calculator97</button>
+    <button class="tablinks" onclick="openTab(event,'tab6')">GST Calculator</button>
+    <button class="tablinks" onclick="openTab(event,'tab7')">Conveyance / Plot Duty Calculator</button>
+    <button class="tablinks" onclick="openTab(event,'tab8')">final_invoice</button>
+    <button class="tablinks" onclick="openTab(event,'tab9')">gstbill_6</button>
+</div>
+
+<div id="tab1" class="tabcontent">
+    <iframe src="https://techwfh.github.io/startpayonline.com/Stamp_Duty_EM_Calculator.html"></iframe>
+    <div class="action-buttons">
+        <button class="add-btn">+ Add</button>
+        <button class="remove-btn">x Remove</button>
+        <button class="print-btn" onclick="window.print()">🖨️ Print/PDF</button>
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">📩 Auto WhatsApp</button>
+        <a href="tel:9340726600" class="call-btn">📞 Call Now</a>
+        <a href="https://startpayonline.com/" target="_blank" class="website-btn">🌐 Visit Website</a>
+    </div>
+</div>
+
+<div id="tab2" class="tabcontent">
+    <iframe src="https://techwfh.github.io/startpayonline.com/Stamp_Duty_Calculator_9340726600.html"></iframe>
+    <div class="action-buttons">
+        <button class="add-btn">+ Add</button>
+        <button class="remove-btn">x Remove</button>
+        <button class="print-btn" onclick="window.print()">🖨️ Print/PDF</button>
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">📩 Auto WhatsApp</button>
+        <a href="tel:9340726600" class="call-btn">📞 Call Now</a>
+        <a href="https://startpayonline.com/" target="_blank" class="website-btn">🌐 Visit Website</a>
+    </div>
+</div>
+
+<div id="tab3" class="tabcontent">
+    <iframe src="https://techwfh.github.io/startpayonline.com/Equitable%20Mortgage%20(EM)%20Calculator.html"></iframe>
+    <div class="action-buttons">
+        <button class="add-btn">+ Add</button>
+        <button class="remove-btn">x Remove</button>
+        <button class="print-btn" onclick="window.print()">🖨️ Print/PDF</button>
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">📩 Auto WhatsApp</button>
+        <a href="tel:9340726600" class="call-btn">📞 Call Now</a>
+        <a href="https://startpayonline.com/" target="_blank" class="website-btn">🌐 Visit Website</a>
+    </div>
+</div>
+
+<div id="tab4" class="tabcontent">
+    <iframe src="https://techwfh.github.io/startpayonline.com/Stamp_Duty_Calculator_9340726600_ICON_CLICKABLE.html"></iframe>
+    <div class="action-buttons">
+        <button class="add-btn">+ Add</button>
+        <button class="remove-btn">x Remove</button>
+        <button class="print-btn" onclick="window.print()">🖨️ Print/PDF</button>
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">📩 Auto WhatsApp</button>
+        <a href="tel:9340726600" class="call-btn">📞 Call Now</a>
+        <a href="https://startpayonline.com/" target="_blank" class="website-btn">🌐 Visit Website</a>
+    </div>
+</div>
+
+<div id="tab5" class="tabcontent">
+    <iframe src="https://techwfh.github.io/startpayonline.com/Plot_Area_and%20Cost_Calculator97.html"></iframe>
+    <div class="action-buttons">
+        <button class="add-btn">+ Add</button>
+        <button class="remove-btn">x Remove</button>
+        <button class="print-btn" onclick="window.print()">🖨️ Print/PDF</button>
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">📩 Auto WhatsApp</button>
+        <a href="tel:9340726600" class="call-btn">📞 Call Now</a>
+        <a href="https://startpayonline.com/" target="_blank" class="website-btn">🌐 Visit Website</a>
+    </div>
+</div>
+
+<div id="tab6" class="tabcontent">
+    <iframe src="https://techwfh.github.io/startpayonline.com/gst_calculator_sp.html"></iframe>
+    <div class="action-buttons">
+        <button class="add-btn">+ Add</button>
+        <button class="remove-btn">x Remove</button>
+        <button class="print-btn" onclick="window.print()">🖨️ Print/PDF</button>
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">📩 Auto WhatsApp</button>
+        <a href="tel:9340726600" class="call-btn">📞 Call Now</a>
+        <a href="https://startpayonline.com/" target="_blank" class="website-btn">🌐 Visit Website</a>
+    </div>
+</div>
+
+<div id="tab7" class="tabcontent">
+    <iframe src="https://techwfh.github.io/startpayonline.com/Conveyance%20%20Plot%20Duty%20Calculator_1.html"></iframe>
+    <div class="action-buttons">
+        <button class="add-btn">+ Add</button>
+        <button class="remove-btn">x Remove</button>
+        <button class="print-btn" onclick="window.print()">🖨️ Print/PDF</button>
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">📩 Auto WhatsApp</button>
+        <a href="tel:9340726600" class="call-btn">📞 Call Now</a>
+        <a href="https://startpayonline.com/" target="_blank" class="website-btn">🌐 Visit Website</a>
+    </div>
+</div>
+
+<div id="tab8" class="tabcontent">
+    <iframe src="https://techwfh.github.io/startpayonline.com/final_invoice.html"></iframe>
+    <div class="action-buttons">
+        <button class="add-btn">+ Add</button>
+        <button class="remove-btn">x Remove</button>
+        <button class="print-btn" onclick="window.print()">🖨️ Print/PDF</button>
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">📩 Auto WhatsApp</button>
+        <a href="tel:9340726600" class="call-btn">📞 Call Now</a>
+        <a href="https://startpayonline.com/" target="_blank" class="website-btn">🌐 Visit Website</a>
+    </div>
+</div>
+
+<div id="tab9" class="tabcontent">
+    <iframe src="https://techwfh.github.io/startpayonline.com/gstbill_6.html"></iframe>
+    <div class="action-buttons">
+        <button class="add-btn">+ Add</button>
+        <button class="remove-btn">x Remove</button>
+        <button class="print-btn" onclick="window.print()">🖨️ Print/PDF</button>
+        <button class="whatsapp-btn" onclick="sendWhatsApp()">📩 Auto WhatsApp</button>
+        <a href="tel:9340726600" class="call-btn">📞 Call Now</a>
+        <a href="https://startpayonline.com/" target="_blank" class="website-btn">🌐 Visit Website</a>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-nav">
+        <button onclick="window.print()"><span>🖨️</span> Print/PDF</button>
+        <a href="https://wa.me/919340726600"><span>📞</span> Need Help?</a>
+        <button onclick="sendWhatsApp()"><span>📩</span> Auto WhatsApp</button>
+        <a href="https://startpayonline.com/" target="_blank"><span>🌐</span> Visit Us</a>
+    </div>
+    <p>* Terms & Conditions apply *</p>
+</footer>
+
+<script>
+function openTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
+// Open first tab by default
+document.addEventListener("DOMContentLoaded", function(){ document.getElementsByClassName("tablinks")[0].click(); });
+
+function sendWhatsApp() {
+    let message = "नमस्ते, यह मेरा कैलकुलेटर विवरण है।";
+    window.open("https://wa.me/919340726600?text="+encodeURIComponent(message),'_blank');
+}
+</script>
+
+</body>
+</html>
