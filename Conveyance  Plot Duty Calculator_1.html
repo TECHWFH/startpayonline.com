@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conveyance Plot Duty Calculator</title>
+    <style>
+        /* CSS Variables for a cleaner look */
+        :root {
+            --primary-color: #5635E9; /* गहरा नीला/बैंगनी */
+            --secondary-color: #22A7FC; /* आसमानी नीला */
+            --light-bg: #E6F4FF; /* हल्का नीला बैकग्राउंड */
+            --text-dark: #333333; /* गहरा टेक्स्ट */
+            --text-light: #FFFFFF; /* सफ़ेद टेक्स्ट */
+            --border-color: #CCCCCC; /* बॉर्डर का रंग */
+            --header-gradient: linear-gradient(to right, #0000FF, #FF0000); /* नीला-लाल ग्रेडिएंट */
+        }
+
+        /* Basic Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            color: var(--text-dark);
+            padding-top: 80px; /* Header spacing */
+            padding-bottom: 100px; /* Footer spacing */
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* Header Section */
+        header {
+            background: var(--header-gradient);
+            color: var(--text-light);
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        header .title-block {
+            flex-grow: 1;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 12px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        /* Main Content */
+        .container {
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--text-light);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Button Styles */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: center;
+        }
+        .action-btn {
+            padding: 10px 15px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s ease;
+            flex: 1 1 45%; /* Flex-basis for wrapping on smaller screens */
+            border: none;
+            cursor: pointer;
+        }
+        .calculate-btn {
+            background-color: var(--primary-color);
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 18px;
+        }
+        .calculate-btn:hover { background-color: #4528b3; }
+        .whatsapp-btn { background-color: #25D366; }
+        .whatsapp-btn:hover { background-color: #1EB85B; }
+        .call-btn { background-color: #007BFF; }
+        .call-btn:hover { background-color: #0056b3; }
+        .website-btn { background-color: #FF5722; }
+        .website-btn:hover { background-color: #e64a19; }
+        .print-btn { background-color: #6C757D; }
+        .print-btn:hover { background-color: #5a6268; }
+
+        /* Result Section */
+        .result {
+            margin-top: 20px;
+            background: var(--light-bg);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .result p {
+            margin: 5px 0;
+        }
+        
+        .result h3 {
+            margin-top: 10px;
+            color: var(--primary-color);
+            font-size: 22px;
+        }
+
+        /* Footer Section */
+        footer {
+            background-color: #ffffff;
+            padding: 15px 0 10px 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .footer-nav a, .footer-nav button {
+            color: var(--text-dark);
+            text-decoration: none;
+            text-align: center;
+            font-size: 12px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: block;
+            flex: 1;
+        }
+        
+        .footer-nav span {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        .footer-nav p {
+            font-size: 10px;
+            color: #888;
+            margin-top: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="title-block">
+        <h1>📊 Conveyance Plot Duty Calculator</h1>
+        <p>by Anurag Rai | ☎ 9340726600 | 🛠 Technical Support Consultant</p>
+    </div>
+</header>
+
+<main>
+    <div class="container">
+        <div class="card">
+            <h2>Conveyance / Plot Duty Calculator</h2>
+            
+            <label for="consideration">Consideration Amount (₹)</label>
+            <input type="number" id="consideration" placeholder="उदा. 500000">
+
+            <label for="marketValue">Market Value as per Guideline (₹)</label>
+            <input type="number" id="marketValue" placeholder="उदा. 600000">
+
+            <label for="stampPaid">Stamp Duty Already Paid (₹)</label>
+            <input type="number" id="stampPaid" value="0">
+
+            <label for="regPaid">Registration Fee Already Paid (₹)</label>
+            <input type="number" id="regPaid" value="0">
+            
+            <button class="calculate-btn" onclick="calcPlot()">Calculate</button>
+            
+            <div class="result" id="plotResult"></div>
+        </div>
+        
+        <div class="button-container">
+            <button class="action-btn whatsapp-btn" onclick="sendWhatsApp()">💬 Auto WhatsApp</button>
+            <a href="tel:9340726600" class="action-btn call-btn">📞 Call Now</a>
+            <a href="https://startpayonline.com/" target="_blank" class="action-btn website-btn">🌐 Visit Website</a>
+            <button class="action-btn print-btn" onclick="window.print()">🖨️ Print/PDF</button>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <div class="footer-nav">
+        <button onclick="window.print()">
+            <span>🖨️</span> Print/PDF
+        </button>
+        <a href="https://wa.me/919340726600">
+            <span>📞</span> Need Help?
+        </a>
+        <button onclick="sendWhatsApp()">
+            <span>📩</span> Auto WhatsApp
+        </button>
+        <a href="https://startpayonline.com/" target="_blank">
+            <span>🌐</span> Visit Us
+        </a>
+    </div>
+    <p>* Terms & Conditions apply *</p>
+</footer>
+
+<script>
+    // मुख्य कैलकुलेशन फंक्शन
+    function calcPlot() {
+        let cons = parseFloat(document.getElementById("consideration").value) || 0;
+        let market = parseFloat(document.getElementById("marketValue").value) || 0;
+        let base = Math.max(cons, market);
+        
+        if (base === 0) {
+            document.getElementById("plotResult").innerHTML = "कृपया Consideration Amount या Market Value डालें।";
+            return;
+        }
+
+        let paidStamp = parseFloat(document.getElementById("stampPaid").value) || 0;
+        let paidReg = parseFloat(document.getElementById("regPaid").value) || 0;
+
+        let govt = Math.round(base * 0.05);
+        let muni = Math.round(base * 0.03);
+        let janpad = Math.round(base * 0.01);
+        let upkar = Math.round(govt * 0.10);
+        let stamp = govt + muni + janpad + upkar;
+        let reg = Math.round(base * 0.03);
+        
+        let stampDue = stamp - paidStamp;
+        let regDue = reg - paidReg;
+        
+        let total = stampDue + regDue;
+        
+        document.getElementById("plotResult").innerHTML = `
+            <p><b>Govt. Stamp Duty (5%):</b> ₹${govt.toLocaleString('en-IN')}</p>
+            <p><b>Municipal Duty (3%):</b> ₹${muni.toLocaleString('en-IN')}</p>
+            <p><b>Janpad Duty (1%):</b> ₹${janpad.toLocaleString('en-IN')}</p>
+            <p><b>Upkar (10% of Govt Duty):</b> ₹${upkar.toLocaleString('en-IN')}</p>
+            <hr style="border-top: 1px solid var(--border-color); margin: 10px 0;">
+            <p><b>Total Stamp Duty:</b> ₹${stamp.toLocaleString('en-IN')}</p>
+            <p><b>Registration Fee:</b> ₹${reg.toLocaleString('en-IN')}</p>
+            <hr style="border-top: 1px solid var(--primary-color); margin: 10px 0;">
+            <h3>Total Payable Amount: ₹${total.toLocaleString('en-IN')}</h3>
+        `;
+    }
+
+    // व्हाट्सएप पर रिजल्ट भेजने का फंक्शन
+    function sendWhatsApp() {
+        const resultDiv = document.getElementById("plotResult");
+        if (resultDiv.innerText.length > 0 && !resultDiv.innerText.startsWith("कृपया")) {
+            let message = "नमस्ते, यह मेरे प्लॉट ड्यूटी कैलकुलेशन का विवरण है:\n\n";
+            message += resultDiv.innerText.replace(/\n\n/g, '\n').replace(/\n\n/g, '\n');
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappUrl = `https://wa.me/919340726600?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        } else {
+            alert("कृपया पहले ड्यूटी कैलकुलेट करें।");
+        }
+    }
+</script>
+
+</body>
+</html>
