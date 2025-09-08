@@ -186,3 +186,26 @@ function sendWhatsApp(){
 
 </body>
 </html>
+<!-- Tabs -->
+  <div class="tabs">
+    <button onclick="openTab('calc1')" class="active">⚡ Calculator V1</button>
+    <button onclick="openTab('calc2')">🌿 Land Area Calculator 6</button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <iframe id="calc1" src="https://techwfh.github.io/startpayonline.com/Calculator_Start_Pay.html"></iframe>
+    <iframe id="calc2" src="https://techwfh.github.io/startpayonline.com/land-area-calculator-6.html" style="display:none;"></iframe>
+  </div>
+
+  <script>
+    function openTab(tabId){
+      document.querySelectorAll("iframe").forEach(el=>el.style.display="none");
+      document.querySelectorAll(".tabs button").forEach(btn=>btn.classList.remove("active"));
+      document.getElementById(tabId).style.display="block";
+      event.target.classList.add("active");
+    }
+  </script>
+</body>
+</html>
+
