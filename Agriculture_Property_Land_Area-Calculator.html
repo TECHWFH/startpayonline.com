@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>भूमि क्षेत्रफल कैलकुलेटर — StartPay</title>
+  <style>
+    /* ====== Basic / Layout ====== */
+    :root{
+      --blue-start:#0000FF; /* final gradient start */
+      --red-end:#FF0000;    /* final gradient end */
+      --remove:#EF4444;     /* ❌ */
+      --add:#3B82F6;        /* ➕ */
+    }
+    body{margin:0;font-family:Inter, Arial, sans-serif;background:#f4f7fb;color:#111;}
+    header{background:#1e3a8a;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+    .header-left{display:flex;align-items:center;gap:10px}
+    .btn-home{background:#ff9800;border:none;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:600}
+    .title{font-size:16px;margin:0}
+    .info{font-size:13px;color:#e6eefc}
+    main{max-width:980px;margin:18px auto;padding:0 14px 120px}
+    .card{background:#fff;border-radius:12px;padding:16px;box-shadow:0 6px 18px rgba(16,24,40,0.06)}
+    h2{margin:6px 0 12px;color:#b22222}
+
+    /* ====== Inputs ====== */
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    label{font-weight:700;font-size:14px;margin-top:8px;display:block}
+    input[type="number"], select{padding:10px;border:1px solid #d1d5db;border-radius:8px;font-size:15px;width:100%}
+    .col{flex:1;min-width:160px}
+    .small{width:140px}
+
+    /* partial list */
+    .partials{margin-top:12px}
+    .partial-item{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+    .partial-item input{flex:1}
+
+    .btn-add{background:var(--add);color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer;font-weight:700}
+    .btn-remove{background:transparent;border:none;color:var(--remove);font-size:20px;cursor:pointer}
+
+    /* ====== Table ====== */
+    table{width:100%;border-collapse:collapse;margin-top:14px;font-size:14px}
+    th,td{border:1px solid #e6e6e6;padding:10px;text-align:center}
+    th{background:#b22222;color:#fff;font-weight:700}
+    tr:nth-child(even){background:#fbfbfb}
+    .final-total-row td{
+      background: linear-gradient(90deg, var(--blue-start), var(--red-end));
+      color:#fff;font-weight:800;
+    }
+
+    /* ====== Footer Buttons (fixed) ====== */
+    footer{position:fixed;left:0;right:0;bottom:0;background:#111827;padding:12px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center;z-index:999}
+    .footer-buttons button{flex:1;min-width:140px;max-width:220px;padding:10px;border-radius:8px;border:none;color:#fff;font-weight:700;cursor:pointer}
+    .btn-print{background:#007bff}
+    .btn-ws{background:#25d366}
+    .btn-auto{background:#20c997}
+    .btn-call{background:#e83e8c}
+    .btn-terms{background:#ffc107;color:#000}
+    .btn-site{background:#6f42c1}
+
+    /* ====== Responsiveness ====== */
+    @media (max-width:640px){
+      .row{flex-direction:column}
+      .small{width:100%}
+      header{padding:10px}
+      .title{font-size:15px}
+      .info{font-size:12px}
+      table th, table td{font-size:12px;padding:8px}
+    }
+
+    /* tiny helper */
+    .muted{color:#666;font-size:13px;margin-top:6px}
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-left">
+      <button class="btn-home" onclick="goHome()">🏠 Home</button>
+      <div>
+        <p class="title">📊 StartPay Legal & Finance Calculator</p>
+        <div class="info">by Anurag Rai | ☎ 9340726600 | 🛠 Technical Support Consultant</div>
+      </div>
+    </div>
+    <div style="text-align:right">
+      <div style="font-weight:700">भूमि क्षेत्रफल कैलकुलेटर</div>
+      <div class="info" style="margin-top:6px">सभी परिणाम: हेक्टेयर ⇆ एकड़ ⇆ वर्ग मीटर ⇆ वर्ग फुट</div>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <div class="card">
+      <h2>कुल ज़मीन व भाग (Partial) दर्ज करें — परिणाम तुरंत दिखें</h2>
+
+      <!-- Inputs -->
+      <div class="row">
+        <div class="col">
+          <label>कुल क्षेत्रफल</label>
+          <input id="totalArea" type="number" min="0" step="any" placeholder="मान दर्ज करें (उदा. 2 या 0.075)" oninput="recalc()">
+          <div class="muted">उदाहरण: 2 (अगर आप एकड़ में हैं) या 0.075 (हेक्टेयर)</div>
+        </div>
+
+        <div class="col small">
+          <label>इकाई</label>
+          <select id="unit" onchange="recalc()">
+            <option value="hectare">हेक्टेयर (hectare)</option>
+            <option value="acre">एकड़ (acre)</option>
+            <option value="sqm">वर्ग मीटर (m²)</option>
+            <option value="sqft">वर्ग फुट (ft²)</option>
+          </select>
+        </div>
+
+        <div class="col small">
+          <label>राउंडिंग</label>
+          <select id="rounding" onchange="recalc()">
+            <option value="2">दशमलव 2 अंक</option>
+            <option value="4" selected>दशमलव 4 अंक (हे.)</option>
+            <option value="0">पूर्णांक</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Partial Areas -->
+      <div style="margin-top:12px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
+        <div style="font-weight:700">घटाए जाने वाले हिस्से (Partial Areas)</div>
+        <div>
+          <button class="btn-add" onclick="addPartial()">➕ Add</button>
+        </div>
+      </div>
+
+      <div id="partials" class="partials" aria-live="polite">
+        <!-- Partial entries will appear here -->
+      </div>
+
+      <div style="margin-top:10px" class="muted">नियम: यदि कुल क्षेत्रफल से जोड़कर घटा देने पर शेष नकारात्मक हो तो शेष 0 दिखेगा। सभी गणनाएँ आंतरिक रूप से हेक्टेयर में होती हैं (परिणाम चुने हुए राउंडिंग के अनुसार दिखते हैं)।</div>
+
+      <!-- Results Table -->
+      <div id="resultTableArea"></div>
+
+    </div>
+  </main>
+
+  <!-- FOOTER (fixed) -->
+  <footer>
+    <button class="footer-buttons btn-print" onclick="window.print()">🖸️ Print / Export PDF</button>
+    <button class="footer-buttons btn-ws" onclick="shareWhatsApp()">📞 Need Help? WhatsApp</button>
+    <button class="footer-buttons btn-auto" onclick="autoShareWhatsApp()">📩 Auto WhatsApp Message</button>
+    <button class="footer-buttons btn-call" onclick="window.location.href='tel:9340726600'">📞 Call Now</button>
+    <button class="footer-buttons btn-terms" onclick="alert('Terms & Conditions: यह कैलकुलेटर केवल सूचना हेतु है।')">⚖️ Terms & Conditions</button>
+    <button class="footer-buttons btn-site" onclick="window.open('https://startpayonline.com/','_blank')">🌐 Visit Website</button>
+  </footer>
+
+  <!-- jsPDF (for PDF export) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <script>
+    /***** Constants & helpers *****/
+    // conversion constants (precise):
+    const HA_TO_ACRE = 2.47105;
+    const HA_TO_SQM = 10000;
+    const HA_TO_SQFT = 107639; // used previously in your examples
+    // Note: using 107639 as per earlier pattern; if you prefer 107639.104167 use that.
+
+    // Utility rounding:
+    function round(value, digits){
+      const m = Math.pow(10, digits);
+      return Math.round(value*m)/m;
+    }
+
+    // Format with chosen rounding for UI strings
+    function fmtH(h, digits){ return round(h, digits).toFixed(digits) + " हे."; }
+    function fmtA(h, digits){ return round(h * HA_TO_ACRE, digits).toFixed(digits) + " एकड़"; }
+    function fmtM(h, digits){ return round(h * HA_TO_SQM, 2).toFixed(2) + " m²"; } // sqm: 2 decimals
+    function fmtF(h, digits){ return round(h * HA_TO_SQFT, 2).toFixed(2) + " ft²"; } // sqft: 2 decimals
+
+    // keep partials in array
+    let partials = []; // each: {id, value (number), label (optional)}
+
+    // generate unique id
+    function uid(){ return 'p_' + Math.random().toString(36).slice(2,9); }
+
+    /***** Partial area UI management *****/
+    const partialsDiv = document.getElementById('partials');
+
+    function addPartial(initialValue = '') {
+      const id = uid();
+      partials.push({id, value: Number(initialValue) || 0});
+      renderPartials();
+      recalc();
+    }
+
+    function removePartial(id){
+      partials = partials.filter(p => p.id !== id);
+      renderPartials();
+      recalc();
+    }
+
+    function updatePartial(id, raw){
+      const val = parseFloat(raw) || 0;
+      const p = partials.find(x => x.id === id);
+      if(p) p.value = val;
+      recalc();
+    }
+
+    function renderPartials(){
+      partialsDiv.innerHTML = '';
+      if(partials.length === 0){
+        partialsDiv.innerHTML = '<div class="muted">कोई Partial Area नहीं जोड़ा गया — "Add" दबाकर जोड़ें।</div>';
+        return;
+      }
+      partials.forEach((p, idx) => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'partial-item';
+        wrapper.innerHTML = `
+          <input type="number" step="any" min="0" value="${p.value}" oninput="updatePartial('${p.id}', this.value)" placeholder="Partial ${idx+1}">
+          <button class="btn-remove" title="हटाएँ" onclick="removePartial('${p.id}')">❌</button>
+        `;
+        partialsDiv.appendChild(wrapper);
+      });
+    }
+
+    // Start with one empty partial by default (optional)
+    addPartial('');
+
+    /***** Core calc logic *****/
+    function parseInputToHectare(value, unit){
+      value = parseFloat(value) || 0;
+      if(unit === 'hectare') return value;
+      if(unit === 'acre') return value / HA_TO_ACRE;
+      if(unit === 'sqm') return value / HA_TO_SQM;
+      if(unit === 'sqft') return value / HA_TO_SQFT;
+      return 0;
+    }
+
+    function recalc(){
+      // read inputs
+      const totalRaw = document.getElementById('totalArea').value || 0;
+      const unit = document.getElementById('unit').value;
+      const roundDigits = parseInt(document.getElementById('rounding').value, 10);
+
+      const totalHa = parseInputToHectare(totalRaw, unit);
+
+      // sum partials (note: partials are input in same unit as 'unit')
+      let sumPartHa = 0;
+      partials.forEach(p => {
+        sumPartHa += parseInputToHectare(p.value, unit);
+      });
+
+      // remaining
+      let remainHa = totalHa - sumPartHa;
+      if(remainHa < 0) remainHa = 0;
+
+      // prepare formatted strings
+      const totalFmt = {
+        h: fmtH(totalHa, roundDigits),
+        a: fmtA(totalHa, roundDigits),
+        m: fmtM(totalHa, roundDigits),
+        f: fmtF(totalHa, roundDigits)
+      };
+      const partFmt = {
+        h: fmtH(sumPartHa, roundDigits),
+        a: fmtA(sumPartHa, roundDigits),
+        m: fmtM(sumPartHa, roundDigits),
+        f: fmtF(sumPartHa, roundDigits)
+      };
+      const remainFmt = {
+        h: fmtH(remainHa, roundDigits),
+        a: fmtA(remainHa, roundDigits),
+        m: fmtM(remainHa, roundDigits),
+        f: fmtF(remainHa, roundDigits)
+      };
+
+      // build partials breakdown (individual)
+      let partialsHTML = '';
+      if(partials.length > 0){
+        partialsHTML += '<div style="margin-top:10px"><strong>Partial Breakdown (Entered values in selected unit):</strong></div>';
+        partials.forEach((p, idx) => {
+          const h = parseInputToHectare(p.value, unit);
+          partialsHTML += `<div style="margin-top:6px">• Partial ${idx+1}: ${p.value} ${unit} = ${fmtH(h, roundDigits)} / ${fmtA(h, roundDigits)} / ${fmtM(h, roundDigits)} / ${fmtF(h, roundDigits)}</div>`;
+        });
+      }
+
+      // results table
+      const tableHTML = `
+        <table aria-live="polite">
+          <tr><th>विवरण</th><th>हेक्टेयर</th><th>एकड़</th><th>वर्ग मीटर</th><th>वर्ग फुट</th></tr>
+          <tr><td><b>कुल क्षेत्रफल</b></td><td>${totalFmt.h}</td><td>${totalFmt.a}</td><td>${totalFmt.m}</td><td>${totalFmt.f}</td></tr>
+          <tr><td><b>घटाया गया (कुल)</b></td><td>${partFmt.h}</td><td>${partFmt.a}</td><td>${partFmt.m}</td><td>${partFmt.f}</td></tr>
+          <tr class="final-total-row"><td><b>शेष क्षेत्रफल</b></td><td>${remainFmt.h}</td><td>${remainFmt.a}</td><td>${remainFmt.m}</td><td>${remainFmt.f}</td></tr>
+        </table>
+        ${partialsHTML}
+        <div style="margin-top:10px" class="muted">नियम: सभी इनपुट चुनी हुई इकाई में दर्ज करें। गणना आंतरिक रूप से हेक्टेयर में होती है।</div>
+      `;
+
+      document.getElementById('resultTableArea').innerHTML = tableHTML;
+
+      // prepare lastResult text for sharing/pdf
+      lastResult = `StartPay — भूमि क्षेत्रफल रिपोर्ट\n\nकुल क्षेत्रफल: ${totalFmt.h} | ${totalFmt.a} | ${totalFmt.m} | ${totalFmt.f}\nघटाया गया (कुल): ${partFmt.h} | ${partFmt.a} | ${partFmt.m} | ${partFmt.f}\nशेष क्षेत्रफल: ${remainFmt.h} | ${remainFmt.a} | ${remainFmt.m} | ${remainFmt.f}\n\n(Partial विवरण नीचे)\n${partials.length>0? partials.map((p,i)=> `Partial ${i+1}: ${p.value} ${unit}`).join('\n') : 'कोई Partial नहीं'}\n\n-- StartPay`;
+    }
+
+    /***** Export / Share / Print functions *****/
+    let lastResult = '';
+
+    function shareWhatsApp(){
+      if(!lastResult) { alert('कृपया पहले गणना करें।'); return; }
+      const url = "https://wa.me/9340726600?text=" + encodeURIComponent(lastResult);
+      window.open(url, '_blank');
+    }
+
+    function autoShareWhatsApp(){
+      if(!lastResult) { alert('कृपया पहले गणना करें।'); return; }
+      shareWhatsApp();
+    }
+
+    async function downloadPDF(){
+      if(!lastResult) { alert('कृपया पहले गणना करें।'); return; }
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({unit:'pt',format:'a4'});
+      const margin = 40;
+      let y = 40;
+      doc.setFontSize(14);
+      doc.text("StartPay — भूमि क्षेत्रफल रिपोर्ट", margin, y); y += 20;
+      doc.setFontSize(11);
+      const lines = doc.splitTextToSize(lastResult, 520);
+      doc.text(lines, margin, y);
+      doc.save("StartPay_Land_Area_Report.pdf");
+    }
+
+    // initial calc
+    recalc();
+
+    function goHome(){
+      // default: go to StartPay site. Change if needed.
+      window.location.href = 'https://startpayonline.com/';
+    }
+  </script>
+</body>
+</html>
