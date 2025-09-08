@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>भूमि क्षेत्रफल कैलकुलेटर — StartPay</title>
+  <style>
+    body{margin:0;font-family:Arial, sans-serif;background:#f4f7fb;}
+    header{background:#1e3a8a;color:#fff;padding:12px;display:flex;justify-content:space-between;flex-wrap:wrap;align-items:center}
+    .btn-home{background:#ff9800;border:none;color:#fff;padding:6px 10px;border-radius:6px;cursor:pointer}
+    main{max-width:960px;margin:20px auto;padding:0 14px 240px}
+    .card{background:#fff;padding:16px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.1);margin-bottom:20px}
+    h2{color:#b22222;margin-top:0}
+    input,select{padding:6px;margin-top:4px;border:1px solid #ccc;border-radius:6px;width:100%;box-sizing:border-box}
+    label{font-weight:bold;font-size:14px}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .col{flex:1;min-width:140px}
+    .table-wrapper{overflow-x:auto}
+    table{width:100%;border-collapse:collapse;margin-top:15px;min-width:480px}
+    th,td{border:1px solid #ccc;padding:6px;text-align:center}
+    th{background:#b22222;color:white}
+    tr:nth-child(even){background:#f9f9f9}
+    .final-total-row td{background:linear-gradient(90deg,#0000FF,#FF0000);color:white;font-weight:bold}
+    .btn-add{background:#3B82F6;color:white;border:none;padding:6px 10px;border-radius:6px;cursor:pointer}
+    .btn-remove{background:transparent;border:none;color:#EF4444;font-size:18px;cursor:pointer}
+    footer{position:fixed;bottom:0;left:0;right:0;background:#111827;padding:10px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;z-index:999;
+           box-shadow:0 -3px 8px rgba(0,0,0,0.3);}
+    footer button{flex:1 1 45%;padding:8px;border:none;border-radius:8px;color:white;font-weight:bold;cursor:pointer;
+                  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px}
+    .btn-print{background:#007bff}
+    .btn-ws{background:#25d366}
+    .btn-auto{background:#20c997}
+    .btn-call{background:#e83e8c}
+    .btn-terms{background:#ffc107;color:black}
+    .btn-site{background:#6f42c1}
+    /* Breakdown Card */
+    .breakdown-card{background:#fff;border-radius:12px;box-shadow:0 4px 8px rgba(0,0,0,0.1);padding:12px;margin-top:20px}
+    .breakdown-card h3{margin-top:0;color:#333;text-align:center}
+    #chartContainer{margin-top:20px;text-align:center}
+    canvas{max-width:100%;height:auto}
+    .btn-download{margin-top:10px;background:#007bff;color:#fff;border:none;padding:8px 14px;border-radius:6px;cursor:pointer;font-weight:bold}
+    @media(max-width:600px){
+      header{flex-direction:column;align-items:flex-start}
+      .row{flex-direction:column}
+      footer{flex-direction:column}
+      footer button{flex:1 1 100%}
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <button class="btn-home" onclick="goHome()">🏠 Home</button>
+    <div>
+      📊 StartPay Legal & Finance Calculator<br>
+      <small>by Anurag Rai | ☎ 9340726600</small>
+    </div>
+  </header>
+
+  <!-- Main Body -->
+  <main>
+    <div class="card">
+      <h2>भूमि क्षेत्रफल कैलकुलेटर</h2>
+
+      <!-- Total Area -->
+      <div class="row">
+        <div class="col">
+          <label>कुल क्षेत्रफल</label>
+          <input id="totalArea" type="number" placeholder="मान दर्ज करें" oninput="recalc()">
+        </div>
+        <div class="col">
+          <label>इकाई</label>
+          <select id="unit" onchange="recalc()">
+            <option value="hectare">हेक्टेयर</option>
+            <option value="acre">एकड़</option>
+            <option value="sqm">वर्ग मीटर</option>
+            <option value="sqft">वर्ग फुट</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Partial Areas -->
+      <div style="margin-top:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <b>घटाए जाने वाले हिस्से (Partial Areas)</b>
+        <button class="btn-add" onclick="addPartial()">➕ Add</button>
+      </div>
+      <div class="table-wrapper">
+        <table id="partialTable">
+          <tr><th>नाम</th><th>मान</th><th>इकाई</th><th>क्रिया</th></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- Results -->
+    <div class="card" id="resultTableArea"></div>
+
+    <!-- Breakdown -->
+    <div class="breakdown-card" id="breakdownTableArea"></div>
+
+    <!-- Chart -->
+    <div id="chartContainer" class="card" style="display:none;">
+      <h3>📊 हिस्सों का Pie Chart</h3>
+      <canvas id="pieChart"></canvas>
+      <button class="btn-download" onclick="downloadChart()">📥 Download Chart (PNG)</button>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <button class="btn-print" onclick="window.print()">🖸️<span>Print / PDF</span></button>
+    <button class="btn-ws" onclick="window.open('https://wa.me/9340726600','_blank')">📞<span>WhatsApp Help</span></button>
+    <button class="btn-auto" onclick="autoShareWhatsApp()">📩<span>Auto Share</span></button>
+    <button class="btn-call" onclick="window.location.href='tel:9340726600'">📞<span>Call Now</span></button>
+    <button class="btn-terms" onclick="window.open('terms.html','_blank')">⚖️<span>Terms</span></button>
+    <button class="btn-site" onclick="window.open('https://startpayonline.com/','_blank')">🌐<span>Website</span></button>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    const HA_TO_ACRE=2.47105, HA_TO_SQM=10000, HA_TO_SQFT=107639;
+    let partials=[]; 
+    const colors=["#e53935","#1e88e5","#43a047","#fb8c00","#8e24aa","#00acc1","#fdd835"];
+    let chart=null;
+
+    function uid(){return 'p'+Math.random().toString(36).slice(2,7);}
+    function parseToHa(v,u){v=parseFloat(v)||0;
+      if(u==="hectare") return v;
+      if(u==="acre") return v/HA_TO_ACRE;
+      if(u==="sqm") return v/HA_TO_SQM;
+      if(u==="sqft") return v/HA_TO_SQFT;
+      return 0;}
+    function fmt(h){return {
+      h:h.toFixed(4)+" हे.",a:(h*HA_TO_ACRE).toFixed(4)+" एकड़",
+      m:(h*HA_TO_SQM).toFixed(2)+" m²",f:(h*HA_TO_SQFT).toFixed(2)+" ft²"};}
+
+    function addPartial(name="Other",val=0,unit="acre",custom=""){
+      const id=uid();
+      partials.push({id,label:name,value:val,unit:unit,custom:custom});
+      renderPartials();
+      recalc();
+    }
+    function removePartial(id){partials=partials.filter(p=>p.id!==id);renderPartials();recalc();}
+    function updatePartial(id,field,val){
+      const p=partials.find(x=>x.id===id);
+      if(p){
+        if(field==="label")p.label=val;
+        if(field==="value")p.value=parseFloat(val)||0;
+        if(field==="unit")p.unit=val;
+        if(field==="custom")p.custom=val;
+      }
+      recalc();
+    }
+
+    function renderPartials(){
+      const tbl=document.getElementById("partialTable");
+      tbl.innerHTML=`<tr><th>नाम</th><th>मान</th><th>इकाई</th><th>क्रिया</th></tr>`;
+      partials.forEach(p=>{
+        const showTextbox = (p.label==="Other");
+        tbl.innerHTML+=`
+        <tr>
+          <td>
+            <select onchange="updatePartial('${p.id}','label',this.value);renderPartials();">
+              <option ${p.label==="Other"?"selected":""}>Other</option>
+              <option ${p.label==="खेत (कृषियोग्य भूमि)"?"selected":""}>खेत (कृषियोग्य भूमि)</option>
+              <option ${p.label==="औद्योगिक ज़मीन"?"selected":""}>औद्योगिक ज़मीन</option>
+              <option ${p.label==="वाणिज्यिक ज़मीन"?"selected":""}>वाणिज्यिक ज़मीन</option>
+              <option ${p.label==="मकान"?"selected":""}>मकान</option>
+              <option ${p.label==="तालाब"?"selected":""}>तालाब</option>
+              <option ${p.label==="रास्ता"?"selected":""}>रास्ता</option>
+              <option ${p.label==="बगीचा"?"selected":""}>बगीचा</option>
+            </select>
+            ${showTextbox ? `<input type="text" placeholder="नाम दर्ज करें" value="${p.custom||""}" 
+              oninput="updatePartial('${p.id}','custom',this.value)">` : ""}
+          </td>
+          <td><input type="number" value="${p.value}" oninput="updatePartial('${p.id}','value',this.value)"></td>
+          <td>
+            <select onchange="updatePartial('${p.id}','unit',this.value)">
+              <option value="hectare" ${p.unit==="hectare"?"selected":""}>हे.</option>
+              <option value="acre" ${p.unit==="acre"?"selected":""}>एकड़</option>
+              <option value="sqm" ${p.unit==="sqm"?"selected":""}>m²</option>
+              <option value="sqft" ${p.unit==="sqft"?"selected":""}>ft²</option>
+            </select>
+          </td>
+          <td><button class="btn-remove" onclick="removePartial('${p.id}')">❌</button></td>
+        </tr>`;
+      });
+    }
+
+    function recalc(){
+      const total=parseToHa(document.getElementById("totalArea").value,document.getElementById("unit").value);
+      let parts=0; partials.forEach(p=>parts+=parseToHa(p.value,p.unit));
+      let remain=total-parts;if(remain<0)remain=0;
+      const t=fmt(total),s=fmt(parts),r=fmt(remain);
+
+      document.getElementById("resultTableArea").innerHTML=`
+        <div class="table-wrapper">
+          <table>
+            <tr><th>विवरण</th><th>हेक्टेयर</th><th>एकड़</th><th>m²</th><th>ft²</th></tr>
+            <tr><td>कुल</td><td>${t.h}</td><td>${t.a}</td><td>${t.m}</td><td>${t.f}</td></tr>
+            <tr><td>घटाया गया</td><td>${s.h}</td><td>${s.a}</td><td>${s.m}</td><td>${s.f}</td></tr>
+            <tr class="final-total-row"><td>शेष</td><td>${r.h}</td><td>${r.a}</td><td>${r.m}</td><td>${r.f}</td></tr>
+          </table>
+        </div>`;
+
+      if(partials.length>0){
+        let b="<h3>📋 Breakdown Details</h3><div class='table-wrapper'><table><tr><th>नाम</th><th>मान</th><th>इकाई</th><th>हेक्टेयर में</th></tr>";
+        partials.forEach((p,i)=>{
+          let name = (p.label==="Other" && p.custom) ? p.custom : p.label;
+          let color = colors[i % colors.length];
+          b+=`<tr>
+                <td style="color:${color};font-weight:bold">${name}</td>
+                <td>${p.value}</td>
+                <td>${p.unit}</td>
+                <td>${parseToHa(p.value,p.unit).toFixed(4)} हे.</td>
+              </tr>`;
+        });
+        b+="</table></div>";
+        document.getElementById("breakdownTableArea").innerHTML=b;
+      } else {
+        document.getElementById("breakdownTableArea").innerHTML="";
+      }
+
+      // Pie Chart update
+      if(partials.length>0){
+        document.getElementById("chartContainer").style.display="block";
+        const labels=partials.map(p=>(p.label==="Other" && p.custom)?p.custom:p.label);
+        const data=partials.map(p=>parseToHa(p.value,p.unit));
+        if(chart){chart.destroy();}
+        chart=new Chart(document.getElementById("pieChart"),{
+          type:'pie',
+          data:{labels:labels,datasets:[{data:data,backgroundColor:colors}]},
+          options:{responsive:true,plugins:{legend:{position:'bottom'}}}
+        });
+      } else {
+        document.getElementById("chartContainer").style.display="none";
+      }
+
+      lastResult=`कुल=${t.h}, घटाया=${s.h}, शेष=${r.h}`;
+    }
+
+    function downloadChart(){
+      if(!chart){alert("चार्ट उपलब्ध नहीं है");return;}
+      const link=document.createElement('a');
+      link.href=document.getElementById("pieChart").toDataURL("image/png");
+      link.download="Land_Area_PieChart.png";
+      link.click();
+    }
+
+    let lastResult="";
+    function autoShareWhatsApp(){
+      if(!lastResult){alert("पहले गणना करें");return;}
+      window.open("https://wa.me/9340726600?text="+encodeURIComponent(lastResult),"_blank");
+    }
+    function goHome(){window.location.href="https://startpayonline.com/";}
+
+    // Page Load पर Example Row
+    window.onload=function(){ addPartial("मकान",2,"acre"); }
+  </script>
+</body>
+</html>
