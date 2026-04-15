@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StartPay Property Duty Calculator</title>
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --red: #FF0000;
+      --dark-red: #B22222;
+      --dark-green: #006400;
+      --card-bg: #ffffff;
+      --header-grad: linear-gradient(135deg, #0f172a 0%, #1e4ed8 100%);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      padding-bottom: 120px;
+    }
+
+    /* Updated Header - Main Focus on Calculator Name */
+    .header {
+      background: var(--header-grad);
+      color: white;
+      padding: 25px 10px;
+      text-align: center;
+      border-bottom: 4px solid #f97316;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .home-link {
+      position: absolute;
+      left: 15px;
+      top: 25px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .header h2 { 
+      margin: 0; 
+      font-size: 24px; 
+      font-weight: 800; 
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+    }
+    
+    .contact-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #ffd1a9; 
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .contact-link:hover { color: white; text-decoration: underline; }
+
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    .input-card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    label { font-size: 13px; font-weight: 700; color: #475569; }
+    
+    input, select {
+      padding: 12px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .land-words-red {
+      color: var(--dark-red);
+      font-weight: 800;
+      font-size: 14px;
+      margin-top: 6px;
+      display: block;
+    }
+
+    .result-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+    }
+
+    table { width: 100%; border-collapse: collapse; }
+    td { padding: 14px 16px; border-bottom: 1px solid #f1f5f9; font-size: 15px; }
+    .num-col { text-align: right; font-weight: 800; color: var(--red); font-size: 17px; }
+
+    .hide-text { cursor: help; position: relative; }
+    .hide-text span {
+      visibility: hidden; opacity: 0; color: #94a3b8;
+      font-size: 12px; margin-left: 8px; transition: 0.2s;
+    }
+    .hide-text:hover span { visibility: visible; opacity: 1; }
+
+    .round-info { cursor: help; border-bottom: 1px dotted #cbd5e1; position: relative; }
+    .round-info:hover::after {
+      content: attr(data-original);
+      position: absolute; right: 0; top: -35px;
+      background: #1e293b; color: white; padding: 6px 12px;
+      border-radius: 6px; font-size: 12px; white-space: nowrap; z-index: 10;
+    }
+
+    .bg-total { background: #eff6ff; font-weight: 700; }
+    .bg-vendor { background: #fffbeb; }
+
+    .final-box {
+      margin-top: 20px;
+      padding: 18px;
+      background: #f0fdf4;
+      border: 2px solid var(--dark-green);
+      border-radius: 12px;
+    }
+    .final-label { color: #166534; font-size: 12px; font-weight: 800; display: block; margin-bottom: 5px;}
+    .word-line { color: var(--dark-green); font-weight: 900; font-size: 19px; }
+
+    .footer-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: #0f172a; display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      padding: 10px 5px;
+      box-shadow: 0 -5px 20px rgba(0,0,0,0.2); z-index: 1000;
+      border-top: 2px solid #f97316;
+    }
+    .nav-btn { color: white; text-decoration: none; text-align: center; font-size: 10px; font-weight: 600; }
+    .nav-btn i { display: block; font-size: 18px; margin-bottom: 4px; font-style: normal; }
+
+    @media (max-width: 480px) {
+      .home-link { position: static; justify-content: center; margin-bottom: 8px; }
+      .header { padding: 15px 5px; }
+      .header h2 { font-size: 18px; }
+      .nav-btn { font-size: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a href="/" class="home-link">🏠 HomeSP</a>
+  <h2>📊 StartPay Legal & Finance Calculator</h2>
+  <a href="tel:9340726600" class="contact-link">
+    by Anurag Rai | ☎ 9340726600 (Click to Call)
+  </a>
+</header>
+
+<div class="container">
+  <div class="input-card">
+    <div class="grid">
+      <div class="field">
+        <label>Land Amount (₹)</label>
+        <input id="landAmt" type="number" value="382500" oninput="calculate()">
+        <span id="landWords" class="land-words-red"></span>
+      </div>
+      
+      <div class="field">
+        <label>Vendor Fee Type</label>
+        <select id="vendorType" onchange="toggleVendorMode()">
+          <option value="0.10">0.10%</option><option value="0.20">0.20%</option>
+          <option value="0.25">0.25%</option><option value="0.30">0.30%</option>
+          <option value="0.40">0.40%</option><option value="0.50" selected>0.50%</option>
+          <option value="1.00">1.00%</option><option value="1.50">1.50%</option>
+          <option value="2.00">2.00%</option><option value="2.50">2.50%</option>
+          <option value="3.00">3.00%</option><option value="3.50">3.50%</option>
+          <option value="4.00">4.00%</option><option value="4.50">4.50%</option>
+          <option value="5.00">5.00%</option><option value="manual">Other (Manual)</option>
+        </select>
+      </div>
+
+      <div class="field" id="manualVendorField" style="display:none;">
+        <label>Edit Manual Fee (₹)</label>
+        <input id="manualVendorAmt" type="number" value="1000" oninput="calculate()">
+      </div>
+
+      <div class="field">
+        <label>Women Exemption?</label>
+        <select id="womenExp" onchange="calculate()">
+          <option value="yes" selected>Yes (हाँ)</option>
+          <option value="no">No (नहीं)</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <table>
+      <tr>
+        <td class="hide-text">Govt Stamp Duty <span id="hintStamp">(5%)</span></td>
+        <td class="num-col"><span id="rStamp" class="round-info">₹0</span></td>
+      </tr>
+      <tr>
+        <td class="hide-text">Upkar <span id="hintUpkar">(10% of Stamp)</span></td>
+        <td class="num-col"><span id="rUpkar" class="round-info">₹0</span></td>
+      </tr>
+      <tr>
+        <td class="hide-text">Reg. Fee <span id="hintReg">(3.75%)</span></td>
+        <td class="num-col"><span id="rRegBase" class="round-info">₹0</span></td>
+      </tr>
+      <tr>
+        <td class="hide-text">Women Discount <span id="hintWomen">(-2%)</span></td>
+        <td class="num-col"><span id="rWomenVal" class="round-info" style="color:blue">₹0</span></td>
+      </tr>
+      <tr class="bg-total">
+        <td>Total Stamp Duty + Payable Reg. Fee</td>
+        <td class="num-col" id="rDutyPlusReg" style="color:black">₹0</td>
+      </tr>
+      <tr class="bg-vendor">
+        <td class="hide-text">Vendor Fee (Service) <span id="hintVendor"></span></td>
+        <td class="num-col"><span id="rVendorAmt" class="round-info">₹0</span></td>
+      </tr>
+      <tr class="bg-total" style="font-size: 18px;">
+        <td><b>FINAL GRAND TOTAL</b></td>
+        <td class="num-col" id="rGrand" style="font-size: 20px;">₹0</td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="final-box">
+    <span class="final-label">Final Amount In Words</span>
+    <span id="finalWords" class="word-line"></span>
+  </div>
+</div>
+
+<footer class="footer-nav">
+  <a href="javascript:void(0)" class="nav-btn" onclick="window.print()"><i>📄</i>Print / PDF</a>
+  <a href="https://wa.me/919340726600" class="nav-btn"><i>📩</i>WhatsApp Help</a>
+  <a href="javascript:void(0)" class="nav-btn" onclick="autoShare()"><i>📞</i>Auto Share</a>
+  <a href="tel:9340726600" class="nav-btn"><i>⚖️</i>Call Now</a>
+  <a href="javascript:void(0)" class="nav-btn" onclick="alert('Terms & Conditions Apply')"><i>🌐</i>Terms</a>
+  <a href="https://yourwebsite.com" class="nav-btn"><i>💻</i>Website</a>
+</footer>
+
+<script>
+  function toWords(n) {
+    if (n <= 0) return "Zero Rupees Only/-";
+    const a = ['','One ','Two ','Three ','Four ','Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
+    const b = ['', '', 'Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+    const fmt = (v) => v < 20 ? a[v] : b[Math.floor(v/10)] + (v%10 !== 0 ? " " + a[v%10] : "");
+    let s = "";
+    if (n >= 10000000) { s += fmt(Math.floor(n/10000000)) + "Crore "; n %= 10000000; }
+    if (n >= 100000) { s += fmt(Math.floor(n/100000)) + "Lakh "; n %= 100000; }
+    if (n >= 1000) { s += fmt(Math.floor(n/1000)) + "Thousand "; n %= 1000; }
+    if (n >= 100) { s += fmt(Math.floor(n/100)) + "Hundred "; n %= 100; }
+    if (n > 0) s += fmt(n);
+    return s.trim() + " Rupees Only/-";
+  }
+
+  function toggleVendorMode() {
+    const type = document.getElementById('vendorType').value;
+    document.getElementById('manualVendorField').style.display = (type === 'manual') ? 'flex' : 'none';
+    calculate();
+  }
+
+  function autoShare() {
+    const text = `StartPay Calculation Result:\nGrand Total: ${document.getElementById('rGrand').innerText}\nCalculated by Anurag Rai`;
+    if (navigator.share) {
+      navigator.share({ title: 'Calculation Result', text: text });
+    } else {
+      alert("Sharing not supported on this browser.");
+    }
+  }
+
+  function calculate() {
+    const amt = parseFloat(document.getElementById('landAmt').value) || 0;
+    const isWomen = document.getElementById('womenExp').value === 'yes';
+    const vType = document.getElementById('vendorType').value;
+
+    const stampRaw = amt * 0.05;
+    const upkarRaw = stampRaw * 0.10;
+    const regBaseRaw = amt * 0.0375;
+    const womenValRaw = isWomen ? (amt * 0.02) : 0;
+    const payRegRaw = Math.max(0, regBaseRaw - womenValRaw);
+
+    let vendorRaw = (vType === 'manual') ? (parseFloat(document.getElementById('manualVendorAmt').value) || 0) : (amt * (parseFloat(vType) / 100));
+    document.getElementById('hintVendor').innerText = (vType === 'manual' ? "(Manual)" : "(" + vType + "%)");
+
+    const stamp = Math.round(stampRaw);
+    const upkar = Math.round(upkarRaw);
+    const regBase = Math.round(regBaseRaw);
+    const womenVal = Math.round(womenValRaw);
+    const payReg = Math.round(payRegRaw);
+    const vendorAmt = Math.round(vendorRaw);
+
+    const dutyPlusReg = stamp + upkar + payReg;
+    const grand = dutyPlusReg + vendorAmt;
+
+    const setVal = (id, raw, rounded) => {
+      const el = document.getElementById(id);
+      el.innerText = "₹" + rounded.toLocaleString('en-IN');
+      el.setAttribute('data-original', "Actual: ₹" + raw.toLocaleString('en-IN', {minimumFractionDigits: 2}));
+    };
+
+    setVal('rStamp', stampRaw, stamp);
+    setVal('rUpkar', upkarRaw, upkar);
+    setVal('rRegBase', regBaseRaw, regBase);
+    setVal('rWomenVal', womenValRaw, womenVal);
+    document.getElementById('rWomenVal').innerText = "-₹" + womenVal.toLocaleString('en-IN');
+    document.getElementById('rDutyPlusReg').innerText = "₹" + dutyPlusReg.toLocaleString('en-IN');
+    setVal('rVendorAmt', vendorRaw, vendorAmt);
+    document.getElementById('rGrand').innerText = "₹" + grand.toLocaleString('en-IN');
+
+    document.getElementById('landWords').innerText = toWords(amt);
+    document.getElementById('finalWords').innerText = toWords(grand);
+  }
+
+  calculate();
+</script>
+</body>
+</html>
