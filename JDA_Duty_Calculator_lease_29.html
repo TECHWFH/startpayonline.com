@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>StartPay Legal & Finance Calculator</title>
+
+  <style>
+    :root{
+      --sp1:#5b4bff;
+      --sp2:#8b3dff;
+      --sp3:#ff6a2b;
+      --bg:#eef2ff;
+      --card:#ffffff;
+      --ink:#0f172a;
+      --muted:#475569;
+      --line:#dbe4f0;
+      --dark:#111827;
+      --panel:#1e293b;
+      --green:#065f46;
+      --greenBg:#ecfdf5;
+      --red:#dc2626;
+      --blue:#2563eb;
+      --shadow:0 12px 28px rgba(15,23,42,.14);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:'Segoe UI',Arial,sans-serif;
+      color:var(--ink);
+      background:linear-gradient(135deg,#eef2ff,#f8fafc);
+      padding-bottom:108px;
+    }
+
+    .top-hero{
+      position:sticky;
+      top:0;
+      z-index:1000;
+      overflow:hidden;
+      background:linear-gradient(120deg,var(--sp1),var(--sp2),var(--sp3));
+      background-size:200% 200%;
+      animation:heroShift 8s ease infinite;
+      color:#fff;
+      padding:12px 12px 16px;
+      border-bottom:4px solid rgba(255,255,255,.16);
+      box-shadow:0 10px 24px rgba(0,0,0,.18);
+    }
+
+    @keyframes heroShift{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    .top-mini-row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      margin-bottom:12px;
+    }
+
+    .home-pill,
+    .fullscreen-btn{
+      background:rgba(255,255,255,.18);
+      color:#fff;
+      border:none;
+      border-radius:999px;
+      padding:9px 14px;
+      font-size:14px;
+      font-weight:800;
+      cursor:pointer;
+      backdrop-filter:blur(6px);
+      -webkit-backdrop-filter:blur(6px);
+      box-shadow:0 4px 12px rgba(0,0,0,.15);
+    }
+
+    .hero-link{
+      text-decoration:none;
+      color:inherit;
+      display:block;
+    }
+
+    .brand-row{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+    }
+
+    .sp-badge{
+      width:58px;
+      height:58px;
+      border-radius:18px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+      font-size:28px;
+      color:#fff;
+      background:linear-gradient(145deg,rgba(255,255,255,.26),rgba(255,255,255,.08));
+      border:1px solid rgba(255,255,255,.28);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.3), 0 8px 22px rgba(0,0,0,.18);
+      flex:0 0 auto;
+    }
+
+    .title-wrap h1{
+      margin:0;
+      font-size:clamp(22px,4vw,42px);
+      line-height:1.08;
+      font-weight:900;
+      letter-spacing:-.4px;
+    }
+
+    .title-wrap .meta{
+      margin-top:6px;
+      font-size:clamp(14px,2vw,22px);
+      font-weight:700;
+      opacity:.98;
+    }
+
+    .wrap{
+      max-width:980px;
+      margin:18px auto;
+      padding:0 14px;
+    }
+
+    .card{
+      background:rgba(255,255,255,.94);
+      border:1px solid rgba(255,255,255,.65);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:18px;
+      backdrop-filter:blur(8px);
+      -webkit-backdrop-filter:blur(8px);
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:14px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+    }
+
+    .field label{
+      font-size:13px;
+      font-weight:800;
+      color:#1f2937;
+    }
+
+    input,select{
+      width:100%;
+      padding:12px 13px;
+      border-radius:12px;
+      border:1px solid #cfd8e3;
+      background:#fff;
+      font-size:15px;
+      outline:none;
+      transition:.2s ease;
+    }
+
+    input:focus,select:focus{
+      border-color:#4f46e5;
+      box-shadow:0 0 0 4px rgba(79,70,229,.12);
+    }
+
+    .manual-highlight{
+      background:#fffdf0 !important;
+      border:1px solid #f4c94a !important;
+    }
+
+    .land-words-red{
+      color:#991b1b;
+      font-weight:900;
+      font-size:14px;
+      line-height:1.45;
+      margin-top:3px;
+    }
+
+    .result-table{
+      width:100%;
+      border-collapse:separate;
+      border-spacing:0;
+      margin-top:18px;
+      overflow:hidden;
+      border-radius:16px;
+      border:1px solid var(--line);
+      box-shadow:0 6px 16px rgba(15,23,42,.05);
+    }
+
+    .result-table td{
+      padding:13px 14px;
+      font-size:15px;
+      border-bottom:1px solid var(--line);
+      background:#fff;
+    }
+
+    .result-table tr:nth-child(even) td{
+      background:#f8fafc;
+    }
+
+    .result-table tr:last-child td{
+      border-bottom:none;
+    }
+
+    .num-red{
+      color:var(--red);
+      font-weight:900;
+      text-align:right;
+      white-space:nowrap;
+    }
+
+    .hide-text{
+      cursor:help;
+      position:relative;
+      font-weight:700;
+    }
+
+    .hide-text span{
+      visibility:hidden;
+      opacity:0;
+      transition:.2s;
+      margin-left:6px;
+      font-size:12px;
+      color:#64748b;
+      font-weight:600;
+    }
+
+    .hide-text:hover span{
+      visibility:visible;
+      opacity:1;
+    }
+
+    .round-info{
+      cursor:help;
+      text-decoration:underline dotted #94a3b8;
+      position:relative;
+    }
+
+    .round-info:hover::after{
+      content:attr(data-original);
+      position:absolute;
+      right:0;
+      top:-34px;
+      background:#111827;
+      color:#fff;
+      padding:6px 10px;
+      border-radius:8px;
+      font-size:12px;
+      white-space:nowrap;
+      z-index:999;
+      box-shadow:0 6px 16px rgba(0,0,0,.25);
+    }
+
+    .section-soft td{
+      background:#fefce8 !important;
+    }
+
+    .grand-row td{
+      background:#eef2ff !important;
+      font-size:18px;
+      font-weight:900;
+    }
+
+    .final-box{
+      margin-top:18px;
+      padding:16px;
+      background:var(--greenBg);
+      border-left:6px solid #16a34a;
+      border-radius:14px;
+    }
+
+    .final-box .small{
+      color:#334155;
+      font-size:13px;
+      font-weight:700;
+      display:block;
+      margin-bottom:6px;
+    }
+
+    .word-line{
+      color:var(--green);
+      font-weight:900;
+      font-size:19px;
+      line-height:1.4;
+    }
+
+    .bottom-action-bar{
+      position:fixed;
+      left:0;
+      right:0;
+      bottom:0;
+      z-index:999;
+      background:#0f172a;
+      padding:8px 8px calc(8px + env(safe-area-inset-bottom));
+      display:grid;
+      grid-template-columns:repeat(6,1fr);
+      gap:8px;
+      box-shadow:0 -8px 22px rgba(0,0,0,.22);
+    }
+
+    .action-btn{
+      min-height:64px;
+      border:none;
+      border-radius:16px;
+      background:#1e293b;
+      color:#fff;
+      text-decoration:none;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      gap:5px;
+      font-size:13px;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.06);
+      padding:8px 6px;
+    }
+
+    .action-btn .icon{
+      font-size:20px;
+      line-height:1;
+    }
+
+    .action-btn.center-call{
+      border-radius:999px;
+      background:#d1d5db;
+      color:#111827;
+      transform:translateY(-14px);
+      min-height:74px;
+      box-shadow:0 10px 18px rgba(0,0,0,.2);
+    }
+
+    .terms-box{
+      display:none;
+    }
+
+    @media (max-width:720px){
+      .bottom-action-bar{
+        grid-template-columns:repeat(3,1fr);
+      }
+      .action-btn.center-call{
+        transform:none;
+        border-radius:16px;
+        min-height:64px;
+      }
+    }
+
+    @media (max-width:600px){
+      .top-hero{padding:12px 12px 15px}
+      .brand-row{align-items:flex-start}
+      .sp-badge{width:54px;height:54px;font-size:25px}
+      .title-wrap h1{font-size:clamp(18px,7vw,28px)}
+      .title-wrap .meta{font-size:14px}
+      .result-table td{font-size:14px;padding:11px 10px}
+      .word-line{font-size:16px}
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-hero">
+    <div class="top-mini-row">
+      <button class="home-pill" onclick="goHome()">🏠 Home</button>
+      <button class="fullscreen-btn" onclick="toggleFullscreen()">⛶</button>
+    </div>
+
+    <a href="tel:+919340726600" class="hero-link" title="Tap to Call">
+      <div class="brand-row">
+        <div class="sp-badge">SP</div>
+        <div class="title-wrap">
+          <h1>📊 StartPay Legal & Finance Calculator</h1>
+          <div class="meta">by Anurag Rai | ☎ 9340726600</div>
+        </div>
+      </div>
+    </a>
+  </header>
+
+  <div class="wrap">
+    <section class="card">
+      <div class="grid">
+        <div class="field">
+          <label>Land Amount (₹)</label>
+          <input id="landAmt" type="number" value="382500" oninput="calculate()">
+          <span id="landWords" class="land-words-red">Loading...</span>
+        </div>
+
+        <div class="field">
+          <label>Vendor Fee Type</label>
+          <select id="vendorType" onchange="toggleVendorMode()">
+            <option value="0.10">0.10%</option>
+            <option value="0.20">0.20%</option>
+            <option value="0.25">0.25%</option>
+            <option value="0.30">0.30%</option>
+            <option value="0.40">0.40%</option>
+            <option value="0.50" selected>0.50%</option>
+            <option value="1.00">1%</option>
+            <option value="1.50">1.5%</option>
+            <option value="2.00">2%</option>
+            <option value="2.50">2.50%</option>
+            <option value="3.00">3%</option>
+            <option value="3.50">3.50%</option>
+            <option value="4.00">4%</option>
+            <option value="4.50">4.50%</option>
+            <option value="5.00">5%</option>
+            <option value="manual">Other (Manual Entry)</option>
+          </select>
+        </div>
+
+        <div class="field" id="manualVendorField" style="display:none;">
+          <label>Edit Vendor Amount (₹)</label>
+          <input id="manualVendorAmt" class="manual-highlight" type="number" value="1000" oninput="calculate()">
+        </div>
+
+        <div class="field">
+          <label>Women Exemption?</label>
+          <select id="womenExp" onchange="calculate()">
+            <option value="yes" selected>Yes / हाँ</option>
+            <option value="no">No / नहीं</option>
+          </select>
+        </div>
+      </div>
+
+      <table class="result-table">
+        <tr>
+          <td class="hide-text">Govt Stamp Duty <span>(5%)</span></td>
+          <td class="num-red"><span id="rStamp" class="round-info">₹0</span></td>
+        </tr>
+        <tr>
+          <td class="hide-text">Upkar <span>(10% of Govt Stamp Duty)</span></td>
+          <td class="num-red"><span id="rUpkar" class="round-info">₹0</span></td>
+        </tr>
+        <tr>
+          <td class="hide-text">Reg. Fee <span>(3.75%)</span></td>
+          <td class="num-red"><span id="rRegBase" class="round-info">₹0</span></td>
+        </tr>
+        <tr>
+          <td class="hide-text">Women Exemption <span>(-2%)</span></td>
+          <td class="num-red"><span id="rWomenVal" class="round-info" style="color:#2563eb">₹0</span></td>
+        </tr>
+        <tr>
+          <td><b>Total Stamp Duty + Payable Reg. Fee</b></td>
+          <td class="num-red"><b id="rDutyPlusReg">₹0</b></td>
+        </tr>
+        <tr class="section-soft">
+          <td class="hide-text">Vendor Fee (Service) <span id="hintVendor"></span></td>
+          <td class="num-red"><span id="rVendorAmt" class="round-info">₹0</span></td>
+        </tr>
+        <tr class="grand-row">
+          <td><b>Final Grand Total</b></td>
+          <td class="num-red" id="rGrand">₹0</td>
+        </tr>
+      </table>
+
+      <div class="final-box">
+        <span class="small">Final Amount In Words:</span>
+        <span id="finalWords" class="word-line">Loading...</span>
+      </div>
+
+      <div class="terms-box" id="termsData">
+        <h3>Terms & Conditions</h3>
+        <p>This calculator is for estimate purpose only.</p>
+        <p>Final amount may change as per portal rules, rounding, exemption eligibility, location, document type, and authority verification.</p>
+        <p>Women exemption and vendor fee values are shown as per selected inputs.</p>
+        <p>Please verify final amount before payment or document execution.</p>
+        <p>StartPay / Anurag Rai shall not be responsible for any direct or indirect difference in government or portal payable amounts.</p>
+      </div>
+    </section>
+  </div>
+
+  <div class="bottom-action-bar">
+    <button class="action-btn" onclick="window.print()">
+      <span class="icon">🖨️</span>
+      <span>Print / PDF</span>
+    </button>
+
+    <button class="action-btn" onclick="whatsappHelp()">
+      <span class="icon">📞</span>
+      <span>WhatsApp Help</span>
+    </button>
+
+    <button class="action-btn" onclick="shareOnWhatsApp()">
+      <span class="icon">📩</span>
+      <span>Auto Share</span>
+    </button>
+
+    <a class="action-btn center-call" href="tel:+919340726600">
+      <span class="icon">📞</span>
+      <span>Call Now</span>
+    </a>
+
+    <button class="action-btn" onclick="showTerms()">
+      <span class="icon">⚖️</span>
+      <span>Terms</span>
+    </button>
+
+    <a class="action-btn" href="https://startpayonline.com/" target="_blank">
+      <span class="icon">🌐</span>
+      <span>Website</span>
+    </a>
+  </div>
+
+  <script>
+    function toWords(n) {
+      n = Math.round(Number(n || 0));
+      if (n <= 0) return "Zero Rupees Only /-";
+      const a = ['', 'One ', 'Two ', 'Three ', 'Four ', 'Five ', 'Six ', 'Seven ', 'Eight ', 'Nine ', 'Ten ', 'Eleven ', 'Twelve ', 'Thirteen ', 'Fourteen ', 'Fifteen ', 'Sixteen ', 'Seventeen ', 'Eighteen ', 'Nineteen '];
+      const b = ['', '', 'Twenty ', 'Thirty ', 'Forty ', 'Fifty ', 'Sixty ', 'Seventy ', 'Eighty ', 'Ninety '];
+
+      function numToWords(num){
+        let str = '';
+        if (num >= 10000000) {
+          str += numToWords(Math.floor(num / 10000000)) + 'Crore ';
+          num %= 10000000;
+        }
+        if (num >= 100000) {
+          str += numToWords(Math.floor(num / 100000)) + 'Lakh ';
+          num %= 100000;
+        }
+        if (num >= 1000) {
+          str += numToWords(Math.floor(num / 1000)) + 'Thousand ';
+          num %= 1000;
+        }
+        if (num >= 100) {
+          str += a[Math.floor(num / 100)] + 'Hundred ';
+          num %= 100;
+        }
+        if (num >= 20) {
+          str += b[Math.floor(num / 10)];
+          num %= 10;
+        }
+        if (num > 0) {
+          str += a[num];
+        }
+        return str;
+      }
+
+      return numToWords(n).replace(/\s+/g,' ').trim() + ' Rupees Only /-';
+    }
+
+    function toggleVendorMode() {
+      const type = document.getElementById('vendorType').value;
+      document.getElementById('manualVendorField').style.display = (type === 'manual') ? 'flex' : 'none';
+      calculate();
+    }
+
+    function setVal(id, raw, rounded) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.innerText = '₹' + Number(rounded).toLocaleString('en-IN');
+      el.setAttribute('data-original', 'Actual: ₹' + Number(raw).toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+    }
+
+    function calculate() {
+      const amt = parseFloat(document.getElementById('landAmt').value) || 0;
+      const isWomen = document.getElementById('womenExp').value === 'yes';
+      const vType = document.getElementById('vendorType').value;
+
+      const stampRaw = amt * 0.05;
+      const upkarRaw = stampRaw * 0.10;
+      const regBaseRaw = amt * 0.0375;
+      const womenValRaw = isWomen ? amt * 0.02 : 0;
+      const payRegRaw = Math.max(0, regBaseRaw - womenValRaw);
+
+      let vendorRaw = 0;
+      if (vType === 'manual') {
+        vendorRaw = parseFloat(document.getElementById('manualVendorAmt').value) || 0;
+        document.getElementById('hintVendor').innerText = '(Manual)';
+      } else {
+        vendorRaw = amt * (parseFloat(vType) / 100);
+        document.getElementById('hintVendor').innerText = '(' + vType + '%)';
+      }
+
+      const stamp = Math.round(stampRaw);
+      const upkar = Math.round(upkarRaw);
+      const regBase = Math.round(regBaseRaw);
+      const womenVal = Math.round(womenValRaw);
+      const payReg = Math.round(payRegRaw);
+      const vendorAmt = Math.round(vendorRaw);
+
+      const dutyPlusReg = stamp + upkar + payReg;
+      const grand = dutyPlusReg + vendorAmt;
+
+      setVal('rStamp', stampRaw, stamp);
+      setVal('rUpkar', upkarRaw, upkar);
+      setVal('rRegBase', regBaseRaw, regBase);
+      setVal('rWomenVal', womenValRaw, womenVal);
+      document.getElementById('rWomenVal').innerText = '-₹' + womenVal.toLocaleString('en-IN');
+      document.getElementById('rWomenVal').setAttribute('data-original', 'Actual: ₹' + womenValRaw.toLocaleString('en-IN', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+      document.getElementById('rDutyPlusReg').innerText = '₹' + dutyPlusReg.toLocaleString('en-IN');
+      setVal('rVendorAmt', vendorRaw, vendorAmt);
+      document.getElementById('rGrand').innerText = '₹' + grand.toLocaleString('en-IN');
+
+      document.getElementById('landWords').innerText = 'Amount In Words: ' + toWords(amt);
+      document.getElementById('finalWords').innerText = toWords(grand);
+    }
+
+    function goHome(){
+      window.location.href = 'https://startpayonline.com/';
+    }
+
+    function toggleFullscreen(){
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen?.();
+      } else {
+        document.exitFullscreen?.();
+      }
+    }
+
+    function getText(id){
+      const el = document.getElementById(id);
+      return el ? el.textContent.replace(/\s+/g,' ').trim() : '';
+    }
+
+    function shareOnWhatsApp(){
+      const landAmount = document.getElementById('landAmt').value || '0';
+      const stamp = getText('rStamp');
+      const reg = getText('rRegBase');
+      const grand = getText('rGrand');
+
+      const msg =
+`📊 StartPay Legal & Finance Calculator
+
+Dear Sir,
+
+I hope you are doing well.
+
+I am seeking confirmation regarding the total payable amount for property registration based on the following details:
+
+📌 Property Amount: Rs/- ${Number(landAmount).toLocaleString('en-IN')}
+📌 Stamp Duty: ${stamp}
+📌 Registration Fee: ${reg}
+
+👉 Total Estimated Cost: ${grand}
+
+Kindly confirm:
+• Final payable amount as per applicable government rules
+• Any additional or hidden charges
+• Required documents and procedure
+• Expected timeline for completion
+
+This calculation has been generated using our system for estimation purposes. I request your confirmation before proceeding.
+
+✅ I hereby confirm that I have given my consent to be contacted via WhatsApp and phone call regarding this inquiry.
+
+Thank you for your support.
+
+Regards,
+Client`;
+
+      window.open('https://wa.me/919340726600?text=' + encodeURIComponent(msg), '_blank');
+    }
+
+    function whatsappHelp(){
+      const landAmount = document.getElementById('landAmt').value || '0';
+      const msg =
+`Hello Sir,
+
+I need assistance regarding property registration.
+
+Property Amount: Rs/- ${Number(landAmount).toLocaleString('en-IN')}
+
+Kindly guide me regarding charges, required documents, and process.
+
+Thank you.`;
+      window.open('https://wa.me/919340726600?text=' + encodeURIComponent(msg), '_blank');
+    }
+
+    function showTerms(){
+      alert(
+`Terms & Conditions
+
+1. This calculator is for estimate purpose only.
+2. Final amount may change as per portal rules, rounding, exemption eligibility, and authority verification.
+3. Women exemption and vendor fee values depend on selected inputs.
+4. Please verify final amount before payment or document execution.
+
+by StartPay | Anurag Rai | 9340726600`
+      );
+    }
+
+    calculate();
+  </script>
+</body>
+</html>
