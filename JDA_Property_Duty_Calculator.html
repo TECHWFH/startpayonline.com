@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StartPay Property Duty Calculator</title>
+  <style>
+    :root{--primary:#1e3a8a;--red:#FF0000;--green:#008000;--shadow:0 10px 25px rgba(0,0,0,0.1)}
+    body{margin:0;font-family:sans-serif;background:#f1f5f9;padding-bottom:100px}
+    .header{background:linear-gradient(90deg,#0f172a,#1d4ed8);color:white;padding:20px;text-align:center;position:sticky;top:0}
+    .wrap{max-width:800px;margin:20px auto;padding:0 15px}
+    .card{background:#fff;border-radius:15px;box-shadow:var(--shadow);padding:20px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:15px;margin-bottom:20px}
+    .field{display:flex;flex-direction:column;gap:5px} label{font-size:14px;font-weight:bold}
+    input,select{padding:12px;border:1px solid #ccc;border-radius:10px;font-size:16px}
+    .result-table{width:100%;border-collapse:collapse;margin-top:20px;border:2px solid #000}
+    .result-table td{border:1px solid #000;padding:12px;font-size:15px}
+    .num-red{color:var(--red);font-weight:bold;text-align:right}
+    .final-box{margin-top:20px;padding:15px;background:#f0fff4;border:2px solid var(--green);border-radius:10px}
+    .word-green{color:var(--green);font-weight:bold}
+    .bottom-nav{position:fixed;bottom:0;width:100%;background:#111827;display:flex;justify-content:space-around;padding:10px 0;left:0;right:0}
+    .nav-item{color:white;text-decoration:none;font-size:12px;text-align:center}
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <h2 style="margin:0">📊 StartPay Property Duty Calculator</h2>
+  <p style="margin:5px 0 0;font-size:14px">by Anurag Rai | ☎ 9340726600</p>
+</header>
+
+<div class="wrap">
+  <section class="card">
+    <div class="grid">
+      <div class="field">
+        <label>Enter Land Amount (₹)</label>
+        <input id="landAmt" type="number" value="382500" oninput="calculate()">
+      </div>
+      <div class="field">
+        <label>Vendor Fee (%)</label>
+        <select id="vendorRate" onchange="calculate()">
+          <option value="0.25">0.25%</option>
+          <option value="0.50" selected>0.50%</option>
+          <option value="1">1.00%</option>
+          <option value="2">2.00%</option>
+          <option value="5">5.00%</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Women Exemption?</label>
+        <select id="womenExp" onchange="calculate()">
+          <option value="yes" selected>Yes / हाँ</option>
+          <option value="no">No / नहीं</option>
+        </select>
+      </div>
+    </div>
+
+    <table class="result-table">
+      <tr><td>Govt Stamp Duty (5%)</td><td class="num-red" id="rStamp">₹0</td></tr>
+      <tr><td>Upkar (0.5%)</td><td class="num-red" id="rUpkar">₹0</td></tr>
+      <tr><td><b>Total Stamp Duty</b></td><td class="num-red" id="rTotalStamp">₹0</td></tr>
+      <tr><td>Reg. Fee (3.75%)</td><td class="num-red" id="rRegBase">₹0</td></tr>
+      <tr><td>Women Exemption (-2%)</td><td class="num-red" id="rWomenVal" style="color:blue">₹0</td></tr>
+      <tr><td><b>Payable Reg. Fee (1.75%)</b></td><td class="num-red" id="rPayReg">₹0</td></tr>
+      <tr style="background:#fff7ed"><td>Vendor Fee Amount</td><td class="num-red" id="rVendorAmt">₹0</td></tr>
+      <tr style="background:#eef2ff; font-size:18px"><td><b>Final Grand Total</b></td><td class="num-red" id="rGrand">₹0</td></tr>
+    </table>
+
+    <div class="final-box">
+      <b>Final Amount In Words:</b>
+      <div id="words" class="word-green">Loading...</div>
+    </div>
+  </section>
+</div>
+
+<footer class="bottom-nav">
+  <a href="javascript:void(0)" class="nav-item" onclick="window.print()"><span>🖨️</span><br>Print</a>
+  <a href="https://wa.me/919340726600" class="nav-item"><span>📞</span><br>WhatsApp</a>
+  <a href="tel:+919340726600" class="nav-item"><span>📞</span><br>Call Now</a>
+</footer>
+
+<script>
+  function toWords(n) {
+    if (n <= 0) return "Zero Rupees Only";
+    const a = ['','One ','Two ','Three ','Four ','Five ','Six ','Seven ','Eight ','Nine ','Ten ','Eleven ','Twelve ','Thirteen ','Fourteen ','Fifteen ','Sixteen ','Seventeen ','Eighteen ','Nineteen '];
+    const b = ['', '', 'Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+    const fmt = (v) => v < 20 ? a[v] : b[Math.floor(v/10)] + (v%10 !== 0 ? " " + a[v%10] : "");
+    let s = "";
+    if (n >= 10000000) { s += fmt(Math.floor(n/10000000)) + "Crore "; n %= 10000000; }
+    if (n >= 100000) { s += fmt(Math.floor(n/100000)) + "Lakh "; n %= 100000; }
+    if (n >= 1000) { s += fmt(Math.floor(n/1000)) + "Thousand "; n %= 1000; }
+    if (n >= 100) { s += fmt(Math.floor(n/100)) + "Hundred "; n %= 100; }
+    if (n > 0) s += fmt(n);
+    return s.trim() + " Rupees Only";
+  }
+
+  function calculate() {
+    const amt = parseFloat(document.getElementById('landAmt').value) || 0;
+    const isWomen = document.getElementById('womenExp').value === 'yes';
+    const vRate = parseFloat(document.getElementById('vendorRate').value) / 100;
+
+    const stamp = Math.round(amt * 0.05);
+    const upkar = Math.round(amt * 0.005);
+    const totalStamp = stamp + upkar;
+
+    const regBase = Math.round(amt * 0.0375);
+    const womenVal = isWomen ? Math.round(amt * 0.02) : 0;
+    const payReg = Math.max(0, regBase - womenVal);
+    
+    const vendorAmt = Math.round(amt * vRate);
+    const grand = totalStamp + payReg + vendorAmt;
+
+    document.getElementById('rStamp').innerText = "₹" + stamp.toLocaleString('en-IN');
+    document.getElementById('rUpkar').innerText = "₹" + upkar.toLocaleString('en-IN');
+    document.getElementById('rTotalStamp').innerText = "₹" + totalStamp.toLocaleString('en-IN');
+    document.getElementById('rRegBase').innerText = "₹" + regBase.toLocaleString('en-IN');
+    document.getElementById('rWomenVal').innerText = isWomen ? "-₹" + womenVal.toLocaleString('en-IN') : "₹0";
+    document.getElementById('rPayReg').innerText = "₹" + payReg.toLocaleString('en-IN');
+    document.getElementById('rVendorAmt').innerText = "₹" + vendorAmt.toLocaleString('en-IN');
+    document.getElementById('rGrand').innerText = "₹" + grand.toLocaleString('en-IN');
+    document.getElementById('words').innerText = toWords(grand);
+  }
+  calculate();
+</script>
+</body>
+</html>
