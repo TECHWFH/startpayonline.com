@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP Duty Calculator</title>
+    <style>
+        body { font-family: sans-serif; padding: 20px; background-color: #f4f4f4; }
+        .calc-container { max-width: 400px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; box-sizing: border-box; }
+        .result { margin-top: 15px; border-top: 2px solid #eee; padding-top: 10px; }
+        .row { display: flex; justify-content: space-between; padding: 5px 0; }
+        b { color: #0000FF; }
+    </style>
+</head>
+<body>
+
+<div class="calc-container">
+    <h3>Property Duty Calculator</h3>
+    <label>Enter Land Amount (₹):</label>
+    <input type="number" id="landAmount" placeholder="e.g. 382500" oninput="calculate()">
+
+    <div class="result" id="results">
+        <div class="row"><span>Govt Stamp Duty (5%):</span> <b id="govt">₹0</b></div>
+        <div class="row"><span>Upkar (0.5%):</span> <b id="upkar">₹0</b></div>
+        <div class="row"><span>Total Stamp Duty:</span> <b id="totalStamp">₹0</b></div>
+        <hr>
+        <div class="row"><span>Reg. Fee (3.75%):</span> <b id="regFee">₹0</b></div>
+        <div class="row"><span>Women Exemption (-2%):</span> <b id="exemption" style="color:red;">₹0</b></div>
+        <div class="row"><span>Payable Reg. Fee (1.75%):</span> <b id="finalReg">₹0</b></div>
+    </div>
+</div>
+
+<script>
+function calculate() {
+    let amt = document.getElementById('landAmount').value;
+    if (amt <= 0) return;
+
+    let govt = Math.round(amt * 0.05);
+    let upkar = Math.round(amt * 0.005);
+    let totalStamp = govt + upkar;
+    
+    let fullReg = Math.round(amt * 0.0375);
+    let exemption = Math.round(amt * 0.02);
+    let finalReg = fullReg - exemption;
+
+    document.getElementById('govt').innerText = "₹" + govt.toLocaleString('en-IN');
+    document.getElementById('upkar').innerText = "₹" + upkar.toLocaleString('en-IN');
+    document.getElementById('totalStamp').innerText = "₹" + totalStamp.toLocaleString('en-IN');
+    document.getElementById('regFee').innerText = "₹" + fullReg.toLocaleString('en-IN');
+    document.getElementById('exemption').innerText = "-₹" + exemption.toLocaleString('en-IN');
+    document.getElementById('finalReg').innerText = "₹" + finalReg.toLocaleString('en-IN');
+}
+</script>
+
+</body>
+</html>
