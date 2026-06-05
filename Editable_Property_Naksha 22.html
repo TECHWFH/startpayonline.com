@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartPay Legal & Finance Calculator</title>
+    <style>
+        /* --- SPO थीम वेरिएबल्स और ग्लोबल स्टाइल्स --- */
+        :root {
+            --primary-blue: #0000FF;
+            --primary-green: #009900;
+            --dark-navy: #000040;
+            --white: #FFFFFF;
+            --light: #f5f7fb;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+        }
+
+        body {
+            background: var(--light);
+            color: #333;
+        }
+
+        /* --- TOP BAR & HEADER --- */
+        .topbar {
+            background: var(--dark-navy);
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .header h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+            font-weight: 800;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        /* --- ACTIONS BUTTONS BAR --- */
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,.1);
+        }
+
+        .btn {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+            text-decoration: none;
+            color: #fff;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+        
+        .print { background: #0066cc; }
+        .help { background: #25D366; }
+        .share { background: #ff6600; }
+        .call { background: #cc0000; }
+        .terms { background: #444; }
+        .web { background: #009900; }
+
+        /* --- DASHBOARD META --- */
+        .dashboard-meta {
+            text-align: center;
+            margin: 20px 10px;
+        }
+        .dashboard-meta h2 {
+            margin: 0;
+            font-size: 24px;
+            color: #c00000;
+            font-weight: 800;
+        }
+
+        /* --- मुख्य नक्शा कंटेनर (A4 पेज लेआउट) --- */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            padding: 0 15px;
+        }
+
+        .naksha-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.15);
+            box-sizing: border-box;
+        }
+
+        .naksha-card {
+            background: #fff;
+            border: 1.5px solid #000;
+            padding: 15px;
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            min-height: 780px;
+        }
+
+        /* हेडिंग और एड्रेस */
+        .naksha-card h3 { text-align: center; margin: 0 0 8px 0; font-size: 22px; font-weight: 800; color: #000; }
+        .naksha-address { text-align: center; font-size: 13px; font-weight: 600; line-height: 1.5; color: #222; }
+        .naksha-red { color: #c00000 !important; font-weight: 700; }
+        .naksha-hr { margin: 12px 0; border: 0; border-top: 1.5px solid #000; }
+
+        /* विवरण तालिका */
+        .naksha-details-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        .naksha-details-table td { padding: 4px 2px; font-size: 13px; vertical-align: top; color: #000; }
+        .naksha-details-table td:first-child { width: 38%; font-weight: bold; }
+        .naksha-details-table td:nth-child(2) { width: 4%; text-align: center; }
+
+        /* नोट बॉक्स */
+        .dynamic-note-table { width: 100%; border-collapse: collapse; margin-top: auto; }
+        .dynamic-note-table td { border: 1px solid #000; padding: 8px; font-size: 12.5px; font-weight: bold; background: #fff; color: #000; }
+
+        .size-input { display: inline-block; min-width: 25px; border-bottom: 1px dashed #c00000; color: #c00000; font-weight: 800; padding: 0 2px; text-align: center; }
+        .non-editable { pointer-events: none; user-select: none; }
+
+        /* --- 8-पॉइंटेड कंपास --- */
+        .naksha-compass-wrapper { position: absolute; left: 15px; top: 15px; z-index: 10; }
+        .exact-image-compass { position: relative; width: 65px; height: 65px; }
+        .compass-outer-circle { position: absolute; top: 8px; left: 8px; width: 47px; height: 47px; border: 1px solid #000; border-radius: 50%; }
+        .compass-pointer-spine { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .spine-arrow { position: absolute; top: 50%; left: 50%; background: #000; transform-origin: center center; }
+        .spine-arrow.main-v { width: 3px; height: 52px; top: calc(50% - 26px); left: calc(50% - 1.5px); clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+        .spine-arrow.main-h { width: 52px; height: 3px; top: calc(50% - 1.5px); left: calc(50% - 26px); clip-path: polygon(0% 50%, 50% 0%, 100% 50%, 50% 100%); }
+        .spine-arrow.sub-diag1 { width: 2px; height: 38px; top: calc(50% - 19px); left: calc(50% - 1px); transform: rotate(45deg); clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+        .spine-arrow.sub-diag2 { width: 2px; height: 38px; top: calc(50% - 19px); left: calc(50% - 1px); transform: rotate(-45deg); clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
+        .compass-txt { position: absolute; font-family: 'Arial Black', sans-serif; font-size: 12px; font-weight: 900; }
+        .compass-txt.N { top: -10px; left: 50%; transform: translateX(-50%); color: #cc0000; }
+        .compass-txt.S { bottom: -10px; left: 50%; transform: translateX(-50%); color: #0022aa; }
+        .compass-txt.E { right: -10px; top: 50%; transform: translateY(-50%); color: #008800; }
+        .compass-txt.W { left: -12px; top: 50%; transform: translateY(-50%); color: #0022aa; }
+
+        /* संपत्ति का स्थान बॉक्स */
+        .location-box { border: 1px solid #000; border-radius: 4px; padding: 6px; text-align: center; margin: 0 0 10px 90px; font-size: 12px; font-weight: bold; }
+        .location-box h4 { margin: 0 0 3px 0; color: #c00000; font-size: 14px; }
+
+        /* --- MAP GRAPHICS AREA --- */
+        .naksha-map-area {
+            position: relative;
+            margin: 20px auto 20px auto;
+            width: 100%;
+            min-height: 340px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
+        }
+
+        /* सेंटर प्लॉट बॉक्स */
+        .naksha-plot-box {
+            width: 190px;
+            height: 220px;
+            border: 2px solid #000;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            z-index: 2;
+            position: relative;
+        }
+        .naksha-plot-title { font-size: 18px; font-weight: bold; color: #000; }
+        .naksha-plot-num { font-size: 44px; font-weight: 900; color: #c00000; margin: 2px 0; line-height: 1; }
+        .naksha-plot-lbl { font-size: 15px; font-weight: bold; color: #000; margin-top: 2px; }
+        .naksha-plot-sqft { font-size: 19px; font-weight: 800; color: #c00000; text-align: center; margin-top: 2px; line-height: 1.2; }
+
+        /* दिशाओं का टेक्स्ट स्थिति */
+        .direction-text { position: absolute; font-size: 13px; font-weight: bold; text-align: center; line-height: 1.3; color: #000; z-index: 5; }
+        
+        .direction-text.north { top: -5px !important; left: 50%; transform: translateX(-50%); width: 200px; }
+        .direction-text.south { bottom: -1px !important; left: 50%; transform: translateX(-50%); width: 200px; }
+        .direction-text.east { right: 0px !important; width: 95px !important; top: 50%; transform: translateY(-50%); text-align: left; color: green; }
+        .direction-text.west { left: 5px; top: 50%; transform: translateY(-50%); width: 105px; text-align: right; }
+
+        /* --- CAD LINES --- */
+        .cad-line-h-container {
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 4;
+        }
+        .cad-line-h-container .stopper { width: 1px; height: 10px; background: #000; }
+        .cad-line-h-container .line {
+            flex-grow: 1;
+            height: 1px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c00000;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .cad-line-h-container .line span { background: #fff; padding: 0 5px; }
+
+        /* पश्चिम (Left) दिशा में वर्टिकल डाइमेंशन लाइन - फिक्स्ड */
+        .cad-line-v-left {
+            position: absolute;
+            left: 140px; /* पश्चिम दिशा/प्लॉट नं 211 की लाइन के पास */
+            top: 50%;
+            transform: translateY(-50%);
+            height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 4;
+        }
+
+        .cad-line-v-left .stopper {
+            height: 1px;
+            width: 10px;
+            background: #000;
+        }
+
+        .cad-line-v-left .line {
+            flex-grow: 1;
+            width: 1px;
+            background: #000;
+            position: relative;
+        }
+
+        .cad-line-v-left .vertical-box-span {
+            position: absolute;
+            left: -30px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #fff;
+            border: 1px solid #000;
+            padding: 5px 3px;
+            width: 48px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+            color: #c00000;
+        }
+
+        /* सीमांकन विवरण तालिका कंटेनर */
+        .naksha-boundary {
+            margin-top: 80px;
+            width: 100%;
+            margin-bottom: auto;
+        }
+        .naksha-boundary-table { width: 95%; border-collapse: collapse; }
+        .naksha-boundary-table th { background: #f5f5f5; color: #c00000; font-weight: bold; border: 1px solid #000; padding: 6px; font-size: 13.5px; text-align: center; }
+        .naksha-boundary-table td { border: 1px solid #000; padding: 5px; font-size: 13px; color: #000; }
+        .naksha-boundary-table td:first-child { font-weight: bold; width: 25%; }
+        .naksha-boundary-table td:nth-child(2) { text-align: center; width: 5%; }
+
+        .naksha-footer-text { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold; margin-top: 15px; color: #444; border-top: 1px dashed #aaa; padding-top: 8px; }
+
+        /* --- FIXED FOOTER --- */
+        .footer {
+            background-color: var(--dark-navy);
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            font-size: 13px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* --- मोबाइल व्यू रिस्पॉन्सिवनेस --- */
+@media (max-width: 850px){
+
+    .actions{
+        flex-direction:column;
+    }
+
+    .btn{
+        width:100%;
+        justify-content:center;
+    }
+
+    .header h1{
+        font-size:22px;
+    }
+
+    .naksha-container{
+        grid-template-columns:1fr !important;
+        padding:10px;
+        gap:20px;
+    }
+
+    .naksha-card{
+        min-height:auto;
+        overflow:hidden;
+    }
+
+    .naksha-map-area{
+        min-height:420px;
+        overflow:hidden;
+        transform:scale(.95);
+        margin:20px auto;
+        position:relative;
+    }
+
+    .naksha-plot-box{
+        width:150px;
+        height:190px;
+    }
+
+    .naksha-plot-title{
+        font-size:16px;
+    }
+
+    .naksha-plot-num{
+        font-size:34px;
+    }
+
+    .naksha-plot-sqft{
+        font-size:15px;
+    }
+
+    .direction-text{
+        font-size:11px;
+        line-height:1.2;
+    }
+
+    .direction-text.north{
+        top:-20px !important;
+        width:160px !important;
+    }
+
+    .direction-text.south{
+        bottom:-20px !important;
+        width:160px !important;
+    }
+
+    .direction-text.east{
+        right:0 !important;
+        width:70px !important;
+    }
+
+    .direction-text.west{
+        left:0 !important;
+        width:70px !important;
+    }
+
+    .cad-line-h-container{
+        width:150px !important;
+        top:50px !important;
+    }
+
+    .cad-line-h-container .line{
+        font-size:11px;
+    }
+
+    .cad-line-v-left{
+        left:55px !important;
+        height:190px !important;
+    }
+
+    .cad-line-v-left .vertical-box-span{
+        left:-20px !important;
+        width:40px;
+        font-size:10px;
+        padding:3px;
+    }
+
+    .location-box{
+        width:70%;
+        margin:0 auto 15px auto !important;
+    }
+
+    .naksha-boundary{
+        margin-top:30px;
+    }
+}
+
+@media (max-width:600px){
+
+    .naksha-map-area{
+        min-height:450px;
+    }
+
+    .direction-text.east{
+        top:95px !important;
+        right:50% !important;
+        transform:translateX(50%) !important;
+        width:120px !important;
+        text-align:center;
+    }
+
+    .direction-text.west{
+        bottom:95px !important;
+        left:50% !important;
+        transform:translateX(-50%) !important;
+        width:120px !important;
+        text-align:center;
+    }
+
+    .cad-line-v-left{
+        left:35px !important;
+    }
+}
+
+        /* --- परफेक्ट A4 लैंडस्केप प्रिंट --- */
+        @media print {
+            @page { size: A4 landscape; margin: 4mm; }
+            .topbar, .header, .actions, .dashboard-meta, .footer { display: none !important; }
+            body { background: #fff; padding: 0; margin: 0; }
+            .main-container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+            .naksha-container { display: flex !important; flex-direction: row !important; justify-content: space-between !important; gap: 10px !important; max-width: 100% !important; border: none !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; page-break-inside: avoid; }
+            .naksha-card { border: 1.5px solid #000 !important; padding: 12px !important; width: calc(50% - 5px) !important; min-height: 100% !important; height: 720px !important; }
+            .naksha-map-area { transform: scale(1) !important; margin: 20px auto 25px auto !important; }
+            
+            /* प्रिंट के समय 50' बॉक्स को पश्चिम दिशा की लाइन पर लॉक रखने के लिए */
+            .cad-line-v-left { left: 140px !important; right: auto !important; }
+            
+            .location-box { margin: 0 0 10px 90px !important; }
+            .naksha-boundary { margin-top: 35px !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght=400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- 1. होम टॉपबार -->
+    <div class="topbar">🏠 Home</div>
+
+    <!-- 2. मुख्य हेडर -->
+    <div class="header">
+        <h1>📊 StartPay Legal & Finance Calculator</h1>
+        <p>by Anurag Rai | ☎ 9340726600</p>
+    </div>
+
+    <!-- 3. एक्शन बटन्स बार -->
+    <div class="actions">
+        <button class="btn print" onclick="window.print()">🖨️ Print PDF</button>
+        <a class="btn help" href="https://wa.me/919340726600" target="_blank">💬 WhatsApp Help</a>
+        <button class="btn share" onclick="sharePage()">📤 Auto Share</button>
+        <button class="btn help" onclick="shareWhatsapp()">📲 WhatsApp Callback Share</button>
+        <a class="btn call" href="tel:+919806191822">📞 Call Now</a>
+        <button class="btn terms">⚖️ Terms</button>
+        <a class="btn web" href="https://startpayonline.com/" target="_blank">🌐 Website</a>
+    </div>
+
+    <!-- 4. डैशबोर्ड सब-टेक्स्ट -->
+    <div class="dashboard-meta">
+        <h2>Editable Property Naksha</h2>
+    </div>
+
+    <!-- 5. दो-पैनल नक्शा लेआउट क्षेत्र -->
+    <div class="main-container">
+        <div class="naksha-container">
+
+            <!-- बायाँ पैनल: संपत्ति का विवरण (A) -->
+            <div class="naksha-card">
+                <h3>🏡 Property Naksha</h3>
+                
+                <div class="naksha-address" contenteditable="true">
+                    प्लॉट नं. <span class="sync-plot-txt" contenteditable="false">222</span>, <span class="sync-colony-txt" contenteditable="false">DEMO नर्मदा VIEW कॉलोनी</span>, मौजा चौकीताल नं. 162<br>
+                    पी.एच. नं. पुराना 35/24, नया 13, चौकीताल<br>
+                    आर.एन.एम. पुराना जबलपुर-1, नया 02 भेड़ाघाट<br>
+                    तहसील गोरखपुर, जिला जबलपुर, मध्य प्रदेश
+                </div>
+                
+                <div class="naksha-address naksha-red" contenteditable="true">
+                    वीर दुर्गादास राठौर वार्ड (वार्ड नंबर 71)
+                </div>
+                
+                <div class="naksha-address" contenteditable="true">
+                    नगर निगम जबलपुर, मध्य प्रदेश
+                </div>
+                
+                <div class="naksha-address naksha-red">
+                    नगर निगम प्रॉपर्टी आईडी नं. <span class="sync-id-txt" contenteditable="true">5555555</span>
+                </div>
+                
+                <hr class="naksha-hr">
+                
+                <div class="naksha-details-table">
+                    <table>
+                        <tr><td>• खातेदार का नाम</td><td>:</td><td><span class="sync-owner-txt" contenteditable="true">श्री राम सीता</span></td></tr>
+                        <tr><td>• पिता का नाम</td><td>:</td><td><span class="sync-father-txt" contenteditable="true">श्री राम सीता DEMO</span></td></tr>
+                        <tr><td>• प्लॉट नंबर</td><td>:</td><td><span class="sync-plot-txt" contenteditable="true">222</span></td></tr>
+                        <tr><td>• कॉलोनी का नाम</td><td>:</td><td><span class="sync-colony-txt" contenteditable="true">DEMO नर्मदा VIEW कॉलोनी</span></td></tr>
+                        <tr><td>• मौजा</td><td>:</td><td contenteditable="true">चौकीताल</td></tr>
+                        <tr><td>• मौजा नं.</td><td>:</td><td contenteditable="true">162</td></tr>
+                        <tr><td>• पी.एच. नं.</td><td>:</td><td contenteditable="true">पुराना 35/24, नया 13</td></tr>
+                        <tr><td>• आर.एन.एम.</td><td>:</td><td contenteditable="true">पुराना जबलपुर-1, नया 02 भेड़ाघाट</td></tr>
+                        <tr><td>• तहसील</td><td>:</td><td contenteditable="true">गोरखपुर</td></tr>
+                        <tr><td>• जिला</td><td>:</td><td contenteditable="true">जबलपुर (म.प्र.)</td></tr>
+                        <tr><td>• भूमि विवरण</td><td>:</td><td contenteditable="true">पी-2 खासरा नं. 14/1 (प्लॉट नं. <span class="sync-plot-txt" contenteditable="false">222</span>)</td></tr>
+                        <tr><td>• क्षेत्रफल</td><td>:</td><td>
+                            <span class="naksha-red">
+                                <span class="size-input sync-w-input" contenteditable="true">30</span>*<span class="size-input sync-h-input" contenteditable="true">50</span> <span class="non-editable">= </span><span class="sync-area-total non-editable">1500</span><span class="non-editable"> वर्गफुट</span>
+                            </span>
+                        </td></tr>
+                        <tr><td>• संपत्ति का प्रकार</td><td>:</td><td contenteditable="true">आवासीय (RCC मकान सहित)</td></tr>
+                        <tr><td>• वीर दुर्गादास राठौर वार्ड</td><td>:</td><td contenteditable="true" class="naksha-red">वार्ड नंबर 71</td></tr>
+                        <tr><td>• नगर निगम प्रॉपर्टी आईडी</td><td>:</td><td><span class="sync-id-txt" contenteditable="true">5555555</span></td></tr>
+                    </table>
+                </div>
+                
+                <!-- डायनामिक नोट टेबल -->
+                <table class="dynamic-note-table" id="noteTable">
+                    <tbody>
+                        <tr>
+                            <td contenteditable="true" class="note-cell">
+                                <span class="naksha-red" contenteditable="false">नोट :-</span> यह संपत्ति वीर दुर्गादास राठौर वार्ड (वार्ड नंबर 71), नगर निगम जबलपुर, म.प्र. के अंतर्गत स्थित है।
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- दायाँ पैनल: नक्शा ग्राफिक्स और चौहद्दी (B) -->
+            <div class="naksha-card">
+                
+                <!-- 8-पॉइंटेड कंपास -->
+                <div class="naksha-compass-wrapper">
+                    <div class="exact-image-compass">
+                        <div class="compass-outer-circle"></div>
+                        <div class="compass-pointer-spine">
+                            <div class="spine-arrow main-v"></div>
+                            <div class="spine-arrow main-h"></div>
+                            <div class="spine-arrow sub-diag1"></div>
+                            <div class="spine-arrow sub-diag2"></div>
+                        </div>
+                        <div class="compass-txt N">N</div>
+                        <div class="compass-txt S">S</div>
+                        <div class="compass-txt E">E</div>
+                        <div class="compass-txt W">W</div>
+                    </div>
+                </div>
+
+                <!-- संपत्ति का स्थान बॉक्स -->
+                <div class="location-box">
+                    <h4>संपत्ति का स्थान</h4>
+                    <p contenteditable="true" style="margin:0; line-height: 1.4;">वीर दुर्गादास राठौर वार्ड (वार्ड नंबर 71),<br>नगर निगम जबलपुर, मध्य प्रदेश</p>
+                </div>
+
+                <!-- मुख्य मैप एरिया -->
+                <div class="naksha-map-area">
+                    
+                    <!-- चारों दिशाओं की चौहद्दी विवरण -->
+                    <div class="direction-text north" contenteditable="true"><b>उत्तर दिशा</b><br>प्लॉट नं. 207</div>
+                    <div class="direction-text east" contenteditable="true"><b>पूर्व दिशा</b><br><span style="color: green;">साइड रोड</span></div>
+                    <div class="direction-text west" contenteditable="true"><b>पश्चिम दिशा</b><br>प्लॉट नं. 211</div>
+
+                    <!-- ऊपर की डाइमेंशन लाइन -->
+                    <div class="cad-line-h-container">
+                        <div class="stopper"></div>
+                        <div class="line"><span><span class="sync-w-input" contenteditable="true">30</span>'-0" Foot</span></div>
+                        <div class="stopper"></div>
+                    </div>
+
+                    <!-- पश्चिम (बाएँ) तरफ की डाइमेंशन लाइन (सुधारी हुई स्थिति) -->
+                    <div class="cad-line-v-left">
+                        <div class="stopper"></div>
+                        <div class="line">
+                            <span class="vertical-box-span">
+                                <span class="sync-h-input" contenteditable="true">50</span>'-0" Foot
+                            </span>
+                        </div>
+                        <div class="stopper"></div>
+                    </div>
+
+                    <!-- बीच का मुख्य प्लॉट बॉक्स -->
+                    <div class="naksha-plot-box">
+                        <div class="naksha-plot-title">प्लॉट नं.</div>
+                        <div class="naksha-plot-num class-sync-plot-main" contenteditable="true">222</div>
+                        <div class="naksha-plot-lbl">क्षेत्रफल</div>
+                        <div class="naksha-plot-sqft">
+                            <span class="sync-w-input">30</span>*<span class="sync-h-input">50</span> = <span class="sync-area-total">1500</span><br>वर्गफुट
+                        </div>
+                    </div>
+
+                    <!-- दक्षिण दिशा -->
+                    <div class="direction-text south" contenteditable="true"><b>दक्षिण दिशा</b><br>प्लॉट नं. 209</div>
+
+                </div>
+
+                <!-- सीमांकन विवरण तालिका -->
+                <div class="naksha-boundary">
+                    <table class="naksha-boundary-table">
+                        <tr>
+                            <th colspan="3">सीमांकन विवरण</th>
+                        </tr>
+                        <tr>
+                            <td>उत्तर दिशा</td><td>:</td><td contenteditable="true">प्लॉट नं. 207 स्थित है।</td>
+                        </tr>
+                        <tr>
+                            <td>दक्षिण दिशा</td><td>:</td><td contenteditable="true">प्लॉट नं. 209 स्थित है।</td>
+                        </tr>
+                        <tr>
+                            <td>पूर्व दिशा</td><td>:</td><td contenteditable="true" style="color:green; font-weight:bold;">साइड रोड स्थित है।</td>
+                        </tr>
+                        <tr>
+                            <td>पश्चिम दिशा</td><td>:</td><td contenteditable="true">प्लॉट नं. 211 स्थित है।</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <!-- फुटर नोट संकेत -->
+                <div class="naksha-footer-text">
+                    <span contenteditable="true">नोट :- सभी माप अनुमानित हैं। माप फीट-इंच में है।</span>
+                    <span contenteditable="true">1 फीट = 12 inch</span>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 6. स्थिर बॉटम फुटर पट्टी -->
+    <div class="footer">
+        © 2026 StartPay Legal & Finance Calculator
+    </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    
+    // टेक्स्ट ऑटो सिंकिंग लॉजिक
+    setupFieldSync(".sync-plot-txt", ".class-sync-plot-main");
+    setupFieldSync(".sync-colony-txt");
+    setupFieldSync(".sync-id-txt");
+    setupFieldSync(".sync-owner-txt");
+    setupFieldSync(".sync-father-txt");
+
+    // लाइव कैलकुलेशन सिंक
+    setupAreaCalculation();
+
+    // नोट बॉक्स ऑटो रो लॉजिक
+    setupTabRowAddition();
+
+    function setupFieldSync(selector, secondarySelector = null) {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+            element.addEventListener("input", function() {
+                const text = this.innerText;
+                elements.forEach(el => { if (el !== element) el.innerText = text; });
+                if (secondarySelector) {
+                    const secEl = document.querySelector(secondarySelector);
+                    if (secEl && secEl !== element) secEl.innerText = text;
+                }
+            });
+        });
+    }
+
+    function setupAreaCalculation() {
+        const widths = document.querySelectorAll(".sync-w-input");
+        const heights = document.querySelectorAll(".sync-h-input");
+        const totals = document.querySelectorAll(".sync-area-total");
+
+        function updateArea() {
+            const w = parseFloat(widths[0].innerText) || 0;
+            const h = parseFloat(heights[0].innerText) || 0;
+            totals.forEach(el => el.innerText = w === 0 || h === 0 ? 0 : w * h);
+        }
+
+        widths.forEach(el => {
+            el.addEventListener("input", function() {
+                widths.forEach(w => { if(w !== el) w.innerText = el.innerText; });
+                updateArea();
+            });
+        });
+
+        heights.forEach(el => {
+            el.addEventListener("input", function() {
+                heights.forEach(h => { if(h !== el) h.innerText = el.innerText; });
+                updateArea();
+            });
+        });
+    }
+
+    function setupTabRowAddition() {
+        const table = document.getElementById("noteTable");
+        table.addEventListener("keydown", function(e) {
+            if (e.key === "Tab") {
+                const cells = table.querySelectorAll(".note-cell");
+                if (e.target === cells[cells.length - 1]) {
+                    e.preventDefault();
+                    const tbody = table.querySelector("tbody") || table;
+                    const row = document.createElement("tr");
+                    const cell = document.createElement("td");
+                    cell.setAttribute("contenteditable", "true");
+                    cell.className = "note-cell";
+                    cell.innerHTML = "PARTY: ";
+                    row.appendChild(cell);
+                    tbody.appendChild(row);
+                    setTimeout(() => {
+                        cell.focus();
+                        const range = document.createRange();
+                        const sel = window.getSelection();
+                        range.selectNodeContents(cell);
+                        range.collapse(false);
+                        sel.removeAllRanges();
+                        sel.addRange(range);
+                    }, 10);
+                }
+            }
+        });
+    }
+});
+
+function sharePage(){
+    if(navigator.share){
+        navigator.share({
+            title: document.title,
+            text: 'StartPay Legal & Finance Calculator',
+            url: window.location.href
+        });
+    } else {
+        shareWhatsapp();
+    }
+}
+
+function shareWhatsapp(){
+    let msg = encodeURIComponent(
+        "📊 StartPay Legal & Finance Calculator\n\n" +
+        window.location.href +
+        "\n\n☎ Support : +91 9340726600"
+    );
+    window.open("https://wa.me/?text="+msg, "_blank");
+    setTimeout(function(){
+        window.open("https://wa.me/919340726600", "_blank");
+    }, 1500);
+}
+</script>
+</body>
+</html>
