@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>StartPay Legal & Finance Calculator</title>
+
+<style>
+
+:root{
+--primary-blue:#0000FF;
+--primary-green:#009900;
+--dark-navy:#000040;
+--white:#FFFFFF;
+--light:#f5f7fb;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:var(--light);
+}
+
+.topbar{
+background:var(--dark-navy);
+color:#fff;
+text-align:center;
+padding:10px;
+font-size:18px;
+font-weight:bold;
+}
+
+.header{
+background:linear-gradient(135deg,var(--primary-blue),var(--primary-green));
+color:#fff;
+padding:20px;
+text-align:center;
+}
+
+.header h1{
+font-size:30px;
+margin-bottom:8px;
+}
+
+.header p{
+font-size:16px;
+}
+
+.actions{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+padding:15px;
+background:#fff;
+box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.btn{
+padding:12px 18px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+text-decoration:none;
+color:#fff;
+}
+
+.print{background:#0066cc;}
+.help{background:#25D366;}
+.share{background:#ff6600;}
+.call{background:#cc0000;}
+.terms{background:#444;}
+.web{background:#009900;}
+
+.main{
+max-width:1400px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:#fff;
+border-radius:10px;
+padding:20px;
+box-shadow:0 2px 8px rgba(0,0,0,.15);
+}
+
+.card h2{
+text-align:center;
+margin-bottom:15px;
+color:#000040;
+}
+
+.footer{
+margin-top:20px;
+background:#000040;
+color:#fff;
+text-align:center;
+padding:15px;
+}
+
+@media(max-width:768px){
+
+.actions{
+flex-direction:column;
+}
+
+.btn{
+width:100%;
+text-align:center;
+}
+
+.header h1{
+font-size:22px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="topbar">
+🏠 Home
+</div>
+
+<div class="header">
+
+<h1>
+📊 StartPay Legal & Finance Calculator
+</h1>
+
+<p>
+by Anurag Rai | ☎ 9340726600
+</p>
+
+</div>
+
+<div class="actions">
+
+<button class="btn print"
+onclick="window.print()">
+🖨️ Print PDF
+</button>
+
+<a class="btn help"
+href="https://wa.me/919340726600"
+target="_blank">
+💬 WhatsApp Help
+</a>
+
+<button class="btn share"
+onclick="sharePage()">
+📤 Auto Share
+</button>
+
+<button class="btn help"
+onclick="shareWhatsapp()">
+📲 WhatsApp Callback Share
+</button>
+
+<a class="btn call"
+href="tel:+919806191822">
+📞 Call Now
+</a>
+
+<button class="btn terms">
+⚖️ Terms
+</button>
+
+<a class="btn web"
+href="https://startpayonline.com/"
+target="_blank">
+🌐 Website
+</a>
+
+</div>
+
+<div class="main">
+
+<div class="card">
+
+<h2>
+🏡 Property Naksha
+</h2>
+
+<p style="text-align:center">
+यहाँ अपना Editable Property Naksha
+</p>
+
+</div>
+
+</div>
+
+<div class="footer">
+© 2026 StartPay Legal & Finance Calculator
+</div>
+
+<br><br>
+
+<script>
+
+function sharePage(){
+
+if(navigator.share){
+
+navigator.share({
+title:document.title,
+text:'StartPay Legal & Finance Calculator',
+url:window.location.href
+});
+
+}else{
+
+shareWhatsapp();
+
+}
+
+}
+
+function shareWhatsapp(){
+
+let msg = encodeURIComponent(
+"📊 StartPay Legal & Finance Calculator\n\n" +
+window.location.href +
+"\n\n☎ Support : +91 9340726600"
+);
+
+window.open(
+"https://wa.me/?text="+msg,
+"_blank"
+);
+
+setTimeout(function(){
+
+window.open(
+"https://wa.me/919340726600",
+"_blank"
+);
+
+},1500);
+
+}
+
+</script>
+
+</body>
+</html>
