@@ -88,6 +88,8 @@
         .call { background: #cc0000; }
         .terms { background: #444; }
         .web { background: #009900; }
+        .download { background: #6a0dad; }
+        .pdf { background: #e60000; }
 
         /* --- DASHBOARD META --- */
         .dashboard-meta {
@@ -108,6 +110,7 @@
             padding: 0 15px;
         }
 
+        /* डेस्कटॉप पर साइड-बाय-साइड लेआउट */
         .naksha-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -120,40 +123,57 @@
             box-sizing: border-box;
         }
 
+        /* डाउनलोड के लिए स्पेशल क्लास */
+        .naksha-container.download-mode {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr !important;
+            width: 1200px !important;
+            gap: 20px !important;
+            padding: 20px !important;
+            position: absolute !important;
+            left: -9999px !important;
+            top: 0 !important;
+        }
+
         .naksha-card {
             background: #fff;
             border: 1.5px solid #000;
-            padding: 15px;
+            padding: 20px;
             position: relative;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
-            min-height: 780px;
+            min-height: 850px;
         }
 
         /* हेडिंग और एड्रेस */
-        .naksha-card h3 { text-align: center; margin: 0 0 8px 0; font-size: 22px; font-weight: 800; color: #000; }
-        .naksha-address { text-align: center; font-size: 13px; font-weight: 600; line-height: 1.5; color: #222; }
+        .naksha-card h3 { text-align: center; margin: 0 0 12px 0; font-size: 24px; font-weight: 800; color: #000; }
+        .naksha-address { text-align: center; font-size: 14px; font-weight: 600; line-height: 1.6; color: #222; }
         .naksha-red { color: #c00000 !important; font-weight: 700; }
-        .naksha-hr { margin: 12px 0; border: 0; border-top: 1.5px solid #000; }
+        .naksha-hr { margin: 15px 0; border: 0; border-top: 1.5px solid #000; }
 
         /* विवरण तालिका */
         .naksha-details-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
-        .naksha-details-table td { padding: 4px 2px; font-size: 13px; vertical-align: top; color: #000; }
+        .naksha-details-table td { padding: 6px 4px; font-size: 14px; vertical-align: top; color: #000; }
         .naksha-details-table td:first-child { width: 38%; font-weight: bold; }
         .naksha-details-table td:nth-child(2) { width: 4%; text-align: center; }
 
         /* नोट बॉक्स */
         .dynamic-note-table { width: 100%; border-collapse: collapse; margin-top: auto; }
-        .dynamic-note-table td { border: 1px solid #000; padding: 8px; font-size: 12.5px; font-weight: bold; background: #fff; color: #000; }
+        .dynamic-note-table td { border: 1px solid #000; padding: 10px; font-size: 13px; font-weight: bold; background: #fff; color: #000; }
 
-        .size-input { display: inline-block; min-width: 25px; border-bottom: 1px dashed #c00000; color: #c00000; font-weight: 800; padding: 0 2px; text-align: center; }
+        .size-input { display: inline-block; min-width: 30px; border-bottom: 1px dashed #c00000; color: #c00000; font-weight: 800; padding: 0 2px; text-align: center; }
         .non-editable { pointer-events: none; user-select: none; }
 
-        /* --- 8-पॉइंटेड कंपास --- */
-        .naksha-compass-wrapper { position: absolute; left: 15px; top: 15px; z-index: 10; }
+        /* --- 🛠️ कंपास फिक्स (ओवरलैप रोकने के लिए सुरक्षित दूरी) --- */
+        .naksha-compass-wrapper { 
+            position: absolute; 
+            left: 15px; 
+            top: 15px; 
+            z-index: 10; 
+        }
         .exact-image-compass { position: relative; width: 65px; height: 65px; }
-        .compass-outer-circle { position: absolute; top: 8px; left: 8px; width: 47px; height: 47px; border: 1px solid #000; border-radius: 50%; }
+        .compass-outer-circle { position: absolute; top: 9px; left: 9px; width: 47px; height: 47px; border: 1px solid #000; border-radius: 50%; }
         .compass-pointer-spine { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
         .spine-arrow { position: absolute; top: 50%; left: 50%; background: #000; transform-origin: center center; }
         .spine-arrow.main-v { width: 3px; height: 52px; top: calc(50% - 26px); left: calc(50% - 1.5px); clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); }
@@ -166,16 +186,24 @@
         .compass-txt.E { right: -10px; top: 50%; transform: translateY(-50%); color: #008800; }
         .compass-txt.W { left: -12px; top: 50%; transform: translateY(-50%); color: #0022aa; }
 
-        /* संपत्ति का स्थान बॉक्स */
-        .location-box { border: 1px solid #000; border-radius: 4px; padding: 6px; text-align: center; margin: 0 0 10px 90px; font-size: 12px; font-weight: bold; }
-        .location-box h4 { margin: 0 0 3px 0; color: #c00000; font-size: 14px; }
+        /* 🛠️ संपत्ति का स्थान बॉक्स फिक्स (ताकि कंपास से न टकराए) */
+        .location-box { 
+            border: 1px solid #000; 
+            border-radius: 4px; 
+            padding: 8px; 
+            text-align: center; 
+            margin: 0 0 25px 95px; /* लेफ्ट मार्जिन बढ़ाकर कंपास को सुरक्षित जगह दी */
+            font-size: 13px; 
+            font-weight: bold; 
+        }
+        .location-box h4 { margin: 0 0 3px 0; color: #c00000; font-size: 15px; }
 
         /* --- MAP GRAPHICS AREA --- */
         .naksha-map-area {
             position: relative;
-            margin: 20px auto 20px auto;
+            margin: 30px auto;
             width: 100%;
-            min-height: 340px;
+            min-height: 380px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -190,30 +218,38 @@
             background: #fff;
             display: flex;
             flex-direction: column;
-            justify-content: center; 
+            justify-content: space-between; 
             align-items: center;
-            padding: 10px;
+            padding: 18px 10px;
             box-sizing: border-box;
             z-index: 2;
             position: relative;
         }
-        .naksha-plot-title { font-size: 18px; font-weight: bold; color: #000; }
-        .naksha-plot-num { font-size: 44px; font-weight: 900; color: #c00000; margin: 2px 0; line-height: 1; }
-        .naksha-plot-lbl { font-size: 15px; font-weight: bold; color: #000; margin-top: 2px; }
-        .naksha-plot-sqft { font-size: 19px; font-weight: 800; color: #c00000; text-align: center; margin-top: 2px; line-height: 1.2; }
+        .naksha-plot-title { font-size: 16px; font-weight: bold; color: #000; text-align: center; margin-bottom: 2px; }
+        .naksha-plot-num { font-size: 42px; font-weight: 900; color: #c00000; line-height: 1; text-align: center; width: 100%; }
+        .naksha-plot-lbl { font-size: 14px; font-weight: bold; color: #000; text-align: center; margin-top: 2px; }
+        .naksha-plot-sqft { font-size: 16px; font-weight: 800; color: #c00000; text-align: center; line-height: 1.3; width: 100%; margin-top: 2px; }
 
-        /* दिशाओं का टेक्स्ट स्थिति */
-        .direction-text { position: absolute; font-size: 13px; font-weight: bold; text-align: center; line-height: 1.3; color: #000; z-index: 5; }
+        /* 🛠️ दिशाओं की टेक्स्ट स्थिति और ओवरलैप सुधार */
+        .direction-text { position: absolute; font-size: 14px; font-weight: bold; text-align: center; line-height: 1.4; color: #000; z-index: 5; }
         
-        .direction-text.north { top: -5px !important; left: 50%; transform: translateX(-50%); width: 200px; }
-        .direction-text.south { bottom: -1px !important; left: 50%; transform: translateX(-50%); width: 200px; }
-        .direction-text.east { right: 0px !important; width: 95px !important; top: 50%; transform: translateY(-50%); text-align: left; color: green; }
-        .direction-text.west { left: 5px; top: 50%; transform: translateY(-50%); width: 105px; text-align: right; }
+        .direction-text.north { top: 0px; left: 50%; transform: translateX(-50%); width: 220px; }
+        .direction-text.south { bottom: 0px; left: 50%; transform: translateX(-50%); width: 220px; }
+        .direction-text.east { right: 15px; width: 110px; top: 50%; transform: translateY(-50%); text-align: left; color: green; }
+        
+        /* 🛠️ पश्चिम दिशा का टेक्स्ट थोड़ा और पीछे सरकाया ताकि डाइमेंशन लाइन से न टकराए */
+        .direction-text.west { 
+            left: 2px; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            width: 120px; 
+            text-align: right; 
+        }
 
-        /* --- CAD LINES --- */
+        /* क्षैतिज (Horizontal) डाइमेंशन लाइन */
         .cad-line-h-container {
             position: absolute;
-            top: 35px;
+            top: 45px;
             left: 50%;
             transform: translateX(-50%);
             width: 190px;
@@ -236,10 +272,10 @@
         }
         .cad-line-h-container .line span { background: #fff; padding: 0 5px; }
 
-        /* पश्चिम (Left) दिशा में वर्टिकल डाइमेंशन लाइन - फिक्स्ड */
+        /* 🛠️ वर्टिकल डाइमेंशन लाइन और बॉक्स फिक्स */
         .cad-line-v-left {
             position: absolute;
-            left: 140px; /* पश्चिम दिशा/प्लॉट नं 211 की लाइन के पास */
+            left: calc(50% - 145px); /* इसे हल्का सा बाएँ खिसकाया ताकि प्लॉट और टेक्स्ट के बीच बैलेंस रहे */
             top: 50%;
             transform: translateY(-50%);
             height: 220px;
@@ -250,47 +286,34 @@
             z-index: 4;
         }
 
-        .cad-line-v-left .stopper {
-            height: 1px;
-            width: 10px;
-            background: #000;
-        }
-
-        .cad-line-v-left .line {
-            flex-grow: 1;
-            width: 1px;
-            background: #000;
-            position: relative;
-        }
-
+        .cad-line-v-left .stopper { height: 1px; width: 10px; background: #000; }
+        .cad-line-v-left .line { flex-grow: 1; width: 1px; background: #000; position: relative; }
+        
+        /* 🛠️ डाइमेंशन बॉक्स का विजुअल लेआउट सुधारा ताकि टेक्स्ट ओवरलैप न हो */
         .cad-line-v-left .vertical-box-span {
             position: absolute;
-            left: -30px;
+            left: -32px;
             top: 50%;
             transform: translateY(-50%);
             background: #fff;
             border: 1px solid #000;
-            padding: 5px 3px;
-            width: 48px;
+            padding: 4px 2px;
+            width: 64px;
             text-align: center;
             font-size: 12px;
             font-weight: bold;
             color: #c00000;
         }
 
-        /* सीमांकन विवरण तालिका कंटेनर */
-        .naksha-boundary {
-            margin-top: 80px;
-            width: 100%;
-            margin-bottom: auto;
-        }
-        .naksha-boundary-table { width: 95%; border-collapse: collapse; }
-        .naksha-boundary-table th { background: #f5f5f5; color: #c00000; font-weight: bold; border: 1px solid #000; padding: 6px; font-size: 13.5px; text-align: center; }
-        .naksha-boundary-table td { border: 1px solid #000; padding: 5px; font-size: 13px; color: #000; }
+        /* सीमांकन विवरण तालिका */
+        .naksha-boundary { margin-top: 35px; width: 100%; margin-bottom: auto; }
+        .naksha-boundary-table { width: 95%; margin: 0 auto; border-collapse: collapse; }
+        .naksha-boundary-table th { background: #f5f5f5; color: #c00000; font-weight: bold; border: 1px solid #000; padding: 7px; font-size: 14px; text-align: center; }
+        .naksha-boundary-table td { border: 1px solid #000; padding: 6px; font-size: 13.5px; color: #000; }
         .naksha-boundary-table td:first-child { font-weight: bold; width: 25%; }
         .naksha-boundary-table td:nth-child(2) { text-align: center; width: 5%; }
 
-        .naksha-footer-text { display: flex; justify-content: space-between; font-size: 11px; font-weight: bold; margin-top: 15px; color: #444; border-top: 1px dashed #aaa; padding-top: 8px; }
+        .naksha-footer-text { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; margin-top: 15px; color: #444; border-top: 1px dashed #aaa; padding-top: 8px; }
 
         /* --- FIXED FOOTER --- */
         .footer {
@@ -304,155 +327,41 @@
         }
 
         /* --- मोबाइल व्यू रिस्पॉन्सिवनेस --- */
-@media (max-width: 850px){
+        @media (max-width: 850px){
+            .actions { flex-direction: column; }
+            .btn { width: 100%; justify-content: center; }
+            .header h1 { font-size: 22px; }
+            .naksha-container { grid-template-columns: 1fr !important; padding: 10px; gap: 25px; }
+            .naksha-card { min-height: auto; padding: 15px; }
+            .naksha-map-area { min-height: 400px; }
+            .naksha-plot-box { width: 160px; height: 200px; padding: 12px 6px; }
+            .naksha-plot-title { font-size: 14px; }
+            .naksha-plot-num { font-size: 34px; }
+            .naksha-plot-sqft { font-size: 14px; }
+            
+            /* मोबाइल पर ओवरलैपिंग को पूरी तरह से रोकने के लिए पोजीशंस */
+            .direction-text { font-size: 12px; }
+            .direction-text.north { top: 5px; }
+            .direction-text.south { bottom: 5px; }
+            .direction-text.east { right: 2px; width: 90px; }
+            .direction-text.west { left: -5px; width: 95px; }
+            
+            .cad-line-h-container { width: 160px !important; top: 48px !important; }
+            .cad-line-v-left { left: calc(50% - 120px) !important; height: 200px !important; }
+            .location-box { width: 75%; margin: 0 auto 20px auto !important; }
+            .naksha-boundary { margin-top: 25px; }
+        }
 
-    .actions{
-        flex-direction:column;
-    }
-
-    .btn{
-        width:100%;
-        justify-content:center;
-    }
-
-    .header h1{
-        font-size:22px;
-    }
-
-    .naksha-container{
-        grid-template-columns:1fr !important;
-        padding:10px;
-        gap:20px;
-    }
-
-    .naksha-card{
-        min-height:auto;
-        overflow:hidden;
-    }
-
-    .naksha-map-area{
-        min-height:420px;
-        overflow:hidden;
-        transform:scale(.95);
-        margin:20px auto;
-        position:relative;
-    }
-
-    .naksha-plot-box{
-        width:150px;
-        height:190px;
-    }
-
-    .naksha-plot-title{
-        font-size:16px;
-    }
-
-    .naksha-plot-num{
-        font-size:34px;
-    }
-
-    .naksha-plot-sqft{
-        font-size:15px;
-    }
-
-    .direction-text{
-        font-size:11px;
-        line-height:1.2;
-    }
-
-    .direction-text.north{
-        top:-20px !important;
-        width:160px !important;
-    }
-
-    .direction-text.south{
-        bottom:-20px !important;
-        width:160px !important;
-    }
-
-    .direction-text.east{
-        right:0 !important;
-        width:70px !important;
-    }
-
-    .direction-text.west{
-        left:0 !important;
-        width:70px !important;
-    }
-
-    .cad-line-h-container{
-        width:150px !important;
-        top:50px !important;
-    }
-
-    .cad-line-h-container .line{
-        font-size:11px;
-    }
-
-    .cad-line-v-left{
-        left:55px !important;
-        height:190px !important;
-    }
-
-    .cad-line-v-left .vertical-box-span{
-        left:-20px !important;
-        width:40px;
-        font-size:10px;
-        padding:3px;
-    }
-
-    .location-box{
-        width:70%;
-        margin:0 auto 15px auto !important;
-    }
-
-    .naksha-boundary{
-        margin-top:30px;
-    }
-}
-
-@media (max-width:600px){
-
-    .naksha-map-area{
-        min-height:450px;
-    }
-
-    .direction-text.east{
-        top:95px !important;
-        right:50% !important;
-        transform:translateX(50%) !important;
-        width:120px !important;
-        text-align:center;
-    }
-
-    .direction-text.west{
-        bottom:95px !important;
-        left:50% !important;
-        transform:translateX(-50%) !important;
-        width:120px !important;
-        text-align:center;
-    }
-
-    .cad-line-v-left{
-        left:35px !important;
-    }
-}
-
-        /* --- परफेक्ट A4 लैंडस्केप प्रिंट --- */
+        /* --- परफेक्ट A4 लैंडस्केप प्रिंट नियम --- */
         @media print {
             @page { size: A4 landscape; margin: 4mm; }
             .topbar, .header, .actions, .dashboard-meta, .footer { display: none !important; }
             body { background: #fff; padding: 0; margin: 0; }
             .main-container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
-            .naksha-container { display: flex !important; flex-direction: row !important; justify-content: space-between !important; gap: 10px !important; max-width: 100% !important; border: none !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; page-break-inside: avoid; }
-            .naksha-card { border: 1.5px solid #000 !important; padding: 12px !important; width: calc(50% - 5px) !important; min-height: 100% !important; height: 720px !important; }
-            .naksha-map-area { transform: scale(1) !important; margin: 20px auto 25px auto !important; }
-            
-            /* प्रिंट के समय 50' बॉक्स को पश्चिम दिशा की लाइन पर लॉक रखने के लिए */
-            .cad-line-v-left { left: 140px !important; right: auto !important; }
-            
-            .location-box { margin: 0 0 10px 90px !important; }
-            .naksha-boundary { margin-top: 35px !important; }
+            .naksha-container { display: grid !important; grid-template-columns: 1fr 1fr !important; gap: 15px !important; border: none !important; padding: 0 !important; margin: 0 !important; box-shadow: none !important; }
+            .naksha-card { border: 1.5px solid #000 !important; padding: 15px !important; min-height: 760px !important; height: 760px !important; }
+            .cad-line-v-left { left: calc(50% - 145px) !important; }
+            .location-box { margin: 0 0 25px 95px !important; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
     </style>
@@ -460,37 +369,34 @@
 </head>
 <body>
 
-    <!-- 1. होम टॉपबार -->
     <div class="topbar">🏠 Home</div>
 
-    <!-- 2. मुख्य हेडर -->
     <div class="header">
         <h1>📊 StartPay Legal & Finance Calculator</h1>
         <p>by Anurag Rai | ☎ 9340726600</p>
     </div>
 
-    <!-- 3. एक्शन बटन्स बार -->
     <div class="actions">
-        <button class="btn print" onclick="window.print()">🖨️ Print PDF</button>
+        <button class="btn print" onclick="window.print()">🖨️ Print A4 Landscape</button>
         <a class="btn help" href="https://wa.me/919340726600" target="_blank">💬 WhatsApp Help</a>
         <button class="btn share" onclick="sharePage()">📤 Auto Share</button>
         <button class="btn help" onclick="shareWhatsapp()">📲 WhatsApp Callback Share</button>
         <a class="btn call" href="tel:+919806191822">📞 Call Now</a>
         <button class="btn terms">⚖️ Terms</button>
         <a class="btn web" href="https://startpayonline.com/" target="_blank">🌐 Website</a>
+        <button class="btn download" onclick="downloadNaksha()">📥 Download PNG (HD)</button>
+        <button class="btn pdf" onclick="downloadPDF()">📄 Download PDF (HD)</button>
     </div>
 
-    <!-- 4. डैशबोर्ड सब-टेक्स्ट -->
     <div class="dashboard-meta">
         <h2>Editable Property Naksha</h2>
     </div>
 
-    <!-- 5. दो-पैनल नक्शा लेआउट क्षेत्र -->
     <div class="main-container">
-        <div class="naksha-container">
+        <div class="naksha-container" id="visible-container">
 
-            <!-- बायाँ पैनल: संपत्ति का विवरण (A) -->
-            <div class="naksha-card">
+            <!-- बायाँ पैनल: संपत्ति का विवरण -->
+            <div class="naksha-card" id="source-details">
                 <h3>🏡 Property Naksha</h3>
                 
                 <div class="naksha-address" contenteditable="true">
@@ -538,7 +444,6 @@
                     </table>
                 </div>
                 
-                <!-- डायनामिक नोट टेबल -->
                 <table class="dynamic-note-table" id="noteTable">
                     <tbody>
                         <tr>
@@ -550,8 +455,8 @@
                 </table>
             </div>
 
-            <!-- दायाँ पैनल: नक्शा ग्राफिक्स और चौहद्दी (B) -->
-            <div class="naksha-card">
+            <!-- दायाँ पैनल: नक्शा ग्राफिक्स (जहाँ ओवरलैपिंग सुधारी गई है) -->
+            <div class="naksha-card" id="source-map">
                 
                 <!-- 8-पॉइंटेड कंपास -->
                 <div class="naksha-compass-wrapper">
@@ -582,6 +487,8 @@
                     <!-- चारों दिशाओं की चौहद्दी विवरण -->
                     <div class="direction-text north" contenteditable="true"><b>उत्तर दिशा</b><br>प्लॉट नं. 207</div>
                     <div class="direction-text east" contenteditable="true"><b>पूर्व दिशा</b><br><span style="color: green;">साइड रोड</span></div>
+                    
+                    <!-- 🛠️ पश्चिम दिशा का टेक्स्ट अब डाइमेंशन बॉक्स से नहीं टकराएगा -->
                     <div class="direction-text west" contenteditable="true"><b>पश्चिम दिशा</b><br>प्लॉट नं. 211</div>
 
                     <!-- ऊपर की डाइमेंशन लाइन -->
@@ -591,7 +498,7 @@
                         <div class="stopper"></div>
                     </div>
 
-                    <!-- पश्चिम (बाएँ) तरफ की डाइमेंशन लाइन (सुधारी हुई स्थिति) -->
+                    <!-- 🛠️ पश्चिम तरफ की डाइमेंशन लाइन (सुरक्षित दूरी पर शिफ्टेड) -->
                     <div class="cad-line-v-left">
                         <div class="stopper"></div>
                         <div class="line">
@@ -638,7 +545,6 @@
                     </table>
                 </div>
 
-                <!-- फुटर नोट संकेत -->
                 <div class="naksha-footer-text">
                     <span contenteditable="true">नोट :- सभी माप अनुमानित हैं। माप फीट-इंच में है।</span>
                     <span contenteditable="true">1 फीट = 12 inch</span>
@@ -649,25 +555,26 @@
         </div>
     </div>
 
-    <!-- 6. स्थिर बॉटम फुटर पट्टी -->
     <div class="footer">
         © 2026 StartPay Legal & Finance Calculator
     </div>
 
+    <!-- बैकग्राउंड हिडन कंटेनर (A4 Landscape डाउनलोड जनरेटर) -->
+    <div id="hidden-download-container" class="naksha-container download-mode" style="background-color: #ffffff;"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     
-    // टेक्स्ट ऑटो सिंकिंग लॉजिक
+    // लाइव टेक्स्ट और वैल्यू ऑटो सिंकिंग
     setupFieldSync(".sync-plot-txt", ".class-sync-plot-main");
     setupFieldSync(".sync-colony-txt");
     setupFieldSync(".sync-id-txt");
     setupFieldSync(".sync-owner-txt");
     setupFieldSync(".sync-father-txt");
 
-    // लाइव कैलकुलेशन सिंक
     setupAreaCalculation();
-
-    // नोट बॉक्स ऑटो रो लॉजिक
     setupTabRowAddition();
 
     function setupFieldSync(selector, secondarySelector = null) {
@@ -750,6 +657,62 @@ function sharePage(){
     } else {
         shareWhatsapp();
     }
+}
+
+function prepareDownloadContainer() {
+    const hiddenContainer = document.getElementById("hidden-download-container");
+    const sourceDetails = document.getElementById("source-details");
+    const sourceMap = document.getElementById("source-map");
+
+    hiddenContainer.innerHTML = "";
+
+    const cloneDetails = sourceDetails.cloneNode(true);
+    const cloneMap = sourceMap.cloneNode(true);
+
+    cloneDetails.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
+    cloneMap.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
+
+    hiddenContainer.appendChild(cloneDetails);
+    hiddenContainer.appendChild(cloneMap);
+
+    return hiddenContainer;
+}
+
+function downloadNaksha(){
+    const targetArea = prepareDownloadContainer();
+    const options = {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        logging: false
+    };
+
+    html2canvas(targetArea, options).then(canvas => {
+        const link = document.createElement("a");
+        link.download = "Property-Naksha-Fixed.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        targetArea.innerHTML = "";
+    });
+}
+
+async function downloadPDF(){
+    const { jsPDF } = window.jspdf;
+    const targetArea = prepareDownloadContainer();
+    const options = {
+        scale: 3,
+        useCORS: true,
+        backgroundColor: "#ffffff",
+        logging: false
+    };
+
+    const canvas = await html2canvas(targetArea, options);
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("l", "mm", "a4");
+    pdf.addImage(imgData, "PNG", 5, 5, 287, 200);
+    pdf.save("Property-Naksha-Fixed.pdf");
+    targetArea.innerHTML = "";
 }
 
 function shareWhatsapp(){
