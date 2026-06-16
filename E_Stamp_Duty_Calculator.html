@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StartPay Legal & Finance Calculator</title>
+
+<style>
+:root {
+    --primary-blue: #0000FF;
+    --primary-green: #009900;
+    --dark-navy: #000040;
+    --white: #FFFFFF;
+    --light: #f5f7fb;
+    --gray: #555;
+    
+    /* 🎨 नए कस्टम कलर वेरिएबल्स */
+    --input-red: #FF0000;
+    --output-dark-green: #006400;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: var(--light);
+}
+
+.topbar {
+    background: var(--dark-navy);
+    color: #fff;
+    text-align: center;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
+    color: #fff;
+    padding: 25px 20px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.header h1 {
+    font-size: clamp(20px, 5vw, 30px);
+    margin-bottom: 8px;
+}
+
+.header p {
+    font-size: clamp(14px, 3.5vw, 16px);
+    opacity: 0.9;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.btn {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+    font-size: 14px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.print { background: #0066cc; }
+.help { background: #25D366; }
+.share { background: #ff6600; }
+.call { background: #cc0000; }
+.terms { background: #444; }
+.web { background: #009900; }
+
+.main {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px 15px;
+    min-height: 60vh;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,.1);
+}
+
+.card h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--dark-navy);
+    font-size: clamp(20px, 4.5vw, 24px);
+}
+
+label {
+    font-weight: bold;
+    display: block;
+    margin-top: 15px;
+    color: #333;
+    font-size: 15px;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: #222;
+}
+
+/* 🔴 इनपुट बॉक्स का कलर टेक्स्ट लाल (Red) किया */
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    font-weight: bold;
+    color: var(--input-red); 
+    transition: border 0.2s;
+}
+
+select:focus, input:focus {
+    border-color: var(--primary-blue);
+    outline: none;
+}
+
+.result {
+    margin-top: 25px;
+    padding: 15px;
+    background: #eef5ff;
+    border-left: 4px solid var(--primary-blue);
+    border-radius: 6px;
+}
+
+.result p {
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 16px;
+    color: #222;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* 🟢 आउटपुट रिजल्ट का फॉन्ट कलर डार्क ग्रीन (Dark Green) किया */
+.result span {
+    color: var(--output-dark-green);
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.footer {
+    margin-top: 40px;
+    background: var(--dark-navy);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
+}
+
+/* Terms Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+}
+.close-btn {
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media(max-width:768px){
+    .actions {
+        flex-direction: column;
+        position: relative;
+    }
+    .btn {
+        width: 100%;
+        text-align: center;
+    }
+    .main {
+        padding: 10px;
+    }
+    .card {
+        padding: 15px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+   🏠 Home
+</div>
+
+<div class="header">
+    <h1 id="app-title">📊 StartPay Legal & Finance Calculator</h1>
+    <p id="app-subtitle">Loading support details...</p>
+</div>
+
+<div class="actions">
+    <button class="btn print" onclick="window.print()">🖨️ Print PDF</button>
+    <a class="btn help" id="wa-help-btn" href="#" target="_blank">💬 WhatsApp Help</a>
+    <button class="btn share" onclick="sharePage()">📤 Auto Share</button>
+    <button class="btn help" onclick="shareWhatsapp()">📲 WhatsApp Callback Share</button>
+    <a class="btn call" id="call-btn" href="#">📞 Call Now</a>
+    <button class="btn terms" onclick="toggleModal(true)">⚖️ Terms</button>
+    <a class="btn web" id="web-btn" href="#" target="_blank">🌐 Website</a>
+</div>
+
+<div class="main">
+    <div class="card">
+        
+        <h2>📊 E-Stamp Duty Calculator</h2>
+        
+        <label for="rate">Duty Rate</label>
+        <select id="rate">
+            <option value="400">0.25%</option>
+            <option value="200">0.50%</option>
+        </select>
+
+        <label for="stampDuty">Stamp Duty (Rs/-)</label>
+        <input type="number" id="stampDuty" placeholder="Enter Stamp Duty" step="any">
+
+        <label for="amountValue">Amount Value (Rs/-)</label>
+        <input type="number" id="amountValue" placeholder="Enter Amount Value" step="any">
+
+        <div class="result">
+            <p>Stamp Duty : <span id="showDuty">0</span></p>
+            <p>Amount Value : <span id="showAmount">0</span></p>
+        </div>
+
+    </div>
+</div>
+
+<div id="termsModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="toggleModal(false)">&times;</span>
+        <h3>⚖️ नियम एवं शर्तें (Terms & Conditions)</h3>
+        <p style="margin-top: 10px; color: var(--gray); line-height: 1.5;">
+            यह कैलकुलेटर केवल अनुमानित गणना के लिए है। किसी भी वित्तीय या कानूनी निर्णय से पहले आधिकारिक जांच अवश्य करें।
+        </p>
+    </div>
+</div>
+
+<div class="footer" id="footer-text">
+    © 2026 StartPay Legal & Finance Calculator
+</div>
+
+<script>
+const CONFIG = {
+    name: "Anurag Rai",
+    primaryPhone: "9340726600",
+    altPhone: "9806191822",
+    website: "https://startpayonline.com/",
+    appName: "StartPay Legal & Finance Calculator"
+};
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("app-subtitle").innerHTML = `by ${CONFIG.name} | ☎ ${CONFIG.primaryPhone}`;
+    document.getElementById("footer-text").innerHTML = `© ${new Date().getFullYear()} ${CONFIG.appName}`;
+    
+    document.getElementById("wa-help-btn").href = `https://wa.me/91${CONFIG.primaryPhone}`;
+    document.getElementById("call-btn").href = `tel:+91${CONFIG.altPhone}`;
+    document.getElementById("web-btn").href = CONFIG.website;
+});
+
+let updating = false;
+
+const rate = document.getElementById("rate");
+const stampDuty = document.getElementById("stampDuty");
+const amountValue = document.getElementById("amountValue");
+
+function formatIndian(num){
+    return Number(num).toLocaleString('en-IN',{
+        maximumFractionDigits:2
+    });
+}
+
+function updateFromDuty(){
+    if(updating) return;
+    updating = true;
+
+    let duty = parseFloat(stampDuty.value);
+
+    if(!isNaN(duty)){
+        let amount = duty * parseFloat(rate.value);
+        amountValue.value = amount.toFixed(2);
+
+        document.getElementById("showDuty").innerHTML = formatIndian(duty);
+        document.getElementById("showAmount").innerHTML = formatIndian(amount);
+    } else {
+        document.getElementById("showDuty").innerHTML = "0";
+        document.getElementById("showAmount").innerHTML = "0";
+    }
+    updating = false;
+}
+
+function updateFromAmount(){
+    if(updating) return;
+    updating = true;
+
+    let amount = parseFloat(amountValue.value);
+
+    if(!isNaN(amount)){
+        let duty = amount / parseFloat(rate.value);
+        stampDuty.value = duty.toFixed(2);
+
+        document.getElementById("showDuty").innerHTML = formatIndian(duty);
+        document.getElementById("showAmount").innerHTML = formatIndian(amount);
+    } else {
+        document.getElementById("showDuty").innerHTML = "0";
+        document.getElementById("showAmount").innerHTML = "0";
+    }
+    updating = false;
+}
+
+stampDuty.addEventListener("input", updateFromDuty);
+amountValue.addEventListener("input", updateFromAmount);
+
+rate.addEventListener("change", function(){
+    if(stampDuty.value !== ""){
+        updateFromDuty();
+    }
+    else if(amountValue.value !== ""){
+        updateFromAmount();
+    }
+});
+
+function sharePage(){
+    if(navigator.share){
+        navigator.share({
+            title: document.title,
+            text: CONFIG.appName,
+            url: window.location.href
+        }).catch(err => console.log("Sharing failed", err));
+    } else {
+        shareWhatsapp();
+    }
+}
+
+function shareWhatsapp(){
+    let currentUrl = window.location.href;
+    let msg = encodeURIComponent(
+        `📊 *${CONFIG.appName}*\n\n` +
+        `🔗 लिंक: ${currentUrl}\n\n` +
+        `☎️ सपोर्ट: +91 ${CONFIG.primaryPhone}`
+    );
+
+    window.open(`https://wa.me/?text=${msg}`, "_blank");
+
+    setTimeout(function(){
+        window.open(`https://wa.me/91${CONFIG.primaryPhone}`, "_blank");
+    }, 1500);
+}
+
+function toggleModal(show) {
+    const modal = document.getElementById("termsModal");
+    modal.style.display = show ? "flex" : "none";
+}
+
+window.onclick = function(event) {
+    const modal = document.getElementById("termsModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
+
+</body>
+</html>
