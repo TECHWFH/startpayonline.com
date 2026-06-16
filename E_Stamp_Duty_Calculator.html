@@ -16,9 +16,9 @@
     --gray: #555;
     --input-red: #FF0000;
     --output-dark-green: #006400;
+    --words-blue: #0044cc;
 }
 
-/* आपकी दी हुई बेस्ट स्क्रॉल रीसेट सेटिंग्स */
 html {
     width: 100%;
     overflow-x: hidden;
@@ -107,7 +107,7 @@ body {
 .terms { background: #444; }
 .web { background: #009900; }
 
-/* --- 💻 लैपटॉप और डेस्कटॉप मुख्य लेआउट (आपकी दी हुई सेटिंग्स के साथ) --- */
+/* --- 💻 लैपटॉप और डेस्कटॉप मुख्य लेआउट --- */
 .main {
     width: 100%;
     max-width: 1400px;
@@ -117,7 +117,7 @@ body {
 
 .card {
     width: 100%;
-    max-width: 650px; /* डेस्कटॉप पर डिफ़ॉल्ट चौड़ाई */
+    max-width: 650px;
     margin: auto;
     background: #fff;
     border-radius: 12px;
@@ -164,6 +164,27 @@ input {
 select:focus, input:focus {
     border-color: var(--primary-blue);
     outline: none;
+}
+
+/* ✍️ इन वर्ड्स (Words Container) की स्टाइलिंग */
+.words-container {
+    margin-top: 6px;
+    padding: 8px 12px;
+    background: #fdfdfd;
+    border: 1px dashed #bbb;
+    border-radius: 6px;
+    font-size: 13.5px;
+    font-weight: bold;
+    line-height: 1.5;
+    display: none; /* डिफ़ॉल्ट रूप से छुपा रहेगा, वैल्यू आने पर दिखेगा */
+}
+.words-en {
+    color: var(--words-blue);
+    text-transform: capitalize;
+    margin-bottom: 2px;
+}
+.words-hi {
+    color: #b05c00;
 }
 
 /* --- 🟢 आउटपुट रिजल्ट बॉक्स --- */
@@ -234,28 +255,17 @@ select:focus, input:focus {
     cursor: pointer;
 }
 
-
-/* --- 📱 MOBILE COMFORT DESIGN (768px से छोटी स्क्रीन) --- */
+/* --- 📱 MOBILE COMFORT DESIGN --- */
 @media screen and (max-width: 768px) {
     .actions {
         flex-direction: column;
         position: relative;
     }
 
-    .btn {
-        width: 100%;
-    }
+    .btn { width: 100%; }
+    .main { padding: 10px; }
+    .card { max-width: 100%; padding: 15px; }
 
-    .main {
-        padding: 10px;
-    }
-
-    .card {
-        max-width: 100%;
-        padding: 15px;
-    }
-
-    /* 🛠️ सुधार: मोबाइल पर डेटा ऊपर-नीचे टूटने के बजाय आमने-सामने ही रहेगा */
     .result p {
         display: flex;
         flex-direction: row; 
@@ -264,29 +274,21 @@ select:focus, input:focus {
         font-size: 14.5px;
     }
 
-    /* 🛠️ सुधार: करोड़ों के अमाउंट को ऑटो-फिट करने के लिए फॉन्ट अलाइनमेंट और साइज फिक्स */
     .result span {
         max-width: 65%;
         text-align: right;
-        font-size: clamp(14px, 4.2vw, 17px); /* बहुत बड़ी संख्या होने पर फॉन्ट ऑटोमैटिक एडजस्ट होगा */
+        font-size: clamp(14px, 4.2vw, 17px);
     }
 }
 
-/* --- 📑 TABLET DESIGN (769px से 1024px तक) --- */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
-    .card {
-        max-width: 700px;
-    }
+    .card { max-width: 700px; }
 }
 
-/* --- 🖥️ ULTRA WIDE DESKTOP DESIGN (1025px से ऊपर) --- */
 @media screen and (min-width: 1025px) {
-    .card {
-        max-width: 750px;
-    }
+    .card { max-width: 750px; }
 }
 
-/* --- 🖨️ PERFECT PDF PRINT --- */
 @media print {
     .topbar, .header, .actions, .footer { display: none !important; }
     body, .main { background: #fff; padding: 0; margin: 0; }
@@ -324,11 +326,21 @@ select:focus, input:focus {
             <option value="200">0.50%</option>
         </select>
 
+        <!-- 1. Stamp Duty Input + Words Feature -->
         <label for="stampDuty">Stamp Duty (Rs/-)</label>
         <input type="number" id="stampDuty" placeholder="Enter Stamp Duty" step="any">
+        <div id="stampDutyWords" class="words-container">
+            <div class="words-en" id="stampDutyWordsEn"></div>
+            <div class="words-hi" id="stampDutyWordsHi"></div>
+        </div>
 
+        <!-- 2. Amount Value Input + Words Feature -->
         <label for="amountValue">Amount Value (Rs/-)</label>
         <input type="number" id="amountValue" placeholder="Enter Amount Value" step="any">
+        <div id="amountValueWords" class="words-container">
+            <div class="words-en" id="amountValueWordsEn"></div>
+            <div class="words-hi" id="amountValueWordsHi"></div>
+        </div>
 
         <div class="result">
             <p>Stamp Duty : <span id="showDuty">0</span></p>
@@ -380,6 +392,131 @@ function formatIndian(num){
     return Number(num).toLocaleString('en-IN',{ maximumFractionDigits:2 });
 }
 
+/* =========================================================
+   📊 नंबर को इंग्लिश और हिंदी शब्दों में बदलने का एडवांस इंजन (Indian System)
+   ========================================================= */
+const th_en = ['', 'thousand', 'lakh', 'crore'];
+const dg_en = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+const tn_en = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seven-teen', 'eighteen', 'nineteen'];
+const tw_en = ['twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+const dg_hi = ['शून्य', 'एक', 'दो', 'तीन', 'चार', 'पाँच', 'छह', 'सात', 'आठ', 'नौ'];
+const tn_hi = ['दस', 'ग्यारह', 'बारह', 'तेरह', 'चौदह', 'पन्द्रह', 'सोलह', 'सत्रह', 'अठारह', 'उन्नीस'];
+const tw_hi = {20:'बीस',21:'इक्कीस',22:'बाईस',23:'तेईस',24:'चौबीस',25:'पच्चीस',26:'छब्बीस',27:'सत्ताईस',28:'अट्ठाईस',29:'उनतीस',30:'तीस',31:'इकतीस',32:'बत्तीस',33:'तेँतीस',34:'चौँतीस',35:'पैँतीस',36:'छत्तीस',37:'सैँतीस',38:'अड़तीस',39:'उनतालीस',40:'चालीस',41:'इक्तालीस',42:'बयालीस',43:'तैँतालीस',44:'चैँतालीस',45:'पैँतालीस',46:'छियालीस',47:'सैँतालीस',48:'अड़तालीस',49:'उनचास',50:'पचास',51:'इक्कावन',52:'बावन',53:'तिरेपन',54:'चौवन',55:'पचपन',56:'छप्पन',57:'सतावन',58:'अठावन',59:'उनसठ',60:'साठ',61:'इक्सठ',62:'बासठ',63:'तिर्सठ',64:'चौँसठ',65:'पैँसठ',66:'छियासठ',67:'सरसठ',68:'अड़सठ',69:'उनहत्तर',70:'सत्तर',71:'इक्हत्तर',72:'बहत्तर',73:'तिहत्तर',74:'चौहत्तर',75:'पचहत्तर',76:'छियहत्तर',77:'सतहत्तर',78:'अठहत्तर',79:'उनासी',80:'अस्सी',81:'इक्कासी',82:'बयासी',83:'तिरासी',84:'चौरासी',85:'पचासी',86:'छियासी',87:'सतासी',88:'अठासी',89:'नवासी',90:'नब्बे',91:'इक्कान्बे',92:'बयान्बे',93:'तिरान्बे',94:'चौरान्बे',95:'पचान्बे',96:'छियान्बे',97:'सतान्बे',98:'अठान्बे',99:'नियान्बे'};
+
+function numToWordsEN(s) {
+    s = s.toString().split('.')[0];
+    let n = parseInt(s);
+    if (isNaN(n) || n === 0) return 'Zero Rupees Only';
+    
+    function convert2Digits(num) {
+        if (num < 10) return dg_en[num];
+        if (num < 20) return tn_en[num - 10];
+        let rem = num % 10;
+        let ten = Math.floor(num / 10);
+        return tw_en[ten - 2] + (rem > 0 ? ' ' + dg_en[rem] : '');
+    }
+
+    let str = '';
+    // करोड़
+    if (n >= 10000000) {
+        let cr = Math.floor(n / 10000000);
+        str += numToWordsEN(cr).replace(' Rupees Only', '') + ' Crore ';
+        n %= 10000000;
+    }
+    // लाख
+    if (n >= 1000000) {
+        let lk = Math.floor(n / 100000);
+        str += convert2Digits(lk) + ' Lakh ';
+        n %= 100000;
+    } else if (n >= 100000) {
+        let lk = Math.floor(n / 100000);
+        str += dg_en[lk] + ' Lakh ';
+        n %= 100000;
+    }
+    // हज़ार
+    if (n >= 1000) {
+        let th = Math.floor(n / 1000);
+        str += convert2Digits(th) + ' Thousand ';
+        n %= 1000;
+    }
+    // सौ
+    if (n >= 100) {
+        let h = Math.floor(n / 100);
+        str += dg_en[h] + ' Hundred ';
+        n %= 100;
+    }
+    // दहाई और इकाई
+    if (n > 0) {
+        if (str !== '') str += 'and ';
+        str += convert2Digits(n);
+    }
+    return str.trim() + ' Rupees Only';
+}
+
+function numToWordsHI(s) {
+    s = s.toString().split('.')[0];
+    let n = parseInt(s);
+    if (isNaN(n) || n === 0) return 'शून्य रुपये मात्र';
+
+    function convert2DigitsHI(num) {
+        if (num < 10) return dg_hi[num];
+        if (num < 20) return tn_hi[num - 10];
+        return tw_hi[num];
+    }
+
+    let str = '';
+    // करोड़
+    if (n >= 10000000) {
+        let cr = Math.floor(n / 10000000);
+        str += numToWordsHI(cr).replace(' रुपये मात्र', '') + ' करोड़ ';
+        n %= 10000000;
+    }
+    // लाख
+    if (n >= 100000) {
+        let lk = Math.floor(n / 100000);
+        str += convert2DigitsHI(lk) + ' लाख ';
+        n %= 100000;
+    }
+    // हज़ार
+    if (n >= 1000) {
+        let th = Math.floor(n / 1000);
+        str += convert2DigitsHI(th) + ' हजार ';
+        n %= 1000;
+    }
+    // सौ
+    if (n >= 100) {
+        let h = Math.floor(n / 100);
+        str += dg_hi[h] + ' सौ ';
+        n %= 100;
+    }
+    // दहाई/इकाई
+    if (n > 0) {
+        str += convert2DigitsHI(n);
+    }
+    return str.trim() + ' रुपये मात्र';
+}
+
+// दोनों इनपुट्स के लिए वर्ड्स अपडेट करने का मास्टर फंक्शन
+function updateWordsDisplay(inputEl, containerId, enId, hiId) {
+    let val = parseFloat(inputEl.value);
+    let container = document.getElementById(containerId);
+    let enBox = document.getElementById(enId);
+    let hiBox = document.getElementById(hiId);
+    
+    if(!isNaN(val) && val > 0) {
+        container.style.display = "block";
+        enBox.innerHTML = "🗣️ " + numToWordsEN(val);
+        hiBox.innerHTML = "✍️ " + numToWordsHI(val);
+    } else {
+        container.style.display = "none";
+        enBox.innerHTML = "";
+        hiBox.innerHTML = "";
+    }
+}
+
+/* ========================================================= */
+
 function updateFromDuty(){
     if(updating) return;
     updating = true;
@@ -394,6 +531,10 @@ function updateFromDuty(){
         document.getElementById("showAmount").innerHTML = "0";
     }
     updating = false;
+    
+    // शब्दों का लाइव डिस्प्ले अपडेट करें
+    updateWordsDisplay(stampDuty, "stampDutyWords", "stampDutyWordsEn", "stampDutyWordsHi");
+    updateWordsDisplay(amountValue, "amountValueWords", "amountValueWordsEn", "amountValueWordsHi");
 }
 
 function updateFromAmount(){
@@ -410,6 +551,10 @@ function updateFromAmount(){
         document.getElementById("showAmount").innerHTML = "0";
     }
     updating = false;
+    
+    // शब्दों का लाइव डिस्प्ले अपडेट करें
+    updateWordsDisplay(stampDuty, "stampDutyWords", "stampDutyWordsEn", "stampDutyWordsHi");
+    updateWordsDisplay(amountValue, "amountValueWords", "amountValueWordsEn", "amountValueWordsHi");
 }
 
 stampDuty.addEventListener("input", updateFromDuty);
