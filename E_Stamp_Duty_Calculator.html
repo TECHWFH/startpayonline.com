@@ -6,6 +6,7 @@
 <title>StartPay Legal & Finance Calculator</title>
 
 <style>
+/* --- 🎨 SPO थीम वेरिएबल्स --- */
 :root {
     --primary-blue: #0000FF;
     --primary-green: #009900;
@@ -13,23 +14,33 @@
     --white: #FFFFFF;
     --light: #f5f7fb;
     --gray: #555;
-    
-    /* 🎨 नए कस्टम कलर वेरिएबल्स */
     --input-red: #FF0000;
     --output-dark-green: #006400;
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
+/* आपकी दी हुई बेस्ट स्क्रॉल रीसेट सेटिंग्स */
+html {
+    width: 100%;
+    overflow-x: hidden;
 }
 
 body {
+    width: 100%;
+    overflow-x: hidden;
+    min-width: 320px;
+    margin: 0;
+    padding: 0;
     background: var(--light);
+    font-family: Arial, sans-serif;
 }
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* --- 🏠 होम टॉपबार --- */
 .topbar {
     background: var(--dark-navy);
     color: #fff;
@@ -39,6 +50,7 @@ body {
     font-weight: bold;
 }
 
+/* --- 📊 मुख्य हेडर बैनर --- */
 .header {
     background: linear-gradient(135deg, var(--primary-blue), var(--primary-green));
     color: #fff;
@@ -50,6 +62,7 @@ body {
 .header h1 {
     font-size: clamp(20px, 5vw, 30px);
     margin-bottom: 8px;
+    font-weight: bold;
 }
 
 .header p {
@@ -57,6 +70,7 @@ body {
     opacity: 0.9;
 }
 
+/* --- 🕹️ एक्शन बटन्स बार --- */
 .actions {
     display: flex;
     flex-wrap: wrap;
@@ -85,10 +99,7 @@ body {
     font-size: 14px;
 }
 
-.btn:hover {
-    opacity: 0.9;
-}
-
+.btn:hover { opacity: 0.9; }
 .print { background: #0066cc; }
 .help { background: #25D366; }
 .share { background: #ff6600; }
@@ -96,18 +107,22 @@ body {
 .terms { background: #444; }
 .web { background: #009900; }
 
+/* --- 💻 लैपटॉप और डेस्कटॉप मुख्य लेआउट (आपकी दी हुई सेटिंग्स के साथ) --- */
 .main {
-    max-width: 600px;
+    width: 100%;
+    max-width: 1400px;
     margin: auto;
-    padding: 20px 15px;
-    min-height: 60vh;
+    padding: 20px;
 }
 
 .card {
+    width: 100%;
+    max-width: 650px; /* डेस्कटॉप पर डिफ़ॉल्ट चौड़ाई */
+    margin: auto;
     background: #fff;
-    border-radius: 10px;
+    border-radius: 12px;
     padding: 25px;
-    box-shadow: 0 4px 15px rgba(0,0,0,.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,.10);
 }
 
 .card h2 {
@@ -115,6 +130,7 @@ body {
     margin-bottom: 20px;
     color: var(--dark-navy);
     font-size: clamp(20px, 4.5vw, 24px);
+    font-weight: bold;
 }
 
 label {
@@ -125,28 +141,22 @@ label {
     font-size: 15px;
 }
 
-select {
+select, input {
     width: 100%;
+    min-height: 48px;
+    font-size: 16px;
     padding: 12px;
     margin-top: 6px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    font-size: 16px;
     box-sizing: border-box;
     font-weight: bold;
-    color: #222;
 }
 
-/* 🔴 इनपुट बॉक्स का कलर टेक्स्ट लाल (Red) किया */
+select { color: #222; }
+
+/* 🔴 इनपुट का रंग चमकदार लाल रहेगा */
 input {
-    width: 100%;
-    padding: 12px;
-    margin-top: 6px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    box-sizing: border-box;
-    font-weight: bold;
     color: var(--input-red); 
     transition: border 0.2s;
 }
@@ -156,7 +166,10 @@ select:focus, input:focus {
     outline: none;
 }
 
+/* --- 🟢 आउटपुट रिजल्ट बॉक्स --- */
 .result {
+    width: 100%;
+    overflow: hidden;
     margin-top: 25px;
     padding: 15px;
     background: #eef5ff;
@@ -165,21 +178,28 @@ select:focus, input:focus {
 }
 
 .result p {
-    margin: 10px 0;
+    margin: 12px 0;
     font-weight: bold;
     font-size: 16px;
     color: #222;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    gap: 10px;
 }
 
-/* 🟢 आउटपुट रिजल्ट का फॉन्ट कलर डार्क ग्रीन (Dark Green) किया */
+/* 🟢 आउटपुट का रंग गहरा हरा रहेगा */
 .result span {
+    max-width: 65%;
+    text-align: right;
     color: var(--output-dark-green);
     font-size: 18px;
     font-weight: 800;
+    overflow-wrap: anywhere;
+    word-break: break-word;
 }
 
+/* --- 📜 फुटर एरिया --- */
 .footer {
     margin-top: 40px;
     background: var(--dark-navy);
@@ -189,7 +209,7 @@ select:focus, input:focus {
     font-size: 14px;
 }
 
-/* Terms Modal Styling */
+/* --- ⚖️ नियम एवं शर्तें पॉपअप विंडो --- */
 .modal {
     display: none;
     position: fixed;
@@ -214,29 +234,69 @@ select:focus, input:focus {
     cursor: pointer;
 }
 
-@media(max-width:768px){
+
+/* --- 📱 MOBILE COMFORT DESIGN (768px से छोटी स्क्रीन) --- */
+@media screen and (max-width: 768px) {
     .actions {
         flex-direction: column;
         position: relative;
     }
+
     .btn {
         width: 100%;
-        text-align: center;
     }
+
     .main {
         padding: 10px;
     }
+
     .card {
+        max-width: 100%;
         padding: 15px;
     }
+
+    /* 🛠️ सुधार: मोबाइल पर डेटा ऊपर-नीचे टूटने के बजाय आमने-सामने ही रहेगा */
+    .result p {
+        display: flex;
+        flex-direction: row; 
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14.5px;
+    }
+
+    /* 🛠️ सुधार: करोड़ों के अमाउंट को ऑटो-फिट करने के लिए फॉन्ट अलाइनमेंट और साइज फिक्स */
+    .result span {
+        max-width: 65%;
+        text-align: right;
+        font-size: clamp(14px, 4.2vw, 17px); /* बहुत बड़ी संख्या होने पर फॉन्ट ऑटोमैटिक एडजस्ट होगा */
+    }
+}
+
+/* --- 📑 TABLET DESIGN (769px से 1024px तक) --- */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .card {
+        max-width: 700px;
+    }
+}
+
+/* --- 🖥️ ULTRA WIDE DESKTOP DESIGN (1025px से ऊपर) --- */
+@media screen and (min-width: 1025px) {
+    .card {
+        max-width: 750px;
+    }
+}
+
+/* --- 🖨️ PERFECT PDF PRINT --- */
+@media print {
+    .topbar, .header, .actions, .footer { display: none !important; }
+    body, .main { background: #fff; padding: 0; margin: 0; }
+    .card { box-shadow: none !important; padding: 0; max-width: 100% !important; }
 }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-   🏠 Home
-</div>
+<div class="topbar">🏠 Home</div>
 
 <div class="header">
     <h1 id="app-title">📊 StartPay Legal & Finance Calculator</h1>
@@ -282,8 +342,8 @@ select:focus, input:focus {
     <div class="modal-content">
         <span class="close-btn" onclick="toggleModal(false)">&times;</span>
         <h3>⚖️ नियम एवं शर्तें (Terms & Conditions)</h3>
-        <p style="margin-top: 10px; color: var(--gray); line-height: 1.5;">
-            यह कैलकुलेटर केवल अनुमानित गणना के लिए है। किसी भी वित्तीय या कानूनी निर्णय से पहले आधिकारिक जांच अवश्य करें।
+        <p style="margin-top: 10px; color: var(--gray); line-height: 1.5; font-size: 14px;">
+            यह कैलकुलेटर केवल अनुमानित गणना के लिए है। किसी भी वित्तीय या कानूनी निर्णय से पहले आधिकारिक सरकारी नियमों की जांच अवश्य करें।
         </p>
     </div>
 </div>
@@ -317,21 +377,16 @@ const stampDuty = document.getElementById("stampDuty");
 const amountValue = document.getElementById("amountValue");
 
 function formatIndian(num){
-    return Number(num).toLocaleString('en-IN',{
-        maximumFractionDigits:2
-    });
+    return Number(num).toLocaleString('en-IN',{ maximumFractionDigits:2 });
 }
 
 function updateFromDuty(){
     if(updating) return;
     updating = true;
-
     let duty = parseFloat(stampDuty.value);
-
     if(!isNaN(duty)){
         let amount = duty * parseFloat(rate.value);
         amountValue.value = amount.toFixed(2);
-
         document.getElementById("showDuty").innerHTML = formatIndian(duty);
         document.getElementById("showAmount").innerHTML = formatIndian(amount);
     } else {
@@ -344,13 +399,10 @@ function updateFromDuty(){
 function updateFromAmount(){
     if(updating) return;
     updating = true;
-
     let amount = parseFloat(amountValue.value);
-
     if(!isNaN(amount)){
         let duty = amount / parseFloat(rate.value);
         stampDuty.value = duty.toFixed(2);
-
         document.getElementById("showDuty").innerHTML = formatIndian(duty);
         document.getElementById("showAmount").innerHTML = formatIndian(amount);
     } else {
@@ -362,14 +414,9 @@ function updateFromAmount(){
 
 stampDuty.addEventListener("input", updateFromDuty);
 amountValue.addEventListener("input", updateFromAmount);
-
 rate.addEventListener("change", function(){
-    if(stampDuty.value !== ""){
-        updateFromDuty();
-    }
-    else if(amountValue.value !== ""){
-        updateFromAmount();
-    }
+    if(stampDuty.value !== "") updateFromDuty();
+    else if(amountValue.value !== "") updateFromAmount();
 });
 
 function sharePage(){
@@ -387,28 +434,19 @@ function sharePage(){
 function shareWhatsapp(){
     let currentUrl = window.location.href;
     let msg = encodeURIComponent(
-        `📊 *${CONFIG.appName}*\n\n` +
-        `🔗 लिंक: ${currentUrl}\n\n` +
-        `☎️ सपोर्ट: +91 ${CONFIG.primaryPhone}`
+        `📊 *${CONFIG.appName}*\n\n🔗 लिंक: ${currentUrl}\n\n☎️ सपोर्ट: +91 ${CONFIG.primaryPhone}`
     );
-
     window.open(`https://wa.me/?text=${msg}`, "_blank");
-
-    setTimeout(function(){
-        window.open(`https://wa.me/91${CONFIG.primaryPhone}`, "_blank");
-    }, 1500);
+    setTimeout(function(){ window.open(`https://wa.me/91${CONFIG.primaryPhone}`, "_blank"); }, 1500);
 }
 
 function toggleModal(show) {
-    const modal = document.getElementById("termsModal");
-    modal.style.display = show ? "flex" : "none";
+    document.getElementById("termsModal").style.display = show ? "flex" : "none";
 }
 
 window.onclick = function(event) {
     const modal = document.getElementById("termsModal");
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
+    if (event.target == modal) modal.style.display = "none";
 }
 </script>
 
