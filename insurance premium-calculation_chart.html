@@ -2,117 +2,152 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Insurance Endorsement & Commission Calculator</title>
 <style>
+    * {
+        box-sizing: border-box;
+    }
     body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #eef2f5;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f4f6f9;
         margin: 0;
-        padding: 15px;
+        padding: 0 0 20px 0;
+        color: #333;
     }
 
-    /* Top Navigation Header Styling */
-    .top-header-nav {
-        max-width: 1050px;
-        margin: 0 auto 20px auto;
-        background: #1a252f;
-        padding: 15px 20px;
-        border-radius: 12px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    /* TOP HEADER CONTAINER (Image Exact Match) */
+    .header-wrapper {
+        width: 100%;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    /* Top Strip - Dark Navy Blue */
+    .top-navy-bar {
+        background-color: #000b4d;
+        padding: 8px 15px;
+        text-align: center;
+    }
+
+    .top-navy-bar a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 15px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    /* Main Banner Gradient (Blue to Green) */
+    .main-banner-gradient {
+        background: linear-gradient(90deg, #001ffc 0%, #008726 100%);
+        padding: 20px 15px;
+        text-align: center;
         color: #ffffff;
     }
 
-    .header-info-bar {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-        border-bottom: 1px solid #34495e;
-        padding-bottom: 10px;
-        margin-bottom: 12px;
-    }
-
-    .header-info-bar h1 {
-        font-size: 18px;
+    .main-banner-title {
+        font-size: 24px;
+        font-weight: 800;
         margin: 0;
-        color: #3498db;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        letter-spacing: 0.5px;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
     }
 
-    .header-info-bar .author-info {
+    .main-banner-author {
         font-size: 13px;
-        color: #ecf0f1;
+        margin-top: 5px;
+        opacity: 0.95;
         font-weight: 500;
     }
 
-    /* Action Buttons / Tabs Grid */
-    .nav-tabs-container {
+    /* Action Buttons Navigation Strip */
+    .nav-buttons-strip {
+        background-color: #ffffff;
+        padding: 12px 10px;
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
         justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid #e0e0e0;
     }
 
-    .nav-tab-btn {
+    .nav-btn {
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         gap: 6px;
-        background-color: #2c3e50;
         color: #ffffff;
         text-decoration: none;
-        padding: 8px 12px;
-        border-radius: 6px;
-        font-size: 12px;
-        font-weight: 600;
-        border: 1px solid #455a64;
-        transition: all 0.2s ease-in-out;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        border: none;
         cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+        transition: transform 0.1s ease, opacity 0.2s;
     }
 
-    .nav-tab-btn:hover {
-        background-color: #3498db;
-        border-color: #2980b9;
-        color: #ffffff;
-        transform: translateY(-2px);
+    .nav-btn:active {
+        transform: scale(0.96);
     }
 
-    .nav-tab-btn.home-btn { background-color: #007bff; border-color: #0056b3; }
-    .nav-tab-btn.print-btn { background-color: #6c757d; border-color: #545b62; }
-    .nav-tab-btn.wa-btn { background-color: #25d366; border-color: #1eb957; color: #fff; }
-    .nav-tab-btn.call-btn { background-color: #ff9800; border-color: #e68a00; }
-    .nav-tab-btn.web-btn { background-color: #9c27b0; border-color: #7b1fa2; }
+    /* Color Palette Matching the Image */
+    .btn-blue { background-color: #0d6efd; }
+    .btn-green { background-color: #00c853; }
+    .btn-orange { background-color: #ff6d00; }
+    .btn-red { background-color: #d50000; }
+    .btn-dark { background-color: #37474f; }
+    .btn-bright-green { background-color: #00a000; }
 
-    /* Calculator Main Container */
+    /* CALCULATOR MAIN CONTAINER */
     .table-container {
         max-width: 1050px;
         margin: 0 auto;
         background: #ffffff;
-        padding: 25px;
+        padding: 20px;
         border-radius: 12px;
-        box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.06);
     }
 
     .header-title {
         text-align: center;
-        margin-bottom: 20px;
-        color: #1a252f;
+        margin: 0 0 15px 0;
+        font-size: 20px;
+        color: #000b4d;
+        font-weight: 700;
+    }
+
+    .table-responsive-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     table {
         width: 100%;
         border-collapse: collapse;
-        margin-top: 10px;
+        margin-top: 5px;
+        min-width: 600px;
     }
 
     th, td {
         border: 1px solid #c0c4cc;
-        padding: 10px 12px;
+        padding: 8px 10px;
         text-align: right;
-        font-size: 13px;
+        font-size: 12px;
     }
 
     th {
-        background-color: #2c3e50;
+        background-color: #000b4d;
         color: #ffffff;
         font-weight: bold;
         text-align: center;
@@ -122,31 +157,32 @@
         text-align: left;
     }
 
-    .bold-text {
-        font-weight: bold;
-    }
+    .bold-text { font-weight: bold; }
 
     .input-field {
-        width: 100px;
-        padding: 5px;
+        width: 100%;
+        max-width: 95px;
+        padding: 4px 6px;
         text-align: right;
         font-weight: bold;
-        border: 2px solid #3498db;
-        border-radius: 5px;
-        background-color: #f0f8ff;
+        border: 2px solid #001ffc;
+        border-radius: 4px;
+        background-color: #f0f4ff;
+        font-size: 12px;
     }
 
     .select-field {
-        padding: 5px;
+        padding: 4px 6px;
         font-weight: bold;
-        border: 2px solid #3498db;
-        border-radius: 5px;
-        background-color: #f0f8ff;
+        border: 2px solid #001ffc;
+        border-radius: 4px;
+        background-color: #f0f4ff;
+        font-size: 12px;
     }
 
-    /* Main Row Styling */
+    /* Table Highlights */
     .row-net-premium {
-        background-color: #003366 !important;
+        background-color: #001ffc !important;
         color: #ffffff !important;
         font-weight: bold;
     }
@@ -155,14 +191,12 @@
         background-color: #8b0000 !important;
         color: #ffffff !important;
         font-weight: bold;
-        font-size: 14px;
     }
 
     .row-commission {
-        background-color: #1b4d3e !important;
+        background-color: #008726 !important;
         color: #ffffff !important;
         font-weight: bold;
-        font-size: 14px;
     }
 
     /* Sub-Rows for Words */
@@ -173,206 +207,217 @@
 
     .row-words-commission {
         background-color: #f2faf6 !important;
-        border-bottom: 2px solid #1b4d3e;
+        border-bottom: 2px solid #008726;
     }
 
     .words-cell {
         text-align: left !important;
-        font-size: 12px;
-        line-height: 1.6;
+        font-size: 11px;
+        line-height: 1.4;
         vertical-align: middle;
-        padding: 10px !important;
+        padding: 8px !important;
     }
 
     .words-tag {
         font-weight: 700;
         display: inline-block;
-        padding: 1px 5px;
+        padding: 1px 4px;
         border-radius: 3px;
-        margin-right: 4px;
-        font-size: 11px;
+        margin-right: 3px;
+        font-size: 10px;
     }
 
-    .tag-payable {
-        background-color: #ffd8d8;
-        color: #8b0000;
-    }
+    .tag-payable { background-color: #ffd8d8; color: #8b0000; }
+    .tag-commission { background-color: #d1f2e4; color: #008726; }
 
-    .tag-commission {
-        background-color: #d1f2e4;
-        color: #1b4d3e;
-    }
+    .text-en-words { font-weight: 700; color: #2b2b2b; display: block; margin-bottom: 2px; }
+    .text-hi-words { font-weight: 700; color: #1a1a1a; display: block; }
 
-    .text-en-words {
-        font-weight: 700;
-        color: #2b2b2b;
-        display: block;
-        margin-bottom: 3px;
-    }
+    .lang-label { color: #555; font-weight: bold; margin-right: 5px; font-size: 12px; }
+    .red-text-bold { color: #d9534f; font-weight: bold; }
 
-    .text-hi-words {
-        font-weight: 700;
-        color: #1a1a1a;
-        display: block;
-    }
-
-    .lang-label {
-        color: #555;
-        font-weight: bold;
-        margin-right: 5px;
-    }
-
-    .red-text-bold {
-        color: #d9534f;
-        font-weight: bold;
-    }
-
-    /* Mobile Responsive Optimizations */
+    /* Extra Mobile Responsive Optimizations */
     @media (max-width: 768px) {
-        body { padding: 5px; }
-        .table-container { padding: 10px; }
-        .header-info-bar { text-align: center; justify-content: center; gap: 5px; }
-        .nav-tabs-container { justify-content: space-between; }
-        .nav-tab-btn { flex: 1 1 45%; justify-content: center; font-size: 11px; padding: 7px 5px; }
-        .table-container { overflow-x: auto; }
-        th, td { font-size: 11px; padding: 6px; }
-        .input-field { width: 75px; font-size: 11px; }
+        .main-banner-title { font-size: 18px; }
+        .main-banner-author { font-size: 11px; }
+
+        .nav-buttons-strip {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            padding: 10px 6px;
+        }
+
+        .nav-btn {
+            width: 100%;
+            padding: 8px 4px;
+            font-size: 11px;
+            border-radius: 6px;
+        }
+
+        .table-container { padding: 12px 8px; margin: 0 5px; }
+        .header-title { font-size: 16px; }
+
+        th, td { padding: 6px 4px; font-size: 11px; }
+        .input-field { max-width: 70px; font-size: 11px; padding: 3px; }
     }
 </style>
 </head>
 <body>
 
-<div class="top-header-nav">
-    <div class="header-info-bar">
-        <h1>📊 StartPay Legal & Finance Calculator</h1>
-        <div class="author-info">by Anurag Rai | ☎ 9340726600</div>
+<!-- EXACT MATCH TOP HEADER DESIGN -->
+<div class="header-wrapper">
+    <!-- Dark Navy Bar -->
+    <div class="top-navy-bar">
+        <a href="https://Startpayonline.com/" target="_blank">🏠 Home</a>
     </div>
-    
-    <div class="nav-tabs-container">
-        <a href="https://Startpayonline.com/" target="_blank" class="nav-tab-btn home-btn">🏠 Home</a>
-        <button onclick="window.print()" class="nav-tab-btn print-btn">🖨️ Print PDF</button>
-        <a href="https://wa.me/919340726600?text=Hi%20StartPay%20Help" target="_blank" class="nav-tab-btn wa-btn">💬 WhatsApp Help</a>
-        <a href="https://wa.me/919340726600?text=Auto%20Share%20Calculator" target="_blank" class="nav-tab-btn wa-btn">📤 Auto Share</a>
-        <a href="https://wa.me/919340726600?text=Please%20Callback%20Me" target="_blank" class="nav-tab-btn wa-btn">📲 WhatsApp Callback Share</a>
-        <a href="tel:9340726600" class="nav-tab-btn call-btn">📞 Call Now</a>
-        <a href="https://Startpayonline.com/terms" target="_blank" class="nav-tab-btn">⚖️ Terms</a>
-        <a href="https://Startpayonline.com/" target="_blank" class="nav-tab-btn web-btn">🌐 Website Link</a>
+
+    <!-- Blue to Green Gradient Banner -->
+    <div class="main-banner-gradient">
+        <h1 class="main-banner-title">
+            <span style="font-size: 24px;">📊</span> StartPay Legal & Finance Calculator
+        </h1>
+        <div class="main-banner-author">by Anurag Rai | ☎ 9340726600</div>
+    </div>
+
+    <!-- Rounded Action Buttons Strip -->
+    <div class="nav-buttons-strip">
+        <button onclick="window.print()" class="nav-btn btn-blue">🖨️ Print PDF</button>
+        <a href="https://wa.me/919340726600?text=Hi%20StartPay%20Help" target="_blank" class="nav-btn btn-green">💬 WhatsApp Help</a>
+        <a href="https://wa.me/919340726600?text=Auto%20Share%20Calculator" target="_blank" class="nav-btn btn-orange">📤 Auto Share</a>
+        <a href="https://wa.me/919340726600?text=Please%20Callback%20Me" target="_blank" class="nav-btn btn-green">📲 WhatsApp Callback Share</a>
+        <a href="tel:9340726600" class="nav-btn btn-red">📞 Call Now</a>
+        <a href="https://Startpayonline.com/terms" target="_blank" class="nav-btn btn-dark">⚖️ Terms</a>
+        <a href="https://Startpayonline.com/" target="_blank" class="nav-btn btn-bright-green">🌐 Website</a>
     </div>
 </div>
 
+<!-- CALCULATOR CONTAINER -->
 <div class="table-container">
-    <h2 class="header-title">Endorsement & Premium Calculation Chart</h2>
+    <h2 class="header-title">📊 Endorsement & Premium Calculation Chart</h2>
     
-    <div style="margin-bottom: 15px; text-align: right;">
-        <span class="lang-label">Words Display Format (शब्द प्रारूप):</span>
+    <div style="margin-bottom: 12px; text-align: right;">
+        <span class="lang-label">Words Display:</span>
         <select id="wordsLangDropdown" class="select-field" onchange="calculateAll()">
-            <option value="both">Both (English + Hindi / दोनों)</option>
-            <option value="en">English Words Only</option>
-            <option value="hi">Hindi Words Only (हिंदी शब्दों में)</option>
+            <option value="both">Both (EN + HI)</option>
+            <option value="en">English Only</option>
+            <option value="hi">Hindi Only (हिंदी)</option>
         </select>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Description (विवरण)</th>
-                <th>Old Value</th>
-                <th>Vehicle Ex Show room Price</th>
-                <th>Vehicle Ex Show room Price idv</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="bold-text">Total IDV (Editable)</td>
-                <td><input type="number" id="idv_old" value="161689" class="input-field" oninput="calculateAll()"></td>
-                <td><input type="number" id="idv_1" value="152899" class="input-field" oninput="calculateAll()"></td>
-                <td><input type="number" id="idv_2" value="151000" class="input-field" oninput="calculateAll()"></td>
-            </tr>
+    <div class="table-responsive-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Description (विवरण)</th>
+                    <th>Old Value</th>
+                    <th>Vehicle Ex Showroom Price</th>
+                    <th>Vehicle Ex Showroom Price IDV</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 1. Total IDV -->
+                <tr>
+                    <td class="bold-text">Total IDV (Editable)</td>
+                    <td><input type="number" id="idv_old" value="161689" class="input-field" oninput="calculateAll()"></td>
+                    <td><input type="number" id="idv_1" value="152899" class="input-field" oninput="calculateAll()"></td>
+                    <td><input type="number" id="idv_2" value="151000" class="input-field" oninput="calculateAll()"></td>
+                </tr>
 
-            <tr>
-                <td>Own Damage Premium (A)</td>
-                <td id="od_old" class="bold-text">17,100.00</td>
-                <td id="od_1">0.00</td>
-                <td id="od_2">0.00</td>
-            </tr>
+                <!-- 2. Own Damage Premium (A) -->
+                <tr>
+                    <td class="bold-text">Own Damage Premium (A) (Editable)</td>
+                    <td><input type="number" id="od_old" value="17100" class="input-field" oninput="calculateAll()"></td>
+                    <td><input type="number" id="od_1" value="16169.75" class="input-field" oninput="calculateAll()"></td>
+                    <td><input type="number" id="od_2" value="15969.05" class="input-field" oninput="calculateAll()"></td>
+                </tr>
 
-            <tr>
-                <td>Total Liability Premium (B)</td>
-                <td><input type="number" id="tp_val" value="3848" class="input-field" oninput="calculateAll()"></td>
-                <td id="tp_1">3,848.00</td>
-                <td id="tp_2">3,848.00</td>
-            </tr>
+                <!-- 3. Total Liability Premium (B) -->
+                <tr>
+                    <td>Total Liability Premium (B)</td>
+                    <td><input type="number" id="tp_val" value="3848" class="input-field" oninput="calculateAll()"></td>
+                    <td id="tp_1">3,848.00</td>
+                    <td id="tp_2">3,848.00</td>
+                </tr>
 
-            <tr class="row-net-premium">
-                <td>Net Package Premium (A+B)</td>
-                <td id="pkg_old">0.00</td>
-                <td id="pkg_1">0.00</td>
-                <td id="pkg_2">0.00</td>
-            </tr>
+                <!-- 4. Net Package Premium (A+B) -->
+                <tr class="row-net-premium">
+                    <td>Net Package Premium (A+B)</td>
+                    <td id="pkg_old">0.00</td>
+                    <td id="pkg_1">0.00</td>
+                    <td id="pkg_2">0.00</td>
+                </tr>
 
-            <tr>
-                <td class="bold-text">IGST 18%</td>
-                <td id="gst_old" class="bold-text">0.00</td>
-                <td id="gst_1">0.00</td>
-                <td id="gst_2">0.00</td>
-            </tr>
+                <!-- 5. IGST 18% -->
+                <tr>
+                    <td class="bold-text">IGST 18%</td>
+                    <td id="gst_old" class="bold-text">0.00</td>
+                    <td id="gst_1">0.00</td>
+                    <td id="gst_2">0.00</td>
+                </tr>
 
-            <tr class="row-total-payable">
-                <td>Total Premium Payable (Net + IGST)</td>
-                <td id="tot_old">0.00</td>
-                <td id="tot_1">0.00</td>
-                <td id="tot_2">0.00</td>
-            </tr>
-            <tr class="row-words-payable">
-                <td class="bold-text" style="color:#8b0000; text-align:left; vertical-align:middle;">
-                    Amount in Words / शब्दों में<br><small style="color:#666; font-weight:normal;">(Total Payable)</small>
-                </td>
-                <td id="tot_old_words" class="words-cell"></td>
-                <td id="tot_1_words" class="words-cell"></td>
-                <td id="tot_2_words" class="words-cell"></td>
-            </tr>
+                <!-- 6. Total Premium Payable -->
+                <tr class="row-total-payable">
+                    <td>Total Premium Payable (Net + IGST)</td>
+                    <td id="tot_old">0.00</td>
+                    <td id="tot_1">0.00</td>
+                    <td id="tot_2">0.00</td>
+                </tr>
+                <!-- 6.1 Words Sub-Row -->
+                <tr class="row-words-payable">
+                    <td class="bold-text" style="color:#8b0000; text-align:left; vertical-align:middle;">
+                        Amount in Words<br><small style="color:#666; font-weight:normal;">(Total Payable)</small>
+                    </td>
+                    <td id="tot_old_words" class="words-cell"></td>
+                    <td id="tot_1_words" class="words-cell"></td>
+                    <td id="tot_2_words" class="words-cell"></td>
+                </tr>
 
-            <tr>
-                <td class="bold-text">Endorsement Total Premium</td>
-                <td>-</td>
-                <td id="end_1" class="red-text-bold">0.00</td>
-                <td id="end_2" class="red-text-bold">0.00</td>
-            </tr>
+                <!-- 7. Endorsement Total Premium -->
+                <tr>
+                    <td class="bold-text">Endorsement Total Premium</td>
+                    <td>-</td>
+                    <td id="end_1" class="red-text-bold">0.00</td>
+                    <td id="end_2" class="red-text-bold">0.00</td>
+                </tr>
 
-            <tr style="background-color: #fcf8e3;">
-                <td class="bold-text">Editable Commission Rate (%)</td>
-                <td colspan="3" style="text-align: left;">
-                    <select id="commDropdown" class="select-field" onchange="updateCommissionRate()">
-                        <option value="29.50">29.50 % (Default)</option>
-                        <option value="15.00">15.00 %</option>
-                        <option value="20.00">20.00 %</option>
-                        <option value="25.00">25.00 %</option>
-                        <option value="custom">Custom Rate</option>
-                    </select>
-                    <input type="number" id="commRate" value="29.50" step="0.01" class="input-field" style="margin-left: 10px;" oninput="calculateAll()"> %
-                </td>
-            </tr>
+                <!-- 8. Commission Rate -->
+                <tr style="background-color: #fcf8e3;">
+                    <td class="bold-text">Editable Commission Rate (%)</td>
+                    <td colspan="3" style="text-align: left;">
+                        <select id="commDropdown" class="select-field" onchange="updateCommissionRate()">
+                            <option value="29.50">29.50 % (Default)</option>
+                            <option value="15.00">15.00 %</option>
+                            <option value="20.00">20.00 %</option>
+                            <option value="25.00">25.00 %</option>
+                            <option value="custom">Custom Rate</option>
+                        </select>
+                        <input type="number" id="commRate" value="29.50" step="0.01" class="input-field" style="margin-left: 5px; width: 65px;" oninput="calculateAll()"> %
+                    </td>
+                </tr>
 
-            <tr class="row-commission">
-                <td>Commission Payment (Net OD Premium A+B)</td>
-                <td id="comm_old">0.00</td>
-                <td id="comm_1">0.00</td>
-                <td id="comm_2">0.00</td>
-            </tr>
-            <tr class="row-words-commission">
-                <td class="bold-text" style="color:#1b4d3e; text-align:left; vertical-align:middle;">
-                    Amount in Words / शब्दों में<br><small style="color:#666; font-weight:normal;">(Commission Payment)</small>
-                </td>
-                <td id="comm_old_words" class="words-cell"></td>
-                <td id="comm_1_words" class="words-cell"></td>
-                <td id="comm_2_words" class="words-cell"></td>
-            </tr>
-        </tbody>
-    </table>
+                <!-- 9. Commission Payment -->
+                <tr class="row-commission">
+                    <td>Commission Payment (Net OD Premium A+B)</td>
+                    <td id="comm_old">0.00</td>
+                    <td id="comm_1">0.00</td>
+                    <td id="comm_2">0.00</td>
+                </tr>
+                <!-- 9.1 Words Sub-Row -->
+                <tr class="row-words-commission">
+                    <td class="bold-text" style="color:#008726; text-align:left; vertical-align:middle;">
+                        Amount in Words<br><small style="color:#666; font-weight:normal;">(Commission Payment)</small>
+                    </td>
+                    <td id="comm_old_words" class="words-cell"></td>
+                    <td id="comm_1_words" class="words-cell"></td>
+                    <td id="comm_2_words" class="words-cell"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script>
-    // Indian Currency Formatter (e.g. ₹ 23,621.69)
     function formatINR(val) {
         return '₹ ' + Number(val).toLocaleString('en-IN', {
             maximumFractionDigits: 2,
@@ -380,7 +425,6 @@
         });
     }
 
-    // Convert Number to English Words
     function numberToWordsEN(num) {
         if (isNaN(num) || num === 0) return "Zero Rupees Only";
         let absoluteNum = Math.floor(Math.abs(num));
@@ -411,7 +455,6 @@
         return result ? result + " Only" : "Zero Rupees Only";
     }
 
-    // Convert Number to Hindi Words (देवनागरी)
     function numberToWordsHI(num) {
         if (isNaN(num) || num === 0) return "शून्य रुपये मात्र";
         let absoluteNum = Math.floor(Math.abs(num));
@@ -449,7 +492,6 @@
         return result ? result + " मात्र" : "शून्य रुपये मात्र";
     }
 
-    // Helper to format words based on Dropdown selection
     function getFormattedWords(num, type) {
         let mode = document.getElementById('wordsLangDropdown').value;
         let tagClass = type === 'payable' ? 'tag-payable' : 'tag-commission';
@@ -459,7 +501,7 @@
 
         if (mode === 'en') return enHtml;
         if (mode === 'hi') return hiHtml;
-        return enHtml + hiHtml; // Both
+        return enHtml + hiHtml;
     }
 
     function updateCommissionRate() {
@@ -473,28 +515,16 @@
     }
 
     function calculateAll() {
-        let idvOld = parseFloat(document.getElementById('idv_old').value) || 0;
-        let idv1 = parseFloat(document.getElementById('idv_1').value) || 0;
-        let idv2 = parseFloat(document.getElementById('idv_2').value) || 0;
+        let odOld = parseFloat(document.getElementById('od_old').value) || 0;
+        let od1 = parseFloat(document.getElementById('od_1').value) || 0;
+        let od2 = parseFloat(document.getElementById('od_2').value) || 0;
+
         let tpVal = parseFloat(document.getElementById('tp_val').value) || 0;
         let commRate = parseFloat(document.getElementById('commRate').value) || 0;
-
-        // Base OD Factor (17100 OD / 161689 IDV)
-        let odFactor = 17100 / 161689;
-
-        // 1. Own Damage Premium (A)
-        let odOld = idvOld * odFactor;
-        let od1 = idv1 * odFactor;
-        let od2 = idv2 * odFactor;
-
-        document.getElementById('od_old').innerText = formatINR(odOld);
-        document.getElementById('od_1').innerText = formatINR(od1);
-        document.getElementById('od_2').innerText = formatINR(od2);
 
         document.getElementById('tp_1').innerText = formatINR(tpVal);
         document.getElementById('tp_2').innerText = formatINR(tpVal);
 
-        // 2. Net Package Premium (A+B)
         let pkgOld = odOld + tpVal;
         let pkg1 = od1 + tpVal;
         let pkg2 = od2 + tpVal;
@@ -503,7 +533,6 @@
         document.getElementById('pkg_1').innerText = formatINR(pkg1);
         document.getElementById('pkg_2').innerText = formatINR(pkg2);
 
-        // 3. IGST 18%
         let gstOld = pkgOld * 0.18;
         let gst1 = pkg1 * 0.18;
         let gst2 = pkg2 * 0.18;
@@ -512,7 +541,6 @@
         document.getElementById('gst_1').innerText = formatINR(gst1);
         document.getElementById('gst_2').innerText = formatINR(gst2);
 
-        // 4. Total Premium Payable (Net + IGST)
         let totOld = pkgOld + gstOld;
         let tot1 = pkg1 + gst1;
         let tot2 = pkg2 + gst2;
@@ -521,19 +549,16 @@
         document.getElementById('tot_1').innerText = formatINR(tot1);
         document.getElementById('tot_2').innerText = formatINR(tot2);
 
-        // Words for Total Premium Payable
         document.getElementById('tot_old_words').innerHTML = getFormattedWords(totOld, 'payable');
         document.getElementById('tot_1_words').innerHTML = getFormattedWords(tot1, 'payable');
         document.getElementById('tot_2_words').innerHTML = getFormattedWords(tot2, 'payable');
 
-        // 5. Endorsement Premium Difference
         let end1 = totOld - tot1;
         let end2 = totOld - tot2;
 
         document.getElementById('end_1').innerText = formatINR(end1);
         document.getElementById('end_2').innerText = formatINR(end2);
 
-        // 6. Commission Payment (on Net OD Premium A+B)
         let commOld = pkgOld * (commRate / 100);
         let comm1 = pkg1 * (commRate / 100);
         let comm2 = pkg2 * (commRate / 100);
@@ -542,13 +567,11 @@
         document.getElementById('comm_1').innerText = formatINR(comm1);
         document.getElementById('comm_2').innerText = formatINR(comm2);
 
-        // Words for Commission Payment
         document.getElementById('comm_old_words').innerHTML = getFormattedWords(commOld, 'commission');
         document.getElementById('comm_1_words').innerHTML = getFormattedWords(comm1, 'commission');
         document.getElementById('comm_2_words').innerHTML = getFormattedWords(comm2, 'commission');
     }
 
-    // Auto-load calculation
     window.onload = calculateAll;
 </script>
 
