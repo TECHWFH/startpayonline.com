@@ -16,14 +16,13 @@
         color: #333;
     }
 
-    /* TOP HEADER CONTAINER (Image Exact Match) */
+    /* TOP HEADER CONTAINER */
     .header-wrapper {
         width: 100%;
         margin-bottom: 20px;
         box-shadow: 0 4px 10px rgba(0,0,0,0.15);
     }
 
-    /* Top Strip - Dark Navy Blue */
     .top-navy-bar {
         background-color: #000b4d;
         padding: 8px 15px;
@@ -40,7 +39,6 @@
         gap: 5px;
     }
 
-    /* Main Banner Gradient (Blue to Green) */
     .main-banner-gradient {
         background: linear-gradient(90deg, #001ffc 0%, #008726 100%);
         padding: 20px 15px;
@@ -67,7 +65,6 @@
         font-weight: 500;
     }
 
-    /* Action Buttons Navigation Strip */
     .nav-buttons-strip {
         background-color: #ffffff;
         padding: 12px 10px;
@@ -100,7 +97,6 @@
         transform: scale(0.96);
     }
 
-    /* Color Palette Matching the Image */
     .btn-blue { background-color: #0d6efd; }
     .btn-green { background-color: #00c853; }
     .btn-orange { background-color: #ff6d00; }
@@ -180,7 +176,6 @@
         font-size: 12px;
     }
 
-    /* Table Highlights */
     .row-net-premium {
         background-color: #001ffc !important;
         color: #ffffff !important;
@@ -199,7 +194,6 @@
         font-weight: bold;
     }
 
-    /* Sub-Rows for Words */
     .row-words-payable {
         background-color: #fff5f5 !important;
         border-bottom: 2px solid #8b0000;
@@ -236,7 +230,6 @@
     .lang-label { color: #555; font-weight: bold; margin-right: 5px; font-size: 12px; }
     .red-text-bold { color: #d9534f; font-weight: bold; }
 
-    /* Extra Mobile Responsive Optimizations */
     @media (max-width: 768px) {
         .main-banner-title { font-size: 18px; }
         .main-banner-author { font-size: 11px; }
@@ -265,14 +258,11 @@
 </head>
 <body>
 
-<!-- EXACT MATCH TOP HEADER DESIGN -->
 <div class="header-wrapper">
-    <!-- Dark Navy Bar -->
     <div class="top-navy-bar">
         <a href="https://Startpayonline.com/" target="_blank">🏠 Home</a>
     </div>
 
-    <!-- Blue to Green Gradient Banner -->
     <div class="main-banner-gradient">
         <h1 class="main-banner-title">
             <span style="font-size: 24px;">📊</span> StartPay Legal & Finance Calculator
@@ -280,7 +270,6 @@
         <div class="main-banner-author">by Anurag Rai | ☎ 9340726600</div>
     </div>
 
-    <!-- Rounded Action Buttons Strip -->
     <div class="nav-buttons-strip">
         <button onclick="window.print()" class="nav-btn btn-blue">🖨️ Print PDF</button>
         <a href="https://wa.me/919340726600?text=Hi%20StartPay%20Help" target="_blank" class="nav-btn btn-green">💬 WhatsApp Help</a>
@@ -292,7 +281,6 @@
     </div>
 </div>
 
-<!-- CALCULATOR CONTAINER -->
 <div class="table-container">
     <h2 class="header-title">📊 Endorsement & Premium Calculation Chart</h2>
     
@@ -316,54 +304,47 @@
                 </tr>
             </thead>
             <tbody>
-                <!-- 1. Total IDV -->
                 <tr>
-                    <td class="bold-text">Total IDV (Editable)</td>
-                    <td><input type="number" id="idv_old" value="161689" class="input-field" oninput="calculateAll()"></td>
-                    <td><input type="number" id="idv_1" value="152899" class="input-field" oninput="calculateAll()"></td>
-                    <td><input type="number" id="idv_2" value="151000" class="input-field" oninput="calculateAll()"></td>
+                    <td class="bold-text">Total IDV</td>
+                    <td><input type="number" id="idv_old" value="100" class="input-field" oninput="onOldIDVChange(); calculateAll();"></td>
+                    <td><input type="number" id="idv_1" value="94" class="input-field" oninput="calculateAll()"></td>
+                    <td><input type="number" id="idv_2" value="93" class="input-field" oninput="calculateAll()"></td>
                 </tr>
 
-                <!-- 2. Own Damage Premium (A) -->
                 <tr>
-                    <td class="bold-text">Own Damage Premium (A) (Editable)</td>
-                    <td><input type="number" id="od_old" value="17100" class="input-field" oninput="calculateAll()"></td>
-                    <td><input type="number" id="od_1" value="16169.75" class="input-field" oninput="calculateAll()"></td>
-                    <td><input type="number" id="od_2" value="15969.05" class="input-field" oninput="calculateAll()"></td>
+                    <td class="bold-text">Own Damage Premium (A)</td>
+                    <td><input type="number" id="od_old" value="100" class="input-field" oninput="onOldODChange(); calculateAll();"></td>
+                    <td><input type="number" id="od_1" value="100" class="input-field" oninput="calculateAll()"></td>
+                    <td><input type="number" id="od_2" value="100" class="input-field" oninput="calculateAll()"></td>
                 </tr>
 
-                <!-- 3. Total Liability Premium (B) -->
                 <tr>
-                    <td>Total Liability Premium (B)</td>
-                    <td><input type="number" id="tp_val" value="3848" class="input-field" oninput="calculateAll()"></td>
-                    <td id="tp_1">3,848.00</td>
-                    <td id="tp_2">3,848.00</td>
+                    <td class="bold-text">Total Liability Premium (B)</td>
+                    <td><input type="number" id="tp_old" value="100" class="input-field" oninput="onOldTPChange(); calculateAll();"></td>
+                    <td><input type="number" id="tp_1" value="100" class="input-field" oninput="calculateAll()"></td>
+                    <td><input type="number" id="tp_2" value="100" class="input-field" oninput="calculateAll()"></td>
                 </tr>
 
-                <!-- 4. Net Package Premium (A+B) -->
                 <tr class="row-net-premium">
                     <td>Net Package Premium (A+B)</td>
-                    <td id="pkg_old">0.00</td>
-                    <td id="pkg_1">0.00</td>
-                    <td id="pkg_2">0.00</td>
+                    <td id="pkg_old">₹ 0.00</td>
+                    <td id="pkg_1">₹ 0.00</td>
+                    <td id="pkg_2">₹ 0.00</td>
                 </tr>
 
-                <!-- 5. IGST 18% -->
                 <tr>
                     <td class="bold-text">IGST 18%</td>
-                    <td id="gst_old" class="bold-text">0.00</td>
-                    <td id="gst_1">0.00</td>
-                    <td id="gst_2">0.00</td>
+                    <td id="gst_old" class="bold-text">₹ 0.00</td>
+                    <td id="gst_1">₹ 0.00</td>
+                    <td id="gst_2">₹ 0.00</td>
                 </tr>
 
-                <!-- 6. Total Premium Payable -->
                 <tr class="row-total-payable">
                     <td>Total Premium Payable (Net + IGST)</td>
-                    <td id="tot_old">0.00</td>
-                    <td id="tot_1">0.00</td>
-                    <td id="tot_2">0.00</td>
+                    <td id="tot_old">₹ 0.00</td>
+                    <td id="tot_1">₹ 0.00</td>
+                    <td id="tot_2">₹ 0.00</td>
                 </tr>
-                <!-- 6.1 Words Sub-Row -->
                 <tr class="row-words-payable">
                     <td class="bold-text" style="color:#8b0000; text-align:left; vertical-align:middle;">
                         Amount in Words<br><small style="color:#666; font-weight:normal;">(Total Payable)</small>
@@ -373,17 +354,15 @@
                     <td id="tot_2_words" class="words-cell"></td>
                 </tr>
 
-                <!-- 7. Endorsement Total Premium -->
                 <tr>
                     <td class="bold-text">Endorsement Total Premium</td>
                     <td>-</td>
-                    <td id="end_1" class="red-text-bold">0.00</td>
-                    <td id="end_2" class="red-text-bold">0.00</td>
+                    <td id="end_1" class="red-text-bold">₹ 0.00</td>
+                    <td id="end_2" class="red-text-bold">₹ 0.00</td>
                 </tr>
 
-                <!-- 8. Commission Rate -->
                 <tr style="background-color: #fcf8e3;">
-                    <td class="bold-text">Editable Commission Rate (%)</td>
+                    <td class="bold-text">Commission Rate (%)</td>
                     <td colspan="3" style="text-align: left;">
                         <select id="commDropdown" class="select-field" onchange="updateCommissionRate()">
                             <option value="29.50">29.50 % (Default)</option>
@@ -396,14 +375,12 @@
                     </td>
                 </tr>
 
-                <!-- 9. Commission Payment -->
                 <tr class="row-commission">
                     <td>Commission Payment (Net OD Premium A+B)</td>
-                    <td id="comm_old">0.00</td>
-                    <td id="comm_1">0.00</td>
-                    <td id="comm_2">0.00</td>
+                    <td id="comm_old">₹ 0.00</td>
+                    <td id="comm_1">₹ 0.00</td>
+                    <td id="comm_2">₹ 0.00</td>
                 </tr>
-                <!-- 9.1 Words Sub-Row -->
                 <tr class="row-words-commission">
                     <td class="bold-text" style="color:#008726; text-align:left; vertical-align:middle;">
                         Amount in Words<br><small style="color:#666; font-weight:normal;">(Commission Payment)</small>
@@ -423,6 +400,24 @@
             maximumFractionDigits: 2,
             minimumFractionDigits: 2
         });
+    }
+
+    function onOldIDVChange() {
+        let oldVal = parseFloat(document.getElementById('idv_old').value) || 0;
+        document.getElementById('idv_1').value = Math.round(oldVal * 0.94);
+        document.getElementById('idv_2').value = Math.round(oldVal * 0.93);
+    }
+
+    function onOldODChange() {
+        let oldVal = parseFloat(document.getElementById('od_old').value) || 0;
+        document.getElementById('od_1').value = oldVal;
+        document.getElementById('od_2').value = oldVal;
+    }
+
+    function onOldTPChange() {
+        let oldVal = parseFloat(document.getElementById('tp_old').value) || 0;
+        document.getElementById('tp_1').value = oldVal;
+        document.getElementById('tp_2').value = oldVal;
     }
 
     function numberToWordsEN(num) {
@@ -519,15 +514,15 @@
         let od1 = parseFloat(document.getElementById('od_1').value) || 0;
         let od2 = parseFloat(document.getElementById('od_2').value) || 0;
 
-        let tpVal = parseFloat(document.getElementById('tp_val').value) || 0;
+        let tpOld = parseFloat(document.getElementById('tp_old').value) || 0;
+        let tp1 = parseFloat(document.getElementById('tp_1').value) || 0;
+        let tp2 = parseFloat(document.getElementById('tp_2').value) || 0;
+
         let commRate = parseFloat(document.getElementById('commRate').value) || 0;
 
-        document.getElementById('tp_1').innerText = formatINR(tpVal);
-        document.getElementById('tp_2').innerText = formatINR(tpVal);
-
-        let pkgOld = odOld + tpVal;
-        let pkg1 = od1 + tpVal;
-        let pkg2 = od2 + tpVal;
+        let pkgOld = odOld + tpOld;
+        let pkg1 = od1 + tp1;
+        let pkg2 = od2 + tp2;
 
         document.getElementById('pkg_old').innerText = formatINR(pkgOld);
         document.getElementById('pkg_1').innerText = formatINR(pkg1);
@@ -572,7 +567,12 @@
         document.getElementById('comm_2_words').innerHTML = getFormattedWords(comm2, 'commission');
     }
 
-    window.onload = calculateAll;
+    window.onload = function() {
+        onOldIDVChange();
+        onOldODChange();
+        onOldTPChange();
+        calculateAll();
+    };
 </script>
 
 </body>
