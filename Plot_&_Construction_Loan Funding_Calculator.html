@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STARTPAYONLINE.COM - Plot & Construction Loan Calculator</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            font-family: 'Noto Sans Devanagari', Arial, sans-serif;
+            color: #333;
+        }
+        
+        /* स्टैंडर्ड ब्रांडिंग हेडिंग */
+        .startpay-header {
+            background: linear-gradient(135deg, #1d2671, #c33764);
+            color: white;
+            text-align: center;
+            padding: 20px 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .startpay-header h1 {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 800;
+        }
+        .startpay-header p {
+            margin: 5px 0 0 0;
+            font-size: 13px;
+            opacity: 0.95;
+        }
+        .tagline {
+            background: #ffeb3b;
+            color: #d32f2f;
+            text-align: center;
+            font-weight: bold;
+            padding: 8px;
+            font-size: 14px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* एक्शन बटन बार */
+        .buttons-bar {
+            max-width: 850px;
+            margin: 15px auto;
+            padding: 0 10px;
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 10px 14px;
+            border: none;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            cursor: pointer;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            transition: transform 0.2s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-print { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+        .btn-wa-help { background: linear-gradient(135deg, #25d366, #128c7e); }
+        .btn-wa-share { background: linear-gradient(135deg, #ff9966, #ff5e62); }
+        .btn-call { background: linear-gradient(135deg, #11998e, #38ef7d); }
+        .btn-web { background: linear-gradient(135deg, #8E2DE2, #4A00E0); }
+        
+        /* मुख्य कैलकुलेटर बॉक्स */
+        .calculator-container {
+            max-width: 850px;
+            margin: 0 auto 70px auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        table.calc-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+            background: #fff;
+        }
+        table.calc-table th, table.calc-table td {
+            border: 1px solid #cbd5e1;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+        table.calc-table th {
+            background: #1d2671;
+            color: white;
+            text-align: center;
+            font-size: 16px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px 10px;
+            border: 2px solid #e1e8ed;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #fafbfc;
+            font-weight: bold;
+            color: #1d2671;
+        }
+        .form-control:focus {
+            border-color: #6a11cb;
+            outline: none;
+            background-color: #fff;
+        }
+        .amount-display {
+            font-weight: bold;
+            color: #c33764;
+            font-size: 16px;
+        }
+        .highlight-row {
+            background: #f8f9fa;
+        }
+        .words-text {
+            font-size: 12px;
+            color: #0066cc;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* फटर */
+        .startpay-footer {
+            background: #1d2671;
+            color: #fff;
+            text-align: center;
+            padding: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+        }
+
+        @media (max-width: 768px) {
+            table.calc-table, th, td { font-size: 12px; padding: 8px; }
+            .buttons-bar { gap: 6px; }
+            .btn { padding: 8px 10px; font-size: 11px; }
+        }
+
+        @media print {
+            .startpay-header, .tagline, .buttons-bar, .startpay-footer { display: none !important; }
+            body { background: #fff; margin: 0; }
+            .calculator-container { border: none; box-shadow: none; max-width: 100%; padding: 5px; margin: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- स्टैंडर्ड ब्रांडिंग हेडिंग -->
+    <div class="startpay-header">
+        <h1>🏠 STARTPAYONLINE.COM</h1>
+        <p>by Anurag Rai | ☎ 9340726600</p>
+    </div>
+    
+    <div class="tagline">
+        !! शुभ शुरुआत स्टार्ट पे के साथ !!
+    </div>
+
+    <!-- एक्शन बटन बार -->
+    <div class="buttons-bar">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print PDF</button>
+        <button class="btn btn-wa-help" onclick="openWhatsAppHelp()">💬 WhatsApp Help</button>
+        <button class="btn btn-wa-share" onclick="shareOnWhatsApp()">📤 Auto Share</button>
+        <a href="tel:9340726600" class="btn btn-call">📞 Call Now</a>
+        <a href="https://startpayonline.com" target="_blank" class="btn btn-web">🌐 Website</a>
+    </div>
+
+    <!-- मुख्य कैलकुलेटर इंटरफ़ेस -->
+    <div class="calculator-container">
+        <h2 style="text-align: center; margin-top: 0; color: #1d2671; font-size: 18px;">📊 Plot & Construction Loan Funding Calculator</h2>
+        
+        <table class="calc-table">
+            <tr>
+                <th style="width: 50%;">विवरण / Particulars</th>
+                <th style="width: 50%;">राशि / मात्रा / Details & Amount (₹)</th>
+            </tr>
+            
+            <tr>
+                <td><b>Buy Price (खरीद मूल्य - Editable)</b></td>
+                <td>
+                    <input type="number" id="buyPrice" class="form-control" value="3500000" oninput="calculateFunding()">
+                    <div id="buyPriceWords" class="words-text">Thirty Five Lakhs Only (पैंतीस लाख रुपये)</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Loan Type (लोन का प्रकार)</b></td>
+                <td>
+                    <select id="loanType" class="form-control" onchange="calculateFunding()">
+                        <option value="Plot Loan">Plot Loan / प्लॉट लोन</option>
+                        <option value="House Loan">House Loan / घर लोन</option>
+                        <option value="Plot + Construction" selected>Plot + Construction Loan / प्लॉट + निर्माण लोन</option>
+                        <option value="P+C Loan">P+C Loan / कॉम्बो लोन</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Loan % Slab (लोन प्रतिशत स्लैब - दोनों पर लागू)</b></td>
+                <td>
+                    <select id="loanPercentage" class="form-control" onchange="calculateFunding()">
+                        <option value="0.60">60% Loan</option>
+                        <option value="0.65">65% Loan</option>
+                        <option value="0.70">70% Loan</option>
+                        <option value="0.75" selected>75% Loan (Standard)</option>
+                        <option value="0.80">80% Loan</option>
+                        <option value="0.85">85% Loan</option>
+                        <option value="0.90">90% Loan</option>
+                        <option value="0.95">95% Loan</option>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td><b>Plot Loan Amount (प्लॉट लोन राशि)</b></td>
+                <td>
+                    <span id="resPlotLoanAmount" class="amount-display">26,25,000</span>
+                    <div id="plotLoanWords" class="words-text">Twenty Six Lakhs Twenty Five Thousand Only</div>
+                </td>
+            </tr>
+
+            <tr id="constructionRow">
+                <td><b>Construction Loan Amount (निर्माण लोन राशि)</b></td>
+                <td>
+                    <span id="resConstLoanAmount" class="amount-display">26,25,000</span>
+                    <div id="constLoanWords" class="words-text">Twenty Six Lakhs Twenty Five Thousand Only</div>
+                </td>
+            </tr>
+
+            <tr class="highlight-row" style="background: #eef2f7;">
+                <td><b>Total Loan Amount (कुल स्वीकृत लोन राशि)</b></td>
+                <td>
+                    <span id="resTotalLoanAmount" class="amount-display" style="color: #1d2671;">52,50,000</span>
+                    <div id="totalLoanWords" class="words-text" style="color: #1d2671;">Fifty Two Lakhs Fifty Thousand Only</div>
+                </td>
+            </tr>
+
+            <tr class="highlight-row">
+                <td><b>Estimated Self Funding (अनुमानित सेल्फ फण्ड)</b></td>
+                <td>
+                    <span id="resSelfFunding" class="amount-display">8,75,000</span>
+                    <div id="selfFundingWords" class="words-text">Eight Lakhs Seventy Five Thousand Only</div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span><b>Registri Amount (रजिस्ट्री शुल्क)</b></span>
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <input type="number" id="registriRate" class="form-control" value="12" style="width: 60px; text-align: center; padding: 4px;" oninput="calculateFunding()">
+                            <span>%</span>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <span id="resRegistriAmount" class="amount-display">4,20,000</span>
+                    <div id="registriWords" class="words-text">Four Lakhs Twenty Thousand Only</div>
+                </td>
+            </tr>
+
+            <tr class="highlight-row" style="background: #fff3f3;">
+                <td><b style="color: #c33764;">Final Self Funding (कुल आवश्यक फण्ड / Down Payment)</b></td>
+                <td>
+                    <span id="resFinalSelfFunding" class="amount-display" style="color: #c33764; font-size: 18px;">12,95,000</span>
+                    <div id="finalSelfWords" class="words-text" style="color: #c33764; font-weight: bold;">Twelve Lakhs Ninety Five Thousand Only (बारह लाख पचानवे हजार रुपये)</div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- फटर -->
+    <div class="startpay-footer">
+        © 2026 STARTPAYONLINE.COM | Technical Support: Anurag Rai (☎ 9340726600)
+    </div>
+
+<script>
+    function convertNumberToWords(num) {
+        if (isNaN(num) || num <= 0) return 'Zero Only (शून्य)';
+        
+        let crore = Math.floor(num / 10000000);
+        let lakh = Math.floor((num % 10000000) / 100000);
+        let thousand = Math.floor((num % 100000) / 1000);
+        let hundred = num % 1000;
+
+        let strEn = "";
+        let strHi = "";
+
+        if (crore > 0) {
+            strEn += crore + " Crore ";
+            strHi += crore + " करोड़ ";
+        }
+        if (lakh > 0) {
+            strEn += lakh + " Lakh ";
+            strHi += lakh + " लाख ";
+        }
+        if (thousand > 0) {
+            strEn += thousand + " Thousand ";
+            strHi += thousand + " हजार ";
+        }
+        if (hundred > 0 || (crore === 0 && lakh === 0 && thousand === 0)) {
+            strEn += hundred;
+            strHi += hundred;
+        }
+
+        return strEn.trim() + " Only (" + strHi.trim() + " रुपये)";
+    }
+
+    function calculateFunding() {
+        let buyPrice = parseFloat(document.getElementById("buyPrice").value) || 0;
+        let loanType = document.getElementById("loanType").value;
+        let loanPercent = parseFloat(document.getElementById("loanPercentage").value) || 0.75;
+        let registriRate = parseFloat(document.getElementById("registriRate").value) || 12;
+
+        // Plot Loan Amount based on Buy Price & % Dropdown
+        let plotLoanAmount = Math.round(buyPrice * loanPercent);
+        
+        let constLoanAmount = 0;
+        let constructionRow = document.getElementById("constructionRow");
+
+        // Handle Construction Loan calculation using the exact same Buy Price and % Dropdown
+        if (loanType === "Plot + Construction" || loanType === "P+C Loan") {
+            constructionRow.style.display = "";
+            constLoanAmount = Math.round(buyPrice * loanPercent); // Same percentage logic applied to construction loan based on buy price
+        } else if (loanType === "House Loan") {
+            constructionRow.style.display = "";
+            constLoanAmount = 0; 
+        } else {
+            // Only Plot Loan
+            constructionRow.style.display = "none";
+            constLoanAmount = 0;
+        }
+
+        let totalLoanAmount = plotLoanAmount + constLoanAmount;
+        
+        // Estimated self funding = Buy Price - Plot Loan Amount
+        let selfFunding = buyPrice - plotLoanAmount;
+        if (selfFunding < 0) selfFunding = 0;
+
+        // Registri amount = Buy Price * (Registri Rate %)
+        let registriAmount = Math.round(buyPrice * (registriRate / 100));
+
+        // Final Self Funding = Self Funding + Registri Amount
+        let finalSelfFunding = selfFunding + registriAmount;
+
+        // Update UI Values & Words
+        document.getElementById("resPlotLoanAmount").innerText = plotLoanAmount.toLocaleString('en-IN');
+        document.getElementById("plotLoanWords").innerText = convertNumberToWords(plotLoanAmount);
+        
+        document.getElementById("buyPriceWords").innerText = convertNumberToWords(buyPrice);
+
+        document.getElementById("resConstLoanAmount").innerText = constLoanAmount.toLocaleString('en-IN');
+        document.getElementById("constLoanWords").innerText = convertNumberToWords(constLoanAmount);
+
+        document.getElementById("resTotalLoanAmount").innerText = totalLoanAmount.toLocaleString('en-IN');
+        document.getElementById("totalLoanWords").innerText = convertNumberToWords(totalLoanAmount);
+
+        document.getElementById("resSelfFunding").innerText = selfFunding.toLocaleString('en-IN');
+        document.getElementById("selfFundingWords").innerText = convertNumberToWords(selfFunding);
+
+        document.getElementById("resRegistriAmount").innerText = registriAmount.toLocaleString('en-IN');
+        document.getElementById("registriWords").innerText = convertNumberToWords(registriAmount);
+
+        document.getElementById("resFinalSelfFunding").innerText = finalSelfFunding.toLocaleString('en-IN');
+        document.getElementById("finalSelfWords").innerText = convertNumberToWords(finalSelfFunding);
+    }
+
+    function shareOnWhatsApp() {
+        let buyPrice = document.getElementById("buyPrice").value;
+        let loanType = document.getElementById("loanType").value;
+        let loanPercent = (parseFloat(document.getElementById("loanPercentage").value) * 100) + "%";
+        let plotLoan = document.getElementById("resPlotLoanAmount").innerText;
+        let constLoan = document.getElementById("resConstLoanAmount").innerText;
+        let totalLoan = document.getElementById("resTotalLoanAmount").innerText;
+        let selfFunding = document.getElementById("resSelfFunding").innerText;
+        let registri = document.getElementById("resRegistriAmount").innerText;
+        let finalSelf = document.getElementById("resFinalSelfFunding").innerText;
+
+        let message = `📊 *STARTPAYONLINE.COM - Property Funding Report*\n` +
+                      `👨‍💻 *By:* Anurag Rai (9340726600)\n\n` +
+                      `• Loan Type: ${loanType} (${loanPercent})\n` +
+                      `• Buy Price: ₹${buyPrice}\n` +
+                      `• Plot Loan: ₹${plotLoan}\n` +
+                      `• Construction Loan: ₹${constLoan}\n` +
+                      `• Total Loan: ₹${totalLoan}\n` +
+                      `• Estimated Self Funding: ₹${selfFunding}\n` +
+                      `• Registri Amount: ₹${registri}\n\n` +
+                      `💰 *Final Self Funding Needed:* ₹${finalSelf}\n\n` +
+                      `🌐 Visit: https://startpayonline.com`;
+
+        let whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    }
+
+    function openWhatsAppHelp() {
+        let text = encodeURIComponent("नमस्ते अनुराग भाई, मुझे StartPay Property Funding Calculator के संबंध में सहायता चाहिए।");
+        window.open(`https://wa.me/919340726600?text=${text}`, '_blank');
+    }
+
+    // Initial run
+    window.onload = function() {
+        calculateFunding();
+    };
+</script>
+
+</body>
+</html>
