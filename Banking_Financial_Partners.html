@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StartPay - Kiosk & Financial Service Partners</title>
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+        background-color: #f4f6f9;
+        color: #333;
+        padding-bottom: 40px;
+    }
+
+    /* 1. TOP NAVY BAR */
+    .top-navy-bar {
+        background-color: #000b4d;
+        padding: 8px 15px;
+        text-align: center;
+    }
+
+    .top-navy-bar a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+        font-size: 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    /* 2. BRANDING BANNER (Gradient with Logo Colors) */
+    .main-banner-gradient {
+        background: linear-gradient(90deg, #001ffc 0%, #008726 100%);
+        padding: 20px 15px;
+        text-align: center;
+        color: #ffffff;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    }
+
+    .banner-content {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 15px;
+    }
+
+    .logo-left-block {
+        background: #ffffff;
+        padding: 8px 12px;
+        border-radius: 8px;
+        text-align: left;
+    }
+
+    .logo-left-text {
+        font-weight: 900;
+        color: #d50000;
+        font-size: 18px;
+        letter-spacing: 0.5px;
+    }
+
+    .logo-left-sub {
+        color: #001ffc;
+        font-weight: 800;
+    }
+
+    .center-title-block {
+        flex: 1;
+        min-width: 280px;
+    }
+
+    .main-banner-title {
+        font-size: 24px;
+        font-weight: 800;
+        margin: 0;
+        letter-spacing: 0.5px;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .main-banner-author {
+        font-size: 13px;
+        margin-top: 5px;
+        opacity: 0.95;
+        font-weight: 600;
+        background: rgba(0,0,0,0.15);
+        display: inline-block;
+        padding: 3px 10px;
+        border-radius: 12px;
+    }
+
+    .logo-right-block {
+        background: #ffffff;
+        color: #333;
+        padding: 8px 12px;
+        border-radius: 8px;
+        font-size: 11px;
+        font-weight: bold;
+        text-align: right;
+    }
+
+    /* 3. TAGLINE STRIP */
+    .tagline-strip {
+        background-color: #ffffff;
+        border-bottom: 2px solid #001ffc;
+        padding: 10px 15px;
+        text-align: center;
+        font-weight: 800;
+        font-size: 18px;
+        color: #d50000;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+
+    /* 4. NAVIGATION BUTTONS STRIP */
+    .nav-buttons-strip {
+        background-color: #ffffff;
+        padding: 12px 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .nav-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.12);
+        transition: transform 0.1s ease, opacity 0.2s;
+    }
+
+    .nav-btn:active { transform: scale(0.96); }
+
+    .btn-blue { background-color: #0d6efd; }
+    .btn-green { background-color: #00c853; }
+    .btn-orange { background-color: #ff6d00; }
+    .btn-red { background-color: #d50000; }
+    .btn-dark { background-color: #37474f; }
+    .btn-bright-green { background-color: #00a000; }
+
+    /* 5. SEARCH & CONTROLS */
+    .controls-wrapper {
+        max-width: 1100px;
+        margin: 20px auto 10px auto;
+        padding: 0 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .section-head {
+        color: #000b4d;
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    .search-box {
+        padding: 9px 15px;
+        width: 100%;
+        max-width: 350px;
+        border: 2px solid #001ffc;
+        border-radius: 8px;
+        font-size: 13px;
+        outline: none;
+        background-color: #ffffff;
+    }
+
+    /* 6. PARTNERS GRID */
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+        max-width: 1100px;
+        margin: 10px auto;
+        padding: 0 15px;
+    }
+
+    .bank-card {
+        background: #ffffff;
+        border: 1px solid #dce2e6;
+        border-radius: 10px;
+        padding: 15px 10px;
+        text-align: center;
+        text-decoration: none;
+        color: #2c3e50;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+        transition: all 0.2s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 115px;
+    }
+
+    .bank-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(0,31,252,0.15);
+        border-color: #001ffc;
+    }
+
+    .bank-icon {
+        font-size: 26px;
+        margin-bottom: 6px;
+    }
+
+    .bank-name {
+        font-weight: 700;
+        font-size: 13px;
+        line-height: 1.2;
+    }
+
+    .badge-integrated {
+        font-size: 9px;
+        color: #d50000;
+        font-weight: bold;
+        margin-top: 5px;
+    }
+
+    @media (max-width: 768px) {
+        .main-banner-title { font-size: 18px; }
+        .tagline-strip { font-size: 15px; }
+
+        .nav-buttons-strip {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            padding: 10px 6px;
+        }
+
+        .nav-btn {
+            width: 100%;
+            padding: 8px 4px;
+            font-size: 11px;
+        }
+
+        .grid-container { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+        .bank-card { min-height: 95px; padding: 10px 5px; }
+        .bank-name { font-size: 11px; }
+    }
+</style>
+</head>
+<body>
+
+<div class="top-navy-bar">
+    <a href="https://startpayonline.com/" target="_blank">🏠 Home</a>
+</div>
+
+<div class="main-banner-gradient">
+    <div class="banner-content">
+        <div class="logo-left-block">
+            <div class="logo-left-text">RAIKIOS <span class="logo-left-sub">SERVICES</span></div>
+        </div>
+
+        <div class="center-title-block">
+            <h1 class="main-banner-title">📊 RAIKIOS SERVICES PRIVATE LIMITED</h1>
+            <div class="main-banner-author">by Anurag Rai | ☎ 9340726600</div>
+        </div>
+
+        <div class="logo-right-block">
+            <span style="color:#001ffc; font-weight:bold;">DPIIT</span> #startupindia<br>
+            <span style="color:#666;">DIPP26081</span>
+        </div>
+    </div>
+</div>
+
+<div class="tagline-strip">
+    !! शुभ शुरुआत स्टार्ट पे के साथ !!
+</div>
+
+<div class="nav-buttons-strip">
+    <button onclick="window.print()" class="nav-btn btn-blue">🖨️ Print PDF</button>
+    <a href="https://wa.me/919340726600?text=Hi%20StartPay%20Help" target="_blank" class="nav-btn btn-green">💬 WhatsApp Help</a>
+    <a href="https://wa.me/919340726600?text=Auto%20Share" target="_blank" class="nav-btn btn-orange">📤 Auto Share</a>
+    <a href="https://wa.me/919340726600?text=Please%20Callback%20Me" target="_blank" class="nav-btn btn-green">📲 WhatsApp Callback Share</a>
+    <a href="tel:9340726600" class="nav-btn btn-red">📞 Call Now</a>
+    <a href="https://startpayonline.com/terms" target="_blank" class="nav-btn btn-dark">⚖️ Terms</a>
+    <a href="https://startpayonline.com/" target="_blank" class="nav-btn btn-bright-green">🌐 Website</a>
+</div>
+
+<div class="controls-wrapper">
+    <h3 class="section-head">🏦 Our Banking & Financial Partners</h3>
+    <input type="text" id="bankSearch" class="search-box" placeholder="Search Bank or Finance Company..." onkeyup="filterBanks()">
+</div>
+
+<div class="grid-container" id="bankGrid"></div>
+
+<script>
+    const bankPartners = [
+        { name: "Aadhar HFL", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Aavas", url: "https://startpayonline.com/loan/", icon: "🏡" },
+        { name: "Abhi Loans", url: "https://startpayonline.com/loan/", integrated: true, icon: "📲" },
+        { name: "Aditya Birla Capital", url: "https://startpayonline.com/loan/", icon: "🏢" },
+        { name: "Aditya Birla HFL", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Ambit FPL", url: "https://startpayonline.com/loan/", icon: "📊" },
+        { name: "Anand Rathi", url: "https://startpayonline.com/loan/", icon: "📈" },
+        { name: "Arka Fincap", url: "https://startpayonline.com/loan/", icon: "💼" },
+        { name: "Art Housing", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "AU Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "Avanse", url: "https://startpayonline.com/loan/", icon: "🎓" },
+        { name: "Axis Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "Axis Bank - Asha", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Axis Finance", url: "https://startpayonline.com/loan/", icon: "💳" },
+        { name: "Bajaj Finance", url: "https://startpayonline.com/loan/", icon: "💳" },
+        { name: "Bajaj Housing", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Bajaj Market", url: "https://startpayonline.com/loan/", icon: "🛒" },
+        { name: "Bandhan Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "Bank of Baroda", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "Capital India", url: "https://startpayonline.com/loan/", icon: "🏢" },
+        { name: "Capri Capital", url: "https://startpayonline.com/loan/", icon: "💵" },
+        { name: "Capri Global HFL", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Centrum", url: "https://startpayonline.com/loan/", icon: "🏛️" },
+        { name: "Cholamandalam", url: "https://startpayonline.com/loan/", icon: "🚚" },
+        { name: "Clix Capital", url: "https://startpayonline.com/loan/", icon: "💻" },
+        { name: "Credit Saison", url: "https://startpayonline.com/loan/", integrated: true, icon: "💳" },
+        { name: "DBS Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "DCB Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "Deutsche Bank", url: "https://startpayonline.com/loan/", integrated: true, icon: "🏦" },
+        { name: "DMI Finance", url: "https://startpayonline.com/loan/", integrated: true, icon: "📱" },
+        { name: "DMI HFL", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Easy Home", url: "https://startpayonline.com/loan/", icon: "🏡" },
+        { name: "Edelweiss", url: "https://startpayonline.com/loan/", icon: "📊" },
+        { name: "Epimoney (FlexiLoans)", url: "https://startpayonline.com/loan/", icon: "⚡" },
+        { name: "Fedbank FSL", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "Federal Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "Finnable", url: "https://startpayonline.com/loan/", icon: "💸" },
+        { name: "GIC HFL", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Godrej Finance", url: "https://startpayonline.com/loan/", icon: "🏢" },
+        { name: "Godrej Housing", url: "https://startpayonline.com/loan/", icon: "🏡" },
+        { name: "HDB Financial Services", url: "https://startpayonline.com/loan/", icon: "💳" },
+        { name: "HDFC Bank Ltd", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "Hero Fincorp", url: "https://startpayonline.com/loan/", icon: "🏍️" },
+        { name: "Hero HFL", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Hinduja HFL", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Hinduja Leyland", url: "https://startpayonline.com/loan/", icon: "🚛" },
+        { name: "HSBC Ltd", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "ICICI Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "ICICI HFC", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "IDBI Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "IDFC Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "IIFL Finance", url: "https://startpayonline.com/loan/", icon: "💰" },
+        { name: "IIFL HFL", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Incred", url: "https://startpayonline.com/loan/", icon: "🚀" },
+        { name: "India Shelter", url: "https://startpayonline.com/loan/", icon: "🧱" },
+        { name: "Indifi", url: "https://startpayonline.com/loan/", integrated: true, icon: "💻" },
+        { name: "Nido Home Finance", url: "https://startpayonline.com/loan/", icon: "🏠" },
+        { name: "Niyogin", url: "https://startpayonline.com/loan/", icon: "⚙️" },
+        { name: "ORIX", url: "https://startpayonline.com/loan/", icon: "🚗" },
+        { name: "Piramal", url: "https://startpayonline.com/loan/", icon: "🏛️" },
+        { name: "PNB Cards", url: "https://startpayonline.com/loan/", icon: "💳" },
+        { name: "PNB HFL", url: "https://startpayonline.com/loan/", integrated: true, icon: "🏠" },
+        { name: "Poonawalla", url: "https://startpayonline.com/loan/", icon: "💎" },
+        { name: "Profectus", url: "https://startpayonline.com/loan/", icon: "📈" },
+        { name: "Protium", url: "https://startpayonline.com/loan/", icon: "⚡" },
+        { name: "RBL Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "SBI", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "Shriram Finance", url: "https://startpayonline.com/loan/", icon: "🚚" },
+        { name: "Tata Capital Limited", url: "https://startpayonline.com/loan/", icon: "🏢" },
+        { name: "Union Bank", url: "https://startpayonline.com/loan/", icon: "🏦" },
+        { name: "YES Bank", url: "https://startpayonline.com/loan/", icon: "🏦" }
+    ];
+
+    function renderBankGrid(data) {
+        const grid = document.getElementById('bankGrid');
+        grid.innerHTML = '';
+        data.forEach(item => {
+            const card = document.createElement('a');
+            card.className = 'bank-card';
+            card.href = item.url;
+            card.target = '_blank';
+            
+            card.innerHTML = `
+                <div class="bank-icon">${item.icon}</div>
+                <div class="bank-name">${item.name}</div>
+                ${item.integrated ? '<span class="badge-integrated">Digitally Integrated</span>' : ''}
+            `;
+            grid.appendChild(card);
+        });
+    }
+
+    function filterBanks() {
+        const query = document.getElementById('bankSearch').value.toLowerCase();
+        const filtered = bankPartners.filter(b => b.name.toLowerCase().includes(query));
+        renderBankGrid(filtered);
+    }
+
+    renderBankGrid(bankPartners);
+</script>
+
+</body>
+</html>
