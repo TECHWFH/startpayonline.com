@@ -1,0 +1,3662 @@
+<!DOCTYPE html>
+<html lang="hi">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no">
+
+<title>StartPay Legal & Finance Property Solutions</title>
+
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+
+/* =====================================================
+   VARIABLES
+===================================================== */
+
+:root{
+
+    --blue:#002D9C;
+    --green:#00A825;
+    --dark:#111111;
+    --white:#FFFFFF;
+    --red:#FF0000;
+
+    --border:#D9E0EC;
+
+    --shadow:
+        0 8px 25px rgba(0,0,0,.08);
+}
+
+
+/* =====================================================
+   BODY
+===================================================== */
+
+body{
+
+    font-family:
+        Arial,
+        "Noto Sans Devanagari",
+        sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #EEF4FF,
+            #F8FBFF
+        );
+
+    color:var(--dark);
+
+    min-height:100vh;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+===================================================== */
+
+.container{
+
+    width:100%;
+
+    max-width:1100px;
+
+    margin:auto;
+
+    padding:10px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header{
+
+    background:#FFFFFF;
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+
+    padding:20px 16px;
+
+    text-align:center;
+
+    border-top:
+        5px solid var(--blue);
+}
+
+
+.header h1{
+
+    color:var(--blue);
+
+    font-size:
+        clamp(22px,4vw,34px);
+
+    line-height:1.25;
+
+    font-weight:800;
+}
+
+
+.header .by{
+
+    margin-top:8px;
+
+    font-size:
+        clamp(15px,3vw,19px);
+
+    font-weight:600;
+}
+
+
+.header .phone{
+
+    color:var(--green);
+
+    font-weight:800;
+}
+
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+.language-box{display:none !important;}
+
+
+
+
+
+
+/* =====================================================
+   ACTION BUTTONS
+===================================================== */
+
+.action-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap:10px;
+
+    margin-top:15px;
+}
+
+
+.action-btn{
+
+    border:none;
+
+    border-radius:12px;
+
+    min-height:48px;
+
+    padding:10px 7px;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    background:#FFFFFF;
+
+    box-shadow:
+        0 3px 12px rgba(0,0,0,.08);
+
+    transition:.2s;
+}
+
+
+.action-btn:hover{
+
+    transform:
+        translateY(-2px);
+}
+
+
+.print{
+    color:#333333;
+}
+
+.help{
+    color:#008C3A;
+}
+
+.share{
+    color:#0066CC;
+}
+
+.callback{
+    color:#7B2CBF;
+}
+
+.call{
+    color:#008C3A;
+}
+
+.terms{
+    color:#C00000;
+}
+
+.website{
+    color:var(--blue);
+}
+
+.credit-score-btn{
+    color:#FFFFFF;
+    background:#0057B8;
+}
+
+.credit-score-btn:hover{
+    background:#00479A;
+}
+
+
+/* =====================================================
+   SECTION
+===================================================== */
+
+.section{
+
+    background:#FFFFFF;
+
+    margin-top:18px;
+
+    border-radius:18px;
+
+    box-shadow:var(--shadow);
+
+    padding:16px;
+}
+
+
+/* =====================================================
+   RED SERVICE TAB
+===================================================== */
+
+.service-title-tab{
+
+    width:100%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #FF0000,
+            #D90000
+        );
+
+    color:#FFFFFF;
+
+    font-size:20px;
+
+    font-weight:900;
+
+    padding:13px 15px;
+
+    border-radius:12px;
+
+    margin-bottom:15px;
+
+    text-align:center;
+
+    box-shadow:
+        0 5px 15px
+        rgba(255,0,0,.22);
+}
+
+
+/* =====================================================
+   SERVICES GRID
+===================================================== */
+
+.services{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+}
+
+
+/* =====================================================
+   SERVICE CARD
+===================================================== */
+
+.service-card{
+
+    position:relative;
+
+    color:#FFFFFF;
+
+    border:
+        3px solid transparent;
+
+    border-radius:15px;
+
+    padding:15px 12px;
+
+    cursor:pointer;
+
+    text-align:center;
+
+    font-weight:800;
+
+    min-height:82px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    line-height:1.35;
+
+    font-size:15px;
+
+    box-shadow:
+        0 5px 14px
+        rgba(0,0,0,.15);
+
+    transition:
+        transform .15s ease,
+        box-shadow .15s ease,
+        border .15s ease;
+}
+
+
+/* =====================================================
+   SERVICE COLORS
+===================================================== */
+
+.s1{
+    background:#1565C0;
+}
+
+.s2{
+    background:#00897B;
+}
+
+.s3{
+    background:#6A1B9A;
+}
+
+.s4{
+    background:#EF6C00;
+}
+
+.s5{
+    background:#00695C;
+}
+
+.s6{
+    background:#283593;
+}
+
+.s7{
+    background:#AD1457;
+}
+
+.s8{
+    background:#2E7D32;
+}
+
+.s9{
+    background:#00838F;
+}
+
+.s10{
+    background:#C62828;
+}
+
+.s11{
+    background:#004D40;
+}
+
+.s12{
+    background:#4A148C;
+}
+
+.s13{
+    background:#006064;
+}
+
+
+/* =====================================================
+   SERVICE HOVER
+===================================================== */
+
+.service-card:hover{
+
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 9px 22px
+        rgba(0,0,0,.22);
+}
+
+
+/* =====================================================
+   SELECTED SERVICE
+===================================================== */
+
+.service-card.selected{
+
+    border-color:#FFD600;
+
+    transform:
+        scale(1.025);
+
+    box-shadow:
+
+        0 0 0 3px
+        rgba(255,214,0,.30),
+
+        0 10px 25px
+        rgba(0,0,0,.25);
+
+    z-index:2;
+}
+
+
+/* =====================================================
+   SELECTED MARK
+===================================================== */
+
+.service-card.selected::after{
+
+    content:"✓ SELECTED";
+
+    position:absolute;
+
+    top:5px;
+
+    right:7px;
+
+    background:#FFD600;
+
+    color:#111111;
+
+    font-size:9px;
+
+    font-weight:900;
+
+    padding:
+        3px 6px;
+
+    border-radius:8px;
+}
+
+
+/* =====================================================
+   SECOND CLICK HINT
+===================================================== */
+
+.service-card.selected::before{
+
+    content:
+        "Tap again → WhatsApp";
+
+    position:absolute;
+
+    bottom:5px;
+
+    left:7px;
+
+    right:7px;
+
+    font-size:9px;
+
+    font-weight:700;
+
+    opacity:.90;
+}
+
+
+/* =====================================================
+   LOAN DOCUMENTATION MULTI-OPTION SUB PANEL
+===================================================== */
+
+.loan-panel{
+    display:none;
+    margin-top:16px;
+    background:#F4F7FF;
+    border:2px solid var(--blue);
+    border-radius:15px;
+    padding:16px;
+}
+
+.loan-panel.show{
+    display:block;
+}
+
+.loan-panel-title{
+    font-size:16px;
+    font-weight:900;
+    color:var(--blue);
+    margin-bottom:12px;
+    text-align:center;
+}
+
+.sub-services-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.sub-svc-box{
+    border-radius:10px;
+    padding:12px;
+    color:#FFFFFF;
+    font-size:13px;
+    font-weight:800;
+    cursor:pointer;
+    display:flex;
+    align-items:flex-start;
+    gap:8px;
+    box-shadow:0 3px 8px rgba(0,0,0,.12);
+    transition:.2s;
+}
+
+.sub-svc-box:hover{
+    transform:translateY(-2px);
+}
+
+.sub-svc-box input[type="checkbox"]{
+    width:18px;
+    height:18px;
+    cursor:pointer;
+    margin-top:2px;
+}
+
+.sub-svc-box.b1{ background:#1E40AF; }
+.sub-svc-box.b2{ background:#15803D; }
+.sub-svc-box.b3{ background:#6B21A8; }
+.sub-svc-box.b4{ background:#C2410C; }
+
+/* Scope Pills */
+.scope-tabs-container{
+    margin-top:15px;
+    background:#FFFFFF;
+    border-radius:12px;
+    padding:12px;
+    border:1px solid #D9E0EC;
+}
+
+.scope-nav{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    padding-bottom:8px;
+    border-bottom:1px solid #E5E7EB;
+}
+
+.scope-btn{
+    background:#F1F5F9;
+    border:1px solid #CBD5E1;
+    border-radius:8px;
+    padding:8px 12px;
+    font-size:12px;
+    font-weight:800;
+    color:#334155;
+    cursor:pointer;
+    white-space:nowrap;
+}
+
+.scope-btn.active{
+    background:var(--blue);
+    color:#FFFFFF;
+    border-color:var(--blue);
+}
+
+.scope-content-box{
+    padding:12px 5px 5px;
+}
+
+.scope-tab-content{
+    display:none;
+}
+
+.scope-tab-content.active{
+    display:block;
+}
+
+.scope-tab-content h4{
+    font-size:14px;
+    color:#0F172A;
+    margin-bottom:8px;
+}
+
+.scope-tab-content ul{
+    list-style:none;
+    padding:0;
+}
+
+.scope-tab-content li{
+    font-size:13px;
+    padding:4px 0;
+    color:#475569;
+    border-bottom:1px dashed #E2E8F0;
+}
+
+.scope-tab-content li::before{
+    content:"✓ ";
+    color:var(--green);
+    font-weight:900;
+}
+
+/* Pitch & Disclaimer Box */
+.pitch-disclaimer-box{
+    margin-top:14px;
+    background:#FFFFFF;
+    border-radius:10px;
+    padding:12px;
+    border:1px solid #E2E8F0;
+}
+
+.pitch-text{
+    font-size:12px;
+    color:#334155;
+    line-height:1.5;
+    margin-bottom:8px;
+    font-style:italic;
+}
+
+.disclaimer-text{
+    font-size:11px;
+    color:#854D0E;
+    background:#FEF9C3;
+    padding:8px;
+    border-radius:6px;
+    border:1px solid #FEF08A;
+    line-height:1.4;
+}
+
+
+/* =====================================================
+   FORM TITLE
+===================================================== */
+
+.section-title{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:var(--blue);
+
+    color:#FFFFFF;
+
+    font-size:18px;
+
+    font-weight:800;
+
+    padding:
+        10px 18px;
+
+    border-radius:10px;
+
+    margin-bottom:16px;
+}
+
+
+/* =====================================================
+   FORM GRID
+===================================================== */
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:14px;
+}
+
+
+.field{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:6px;
+}
+
+
+.field.full{
+
+    grid-column:
+        1/-1;
+}
+
+
+/* =====================================================
+   LABEL
+===================================================== */
+
+label{
+
+    font-size:14px;
+
+    font-weight:800;
+}
+
+
+.required{
+
+    color:var(--red);
+}
+
+
+label small{
+
+    color:#777777;
+
+    font-weight:500;
+}
+
+
+/* =====================================================
+   INPUT
+===================================================== */
+
+input,
+select,
+textarea{
+
+    width:100%;
+
+    border:
+        1.5px solid var(--border);
+
+    border-radius:11px;
+
+    padding:
+        13px 14px;
+
+    font-size:16px;
+
+    min-height:48px;
+
+    outline:none;
+
+    background:#FFFFFF;
+
+    color:#111111;
+}
+
+
+input:focus,
+select:focus,
+textarea:focus{
+
+    border-color:
+        var(--blue);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(0,45,156,.08);
+}
+
+
+textarea{
+
+    min-height:100px;
+
+    resize:vertical;
+}
+
+
+/* =====================================================
+   OTHER TEHSIL
+===================================================== */
+
+.other-box{
+
+    display:none;
+
+    margin-top:8px;
+}
+
+
+.other-box.show{
+
+    display:block;
+}
+
+
+/* =====================================================
+   WHATSAPP MAIN
+===================================================== */
+
+.whatsapp-main{
+
+    width:100%;
+
+    border:none;
+
+    background:#00A825;
+
+    color:#FFFFFF;
+
+    min-height:58px;
+
+    border-radius:14px;
+
+    font-size:17px;
+
+    font-weight:900;
+
+    cursor:pointer;
+
+    margin-top:18px;
+
+    box-shadow:
+        0 6px 18px
+        rgba(0,168,37,.25);
+}
+
+
+.whatsapp-main:hover{
+
+    background:#008F20;
+}
+
+
+/* =====================================================
+   PREVIEW
+===================================================== */
+
+.preview{
+
+    margin-top:16px;
+
+    background:#F6F8FC;
+
+    border:
+        1px solid #E0E5EF;
+
+    border-radius:12px;
+
+    padding:14px;
+
+    white-space:pre-wrap;
+
+    font-size:14px;
+
+    line-height:1.6;
+
+    display:none;
+}
+
+
+.preview.show{
+
+    display:block;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer{
+
+    text-align:center;
+
+    padding:
+        20px 10px;
+
+    font-size:16px;
+
+    font-weight:900;
+
+    color:#FF0000;
+}
+
+
+/* =====================================================
+   CREDIT SCORE DEMO
+===================================================== */
+
+.credit-modal-close{
+    position:absolute;
+    top:10px;
+    right:10px;
+    z-index:20;
+    width:40px;
+    height:40px;
+    border:0;
+    border-radius:50%;
+    background:#FF0000;
+    color:#FFFFFF;
+    font-size:28px;
+    line-height:1;
+    font-weight:900;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.18);
+}
+
+.credit-modal-close:hover{
+    transform:scale(1.05);
+}
+
+.credit-modal-box{
+    position:relative;
+    background:#FFFFFF;
+    width:100%;
+    max-width:980px;
+    max-height:94vh;
+    overflow:auto;
+    border-radius:20px;
+    box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+
+.credit-demo{
+    display:grid;
+    grid-template-columns:34% 66%;
+    min-height:520px;
+}
+
+.credit-info{
+    background:linear-gradient(145deg,#0068D8,#003C9E);
+    color:#FFFFFF;
+    padding:34px 30px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.credit-info h2{
+    margin:0 0 10px;
+    font-size:30px;
+    line-height:1.15;
+}
+
+
+.startpay-demo-label{
+    display:inline-block;
+    margin:0 0 12px;
+    background:#FF0000;
+    color:#FFFFFF;
+    padding:6px 10px;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:900;
+}
+
+.credit-info p{
+    margin:0 0 22px;
+    line-height:1.55;
+    font-size:14px;
+}
+
+.credit-points{
+    display:grid;
+    gap:12px;
+}
+
+.credit-point{
+    background:rgba(255,255,255,.12);
+    border:1px solid rgba(255,255,255,.18);
+    border-radius:12px;
+    padding:11px 12px;
+    font-size:13px;
+}
+
+.credit-secure{
+    font-size:12px;
+    opacity:.9;
+    border-top:1px solid rgba(255,255,255,.2);
+    padding-top:15px;
+}
+
+.credit-form{
+    padding:30px;
+}
+
+.credit-form-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.credit-form-head h3{
+    margin:0 0 5px;
+    font-size:25px;
+}
+
+.credit-form-head p{
+    margin:0;
+    color:#666;
+    font-size:13px;
+}
+
+.credit-demo-badge{
+    background:#EAF2FF;
+    color:#0057B8;
+    border:1px solid #C9DFFF;
+    padding:7px 10px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:800;
+    white-space:nowrap;
+}
+
+.credit-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.credit-field.full{
+    grid-column:1/-1;
+}
+
+.credit-field label{
+    display:block;
+    margin-bottom:6px;
+    font-size:13px;
+    font-weight:800;
+}
+
+.credit-field input{
+    min-height:46px;
+}
+
+.gender-row{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+}
+
+.gender-option{
+    position:relative;
+}
+
+.gender-option input{
+    position:absolute;
+    opacity:0;
+    pointer-events:none;
+}
+
+.gender-option span{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:46px;
+    border:1.5px solid var(--border);
+    border-radius:10px;
+    font-size:13px;
+    font-weight:700;
+    cursor:pointer;
+    background:#FFFFFF;
+}
+
+.gender-option input:checked + span{
+    border-color:#0057B8;
+    background:#EAF2FF;
+    color:#0057B8;
+}
+
+.credit-consent{
+    margin-top:16px;
+    padding:12px;
+    border-radius:10px;
+    background:#F7F9FC;
+    border:1px solid #E3E8F0;
+    font-size:11px;
+    line-height:1.5;
+    color:#555;
+}
+
+.credit-consent input{
+    width:auto;
+    min-height:auto;
+    margin-right:6px;
+}
+
+.credit-submit{
+    width:100%;
+    border:0;
+    border-radius:11px;
+    min-height:48px;
+    margin-top:14px;
+    background:#0057B8;
+    color:#FFFFFF;
+    font-weight:900;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.credit-submit:hover{
+    background:#00479A;
+}
+
+.credit-demo-note{
+    text-align:center;
+    margin:9px 0 0;
+    font-size:10px;
+    color:#777;
+}
+
+@media(max-width:700px){
+    .credit-modal-box{
+        max-height:96vh;
+        border-radius:15px;
+    }
+    .credit-demo{
+        grid-template-columns:1fr;
+    }
+    .credit-info{
+        padding:22px 18px;
+    }
+    .credit-info h2{
+        font-size:24px;
+    }
+    .credit-points{
+        grid-template-columns:1fr;
+        gap:8px;
+    }
+    .credit-secure{
+        margin-top:18px;
+    }
+    .credit-form{
+        padding:20px 16px 22px;
+    }
+    .credit-form-head h3{
+        font-size:21px;
+    }
+    .credit-grid{
+        grid-template-columns:1fr;
+    }
+    .credit-field.full{
+        grid-column:auto;
+    }
+    .sub-services-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+        rgba(0,0,0,.55);
+
+    z-index:9999;
+
+    align-items:center;
+
+    justify-content:center;
+
+    padding:15px;
+}
+
+
+.modal.show{
+
+    display:flex;
+}
+
+
+.modal-box{
+
+    background:#FFFFFF;
+
+    width:100%;
+
+    max-width:600px;
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    border-radius:18px;
+
+    padding:20px;
+}
+
+
+.modal-head{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-bottom:15px;
+}
+
+
+.close{
+
+    border:none;
+
+    background:#EEEEEE;
+
+    width:38px;
+
+    height:38px;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:20px;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:700px){
+
+    .container{
+
+        padding:8px;
+    }
+
+
+    .header{
+
+        padding:
+            16px 10px;
+
+        border-radius:15px;
+    }
+
+
+    .header h1{
+
+        font-size:22px;
+    }
+
+
+    .header .by{
+
+        font-size:15px;
+    }
+
+
+    .action-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:8px;
+    }
+
+
+    .action-btn{
+
+        min-height:50px;
+
+        font-size:13px;
+
+        padding:
+            8px 4px;
+    }
+
+
+    .services{
+
+        grid-template-columns:
+            1fr;
+
+        gap:10px;
+    }
+
+
+    .service-card{
+
+        min-height:70px;
+
+        padding:
+            14px 10px;
+
+        font-size:15px;
+
+        border-radius:13px;
+    }
+
+
+    .service-card.selected{
+
+        transform:
+            scale(1.015);
+    }
+
+
+    .service-title-tab{
+
+        font-size:18px;
+
+        padding:12px;
+
+        margin-bottom:12px;
+    }
+
+
+    .section{
+
+        padding:13px;
+
+        border-radius:15px;
+    }
+
+
+    .form-grid{
+
+        grid-template-columns:
+            1fr;
+
+        gap:12px;
+    }
+
+
+    .field.full{
+
+        grid-column:auto;
+    }
+
+
+    input,
+    select,
+    textarea{
+
+        font-size:16px;
+    }
+
+
+    .whatsapp-main{
+
+        min-height:58px;
+
+        font-size:16px;
+    }
+
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
+@media(max-width:380px){
+
+    .action-btn{
+
+        font-size:12px;
+
+        padding:
+            8px 3px;
+    }
+
+
+    .service-card{
+
+        min-height:66px;
+
+        font-size:14px;
+    }
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@media print{
+
+    body{
+
+        background:#FFFFFF;
+    }
+
+
+    .action-grid,
+    .language-box,
+    .whatsapp-main,
+    .preview,
+    .footer{
+
+        display:none !important;
+    }
+
+
+    .container{
+
+        max-width:none;
+    }
+
+
+    .section,
+    .header{
+
+        box-shadow:none;
+
+        border:
+            1px solid #DDDDDD;
+    }
+
+
+    .service-card{
+
+        print-color-adjust:exact;
+
+        -webkit-print-color-adjust:
+            exact;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="header">
+
+    <h1>
+        StartPay Legal & Finance Property Solutions
+    </h1>
+
+
+    <div class="by">
+
+        <span>
+            by Anurag Rai
+        </span>
+
+        <span class="phone">
+            | ☎ 9340726600
+        </span>
+
+    </div>
+
+</header>
+
+
+
+<!-- =====================================================
+     ACTION BUTTONS
+===================================================== -->
+
+<div class="action-grid">
+
+
+    <button
+        class="action-btn print"
+        onclick="window.print()">
+
+        🖨️ Print PDF
+
+    </button>
+
+
+    <button
+        class="action-btn help"
+        onclick="openWhatsAppHelp()">
+
+        💬 WhatsApp Help
+
+    </button>
+
+
+    <button
+        class="action-btn share"
+        onclick="sharePage()">
+
+        📤 Auto Share
+
+    </button>
+
+
+    <button
+        class="action-btn callback"
+        onclick="callbackShare()">
+
+        📲 WhatsApp Callback Share
+
+    </button>
+
+
+    <button
+        class="action-btn call"
+        onclick="window.location.href='tel:+919340726600'">
+
+        📞 Call Now
+
+    </button>
+
+
+    <button
+        class="action-btn terms"
+        onclick="openTerms()">
+
+        ⚖️ Terms
+
+    </button>
+
+
+    <button
+        class="action-btn website"
+        onclick="window.open('https://startpayonline.com/','_blank')">
+
+        🌐 Website
+
+    </button>
+
+
+    <button
+        class="action-btn credit-score-btn"
+        onclick="handleCreditScoreTabClick()">
+
+        📊 Check your Credit Score
+
+    </button>
+
+</div>
+
+
+
+<!-- =====================================================
+     SERVICES
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="service-title-tab">
+
+        <span
+            data-hi="सेवा चुनें"
+            data-en="Select Service">
+
+            सेवा चुनें
+
+        </span>
+
+    </div>
+
+
+
+    <div class="services">
+
+
+        <!-- =================================================
+             1 MUTATION
+        ================================================= -->
+
+        <div
+            class="service-card s1"
+            onclick="serviceClick(
+                this,
+                'नामान्तरण',
+                'Mutation'
+            )">
+
+            <span
+                data-hi="नामान्तरण"
+                data-en="Mutation">
+
+                नामान्तरण
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             2 P-I
+        ================================================= -->
+
+        <div
+            class="service-card s2"
+            onclick="serviceClick(
+                this,
+                'P-I',
+                'P-I'
+            )">
+
+            P-I
+
+        </div>
+
+
+
+        <!-- =================================================
+             3 P-II
+        ================================================= -->
+
+        <div
+            class="service-card s3"
+            onclick="serviceClick(
+                this,
+                'P-II',
+                'P-II'
+            )">
+
+            P-II
+
+        </div>
+
+
+
+        <!-- =================================================
+             4 DIVERSION
+        ================================================= -->
+
+        <div
+            class="service-card s4"
+            onclick="serviceClick(
+                this,
+                'डायवर्सन',
+                'Diversion'
+            )">
+
+            <span
+                data-hi="डायवर्सन"
+                data-en="Diversion">
+
+                डायवर्सन
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             5 TNCP MAP
+        ================================================= -->
+
+        <div
+            class="service-card s5"
+            onclick="serviceClick(
+                this,
+                'TNCP नक्शा',
+                'TNCP Map'
+            )">
+
+            <span
+                data-hi="TNCP नक्शा"
+                data-en="TNCP Map">
+
+                TNCP नक्शा
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             6 MUNICIPAL MAP
+        ================================================= -->
+
+        <div
+            class="service-card s6"
+            onclick="serviceClick(
+                this,
+                'नगर निगम नक्शा',
+                'Municipal Corporation Map'
+            )">
+
+            <span
+                data-hi="नगर निगम नक्शा"
+                data-en="Municipal Corporation Map">
+
+                नगर निगम नक्शा
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             7 DEEMED APPROVAL
+        ================================================= -->
+
+        <div
+            class="service-card s7"
+            onclick="serviceClick(
+                this,
+                'Deemed Approval - Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases',
+                'Deemed Approval - Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases'
+            )">
+
+            <span
+                data-hi="Deemed Approval – Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases"
+                data-en="Deemed Approval – Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases">
+
+                Deemed Approval – Plot Area Up to 186 SQM
+                (2000 sq.ft.) Residential Cases
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             8 ENGINEERING APPROVAL
+        ================================================= -->
+
+        <div
+            class="service-card s8"
+            onclick="serviceClick(
+                this,
+                'Engineering Approval - Plot Area Up to 300 SQM (3229.17 sq.ft.)',
+                'Engineering Approval - Plot Area Up to 300 SQM (3229.17 sq.ft.)'
+            )">
+
+            <span
+                data-hi="Engineering Approval – Plot Area Up to 300 SQM (3229.17 sq.ft.)"
+                data-en="Engineering Approval – Plot Area Up to 300 SQM (3229.17 sq.ft.)">
+
+                Engineering Approval – Plot Area Up to 300 SQM
+                (3229.17 sq.ft.)
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             9 KHASRA RECORD
+        ================================================= -->
+
+        <div
+            class="service-card s9"
+            onclick="serviceClick(
+                this,
+                'खसरा रिकॉर्ड',
+                'Khasra Record'
+            )">
+
+            <span
+                data-hi="खसरा रिकॉर्ड"
+                data-en="Khasra Record">
+
+                खसरा रिकॉर्ड
+
+            </span>
+
+        </div>
+
+
+
+        <!-- =================================================
+             10 ORDER P-I / P-II
+        ================================================= -->
+
+        <div
+            class="service-card s10"
+            onclick="serviceClick(
+                this,
+                'आदेश / Order – P-I / P-II',
+                'Order – P-I / P-II'
+            )">
+
+            <span
+                data-hi="आदेश / Order – P-I / P-II"
+                data-en="Order – P-I / P-II">
+
+                आदेश / Order – P-I / P-II
+
+            </span>
+
+        </div>
+
+
+        <!-- =================================================
+             11 LOAN DOCUMENTATION & DUE DILIGENCE
+        ================================================= -->
+
+        <div
+            class="service-card s12"
+            onclick="serviceClick(
+                this,
+                'प्रॉपर्टी लोन दस्तावेज़ एवं संपत्ति पूर्व-जांच',
+                'Property Loan Documentation & Due Diligence'
+            )">
+
+            <span
+                data-hi="प्रॉपर्टी लोन दस्तावेज़ एवं संपत्ति पूर्व-जांच"
+                data-en="Property Loan Documentation & Due Diligence">
+
+                प्रॉपर्टी लोन दस्तावेज़ एवं संपत्ति पूर्व-जांच
+
+            </span>
+
+        </div>
+
+
+        <!-- =================================================
+             12 PROPERTY SEARCH REPORT
+        ================================================= -->
+
+        <div
+            class="service-card s13"
+            onclick="serviceClick(
+                this,
+                'प्रॉपर्टी सर्च रिपोर्ट / संपत्ति खोज रिपोर्ट',
+                'Property Search Report'
+            )">
+
+            <span
+                data-hi="प्रॉपर्टी सर्च रिपोर्ट / संपत्ति खोज रिपोर्ट"
+                data-en="Property Search Report">
+
+                प्रॉपर्टी सर्च रिपोर्ट / संपत्ति खोज रिपोर्ट
+
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- =====================================================
+         NEW INTEGRATED LOAN MULTI-OPTION SUB PANEL
+    ===================================================== -->
+    <div class="loan-panel" id="loanPanel">
+
+        <div class="loan-panel-title">
+            🏦 Property Loan Documentation & Due Diligence Options
+        </div>
+
+        <div style="font-size:12px; font-weight:800; color:#334155; margin-bottom:8px;">
+            आवश्यकतानुसार Sub-Services सेलेक्ट करें (Multiple Selection):
+        </div>
+
+        <!-- 4 Multicolor Sub-Services -->
+        <div class="sub-services-grid">
+
+            <label class="sub-svc-box b1">
+                <input type="checkbox" class="sub-svc-cb" value="Financial & Property Due Diligence Service / वित्तीय एवं संपत्ति पूर्व-जांच सेवा" checked>
+                <div>
+                    🔵 Financial & Property Due Diligence
+                    <div style="font-size:11px; opacity:0.9;">वित्तीय एवं संपत्ति पूर्व-जांच सेवा</div>
+                </div>
+            </label>
+
+            <label class="sub-svc-box b2">
+                <input type="checkbox" class="sub-svc-cb" value="Loan Documentation & Legal Verification Support / ऋण दस्तावेज़ एवं कानूनी सत्यापन सहायता" checked>
+                <div>
+                    🟢 Loan Documentation & Legal Support
+                    <div style="font-size:11px; opacity:0.9;">ऋण दस्तावेज़ एवं कानूनी सत्यापन सहायता</div>
+                </div>
+            </label>
+
+            <label class="sub-svc-box b3">
+                <input type="checkbox" class="sub-svc-cb" value="Pre-Loan Property Document Audit / ऋण-पूर्व संपत्ति दस्तावेज़ ऑडिट" checked>
+                <div>
+                    🟣 Pre-Loan Property Document Audit
+                    <div style="font-size:11px; opacity:0.9;">ऋण-पूर्व संपत्ति दस्तावेज़ ऑडिट</div>
+                </div>
+            </label>
+
+            <label class="sub-svc-box b4">
+                <input type="checkbox" class="sub-svc-cb" value="Title & Document Scrutiny Consultancy / टाइटल एवं दस्तावेज़ जांच समीक्षा कंसल्टेंसी" checked>
+                <div>
+                    🟠 Title & Document Scrutiny Consultancy
+                    <div style="font-size:11px; opacity:0.9;">टाइटल एवं दस्तावेज़ जांच/समीक्षा कंसल्टेंसी</div>
+                </div>
+            </label>
+
+        </div>
+
+        <!-- Scope of Work Side/Pill Tabs -->
+        <div class="scope-tabs-container">
+            <div style="font-size:13px; font-weight:800; color:#0F172A; margin-bottom:8px;">
+                📋 Scope of Work (कार्य का दायरा):
+            </div>
+
+            <div class="scope-nav">
+                <button class="scope-btn active" onclick="showScopeTab(event, 'sc_kyc')">👤 KYC & Income</button>
+                <button class="scope-btn" onclick="showScopeTab(event, 'sc_chain')">🏠 Property Chain</button>
+                <button class="scope-btn" onclick="showScopeTab(event, 'sc_legal')">⚖️ Legal Status</button>
+                <button class="scope-btn" onclick="showScopeTab(event, 'sc_disc')">🔎 Discrepancy Reporting</button>
+            </div>
+
+            <div class="scope-content-box">
+
+                <div id="sc_kyc" class="scope-tab-content active">
+                    <h4>👤 KYC & Income Verification / आवेदक KYC एवं आय सत्यापन</h4>
+                    <ul>
+                        <li>PAN, Aadhaar/KYC</li>
+                        <li>Bank Statement</li>
+                        <li>Salary Slip / ITR</li>
+                        <li>Business / Income Proof</li>
+                    </ul>
+                </div>
+
+                <div id="sc_chain" class="scope-tab-content">
+                    <h4>🏠 Property Chain Documents / प्रॉपर्टी की रजिस्ट्री चैन</h4>
+                    <ul>
+                        <li>मूल रजिस्ट्री / Sale Deed</li>
+                        <li>पिछला Title Deed / Mother Deed</li>
+                        <li>खसरा / खतौनी</li>
+                        <li>P-I / P-II</li>
+                        <li>नामांतरण / Mutation</li>
+                        <li>संबंधित Chain Documents</li>
+                    </ul>
+                </div>
+
+                <div id="sc_legal" class="scope-tab-content">
+                    <h4>⚖️ Legal & Encumbrance Status / कानूनी स्थिति</h4>
+                    <ul>
+                        <li>NOC, जहाँ लागू हो</li>
+                        <li>Encumbrance / भारमुक्त स्थिति</li>
+                        <li>Existing Loan / Charge की जांच</li>
+                        <li>Court Case / Title Dispute की जांच</li>
+                        <li>Approved Map / Plan</li>
+                        <li>TNCP / Municipal approval, जहाँ लागू हो</li>
+                    </ul>
+                </div>
+
+                <div id="sc_disc" class="scope-tab-content">
+                    <h4>🔎 Discrepancy Reporting / कमी एवं विसंगति रिपोर्ट</h4>
+                    <ul>
+                        <li>नाम/रकबा mismatch</li>
+                        <li>Chain deed missing</li>
+                        <li>Mutation discrepancy</li>
+                        <li>Pending litigation</li>
+                        <li>Document inconsistency</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Professional Pitch & Disclaimer -->
+        <div class="pitch-disclaimer-box">
+            <div class="pitch-text">
+                <strong>End-to-End Loan Document Verification & Property Due Diligence:</strong><br>
+                “हम आपके प्रॉपर्टी लोन से संबंधित दस्तावेज़ों की completeness, consistency, legal/title records एवं bank-compliance requirements के अनुसार जांच में सहायता करते हैं, ताकि संभावित कमी या discrepancy की पहचान लोन प्रक्रिया से पहले की जा सके।”
+            </div>
+
+            <div class="disclaimer-text">
+                <strong>Note:</strong> यह सेवा दस्तावेज़ों की जांच, संभावित कमियों/विसंगतियों की पहचान एवं आवश्यक documentation support के लिए है। अंतिम ऋण स्वीकृति संबंधित बैंक/वित्तीय संस्था की नीतियों, पात्रता एवं स्वतंत्र जांच पर निर्भर करती है।
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     ENQUIRY FORM
+===================================================== -->
+
+<section class="section">
+
+
+    <div class="section-title">
+
+        📋
+
+        <span
+            data-hi="Property Enquiry"
+            data-en="Property Enquiry">
+
+            Property Enquiry
+
+        </span>
+
+    </div>
+
+
+
+    <div class="form-grid">
+
+
+        <!-- SERVICE DROPDOWN -->
+
+        <div class="field full">
+
+            <label>
+
+                <span
+                    data-hi="सेवा / Service"
+                    data-en="Service">
+
+                    सेवा / Service
+
+                </span>
+
+                <span class="required">*</span>
+
+            </label>
+
+
+            <select
+                id="serviceSelect"
+                onchange="serviceFromDropdown()">
+
+
+                <option value="">
+                    सेवा चुनें / Select Service
+                </option>
+
+                <option value="Mutation|नामान्तरण">
+                    नामान्तरण / Mutation
+                </option>
+
+
+                <option value="P-I|P-I">
+                    P-I
+                </option>
+
+
+                <option value="P-II|P-II">
+                    P-II
+                </option>
+
+
+                <option value="Diversion|डायवर्सन">
+                    डायवर्सन / Diversion
+                </option>
+
+
+                <option value="TNCP Map|TNCP नक्शा">
+                    TNCP नक्शा / TNCP Map
+                </option>
+
+
+                <option value="Municipal Corporation Map|नगर निगम नक्शा">
+                    नगर निगम नक्शा / Municipal Corporation Map
+                </option>
+
+
+                <option value="Deemed Approval - Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases|Deemed Approval - Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases">
+
+                    Deemed Approval – Residential Cases
+
+                </option>
+
+
+                <option value="Engineering Approval - Plot Area Up to 300 SQM (3229.17 sq.ft.)|Engineering Approval - Plot Area Up to 300 SQM (3229.17 sq.ft.)">
+
+                    Engineering Approval – Plot Area Up to 300 SQM
+                    (3229.17 sq.ft.)
+
+                </option>
+
+
+                <option value="Khasra Record|खसरा रिकॉर्ड">
+
+                    खसरा रिकॉर्ड / Khasra Record
+
+                </option>
+
+
+                <option value="Order – P-I / P-II|आदेश / Order – P-I / P-II">
+
+                    आदेश / Order – P-I / P-II
+
+                </option>
+
+
+                <option value="Property Loan Documentation & Due Diligence|प्रॉपर्टी लोन दस्तावेज़ एवं संपत्ति पूर्व-जांच">
+                    प्रॉपर्टी लोन दस्तावेज़ एवं संपत्ति पूर्व-जांच / Property Loan Documentation & Due Diligence
+                </option>
+
+
+                <option value="Property Search Report|प्रॉपर्टी सर्च रिपोर्ट / संपत्ति खोज रिपोर्ट">
+                    प्रॉपर्टी सर्च रिपोर्ट / संपत्ति खोज रिपोर्ट (Property Search Report)
+                </option>
+
+
+            </select>
+
+        </div>
+
+
+
+        <!-- DISTRICT -->
+
+        <div class="field">
+
+            <label>
+
+                <span
+                    data-hi="जिला / District"
+                    data-en="District">
+
+                    जिला / District
+
+                </span>
+
+                <span class="required">*</span>
+
+            </label>
+
+
+            <input
+                type="text"
+                id="district"
+                value="Jabalpur"
+                placeholder="Jabalpur / जबलपुर">
+
+        </div>
+
+
+
+        <!-- TEHSIL -->
+
+        <div class="field">
+
+            <label>
+
+                <span
+                    data-hi="तहसील / Tehsil"
+                    data-en="Tehsil">
+
+                    तहसील / Tehsil
+
+                </span>
+
+            </label>
+
+
+            <select
+                id="tehsil"
+                onchange="checkOtherTehsil()">
+
+
+                <option value="">
+                    तहसील चुनें / Select Tehsil
+                </option>
+
+
+                <option value="ओमाती | Omati">
+                    ओमाती / Omati
+                </option>
+
+
+                <option value="कुंडम | Kundam">
+                    कुंडम / Kundam
+                </option>
+
+
+                <option value="कोतवाली | Kotwali">
+                    कोतवाली / Kotwali
+                </option>
+
+
+                <option value="गोरखपुर | Gorakhpur">
+                    गोरखपुर / Gorakhpur
+                </option>
+
+
+                <option value="गोहलपुर | Gohalpur">
+                    गोहलपुर / Gohalpur
+                </option>
+
+
+                <option value="जबलपुर | Jabalpur">
+                    जबलपुर / Jabalpur
+                </option>
+
+
+                <option value="पाटन | Paatan">
+                    पाटन / Paatan
+                </option>
+
+
+                <option value="रांझी | Ranjhi">
+                    रांझी / Ranjhi
+                </option>
+
+
+                <option value="शाहपुरा | Shahpura">
+                    शाहपुरा / Shahpura
+                </option>
+
+
+                <option value="सिहोरा | Sihora">
+                    सिहोरा / Sihora
+                </option>
+
+
+                <option value="OTHER">
+                    अन्य / Other — स्वयं भरें
+                </option>
+
+
+            </select>
+
+
+            <div
+                class="other-box"
+                id="otherTehsilBox">
+
+
+                <input
+                    type="text"
+                    id="otherTehsil"
+                    placeholder="अन्य तहसील / Other Tehsil">
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PROPERTY ADDRESS -->
+
+        <div class="field full">
+
+            <label>
+
+                <span
+                    data-hi="प्लॉट / संपत्ति का पता"
+                    data-en="Plot / Property Address">
+
+                    प्लॉट / संपत्ति का पता
+
+                </span>
+
+                <small>
+                    (Optional)
+                </small>
+
+            </label>
+
+
+            <textarea
+                id="propertyAddress"
+                placeholder="Plot No., Ward, Mohalla, Village, Street etc.">
+            </textarea>
+
+        </div>
+
+
+
+        <!-- PARTY NAME -->
+
+        <div class="field">
+
+            <label>
+
+                <span
+                    data-hi="पक्षकार / आवेदक का नाम"
+                    data-en="Party / Applicant Name">
+
+                    पक्षकार / आवेदक का नाम
+
+                </span>
+
+                <span class="required">*</span>
+
+            </label>
+
+
+            <input
+                type="text"
+                id="partyName"
+                placeholder="नाम / Name">
+
+        </div>
+
+
+
+        <!-- MOBILE -->
+
+        <div class="field">
+
+            <label>
+
+                <span
+                    data-hi="मोबाइल नंबर"
+                    data-en="Mobile Number">
+
+                    मोबाइल नंबर
+
+                </span>
+
+                <span class="required">*</span>
+
+            </label>
+
+
+            <input
+                type="tel"
+                id="mobile"
+                inputmode="numeric"
+                maxlength="10"
+                placeholder="10 Digit Mobile Number">
+
+        </div>
+
+
+
+        <!-- DETAILS -->
+
+        <div class="field full">
+
+            <label>
+
+                <span
+                    data-hi="अतिरिक्त जानकारी"
+                    data-en="Additional Details">
+
+                    अतिरिक्त जानकारी
+
+                </span>
+
+                <small>
+                    (Optional)
+                </small>
+
+            </label>
+
+
+            <textarea
+                id="details"
+                placeholder="अपनी समस्या / आवश्यक जानकारी लिखें...">
+            </textarea>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- MAIN WHATSAPP -->
+
+    <button
+        class="whatsapp-main"
+        onclick="sendEnquiry()">
+
+        💬
+
+        <span
+            data-hi="WhatsApp पर Enquiry भेजें"
+            data-en="Send Enquiry on WhatsApp">
+
+            WhatsApp पर Enquiry भेजें
+
+        </span>
+
+    </button>
+
+
+
+    <!-- PREVIEW -->
+
+    <div
+        class="preview"
+        id="preview">
+    </div>
+
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<div class="footer">
+
+    !! शुभ शुरुआत स्टार्ट पे के साथ !!
+
+</div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     CREDIT SCORE DEMO MODAL
+===================================================== -->
+
+<div class="modal" id="creditScoreModal">
+
+    <div class="credit-modal-box">
+
+        <button type="button" class="credit-modal-close" onclick="closeCreditScoreDemo()" aria-label="Close Credit Score form">×</button>
+
+        <div class="credit-demo">
+
+            <div class="credit-info">
+                <div>
+                    <h2>Check your Credit Score</h2>
+                    <div class="startpay-demo-label">Demo only - StartPay</div>
+                    <p>Demo only — StartPay credit-score enquiry form. Fill in your details for WhatsApp enquiry and authorised next-step processing.</p>
+
+                    <div class="credit-points">
+                        <div class="credit-point">✓ Free enquiry demo</div>
+                        <div class="credit-point">✓ No score impact from this demo form</div>
+                        <div class="credit-point">✓ Simple and secure information flow</div>
+                    </div>
+                </div>
+
+                <div class="credit-secure">🔒 Demo only - StartPay · PAN is collected for KYC / CIBIL Verification & Income Tax Compliance.</div>
+            </div>
+
+            <div class="credit-form">
+                <div class="credit-form-head">
+                    <div>
+                        <h3>Tell us about you</h3>
+                        <p>Enter your details for a StartPay credit-score enquiry.</p>
+                    </div>
+                    <span class="credit-demo-badge">Demo only - StartPay</span>
+                </div>
+
+                <form id="creditScoreForm" onsubmit="submitCreditScoreDemo(event)">
+                    <div class="credit-grid">
+
+                        <div class="credit-field">
+                            <label for="creditFirstName">First Name <span class="required">*</span></label>
+                            <input id="creditFirstName" name="firstName" type="text" autocomplete="off" required placeholder="Enter first name">
+                        </div>
+
+                        <div class="credit-field">
+                            <label for="creditLastName">Last Name <span class="required">*</span></label>
+                            <input id="creditLastName" name="lastName" type="text" autocomplete="off" required placeholder="Enter last name">
+                        </div>
+
+                        <div class="credit-field full">
+                            <label>Gender <span class="required">*</span></label>
+                            <div class="gender-row">
+                                <label class="gender-option"><input type="radio" name="gender" value="Male" required><span>Male</span></label>
+                                <label class="gender-option"><input type="radio" name="gender" value="Female"><span>Female</span></label>
+                                <label class="gender-option"><input type="radio" name="gender" value="Other"><span>Other</span></label>
+                            </div>
+                        </div>
+
+                        <div class="credit-field full">
+                            <label for="creditPhone">Phone Number <span class="required">*</span></label>
+                            <input id="creditPhone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" autocomplete="off" required placeholder="Enter 10-digit mobile number">
+                        </div>
+
+                        <div class="credit-field">
+                            <label for="creditDob">Date of Birth <span class="required">*</span></label>
+                            <input id="creditDob" name="dob" type="date" required>
+                        </div>
+
+                        <div class="credit-field">
+                            <label for="creditPin">Pin Code <span class="required">*</span></label>
+                            <input id="creditPin" name="pin" type="text" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" autocomplete="off" required placeholder="Enter 6-digit PIN code">
+                        </div>
+
+                        <div class="credit-field full">
+                            <label for="creditPan">PAN Card <span class="required">*</span> <small>(Mandatory / अनिवार्य)</small></label>
+                            <input id="creditPan" name="pan" type="text" maxlength="10" minlength="10" pattern="[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}" autocomplete="off" required placeholder="Enter 10-digit PAN">
+                            <small style="display:block;margin-top:5px;color:#666;font-size:11px;">For KYC, CIBIL Verification & Income Tax Compliance</small>
+                        </div>
+
+                        <div class="credit-field full">
+                            <label for="creditEmail">Personal Email Id <small>(optional)</small></label>
+                            <input id="creditEmail" name="email" type="email" autocomplete="off" placeholder="Enter personal email">
+                        </div>
+
+                    </div>
+
+                    <div class="credit-consent">
+                        <label><input type="checkbox" id="creditConsent" required> I understand this is a StartPay demo form. My entered enquiry details, including PAN, may be sent to StartPay on WhatsApp, and the authorised credit-score link will open after submission.</label>
+                    </div>
+
+                    <button class="credit-submit" type="submit">📲 Submit → WhatsApp + Open Link</button>
+                    <p class="credit-demo-note">Demo only - StartPay · No credit report is fetched by this HTML form.</p>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     TERMS MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="termsModal">
+
+
+    <div class="modal-box">
+
+
+        <div class="modal-head">
+
+            <h2>
+                Terms & Conditions
+            </h2>
+
+
+            <button
+                class="close"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div>
+
+            <p>
+
+                Property related services are subject to
+                document verification, applicable rules,
+                authority requirements and service conditions.
+
+            </p>
+
+
+            <br>
+
+
+            <p>
+
+                Final approval or decision shall remain with
+                the concerned government / statutory authority.
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   SETTINGS
+===================================================== */
+
+const WHATSAPP_NUMBER =
+    "919340726600";
+
+
+let currentLanguage =
+    "hi";
+
+
+let selectedServiceHi =
+    "";
+
+
+let selectedServiceEn =
+    "";
+
+
+let lastClickedCard =
+    null;
+
+
+let clickTimer =
+    null;
+
+
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+function setLanguage(lang){
+
+    currentLanguage =
+        lang;
+
+
+    document.documentElement.lang =
+        lang === "hi"
+        ? "hi"
+        : "en";
+
+
+    document
+        .querySelectorAll("[data-hi]")
+        .forEach(function(el){
+
+            el.textContent =
+                lang === "hi"
+                ? el.getAttribute("data-hi")
+                : el.getAttribute("data-en");
+
+        });
+
+
+    document
+        .getElementById("hiBtn")
+        .classList
+        .toggle(
+            "active",
+            lang === "hi"
+        );
+
+
+    document
+        .getElementById("enBtn")
+        .classList
+        .toggle(
+            "active",
+            lang === "en"
+        );
+
+}
+
+
+
+/* =====================================================
+   SERVICE CLICK
+   FIRST CLICK = SELECT
+   SECOND CLICK = WHATSAPP
+===================================================== */
+
+function serviceClick(card,hi,en){
+
+    /* ---------------------------------------------
+       SECOND CLICK ON SAME SERVICE
+    --------------------------------------------- */
+
+    if(lastClickedCard === card){
+
+        clearTimeout(clickTimer);
+
+
+        sendServiceWhatsApp(
+            hi,
+            en
+        );
+
+
+        lastClickedCard =
+            null;
+
+
+        return;
+
+    }
+
+
+    /* ---------------------------------------------
+       NEW SERVICE SELECT
+    --------------------------------------------- */
+
+    clearTimeout(clickTimer);
+
+
+    document
+        .querySelectorAll(".service-card")
+        .forEach(function(x){
+
+            x.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    card.classList.add(
+        "selected"
+    );
+
+
+    selectedServiceHi =
+        hi;
+
+
+    selectedServiceEn =
+        en;
+
+    const loanPanel = document.getElementById("loanPanel");
+    if(loanPanel){
+        loanPanel.classList.toggle(
+            "show",
+            en === "Property Loan Documentation & Due Diligence"
+        );
+    }
+
+
+    /* ---------------------------------------------
+       DROPDOWN SYNC
+    --------------------------------------------- */
+
+    const select =
+        document.getElementById(
+            "serviceSelect"
+        );
+
+
+    for(
+        let i=0;
+        i<select.options.length;
+        i++
+    ){
+
+        if(
+            select.options[i]
+                .value
+                .startsWith(
+                    en + "|"
+                )
+        ){
+
+            select.selectedIndex =
+                i;
+
+            break;
+
+        }
+
+    }
+
+
+    lastClickedCard =
+        card;
+
+
+    /*
+       Double-click window
+    */
+
+    clickTimer =
+        setTimeout(
+            function(){
+
+                lastClickedCard =
+                    null;
+
+            },
+            1500
+        );
+
+}
+
+
+
+/* =====================================================
+   DROPDOWN SERVICE
+===================================================== */
+
+function serviceFromDropdown(){
+
+    const select =
+        document.getElementById(
+            "serviceSelect"
+        );
+
+
+    if(!select.value){
+
+        selectedServiceHi =
+            "";
+
+        selectedServiceEn =
+            "";
+
+        document
+            .querySelectorAll(
+                ".service-card"
+            )
+            .forEach(function(card){
+
+                card.classList.remove(
+                    "selected"
+                );
+
+            });
+
+        const loanPanel = document.getElementById("loanPanel");
+        if(loanPanel){ loanPanel.classList.remove("show"); }
+
+        return;
+
+    }
+
+
+    const parts =
+        select.value.split("|");
+
+
+    selectedServiceEn =
+        parts[0];
+
+
+    selectedServiceHi =
+        parts[1];
+
+    const loanPanel = document.getElementById("loanPanel");
+    if(loanPanel){
+        loanPanel.classList.toggle(
+            "show",
+            selectedServiceEn === "Property Loan Documentation & Due Diligence"
+        );
+    }
+
+
+    document
+        .querySelectorAll(
+            ".service-card"
+        )
+        .forEach(function(card){
+
+            card.classList.remove(
+                "selected"
+            );
+
+        });
+
+
+    lastClickedCard =
+        null;
+
+}
+
+/* =====================================================
+   SCOPE TABS LOGIC
+===================================================== */
+function showScopeTab(evt, tabId){
+    const contents = document.querySelectorAll('.scope-tab-content');
+    contents.forEach(c => c.classList.remove('active'));
+
+    const btns = document.querySelectorAll('.scope-btn');
+    btns.forEach(b => b.classList.remove('active'));
+
+    document.getElementById(tabId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
+
+
+/* =====================================================
+   OTHER TEHSIL
+===================================================== */
+
+function checkOtherTehsil(){
+
+    const value =
+        document.getElementById(
+            "tehsil"
+        ).value;
+
+
+    const box =
+        document.getElementById(
+            "otherTehsilBox"
+        );
+
+
+    if(value === "OTHER"){
+
+        box.classList.add(
+            "show"
+        );
+
+    }else{
+
+        box.classList.remove(
+            "show"
+        );
+
+
+        document.getElementById(
+            "otherTehsil"
+        ).value =
+            "";
+
+    }
+
+}
+
+
+
+/* =====================================================
+   GET TEHSIL
+===================================================== */
+
+function getTehsil(){
+
+    const select =
+        document.getElementById(
+            "tehsil"
+        );
+
+
+    if(
+        select.value ===
+        "OTHER"
+    ){
+
+        return document
+            .getElementById(
+                "otherTehsil"
+            )
+            .value
+            .trim();
+
+    }
+
+
+    return select.value;
+
+}
+
+
+
+/* =====================================================
+   BUILD WHATSAPP MESSAGE
+===================================================== */
+
+function makeMessage(){
+
+    const district =
+        document
+            .getElementById(
+                "district"
+            )
+            .value
+            .trim();
+
+
+    const tehsil =
+        getTehsil();
+
+
+    const address =
+        document
+            .getElementById(
+                "propertyAddress"
+            )
+            .value
+            .trim();
+
+
+    const party =
+        document
+            .getElementById(
+                "partyName"
+            )
+            .value
+            .trim();
+
+
+    const mobile =
+        document
+            .getElementById(
+                "mobile"
+            )
+            .value
+            .trim();
+
+
+    const details =
+        document
+            .getElementById(
+                "details"
+            )
+            .value
+            .trim();
+
+
+    if(!selectedServiceEn){
+
+        alert(
+            currentLanguage === "hi"
+            ? "कृपया Service चुनें।"
+            : "Please select a Service."
+        );
+
+        return null;
+
+    }
+
+
+    if(!district){
+
+        alert(
+            currentLanguage === "hi"
+            ? "कृपया जिला भरें।"
+            : "Please enter District."
+        );
+
+        return null;
+
+    }
+
+
+    if(!party){
+
+        alert(
+            currentLanguage === "hi"
+            ? "कृपया पक्षकार / आवेदक का नाम भरें।"
+            : "Please enter Party / Applicant Name."
+        );
+
+        return null;
+
+    }
+
+
+    if(
+        !/^[0-9]{10}$/.test(
+            mobile
+        )
+    ){
+
+        alert(
+            currentLanguage === "hi"
+            ? "कृपया सही 10 अंकों का मोबाइल नंबर भरें।"
+            : "Please enter a valid 10-digit mobile number."
+        );
+
+        return null;
+
+    }
+
+    // Check Sub-Services if Loan Service Selected
+    let selectedSubServicesText = "";
+    if(selectedServiceEn === "Property Loan Documentation & Due Diligence"){
+        const checkedSubs = document.querySelectorAll('.sub-svc-cb:checked');
+        if(checkedSubs.length > 0){
+            selectedSubServicesText = "\n\n*Selected Sub-Services:*\n";
+            checkedSubs.forEach((cb, idx) => {
+                selectedSubServicesText += `${idx+1}. ${cb.value}\n`;
+            });
+        }
+    }
+
+
+    if(currentLanguage === "hi"){
+
+        return `🏠 *StartPay Property Enquiry*
+
+*सेवा:* ${selectedServiceHi}${selectedSubServicesText}
+
+*जिला:* ${district}
+
+*तहसील:* ${tehsil || "नहीं बताया"}
+
+*प्लॉट / संपत्ति का पता:* ${address || "नहीं बताया"}
+
+*पक्षकार / आवेदक का नाम:* ${party}
+
+*मोबाइल नंबर:* ${mobile}
+
+*अतिरिक्त जानकारी:* ${details || "नहीं बताया"}
+
+कृपया इस Property Service के संबंध में मुझसे संपर्क करें।
+
+!! शुभ शुरुआत स्टार्ट पे के साथ !!`;
+
+    }
+
+
+    return `🏠 *StartPay Property Enquiry*
+
+*Service:* ${selectedServiceEn}${selectedSubServicesText}
+
+*District:* ${district}
+
+*Tehsil:* ${tehsil || "Not provided"}
+
+*Plot / Property Address:* ${address || "Not provided"}
+
+*Party / Applicant Name:* ${party}
+
+*Mobile Number:* ${mobile}
+
+*Additional Details:* ${details || "Not provided"}
+
+Please contact me regarding this Property Service.
+
+!! शुभ शुरुआत स्टार्ट पे के साथ !!`;
+
+}
+
+
+
+/* =====================================================
+   SEND ENQUIRY
+===================================================== */
+
+function sendEnquiry(){
+
+    const message =
+        makeMessage();
+
+
+    if(!message){
+
+        return;
+
+    }
+
+
+    document
+        .getElementById(
+            "preview"
+        )
+        .textContent =
+            message;
+
+
+    document
+        .getElementById(
+            "preview"
+        )
+        .classList
+        .add("show");
+
+
+    const url =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(
+            message
+        );
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+
+/* =====================================================
+   SECOND SERVICE CLICK WHATSAPP
+===================================================== */
+
+function sendServiceWhatsApp(
+    hi,
+    en
+){
+
+    selectedServiceHi =
+        hi;
+
+
+    selectedServiceEn =
+        en;
+
+
+    const district =
+        document
+            .getElementById(
+                "district"
+            )
+            .value
+            .trim();
+
+
+    const tehsil =
+        getTehsil();
+
+
+    const address =
+        document
+            .getElementById(
+                "propertyAddress"
+            )
+            .value
+            .trim();
+
+
+    const party =
+        document
+            .getElementById(
+                "partyName"
+            )
+            .value
+            .trim();
+
+
+    const mobile =
+        document
+            .getElementById(
+                "mobile"
+            )
+            .value
+            .trim();
+
+
+    const details =
+        document
+            .getElementById(
+                "details"
+            )
+            .value
+            .trim();
+
+    // Check Sub-Services if Loan Service Selected
+    let selectedSubServicesText = "";
+    if(en === "Property Loan Documentation & Due Diligence"){
+        const checkedSubs = document.querySelectorAll('.sub-svc-cb:checked');
+        if(checkedSubs.length > 0){
+            selectedSubServicesText = "\n\n*Selected Sub-Services:*\n";
+            checkedSubs.forEach((cb, idx) => {
+                selectedSubServicesText += `${idx+1}. ${cb.value}\n`;
+            });
+        }
+    }
+
+
+    let message;
+
+
+    if(currentLanguage === "hi"){
+
+        message =
+`🏠 *StartPay Property Enquiry*
+
+*सेवा:* ${hi}${selectedSubServicesText}
+
+*जिला:* ${district || "नहीं बताया"}
+
+*तहसील:* ${tehsil || "नहीं बताया"}
+
+*प्लॉट / संपत्ति का पता:* ${address || "नहीं बताया"}
+
+*पक्षकार / आवेदक का नाम:* ${party || "नहीं बताया"}
+
+*मोबाइल नंबर:* ${mobile || "नहीं बताया"}
+
+*अतिरिक्त जानकारी:* ${details || "नहीं बताया"}
+
+मुझे इस Property Service के संबंध में जानकारी चाहिए।
+
+!! शुभ शुरुआत स्टार्ट पे के साथ !!`;
+
+    }else{
+
+        message =
+`🏠 *StartPay Property Enquiry*
+
+*Service:* ${en}${selectedSubServicesText}
+
+*District:* ${district || "Not provided"}
+
+*Tehsil:* ${tehsil || "Not provided"}
+
+*Plot / Property Address:* ${address || "Not provided"}
+
+*Party / Applicant Name:* ${party || "Not provided"}
+
+*Mobile Number:* ${mobile || "Not provided"}
+
+*Additional Details:* ${details || "Not provided"}
+
+I need information regarding this Property Service.
+
+!! शुभ शुरुआत स्टार्ट पे के साथ !!`;
+
+    }
+
+
+    document
+        .getElementById(
+            "preview"
+        )
+        .textContent =
+            message;
+
+
+    document
+        .getElementById(
+            "preview"
+        )
+        .classList
+        .add("show");
+
+
+    const url =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(
+            message
+        );
+
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+
+/* =====================================================
+   WHATSAPP HELP
+===================================================== */
+
+function openWhatsAppHelp(){
+
+    const message =
+        currentLanguage === "hi"
+
+        ?
+
+`नमस्ते StartPay, मुझे Property Legal & Finance Services के संबंध में सहायता चाहिए।`
+
+        :
+
+`Hello StartPay, I need help regarding Property Legal & Finance Services.`;
+
+
+    window.open(
+
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(
+            message
+        ),
+
+        "_blank"
+
+    );
+
+}
+
+
+
+/* =====================================================
+   CALLBACK
+===================================================== */
+
+function callbackShare(){
+
+    const message =
+        currentLanguage === "hi"
+
+        ?
+
+`नमस्ते StartPay, कृपया मुझे Property Service के संबंध में WhatsApp Callback करें।`
+
+        :
+
+`Hello StartPay, please give me a WhatsApp callback regarding Property Services.`;
+
+
+    window.open(
+
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(
+            message
+        ),
+
+        "_blank"
+
+    );
+
+}
+
+
+
+/* =====================================================
+   AUTO SHARE
+===================================================== */
+
+async function sharePage(){
+
+    const shareData = {
+
+        title:
+            "StartPay Legal & Finance Property Solutions",
+
+        text:
+            "StartPay Property Legal & Finance Services",
+
+        url:
+            window.location.href
+
+    };
+
+
+    if(
+        navigator.share
+    ){
+
+        try{
+
+            await navigator.share(
+                shareData
+            );
+
+        }catch(e){}
+
+    }else{
+
+        try{
+
+            await navigator
+                .clipboard
+                .writeText(
+                    window.location.href
+                );
+
+
+            alert(
+
+                currentLanguage === "hi"
+
+                ?
+
+                "Page link copy हो गया है।"
+
+                :
+
+                "Page link has been copied."
+
+            );
+
+        }catch(e){
+
+            alert(
+                window.location.href
+            );
+
+        }
+
+    }
+
+}
+
+
+
+/* =====================================================
+   CREDIT SCORE DEMO
+===================================================== */
+
+const CREDIT_SCORE_LINK =
+    "https://www.creditmantri.com/o2o/?utm_term=O2O-Agent&utm_source=o2o_commonwealth&dsa_name=Raikiosk_Rai_137";
+
+let creditScoreSubmitted = false;
+let creditScoreLastClick = 0;
+
+function openCreditScoreDemo(){
+    document.getElementById("creditScoreModal").classList.add("show");
+    document.body.style.overflow = "hidden";
+}
+
+function closeCreditScoreDemo(){
+    document.getElementById("creditScoreModal").classList.remove("show");
+    document.body.style.overflow = "";
+}
+
+function handleCreditScoreTabClick(){
+    const now = Date.now();
+
+    if(creditScoreSubmitted){
+        window.open(CREDIT_SCORE_LINK, "_blank", "noopener,noreferrer");
+        return;
+    }
+
+    openCreditScoreDemo();
+    creditScoreLastClick = now;
+}
+
+function submitCreditScoreDemo(e){
+    e.preventDefault();
+
+    const panInput = document.getElementById("creditPan");
+    if(panInput){ panInput.value = panInput.value.trim().toUpperCase(); }
+
+    const form = document.getElementById("creditScoreForm");
+    if(!form.checkValidity()){
+        form.reportValidity();
+        return;
+    }
+
+    const firstName = document.getElementById("creditFirstName").value.trim();
+    const lastName = document.getElementById("creditLastName").value.trim();
+    const gender = document.querySelector('input[name="gender"]:checked')?.value || "Not provided";
+    const phone = document.getElementById("creditPhone").value.trim();
+    const dob = document.getElementById("creditDob").value;
+    const pin = document.getElementById("creditPin").value.trim();
+    const pan = document.getElementById("creditPan").value.trim().toUpperCase();
+    const email = document.getElementById("creditEmail").value.trim();
+
+    const message = `📊 *StartPay Credit Score Enquiry*\n\n*Demo only - StartPay*\n\n*Name:* ${firstName} ${lastName}\n*Gender:* ${gender}\n*Mobile:* ${phone}\n*Date of Birth:* ${dob || "Not provided"}\n*PAN Card:* ${pan}\n*PIN Code:* ${pin}\n*Email:* ${email || "Not provided"}\n\nPlease assist with my credit score enquiry.`;
+
+    const whatsappUrl =
+        "https://wa.me/" + WHATSAPP_NUMBER +
+        "?text=" + encodeURIComponent(message);
+
+    creditScoreSubmitted = true;
+
+    window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+    setTimeout(function(){
+        window.open(CREDIT_SCORE_LINK, "_blank", "noopener,noreferrer");
+    }, 450);
+
+    closeCreditScoreDemo();
+
+    alert("Demo enquiry WhatsApp पर भेजी गई है। अब Credit Score link भी खोला जा रहा है।");
+}
+
+/* =====================================================
+   TERMS
+===================================================== */
+
+function openTerms(){
+
+    document
+        .getElementById(
+            "termsModal"
+        )
+        .classList
+        .add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById(
+            "termsModal"
+        )
+        .classList
+        .remove("show");
+
+}
+
+
+
+document.getElementById("creditScoreModal").addEventListener("click", function(e){
+    if(e.target === this){
+        closeCreditScoreDemo();
+    }
+});
+
+/* =====================================================
+   CLOSE MODAL OUTSIDE
+===================================================== */
+
+document
+    .getElementById(
+        "termsModal"
+    )
+    .addEventListener(
+        "click",
+        function(e){
+
+            if(
+                e.target === this
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+
+document.addEventListener("keydown", function(e){
+    if(e.key === "Escape"){
+        closeCreditScoreDemo();
+        closeModal();
+    }
+});
+
+/* =====================================================
+   INITIAL LANGUAGE
+===================================================== */
+
+setLanguage("hi");
+
+</script>
+
+
+</body>
+</html>
