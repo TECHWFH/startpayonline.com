@@ -1,0 +1,1672 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0, user-scalable=no">
+
+<title>StartPay Legal & Finance Property Solutions</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --blue:#002D9C;
+    --green:#00A825;
+    --dark:#111111;
+    --white:#ffffff;
+    --red:#FF0000;
+    --light:#f4f7fb;
+    --border:#d9e0ec;
+    --shadow:0 8px 25px rgba(0,0,0,.08);
+}
+
+body{
+    font-family:Arial,"Noto Sans Devanagari",sans-serif;
+    background:linear-gradient(135deg,#eef4ff,#f8fbff);
+    color:var(--dark);
+    min-height:100vh;
+}
+
+.container{
+    width:100%;
+    max-width:1100px;
+    margin:auto;
+    padding:14px;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+.header{
+    background:var(--white);
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:20px 18px;
+    text-align:center;
+    border-top:5px solid var(--blue);
+}
+
+.header h1{
+    color:var(--blue);
+    font-size:clamp(22px,4vw,34px);
+    line-height:1.25;
+    font-weight:800;
+}
+
+.header .by{
+    margin-top:8px;
+    font-size:clamp(15px,3vw,19px);
+    font-weight:600;
+}
+
+.header .phone{
+    color:var(--green);
+    font-weight:700;
+}
+
+/* =========================
+   LANGUAGE
+========================= */
+
+.language-box{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-top:16px;
+    flex-wrap:wrap;
+}
+
+.lang-btn{
+    border:1px solid var(--blue);
+    background:#fff;
+    color:var(--blue);
+    padding:10px 20px;
+    border-radius:25px;
+    cursor:pointer;
+    font-weight:700;
+    min-height:42px;
+    transition:.2s;
+}
+
+.lang-btn.active{
+    background:var(--blue);
+    color:white;
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+
+.action-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+
+.action-btn{
+    border:none;
+    border-radius:12px;
+    min-height:48px;
+    padding:10px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    background:white;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    transition:.2s;
+}
+
+.action-btn:hover{
+    transform:translateY(-2px);
+}
+
+.print{color:#333;}
+.help{color:#008c3a;}
+.share{color:#0066cc;}
+.callback{color:#7b2cbf;}
+.call{color:#008c3a;}
+.terms{color:#c00000;}
+.website{color:var(--blue);}
+
+/* =========================
+   SECTION
+========================= */
+
+.section{
+    background:white;
+    margin-top:18px;
+    border-radius:18px;
+    box-shadow:var(--shadow);
+    padding:18px;
+}
+
+/* PROPERTY ENQUIRY TITLE */
+
+.section-title{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--blue);
+    color:#fff;
+    font-size:18px;
+    font-weight:800;
+    padding:10px 20px;
+    border-radius:10px;
+    margin-bottom:16px;
+    box-shadow:0 4px 12px rgba(0,45,156,.18);
+}
+
+/* =========================
+   SERVICE TITLE - RED TAB
+========================= */
+
+.service-title-tab{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    background:var(--red);
+    color:#fff;
+    font-size:19px;
+    font-weight:800;
+    padding:12px 16px;
+    border-radius:12px;
+    margin-bottom:15px;
+    box-shadow:0 5px 14px rgba(255,0,0,.20);
+    text-align:center;
+}
+
+/* =========================
+   SERVICE CARDS
+========================= */
+
+.services{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.service-card{
+    border:2px solid #e2e8f2;
+    background:#fff;
+    border-radius:14px;
+    padding:15px;
+    cursor:pointer;
+    text-align:center;
+    font-weight:700;
+    min-height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    line-height:1.4;
+    transition:.2s;
+}
+
+.service-card:hover{
+    border-color:var(--blue);
+    background:#f2f6ff;
+    transform:translateY(-1px);
+}
+
+.service-card.selected{
+    background:var(--blue);
+    color:#fff;
+    border-color:var(--blue);
+}
+
+/* =========================
+   FORM
+========================= */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+}
+
+.field.full{
+    grid-column:1/-1;
+}
+
+label{
+    font-size:14px;
+    font-weight:700;
+}
+
+.required{
+    color:var(--red);
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    border:1.5px solid var(--border);
+    border-radius:11px;
+    padding:13px 14px;
+    font-size:16px;
+    min-height:48px;
+    outline:none;
+    background:#fff;
+    color:#111;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px rgba(0,45,156,.08);
+}
+
+textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+/* =========================
+   OTHER TEHSIL
+========================= */
+
+.other-box{
+    display:none;
+    margin-top:8px;
+}
+
+.other-box.show{
+    display:block;
+}
+
+/* =========================
+   WHATSAPP BUTTON
+========================= */
+
+.whatsapp-main{
+    width:100%;
+    border:none;
+    background:var(--green);
+    color:#fff;
+    min-height:56px;
+    border-radius:14px;
+    font-size:17px;
+    font-weight:800;
+    cursor:pointer;
+    margin-top:18px;
+    box-shadow:0 6px 18px rgba(0,168,37,.25);
+}
+
+.whatsapp-main:hover{
+    background:#008f20;
+}
+
+/* =========================
+   PREVIEW
+========================= */
+
+.preview{
+    margin-top:16px;
+    background:#f6f8fc;
+    border:1px solid #e0e5ef;
+    border-radius:12px;
+    padding:14px;
+    white-space:pre-wrap;
+    font-size:14px;
+    line-height:1.6;
+    display:none;
+}
+
+.preview.show{
+    display:block;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+    text-align:center;
+    padding:20px 10px;
+    font-size:14px;
+    font-weight:800;
+    color:var(--red);
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:9999;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    background:white;
+    width:100%;
+    max-width:600px;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:18px;
+    padding:20px;
+}
+
+.modal-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.close{
+    border:none;
+    background:#eee;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:20px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:700px){
+
+    .container{
+        padding:9px;
+    }
+
+    .header{
+        padding:17px 12px;
+        border-radius:15px;
+    }
+
+    .header h1{
+        font-size:23px;
+    }
+
+    .header .by{
+        font-size:15px;
+    }
+
+    .action-grid{
+        grid-template-columns:repeat(2,1fr);
+        gap:8px;
+    }
+
+    .action-btn{
+        min-height:50px;
+        font-size:13px;
+    }
+
+    .services{
+        grid-template-columns:1fr;
+    }
+
+    .service-card{
+        min-height:60px;
+        padding:12px;
+        font-size:15px;
+    }
+
+    .section{
+        padding:14px;
+        border-radius:15px;
+    }
+
+    .service-title-tab{
+        font-size:18px;
+        min-height:48px;
+        padding:12px 10px;
+        border-radius:11px;
+        margin-bottom:13px;
+    }
+
+    .section-title{
+        font-size:18px;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+        gap:12px;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
+    input,
+    select,
+    textarea{
+        font-size:16px;
+    }
+}
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media(max-width:380px){
+
+    .action-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .action-btn{
+        font-size:12px;
+        padding:8px 5px;
+    }
+
+    .lang-btn{
+        padding:9px 14px;
+    }
+
+    .service-card{
+        font-size:14px;
+    }
+}
+
+/* =========================
+   PRINT
+========================= */
+
+@media print{
+
+    body{
+        background:white;
+    }
+
+    .action-grid,
+    .language-box,
+    .whatsapp-main,
+    .preview,
+    .footer{
+        display:none !important;
+    }
+
+    .container{
+        max-width:none;
+    }
+
+    .section,
+    .header{
+        box-shadow:none;
+        border:1px solid #ddd;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header class="header">
+
+    <h1>
+        StartPay Legal & Finance Property Solutions
+    </h1>
+
+    <div class="by">
+        <span id="byText">by Anurag Rai</span>
+        <span class="phone"> | ☎ 9340726600</span>
+    </div>
+
+    <!-- LANGUAGE -->
+
+    <div class="language-box">
+
+        <button class="lang-btn active"
+                id="hiBtn"
+                onclick="setLanguage('hi')">
+            🇮🇳 हिंदी
+        </button>
+
+        <button class="lang-btn"
+                id="enBtn"
+                onclick="setLanguage('en')">
+            🇬🇧 English
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================
+     ALL ACTION BUTTONS
+========================= -->
+
+<div class="action-grid">
+
+    <button class="action-btn print"
+            onclick="window.print()">
+        🖨️
+        <span data-hi="Print PDF"
+              data-en="Print PDF">
+            Print PDF
+        </span>
+    </button>
+
+    <button class="action-btn help"
+            onclick="openWhatsAppHelp()">
+        💬
+        <span data-hi="WhatsApp Help"
+              data-en="WhatsApp Help">
+            WhatsApp Help
+        </span>
+    </button>
+
+    <button class="action-btn share"
+            onclick="sharePage()">
+        📤
+        <span data-hi="Auto Share"
+              data-en="Auto Share">
+            Auto Share
+        </span>
+    </button>
+
+    <button class="action-btn callback"
+            onclick="callbackShare()">
+        📲
+        <span data-hi="WhatsApp Callback Share"
+              data-en="WhatsApp Callback Share">
+            WhatsApp Callback Share
+        </span>
+    </button>
+
+    <button class="action-btn call"
+            onclick="window.location.href='tel:+919340726600'">
+        📞
+        <span data-hi="Call Now"
+              data-en="Call Now">
+            Call Now
+        </span>
+    </button>
+
+    <button class="action-btn terms"
+            onclick="openTerms()">
+        ⚖️
+        <span data-hi="Terms"
+              data-en="Terms">
+            Terms
+        </span>
+    </button>
+
+    <button class="action-btn website"
+            onclick="window.open('https://startpayonline.com/','_blank')">
+        🌐
+        <span data-hi="Website"
+              data-en="Website">
+            Website
+        </span>
+    </button>
+
+</div>
+
+
+<!-- =========================
+     SERVICES
+========================= -->
+
+<section class="section">
+
+    <!-- RED SERVICE TAB -->
+
+    <div class="service-title-tab">
+
+        <span data-hi="सेवा चुनें"
+              data-en="Select Service">
+            सेवा चुनें
+        </span>
+
+    </div>
+
+
+    <div class="services">
+
+        <!-- 1 -->
+
+        <div class="service-card"
+             onclick="selectService(this,'नामान्तरण','Mutation')">
+
+            <span data-hi="नामान्तरण"
+                  data-en="Mutation">
+                नामान्तरण
+            </span>
+
+        </div>
+
+
+        <!-- 2 -->
+
+        <div class="service-card"
+             onclick="selectService(this,'P-I','P-I')">
+
+            P-I
+
+        </div>
+
+
+        <!-- 3 -->
+
+        <div class="service-card"
+             onclick="selectService(this,'P-II','P-II')">
+
+            P-II
+
+        </div>
+
+
+        <!-- 4 -->
+
+        <div class="service-card"
+             onclick="selectService(this,'डायवर्सन','Diversion')">
+
+            <span data-hi="डायवर्सन"
+                  data-en="Diversion">
+                डायवर्सन
+            </span>
+
+        </div>
+
+
+        <!-- 5 -->
+
+        <div class="service-card"
+             onclick="selectService(this,'TNCP नक्शा','TNCP Map')">
+
+            <span data-hi="TNCP नक्शा"
+                  data-en="TNCP Map">
+                TNCP नक्शा
+            </span>
+
+        </div>
+
+
+        <!-- 6 -->
+
+        <div class="service-card"
+             onclick="selectService(
+                 this,
+                 'नगर निगम नक्शा',
+                 'Municipal Corporation Map'
+             )">
+
+            <span data-hi="नगर निगम नक्शा"
+                  data-en="Municipal Corporation Map">
+                नगर निगम नक्शा
+            </span>
+
+        </div>
+
+
+        <!-- 7 -->
+
+        <div class="service-card"
+             onclick="selectService(
+                 this,
+                 'Deemed Approval - Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases',
+                 'Deemed Approval - Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases'
+             )">
+
+            <span data-hi="Deemed Approval – Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases"
+                  data-en="Deemed Approval – Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases">
+
+                Deemed Approval – Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases
+
+            </span>
+
+        </div>
+
+
+        <!-- 8 - ENGINEERING APPROVAL -->
+
+        <div class="service-card"
+             onclick="selectService(
+                 this,
+                 'Engineering Approval - Plot Area Up to 300 SQM (3229.17 sq.ft.)',
+                 'Engineering Approval - Plot Area Up to 300 SQM (3229.17 sq.ft.)'
+             )">
+
+            <span data-hi="Engineering Approval – Plot Area Up to 300 SQM (3229.17 sq.ft.)"
+                  data-en="Engineering Approval – Plot Area Up to 300 SQM (3229.17 sq.ft.)">
+
+                Engineering Approval – Plot Area Up to 300 SQM (3229.17 sq.ft.)
+
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     ENQUIRY FORM
+========================= -->
+
+<section class="section">
+
+    <div class="section-title">
+
+        📋
+
+        <span data-hi="Property Enquiry"
+              data-en="Property Enquiry">
+            Property Enquiry
+        </span>
+
+    </div>
+
+
+    <div class="form-grid">
+
+        <!-- SERVICE DROPDOWN -->
+
+        <div class="field full">
+
+            <label>
+
+                <span data-hi="सेवा / Service"
+                      data-en="Service">
+                    सेवा / Service
+                </span>
+
+                <span class="required">*</span>
+
+            </label>
+
+
+            <select id="serviceSelect"
+                    onchange="serviceFromDropdown()">
+
+                <option value="">
+                    सेवा चुनें / Select Service
+                </option>
+
+
+                <option value="Mutation|नामान्तरण">
+                    नामान्तरण / Mutation
+                </option>
+
+
+                <option value="P-I|P-I">
+                    P-I
+                </option>
+
+
+                <option value="P-II|P-II">
+                    P-II
+                </option>
+
+
+                <option value="Diversion|डायवर्सन">
+                    डायवर्सन / Diversion
+                </option>
+
+
+                <option value="TNCP Map|TNCP नक्शा">
+                    TNCP नक्शा / TNCP Map
+                </option>
+
+
+                <option value="Municipal Corporation Map|नगर निगम नक्शा">
+                    नगर निगम नक्शा / Municipal Corporation Map
+                </option>
+
+
+                <option value="Deemed Approval - Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases|Deemed Approval - Plot Area Up to 186 SQM (2000 sq.ft.) Residential Cases">
+                    Deemed Approval – Residential Cases
+                </option>
+
+
+                <option value="Engineering Approval - Plot Area Up to 300 SQM (3229.17 sq.ft.)|Engineering Approval - Plot Area Up to 300 SQM (3229.17 sq.ft.)">
+                    Engineering Approval – Plot Area Up to 300 SQM (3229.17 sq.ft.)
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- DISTRICT -->
+
+        <div class="field">
+
+            <label>
+
+                <span data-hi="जिला / District"
+                      data-en="District">
+                    जिला / District
+                </span>
+
+                <span class="required">*</span>
+
+            </label>
+
+
+            <input type="text"
+                   id="district"
+                   value="Jabalpur"
+                   placeholder="Jabalpur / जबलपुर">
+
+        </div>
+
+
+        <!-- TEHSIL -->
+
+        <div class="field">
+
+            <label>
+
+                <span data-hi="तहसील / Tehsil"
+                      data-en="Tehsil">
+                    तहसील / Tehsil
+                </span>
+
+            </label>
+
+
+            <select id="tehsil"
+                    onchange="checkOtherTehsil()">
+
+                <option value="">
+                    तहसील चुनें / Select Tehsil
+                </option>
+
+
+                <option value="ओमाती | Omati">
+                    ओमाती / Omati
+                </option>
+
+
+                <option value="कुंडम | Kundam">
+                    कुंडम / Kundam
+                </option>
+
+
+                <option value="कोतवाली | Kotwali">
+                    कोतवाली / Kotwali
+                </option>
+
+
+                <option value="गोरखपुर | Gorakhpur">
+                    गोरखपुर / Gorakhpur
+                </option>
+
+
+                <option value="गोहलपुर | Gohalpur">
+                    गोहलपुर / Gohalpur
+                </option>
+
+
+                <option value="जबलपुर | Jabalpur">
+                    जबलपुर / Jabalpur
+                </option>
+
+
+                <option value="पाटन | Paatan">
+                    पाटन / Paatan
+                </option>
+
+
+                <option value="रांझी | Ranjhi">
+                    रांझी / Ranjhi
+                </option>
+
+
+                <option value="शाहपुरा | Shahpura">
+                    शाहपुरा / Shahpura
+                </option>
+
+
+                <option value="सिहोरा | Sihora">
+                    सिहोरा / Sihora
+                </option>
+
+
+                <option value="OTHER">
+                    अन्य / Other — स्वयं भरें
+                </option>
+
+            </select>
+
+
+            <div class="other-box"
+                 id="otherTehsilBox">
+
+                <input type="text"
+                       id="otherTehsil"
+                       placeholder="अन्य तहसील / Other Tehsil">
+
+            </div>
+
+        </div>
+
+
+        <!-- PROPERTY ADDRESS -->
+
+        <div class="field full">
+
+            <label>
+
+                <span data-hi="प्लॉट / संपत्ति का पता"
+                      data-en="Plot / Property Address">
+                    प्लॉट / संपत्ति का पता
+                </span>
+
+                <small>
+                    (Optional)
+                </small>
+
+            </label>
+
+
+            <textarea id="propertyAddress"
+                      placeholder="Plot No., Ward, Mohalla, Village, Street etc."></textarea>
+
+        </div>
+
+
+        <!-- PARTY NAME -->
+
+        <div class="field">
+
+            <label>
+
+                <span data-hi="पक्षकार / आवेदक का नाम"
+                      data-en="Party / Applicant Name">
+                    पक्षकार / आवेदक का नाम
+                </span>
+
+                <span class="required">*</span>
+
+            </label>
+
+
+            <input type="text"
+                   id="partyName"
+                   placeholder="नाम / Name">
+
+        </div>
+
+
+        <!-- MOBILE -->
+
+        <div class="field">
+
+            <label>
+
+                <span data-hi="मोबाइल नंबर"
+                      data-en="Mobile Number">
+                    मोबाइल नंबर
+                </span>
+
+                <span class="required">*</span>
+
+            </label>
+
+
+            <input type="tel"
+                   id="mobile"
+                   inputmode="numeric"
+                   maxlength="10"
+                   placeholder="10 Digit Mobile Number">
+
+        </div>
+
+
+        <!-- DETAILS -->
+
+        <div class="field full">
+
+            <label>
+
+                <span data-hi="अतिरिक्त जानकारी"
+                      data-en="Additional Details">
+                    अतिरिक्त जानकारी
+                </span>
+
+                <small>
+                    (Optional)
+                </small>
+
+            </label>
+
+
+            <textarea id="details"
+                      placeholder="अपनी समस्या / आवश्यक जानकारी लिखें..."></textarea>
+
+        </div>
+
+    </div>
+
+
+    <!-- WHATSAPP -->
+
+    <button class="whatsapp-main"
+            onclick="sendEnquiry()">
+
+        💬
+
+        <span data-hi="WhatsApp पर Enquiry भेजें"
+              data-en="Send Enquiry on WhatsApp">
+            WhatsApp पर Enquiry भेजें
+        </span>
+
+    </button>
+
+
+    <!-- MESSAGE PREVIEW -->
+
+    <div class="preview"
+         id="preview">
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FOOTER
+========================= -->
+
+<div class="footer">
+    !! शुभ शुरुआत स्टार्ट पे के साथ !!
+</div>
+
+</div>
+
+
+<!-- =========================
+     TERMS MODAL
+========================= -->
+
+<div class="modal"
+     id="termsModal">
+
+    <div class="modal-box">
+
+        <div class="modal-head">
+
+            <h2 id="termsTitle">
+                Terms & Conditions
+            </h2>
+
+
+            <button class="close"
+                    onclick="closeModal()">
+                ×
+            </button>
+
+        </div>
+
+
+        <div id="termsText">
+
+            <p>
+                Property related services are subject to
+                document verification, applicable rules,
+                authority requirements and service conditions.
+            </p>
+
+            <br>
+
+            <p>
+                Final approval or decision shall remain with
+                the concerned government / statutory authority.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   SETTINGS
+========================= */
+
+const WHATSAPP_NUMBER = "919340726600";
+
+let currentLanguage = "hi";
+
+let selectedServiceHi = "";
+let selectedServiceEn = "";
+
+
+/* =========================
+   LANGUAGE
+========================= */
+
+function setLanguage(lang){
+
+    currentLanguage = lang;
+
+    document.documentElement.lang =
+        lang === "hi" ? "hi" : "en";
+
+
+    document.querySelectorAll("[data-hi]").forEach(el => {
+
+        el.textContent =
+            lang === "hi"
+            ? el.getAttribute("data-hi")
+            : el.getAttribute("data-en");
+
+    });
+
+
+    document.getElementById("hiBtn")
+        .classList.toggle("active",lang === "hi");
+
+
+    document.getElementById("enBtn")
+        .classList.toggle("active",lang === "en");
+
+}
+
+
+/* =========================
+   SERVICE CARD
+========================= */
+
+function selectService(card,hi,en){
+
+    document.querySelectorAll(".service-card")
+        .forEach(x => x.classList.remove("selected"));
+
+
+    card.classList.add("selected");
+
+
+    selectedServiceHi = hi;
+    selectedServiceEn = en;
+
+
+    const select =
+        document.getElementById("serviceSelect");
+
+
+    for(let i=0;i<select.options.length;i++){
+
+        if(select.options[i].value.startsWith(en+"|")){
+
+            select.selectedIndex = i;
+
+            break;
+
+        }
+
+    }
+
+}
+
+
+/* =========================
+   SERVICE DROPDOWN
+========================= */
+
+function serviceFromDropdown(){
+
+    const select =
+        document.getElementById("serviceSelect");
+
+
+    if(!select.value){
+
+        selectedServiceHi = "";
+        selectedServiceEn = "";
+
+        document.querySelectorAll(".service-card")
+            .forEach(x => x.classList.remove("selected"));
+
+        return;
+
+    }
+
+
+    const parts =
+        select.value.split("|");
+
+
+    selectedServiceEn = parts[0];
+    selectedServiceHi = parts[1];
+
+
+    /* SYNC SELECTED CARD */
+
+    document.querySelectorAll(".service-card")
+        .forEach(card => {
+
+            card.classList.remove("selected");
+
+            const onclickText =
+                card.getAttribute("onclick") || "";
+
+            if(
+                onclickText.includes(selectedServiceEn) ||
+                onclickText.includes(selectedServiceHi)
+            ){
+
+                card.classList.add("selected");
+
+            }
+
+        });
+
+}
+
+
+/* =========================
+   TEHSIL OTHER
+========================= */
+
+function checkOtherTehsil(){
+
+    const value =
+        document.getElementById("tehsil").value;
+
+
+    const box =
+        document.getElementById("otherTehsilBox");
+
+
+    if(value === "OTHER"){
+
+        box.classList.add("show");
+
+    }else{
+
+        box.classList.remove("show");
+
+        document.getElementById("otherTehsil").value = "";
+
+    }
+
+}
+
+
+/* =========================
+   GET TEHSIL
+========================= */
+
+function getTehsil(){
+
+    const select =
+        document.getElementById("tehsil");
+
+
+    if(select.value === "OTHER"){
+
+        return document
+            .getElementById("otherTehsil")
+            .value.trim();
+
+    }
+
+
+    return select.value;
+
+}
+
+
+/* =========================
+   BUILD MESSAGE
+========================= */
+
+function buildMessage(){
+
+    const district =
+        document.getElementById("district")
+        .value.trim();
+
+
+    const tehsil =
+        getTehsil();
+
+
+    const address =
+        document.getElementById("propertyAddress")
+        .value.trim();
+
+
+    const party =
+        document.getElementById("partyName")
+        .value.trim();
+
+
+    const mobile =
+        document.getElementById("mobile")
+        .value.trim();
+
+
+    const details =
+        document.getElementById("details")
+        .value.trim();
+
+
+    if(!selectedServiceEn){
+
+        alert(
+            currentLanguage === "hi"
+            ? "कृपया Service चुनें।"
+            : "Please select a Service."
+        );
+
+        return null;
+
+    }
+
+
+    if(!district){
+
+        alert(
+            currentLanguage === "hi"
+            ? "कृपया जिला भरें।"
+            : "Please enter District."
+        );
+
+        return null;
+
+    }
+
+
+    if(!party){
+
+        alert(
+            currentLanguage === "hi"
+            ? "कृपया पक्षकार / आवेदक का नाम भरें।"
+            : "Please enter Party / Applicant Name."
+        );
+
+        return null;
+
+    }
+
+
+    if(!/^[0-9]{10}$/.test(mobile)){
+
+        alert(
+            currentLanguage === "hi"
+            ? "कृपया सही 10 अंकों का मोबाइल नंबर भरें।"
+            : "Please enter a valid 10-digit mobile number."
+        );
+
+        return null;
+
+    }
+
+
+    let message = "";
+
+
+    if(currentLanguage === "hi"){
+
+        message =
+`🏠 *StartPay Property Enquiry*
+
+*सेवा:* ${selectedServiceHi}
+
+*जिला:* ${district}
+
+*तहसील:* ${tehsil || "नहीं बताया"}
+
+*प्लॉट / संपत्ति का पता:* ${address || "नहीं बताया"}
+
+*पक्षकार / आवेदक का नाम:* ${party}
+
+*मोबाइल नंबर:* ${mobile}
+
+*अतिरिक्त जानकारी:* ${details || "नहीं बताया"}
+
+कृपया इस Property Service के संबंध में मुझसे संपर्क करें।
+
+!! शुभ शुरुआत स्टार्ट पे के साथ !!`;
+
+    }else{
+
+        message =
+`🏠 *StartPay Property Enquiry*
+
+*Service:* ${selectedServiceEn}
+
+*District:* ${district}
+
+*Tehsil:* ${tehsil || "Not provided"}
+
+*Plot / Property Address:* ${address || "Not provided"}
+
+*Party / Applicant Name:* ${party}
+
+*Mobile Number:* ${mobile}
+
+*Additional Details:* ${details || "Not provided"}
+
+Please contact me regarding this Property Service.
+
+!! शुभ शुरुआत स्टार्ट पे के साथ !!`;
+
+    }
+
+
+    return message;
+
+}
+
+
+/* =========================
+   SEND WHATSAPP
+========================= */
+
+function sendEnquiry(){
+
+    const message =
+        buildMessage();
+
+
+    if(!message) return;
+
+
+    document.getElementById("preview")
+        .textContent = message;
+
+
+    document.getElementById("preview")
+        .classList.add("show");
+
+
+    const url =
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(message);
+
+
+    window.open(url,"_blank");
+
+}
+
+
+/* =========================
+   WHATSAPP HELP
+========================= */
+
+function openWhatsAppHelp(){
+
+    const message =
+        currentLanguage === "hi"
+        ? "नमस्ते StartPay, मुझे Property Legal & Finance Services के संबंध में सहायता चाहिए।"
+        : "Hello StartPay, I need help regarding Property Legal & Finance Services.";
+
+
+    window.open(
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(message),
+        "_blank"
+    );
+
+}
+
+
+/* =========================
+   CALLBACK SHARE
+========================= */
+
+function callbackShare(){
+
+    const message =
+        currentLanguage === "hi"
+        ? "नमस्ते StartPay, कृपया मुझे Property Service के संबंध में WhatsApp Callback करें।"
+        : "Hello StartPay, please give me a WhatsApp callback regarding Property Services.";
+
+
+    window.open(
+        "https://wa.me/" +
+        WHATSAPP_NUMBER +
+        "?text=" +
+        encodeURIComponent(message),
+        "_blank"
+    );
+
+}
+
+
+/* =========================
+   AUTO SHARE
+========================= */
+
+async function sharePage(){
+
+    const shareData = {
+
+        title:
+            "StartPay Legal & Finance Property Solutions",
+
+        text:
+            currentLanguage === "hi"
+            ? "StartPay Property Legal & Finance Services"
+            : "StartPay Property Legal & Finance Services",
+
+        url:
+            window.location.href
+
+    };
+
+
+    if(navigator.share){
+
+        try{
+
+            await navigator.share(shareData);
+
+        }catch(e){}
+
+    }else{
+
+        try{
+
+            await navigator.clipboard
+                .writeText(window.location.href);
+
+
+            alert(
+                currentLanguage === "hi"
+                ? "Page link copy हो गया है।"
+                : "Page link has been copied."
+            );
+
+        }catch(e){
+
+            alert(window.location.href);
+
+        }
+
+    }
+
+}
+
+
+/* =========================
+   TERMS
+========================= */
+
+function openTerms(){
+
+    document
+        .getElementById("termsModal")
+        .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("termsModal")
+        .classList.remove("show");
+
+}
+
+
+/* =========================
+   CLOSE MODAL OUTSIDE
+========================= */
+
+document.getElementById("termsModal")
+    .addEventListener("click",function(e){
+
+        if(e.target === this){
+
+            closeModal();
+
+        }
+
+    });
+
+
+/* =========================
+   INITIAL LANGUAGE
+========================= */
+
+setLanguage("hi");
+
+</script>
+
+</body>
+</html>
