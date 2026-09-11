@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ऑनलाइन कियोस्क फाइनेंशियल सर्विसेज | Kiosk Services</title>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: #f1f5f9;
+            color: var(--text-dark);
+            padding: 30px 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 1250px;
+            background: #ffffff;
+            border-radius: 24px;
+            padding: 35px 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #3730a3;
+            font-size: 0.8rem;
+            font-weight: 700;
+            padding: 6px 16px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Language Toggle Button */
+        .lang-btn {
+            background: #0f172a;
+            color: #ffffff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: #2563eb;
+        }
+
+        /* Top Header Section */
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-title-box h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            line-height: 1.2;
+            background: linear-gradient(90deg, #2563eb, #16a34a, #d97706);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-title-box p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Gradient WhatsApp Button */
+        .gradient-wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(90deg, #0284c7 0%, #16a34a 50%, #d97706 100%);
+            color: #ffffff;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(22, 163, 74, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .gradient-wa-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+        }
+
+        /* Grid Layout (8 Cards) */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        /* Clean White Cards */
+        .card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            padding: 22px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
+            border-color: transparent;
+        }
+
+        /* Background Numbering */
+        .card-number {
+            position: absolute;
+            top: 15px;
+            right: 18px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #f1f5f9;
+            user-select: none;
+        }
+
+        /* Custom Card Colors */
+        .card-1 { border-top: 5px solid #2563eb; }
+        .card-1 .icon-box { background: #dbeafe; color: #2563eb; }
+
+        .card-2 { border-top: 5px solid #7c3aed; }
+        .card-2 .icon-box { background: #ede9fe; color: #7c3aed; }
+
+        .card-3 { border-top: 5px solid #059669; }
+        .card-3 .icon-box { background: #d1fae5; color: #059669; }
+
+        .card-4 { border-top: 5px solid #ea580c; }
+        .card-4 .icon-box { background: #ffedd5; color: #ea580c; }
+
+        .card-5 { border-top: 5px solid #dc2626; }
+        .card-5 .icon-box { background: #fee2e2; color: #dc2626; }
+
+        .card-6 { border-top: 5px solid #0891b2; }
+        .card-6 .icon-box { background: #cffafe; color: #0891b2; }
+
+        .card-7 { border-top: 5px solid #4f46e5; }
+        .card-7 .icon-box { background: #e0e7ff; color: #4f46e5; }
+
+        .card-8 { border-top: 5px solid #16a34a; }
+        .card-8 .icon-box { background: #dcfce7; color: #16a34a; }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .card ul {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .card ul li {
+            font-size: 0.88rem;
+            color: #475569;
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .card ul li i {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        /* Auto WhatsApp Action Link */
+        .card-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-decoration: none;
+            color: #16a34a;
+            padding-top: 10px;
+            border-top: 1px dashed #e2e8f0;
+            transition: color 0.2s ease;
+        }
+
+        .card-action:hover {
+            color: #15803d;
+        }
+
+        /* Footer Info */
+        .footer-info {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .phone-tag {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: #1e293b;
+        }
+
+        @media (max-width: 768px) {
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .gradient-wa-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    
+    <!-- Top Bar with Language Toggle -->
+    <div class="top-bar">
+        <span class="badge" id="badge-text">डिजिटल ऑनलाइन कियोस्क</span>
+        <button class="lang-btn" onclick="toggleLanguage()">
+            <i class="fa-solid fa-language"></i> <span id="lang-btn-text">English में देखें</span>
+        </button>
+    </div>
+    
+    <div class="header-section">
+        <div class="header-title-box">
+            <h1 id="main-title">ऑनलाइन कियोस्क फाइनेंशियल सर्विसेज</h1>
+            <p id="main-subtitle">आपकी सभी बैंकिंग, लोन, MSME, गुमास्ता, रजिस्ट्री व बीमा की सेवाएं</p>
+        </div>
+        
+        <a id="hdr-wa-btn" href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20आपकी%20कियोस्क%20सेवाओं%20की%20जानकारी%20चाहिए।" class="gradient-wa-btn" target="_blank">
+            <span id="hdr-wa-text">WhatsApp पर शुरू करें</span>
+            <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+
+    <!-- Exact 8 Services Cards Grid -->
+    <div class="cards-grid">
+        
+        <!-- Tab 1: Land Services -->
+        <div class="card card-1">
+            <span class="card-number">01</span>
+            <div>
+                <div class="icon-box"><i class="fa-solid fa-map-location-dot"></i></div>
+                <h3 class="t1-head">जमीन व रिकॉर्ड्स</h3>
+                <ul>
+                    <li class="t1-item1"><i class="fa-solid fa-check"></i> नामांतरण - डायवर्शन</li>
+                    <li class="t1-item2"><i class="fa-solid fa-check"></i> खसरा पी-1-2 रिकॉर्ड</li>
+                    <li class="t1-item3"><i class="fa-solid fa-check"></i> TNCP व नगर निगम नक्शा</li>
+                    <li class="t1-item4"><i class="fa-solid fa-check"></i> प्लॉट खरीदी व बिक्री</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20जमीन%20और%20रेकॉर्ड्स%20(नामांतरण/खसरा/नक्शा)%20की%20सेवाएं%20चाहिए।" class="card-action" target="_blank">
+                <span class="wa-action-text">WhatsApp पर पूछें</span>
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Tab 2: Banking & Business (MSME, Udyam & Gumasta) -->
+        <div class="card card-2">
+            <span class="card-number">02</span>
+            <div>
+                <div class="icon-box"><i class="fa-solid fa-building-columns"></i></div>
+                <h3 class="t2-head">बैंकिंग व व्यापार रजिस्ट्रेशन</h3>
+                <ul>
+                    <li class="t2-item1"><i class="fa-solid fa-check"></i> आधार पेमेंट निकासी (AEPS)</li>
+                    <li class="t2-item2"><i class="fa-solid fa-check"></i> मनी ट्रांसफर (DMT) / E-KYC</li>
+                    <li class="t2-item3"><i class="fa-solid fa-check"></i> MSME / उद्यम रजिस्ट्रेशन कार्ड</li>
+                    <li class="t2-item4"><i class="fa-solid fa-check"></i> गुमास्ता लाइसेंस (Shop Licence)</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20बैंकिंग,%20MSME/उद्यम%20कार्ड%20या%20गुमास्ता%20लाइसेंस%20की%20जानकारी%20चाहिए।" class="card-action" target="_blank">
+                <span class="wa-action-text">WhatsApp पर पूछें</span>
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Tab 3: Loans -->
+        <div class="card card-3">
+            <span class="card-number">03</span>
+            <div>
+                <div class="icon-box"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <h3 class="t3-head">सभी प्रकार के लोन</h3>
+                <ul>
+                    <li class="t3-item1"><i class="fa-solid fa-check"></i> होम लोन (Home Loan)</li>
+                    <li class="t3-item2"><i class="fa-solid fa-check"></i> प्लॉट लोन (Plot Loan)</li>
+                    <li class="t3-item3"><i class="fa-solid fa-check"></i> पर्सनल लोन (Personal Loan)</li>
+                    <li class="t3-item4"><i class="fa-solid fa-check"></i> कार लोन (Car Loan)</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20लोन%20(Home/Plot/Personal/Car)%20के%20लिए%20जानकारी%20चाहिए।" class="card-action" target="_blank">
+                <span class="wa-action-text">WhatsApp पर पूछें</span>
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Tab 4: All Types of Insurance (Bima) -->
+        <div class="card card-4">
+            <span class="card-number">04</span>
+            <div>
+                <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+                <h3 class="t4-head">सभी प्रकार के बीमा (Insurance)</h3>
+                <ul>
+                    <li class="t4-item1"><i class="fa-solid fa-check"></i> LIC बीमा पॉलिसी</li>
+                    <li class="t4-item2"><i class="fa-solid fa-check"></i> कार व टू-व्हीलर (2-Wheeler) बीमा</li>
+                    <li class="t4-item3"><i class="fa-solid fa-check"></i> ई-रिक्शा (E-Rickshaw) बीमा</li>
+                    <li class="t4-item4"><i class="fa-solid fa-check"></i> ट्रक व डम्पर (Dumper) बीमा</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20बीमा%20(LIC/Car/2-Wheeler/E-Rickshaw/Truck/Dumper%20Bima)%20करवाना%20है।" class="card-action" target="_blank">
+                <span class="wa-action-text">WhatsApp पर पूछें</span>
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Tab 5: Pollution Certificate (PUC) -->
+        <div class="card card-8">
+            <span class="card-number">05</span>
+            <div>
+                <div class="icon-box"><i class="fa-solid fa-smog"></i></div>
+                <h3 class="t5-head">प्रदूषण प्रमाणपत्र (PUC)</h3>
+                <ul>
+                    <li class="t5-item1"><i class="fa-solid fa-check"></i> ऑनलाइन प्रदूषण (PUC) सर्टिफिकेट</li>
+                    <li class="t5-item2"><i class="fa-solid fa-check"></i> 2-व्हीलर व 4-व्हीलर प्रदूषण जांच</li>
+                    <li class="t5-item3"><i class="fa-solid fa-check"></i> कमर्शियल व्हीकल (ट्रक/डम्पर) PUC</li>
+                    <li class="t5-item4"><i class="fa-solid fa-check"></i> PUC रिन्यूअल व स्टेटस चेक</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20गाड़ी%20का%20प्रदूषण%20प्रमाणपत्र%20(Pollution%20Certificate)%20बनवाना%20है।" class="card-action" target="_blank">
+                <span class="wa-action-text">WhatsApp पर पूछें</span>
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Tab 6: Tax, GeM & PAN -->
+        <div class="card card-5">
+            <span class="card-number">06</span>
+            <div>
+                <div class="icon-box"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                <h3 class="t6-head">टैक्स, पैन व GeM</h3>
+                <ul>
+                    <li class="t6-item1"><i class="fa-solid fa-check"></i> नया पेन कार्ड (PAN Card)</li>
+                    <li class="t6-item2"><i class="fa-solid fa-check"></i> GST / PF / ITR फाइलिंग</li>
+                    <li class="t6-item3"><i class="fa-solid fa-check"></i> GeM Seller Profile & Bidding</li>
+                    <li class="t6-item4"><i class="fa-solid fa-check"></i> कोर्ट मैरिज / विवाह पंजीयन</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20GST,%20ITR,%20PAN%20या%20GeM%20की%20सेवा%20चाहिए।" class="card-action" target="_blank">
+                <span class="wa-action-text">WhatsApp पर पूछें</span>
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Tab 7: Stamp & Registry -->
+        <div class="card card-6">
+            <span class="card-number">07</span>
+            <div>
+                <div class="icon-box"><i class="fa-solid fa-file-contract"></i></div>
+                <h3 class="t7-head">स्टाम्प व रजिस्ट्री सेवाएं</h3>
+                <ul>
+                    <li class="t7-item1"><i class="fa-solid fa-check"></i> स्टाम्प पंजीकरण व प्रॉपर्टी रजिस्ट्री</li>
+                    <li class="t7-item2"><i class="fa-solid fa-check"></i> बिक्री / खरीद नामा</li>
+                    <li class="t7-item3"><i class="fa-solid fa-check"></i> बैंक लोन बंधपत्र (EM)</li>
+                    <li class="t7-item4"><i class="fa-solid fa-check"></i> वसीयतनामा / दान पत्र / पट्टा</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20स्टाम्प,%20रजिस्ट्री%20या%20बंधपत्र%20की%20सेवा%20चाहिए।" class="card-action" target="_blank">
+                <span class="wa-action-text">WhatsApp पर पूछें</span>
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <!-- Tab 8: Document Verification -->
+        <div class="card card-7">
+            <span class="card-number">08</span>
+            <div>
+                <div class="icon-box"><i class="fa-solid fa-file-circle-check"></i></div>
+                <h3 class="t8-head">डॉक्युमेंट वेरिफिकेशन</h3>
+                <ul>
+                    <li class="t8-item1"><i class="fa-solid fa-check"></i> Property Due Diligence</li>
+                    <li class="t8-item2"><i class="fa-solid fa-check"></i> Encumbrance Certificate (भारमुक्त)</li>
+                    <li class="t8-item3"><i class="fa-solid fa-check"></i> Sale / Lease Deed Vetting</li>
+                    <li class="t8-item4"><i class="fa-solid fa-check"></i> Legal Opinion Before Purchase</li>
+                </ul>
+            </div>
+            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20प्रॉपर्टी%20डॉक्युमेंट%20वेरीफिकेशन%20और%20लीगल%20ओपिनियन%20की%20जानकारी%20चाहिए।" class="card-action" target="_blank">
+                <span class="wa-action-text">WhatsApp पर पूछें</span>
+                <i class="fa-brands fa-whatsapp"></i>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- Footer Contact -->
+    <div class="footer-info">
+        <div class="phone-tag">
+            <i class="fa-solid fa-phone" style="color: #16a34a; margin-right: 8px;"></i> M. 9806191441
+        </div>
+        <div id="footer-terms" style="color: var(--text-muted); font-size: 0.85rem;">* नियम एवं शर्तें लागू | Online Kiosk Financial Services</div>
+    </div>
+
+</div>
+
+<script>
+    let currentLang = 'hi';
+
+    const translations = {
+        hi: {
+            badge: "डिजिटल ऑनलाइन कियोस्क",
+            langBtn: "English में देखें",
+            title: "ऑनलाइन कियोस्क फाइनेंशियल सर्विसेज",
+            subtitle: "आपकी सभी बैंकिंग, लोन, MSME, गुमास्ता, रजिस्ट्री व बीमा की सेवाएं",
+            hdrWaText: "WhatsApp पर शुरू करें",
+            waActionText: "WhatsApp पर पूछें",
+            footerTerms: "* नियम एवं शर्तें लागू | Online Kiosk Financial Services",
+            
+            t1Head: "जमीन व रिकॉर्ड्स",
+            t1Item1: "नामांतरण - डायवर्शन",
+            t1Item2: "खसरा पी-1-2 रिकॉर्ड",
+            t1Item3: "TNCP व नगर निगम नक्शा",
+            t1Item4: "प्लॉट खरीदी व बिक्री",
+
+            t2Head: "बैंकिंग व व्यापार रजिस्ट्रेशन",
+            t2Item1: "आधार पेमेंट निकासी (AEPS)",
+            t2Item2: "मनी ट्रांसफर (DMT) / E-KYC",
+            t2Item3: "MSME / उद्यम रजिस्ट्रेशन कार्ड",
+            t2Item4: "गुमास्ता लाइसेंस (Shop Licence)",
+
+            t3Head: "सभी प्रकार के लोन",
+            t3Item1: "होम लोन (Home Loan)",
+            t3Item2: "प्लॉट लोन (Plot Loan)",
+            t3Item3: "पर्सनल लोन (Personal Loan)",
+            t3Item4: "कार लोन (Car Loan)",
+
+            t4Head: "सभी प्रकार के बीमा (Insurance)",
+            t4Item1: "LIC बीमा पॉलिसी",
+            t4Item2: "कार व टू-व्हीलर (2-Wheeler) बीमा",
+            t4Item3: "ई-रिक्शा (E-Rickshaw) बीमा",
+            t4Item4: "ट्रक व डम्पर (Dumper) बीमा",
+
+            t5Head: "प्रदूषण प्रमाणपत्र (PUC)",
+            t5Item1: "ऑनलाइन प्रदूषण (PUC) सर्टिफिकेट",
+            t5Item2: "2-व्हीलर व 4-व्हीलर प्रदूषण जांच",
+            t5Item3: "कमर्शियल व्हीकल (ट्रक/डम्पर) PUC",
+            t5Item4: "PUC रिन्यूअल व स्टेटस चेक",
+
+            t6Head: "टैक्स, पैन व GeM",
+            t6Item1: "नया पेन कार्ड (PAN Card)",
+            t6Item2: "GST / PF / ITR फाइलिंग",
+            t6Item3: "GeM Seller Profile & Bidding",
+            t6Item4: "कोर्ट मैरिज / विवाह पंजीयन",
+
+            t7Head: "स्टाम्प व रजिस्ट्री सेवाएं",
+            t7Item1: "स्टाम्प पंजीकरण व प्रॉपर्टी रजिस्ट्री",
+            t7Item2: "बिक्री / खरीद नामा",
+            t7Item3: "बैंक लोन बंधपत्र (EM)",
+            t7Item4: "वसीयतनामा / दान पत्र / पट्टा",
+
+            t8Head: "डॉक्युमेंट वेरिफिकेशन",
+            t8Item1: "Property Due Diligence",
+            t8Item2: "Encumbrance Certificate (भारमुक्त)",
+            t8Item3: "Sale / Lease Deed Vetting",
+            t8Item4: "Legal Opinion Before Purchase"
+        },
+        en: {
+            badge: "Digital Online Kiosk",
+            langBtn: "हिंदी में देखें",
+            title: "Online Kiosk Financial Services",
+            subtitle: "All your Banking, Loans, MSME, Gumasta, Registry & Insurance Services",
+            hdrWaText: "Start on WhatsApp",
+            waActionText: "Ask on WhatsApp",
+            footerTerms: "* Terms & Conditions Apply | Online Kiosk Financial Services",
+
+            t1Head: "Land & Property Records",
+            t1Item1: "Mutation & Diversion",
+            t1Item2: "Khasra P-1-2 Records",
+            t1Item3: "TNCP & Nagar Nigam Map",
+            t1Item4: "Plot Purchase & Sale",
+
+            t2Head: "Banking & Business Registration",
+            t2Item1: "Aadhaar Cash Withdrawal (AEPS)",
+            t2Item2: "Money Transfer (DMT) / E-KYC",
+            t2Item3: "MSME / Udyam Card Registration",
+            t2Item4: "Gumasta License (Shop Act)",
+
+            t3Head: "All Types of Loans",
+            t3Item1: "Home Loan",
+            t3Item2: "Plot Loan",
+            t3Item3: "Personal Loan",
+            t3Item4: "Car Loan",
+
+            t4Head: "All Types of Insurance",
+            t4Item1: "LIC Insurance Policy",
+            t4Item2: "Car & Two-Wheeler Insurance",
+            t4Item3: "E-Rickshaw Insurance",
+            t4Item4: "Truck & Dumper Insurance",
+
+            t5Head: "Pollution Certificate (PUC)",
+            t5Item1: "Online PUC Certificate",
+            t5Item2: "2-Wheeler & 4-Wheeler Testing",
+            t5Item3: "Commercial Vehicle (Truck/Dumper) PUC",
+            t5Item4: "PUC Renewal & Status Check",
+
+            t6Head: "Tax, PAN & GeM Services",
+            t6Item1: "New PAN Card",
+            t6Item2: "GST / PF / ITR Filing",
+            t6Item3: "GeM Seller Profile & Bidding",
+            t6Item4: "Court Marriage / Marriage Reg.",
+
+            t7Head: "Stamp & Registry Services",
+            t7Item1: "Stamp Reg. & Property Registry",
+            t7Item2: "Sale Deed / Purchase Deed",
+            t7Item3: "Bank Loan Bond (EM)",
+            t7Item4: "Will / Gift Deed / Lease",
+
+            t8Head: "Document Verification",
+            t8Item1: "Property Due Diligence",
+            t8Item2: "Encumbrance Certificate",
+            t8Item3: "Sale / Lease Deed Vetting",
+            t8Item4: "Legal Opinion Before Purchase"
+        }
+    };
+
+    function toggleLanguage() {
+        currentLang = currentLang === 'hi' ? 'en' : 'hi';
+        const langData = translations[currentLang];
+
+        document.getElementById('badge-text').innerText = langData.badge;
+        document.getElementById('lang-btn-text').innerText = langData.langBtn;
+        document.getElementById('main-title').innerText = langData.title;
+        document.getElementById('main-subtitle').innerText = langData.subtitle;
+        document.getElementById('hdr-wa-text').innerText = langData.hdrWaText;
+        document.getElementById('footer-terms').innerText = langData.footerTerms;
+
+        // Action text on cards
+        document.querySelectorAll('.wa-action-text').forEach(el => {
+            el.innerText = langData.waActionText;
+        });
+
+        // Tab Content Dynamic Updates
+        document.querySelector('.t1-head').innerText = langData.t1Head;
+        document.querySelector('.t1-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t1Item1}`;
+        document.querySelector('.t1-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t1Item2}`;
+        document.querySelector('.t1-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t1Item3}`;
+        document.querySelector('.t1-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t1Item4}`;
+
+        document.querySelector('.t2-head').innerText = langData.t2Head;
+        document.querySelector('.t2-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t2Item1}`;
+        document.querySelector('.t2-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t2Item2}`;
+        document.querySelector('.t2-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t2Item3}`;
+        document.querySelector('.t2-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t2Item4}`;
+
+        document.querySelector('.t3-head').innerText = langData.t3Head;
+        document.querySelector('.t3-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t3Item1}`;
+        document.querySelector('.t3-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t3Item2}`;
+        document.querySelector('.t3-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t3Item3}`;
+        document.querySelector('.t3-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t3Item4}`;
+
+        document.querySelector('.t4-head').innerText = langData.t4Head;
+        document.querySelector('.t4-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t4Item1}`;
+        document.querySelector('.t4-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t4Item2}`;
+        document.querySelector('.t4-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t4Item3}`;
+        document.querySelector('.t4-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t4Item4}`;
+
+        document.querySelector('.t5-head').innerText = langData.t5Head;
+        document.querySelector('.t5-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t5Item1}`;
+        document.querySelector('.t5-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t5Item2}`;
+        document.querySelector('.t5-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t5Item3}`;
+        document.querySelector('.t5-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t5Item4}`;
+
+        document.querySelector('.t6-head').innerText = langData.t6Head;
+        document.querySelector('.t6-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t6Item1}`;
+        document.querySelector('.t6-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t6Item2}`;
+        document.querySelector('.t6-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t6Item3}`;
+        document.querySelector('.t6-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t6Item4}`;
+
+        document.querySelector('.t7-head').innerText = langData.t7Head;
+        document.querySelector('.t7-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t7Item1}`;
+        document.querySelector('.t7-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t7Item2}`;
+        document.querySelector('.t7-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t7Item3}`;
+        document.querySelector('.t7-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t7Item4}`;
+
+        document.querySelector('.t8-head').innerText = langData.t8Head;
+        document.querySelector('.t8-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t8Item1}`;
+        document.querySelector('.t8-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t8Item2}`;
+        document.querySelector('.t8-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t8Item3}`;
+        document.querySelector('.t8-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t8Item4}`;
+    }
+</script>
+
+</body>
+</html>
