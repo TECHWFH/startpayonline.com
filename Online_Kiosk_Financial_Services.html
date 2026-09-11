@@ -23,7 +23,7 @@
         body {
             background-color: #f1f5f9;
             color: var(--text-dark);
-            padding: 30px 15px;
+            padding: 20px 10px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -35,7 +35,7 @@
             max-width: 1250px;
             background: #ffffff;
             border-radius: 24px;
-            padding: 35px 25px;
+            padding: 25px 18px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
         }
 
@@ -46,7 +46,6 @@
             margin-bottom: 12px;
         }
 
-        /* Badge */
         .badge {
             display: inline-block;
             background: #e0e7ff;
@@ -59,7 +58,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Language Toggle Button */
         .lang-btn {
             background: #0f172a;
             color: #ffffff;
@@ -79,18 +77,17 @@
             background: #2563eb;
         }
 
-        /* Top Header Section */
         .header-section {
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
-            margin-bottom: 35px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 20px;
         }
 
         .header-title-box h1 {
-            font-size: 2.2rem;
+            font-size: 2.1rem;
             font-weight: 800;
             line-height: 1.2;
             background: linear-gradient(90deg, #2563eb, #16a34a, #d97706);
@@ -100,12 +97,11 @@
 
         .header-title-box p {
             color: var(--text-muted);
-            font-size: 1rem;
-            margin-top: 8px;
+            font-size: 0.98rem;
+            margin-top: 6px;
             font-weight: 500;
         }
 
-        /* Gradient WhatsApp Button */
         .gradient-wa-btn {
             display: inline-flex;
             align-items: center;
@@ -126,126 +122,169 @@
             box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
         }
 
-        /* Grid Layout (8 Cards) */
         .cards-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
             gap: 20px;
         }
 
-        /* Clean White Cards */
+        /* Base Card Styling */
         .card {
             background: #ffffff;
             border: 1px solid #e2e8f0;
-            border-radius: 18px;
-            padding: 22px 18px;
+            border-radius: 20px;
+            padding: 0 0 18px 0;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            overflow: hidden;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
-            border-color: transparent;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.08);
         }
 
-        /* Background Numbering */
+        /* Colorful Header for Each Card */
+        .card-top-head {
+            padding: 18px 16px 14px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
         .card-number {
             position: absolute;
-            top: 15px;
-            right: 18px;
-            font-size: 1.8rem;
+            top: 10px;
+            right: 14px;
+            font-size: 1.6rem;
             font-weight: 900;
-            color: #f1f5f9;
+            color: rgba(255, 255, 255, 0.6);
             user-select: none;
         }
 
-        /* Custom Card Colors */
-        .card-1 { border-top: 5px solid #2563eb; }
-        .card-1 .icon-box { background: #dbeafe; color: #2563eb; }
-
-        .card-2 { border-top: 5px solid #7c3aed; }
-        .card-2 .icon-box { background: #ede9fe; color: #7c3aed; }
-
-        .card-3 { border-top: 5px solid #059669; }
-        .card-3 .icon-box { background: #d1fae5; color: #059669; }
-
-        .card-4 { border-top: 5px solid #ea580c; }
-        .card-4 .icon-box { background: #ffedd5; color: #ea580c; }
-
-        .card-5 { border-top: 5px solid #dc2626; }
-        .card-5 .icon-box { background: #fee2e2; color: #dc2626; }
-
-        .card-6 { border-top: 5px solid #0891b2; }
-        .card-6 .icon-box { background: #cffafe; color: #0891b2; }
-
-        .card-7 { border-top: 5px solid #4f46e5; }
-        .card-7 .icon-box { background: #e0e7ff; color: #4f46e5; }
-
-        .card-8 { border-top: 5px solid #16a34a; }
-        .card-8 .icon-box { background: #dcfce7; color: #16a34a; }
+        /* Unique Gradients for 8 Cards */
+        .card-1 .card-top-head { background: linear-gradient(135deg, #1e40af, #3b82f6); color: white; }
+        .card-2 .card-top-head { background: linear-gradient(135deg, #6b21a8, #a855f7); color: white; }
+        .card-3 .card-top-head { background: linear-gradient(135deg, #065f46, #10b981); color: white; }
+        .card-4 .card-top-head { background: linear-gradient(135deg, #c2410c, #f97316); color: white; }
+        .card-5 .card-top-head { background: linear-gradient(135deg, #991b1b, #ef4444); color: white; }
+        .card-6 .card-top-head { background: linear-gradient(135deg, #0e7490, #06b6d4); color: white; }
+        .card-7 .card-top-head { background: linear-gradient(135deg, #3730a3, #6366f1); color: white; }
+        .card-8 .card-top-head { background: linear-gradient(135deg, #15803d, #22c55e); color: white; }
 
         .icon-box {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.3rem;
-            margin-bottom: 16px;
+            font-size: 1.2rem;
+            color: #ffffff;
+            flex-shrink: 0;
         }
 
         .card h3 {
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--text-dark);
+            color: #ffffff;
+            cursor: pointer;
+            line-height: 1.3;
+        }
+
+        .card-body {
+            padding: 0 16px;
         }
 
         .card ul {
             list-style: none;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
+        /* Colorful & Highlighted Item Rows */
         .card ul li {
             font-size: 0.88rem;
-            color: #475569;
-            padding: 5px 0;
+            color: #334155;
+            padding: 8px 10px;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            background: #f8fafc;
+            border: 1px solid #f1f5f9;
+            transition: all 0.2s ease;
+            user-select: none;
+        }
+
+        .card ul li:hover {
+            background: #eef2ff;
+            border-color: #c7d2fe;
+            color: #1e40af;
+        }
+
+        .item-left {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-weight: 500;
         }
 
         .card ul li i {
-            font-size: 0.75rem;
-            color: #94a3b8;
+            font-size: 0.8rem;
+            color: #2563eb;
+            pointer-events: none;
         }
 
-        /* Auto WhatsApp Action Link */
+        /* Service Tag Pill inside Items */
+        .mini-tag {
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .tag-blue { background: #dbeafe; color: #1e40af; }
+        .tag-green { background: #dcfce7; color: #166534; }
+        .tag-orange { background: #ffedd5; color: #9a3412; }
+        .tag-purple { background: #f3e8ff; color: #6b21a8; }
+
+        .card-action-box {
+            padding: 0 16px;
+        }
+
         .card-action {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.85rem;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.88rem;
             font-weight: 700;
             text-decoration: none;
-            color: #16a34a;
-            padding-top: 10px;
-            border-top: 1px dashed #e2e8f0;
-            transition: color 0.2s ease;
+            color: #ffffff;
+            background: #16a34a;
+            padding: 10px;
+            border-radius: 10px;
+            transition: background 0.2s ease;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(22, 163, 74, 0.2);
         }
 
         .card-action:hover {
-            color: #15803d;
+            background: #15803d;
         }
 
-        /* Footer Info */
         .footer-info {
             margin-top: 35px;
             padding-top: 20px;
@@ -302,159 +341,194 @@
         </a>
     </div>
 
-    <!-- Exact 8 Services Cards Grid -->
+    <!-- 8 Colorful Cards Grid -->
     <div class="cards-grid">
         
-        <!-- Tab 1: Land Services -->
+        <!-- 1. बैंकिंग व व्यापार रजिस्ट्रेशन -->
         <div class="card card-1">
-            <span class="card-number">01</span>
-            <div>
-                <div class="icon-box"><i class="fa-solid fa-map-location-dot"></i></div>
-                <h3 class="t1-head">जमीन व रिकॉर्ड्स</h3>
-                <ul>
-                    <li class="t1-item1"><i class="fa-solid fa-check"></i> नामांतरण - डायवर्शन</li>
-                    <li class="t1-item2"><i class="fa-solid fa-check"></i> खसरा पी-1-2 रिकॉर्ड</li>
-                    <li class="t1-item3"><i class="fa-solid fa-check"></i> TNCP व नगर निगम नक्शा</li>
-                    <li class="t1-item4"><i class="fa-solid fa-check"></i> प्लॉट खरीदी व बिक्री</li>
-                </ul>
-            </div>
-            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20जमीन%20और%20रेकॉर्ड्स%20(नामांतरण/खसरा/नक्शा)%20की%20सेवाएं%20चाहिए।" class="card-action" target="_blank">
-                <span class="wa-action-text">WhatsApp पर पूछें</span>
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-        </div>
-
-        <!-- Tab 2: Banking & Business (MSME, Udyam & Gumasta) -->
-        <div class="card card-2">
-            <span class="card-number">02</span>
-            <div>
+            <div class="card-top-head">
+                <span class="card-number">01</span>
                 <div class="icon-box"><i class="fa-solid fa-building-columns"></i></div>
-                <h3 class="t2-head">बैंकिंग व व्यापार रजिस्ट्रेशन</h3>
+                <h3 class="t1-head" ondblclick="sendItemToWA(this.innerText)">बैंकिंग व व्यापार रजिस्ट्रेशन</h3>
+            </div>
+            <div class="card-body">
                 <ul>
-                    <li class="t2-item1"><i class="fa-solid fa-check"></i> आधार पेमेंट निकासी (AEPS)</li>
-                    <li class="t2-item2"><i class="fa-solid fa-check"></i> मनी ट्रांसफर (DMT) / E-KYC</li>
-                    <li class="t2-item3"><i class="fa-solid fa-check"></i> MSME / उद्यम रजिस्ट्रेशन कार्ड</li>
-                    <li class="t2-item4"><i class="fa-solid fa-check"></i> गुमास्ता लाइसेंस (Shop Licence)</li>
+                    <li class="t1-item1" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> आधार पेमेंट निकासी (AEPS)</span> <span class="mini-tag tag-blue">Instant</span></li>
+                    <li class="t1-item2" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> मनी ट्रांसफर (DMT) / E-KYC</span> <span class="mini-tag tag-green">Fast</span></li>
+                    <li class="t1-item3" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> MSME / उद्यम रजिस्ट्रेशन</span> <span class="mini-tag tag-orange">Govt Reg.</span></li>
+                    <li class="t1-item4" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> गुमास्ता व व्यापारिक लाइसेंस</span> <span class="mini-tag tag-purple">License</span></li>
                 </ul>
             </div>
-            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20बैंकिंग,%20MSME/उद्यम%20कार्ड%20या%20गुमास्ता%20लाइसेंस%20की%20जानकारी%20चाहिए।" class="card-action" target="_blank">
-                <span class="wa-action-text">WhatsApp पर पूछें</span>
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
+            <div class="card-action-box">
+                <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20बैंकिंग,%20MSME/उद्यम%20कार्ड,%20गुमास्ता%20या%20व्यापारिक%20लाइसेंस%20की%20जानकारी%20चाहिए।" class="card-action" target="_blank">
+                    <span class="wa-action-text">WhatsApp पर पूछें</span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
         </div>
 
-        <!-- Tab 3: Loans -->
+        <!-- 2. जमीन व रिकॉर्ड्स -->
+        <div class="card card-2">
+            <div class="card-top-head">
+                <span class="card-number">02</span>
+                <div class="icon-box"><i class="fa-solid fa-map-location-dot"></i></div>
+                <h3 class="t2-head" ondblclick="sendItemToWA(this.innerText)">जमीन व रिकॉर्ड्स</h3>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li class="t2-item1" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> नामांतरण - डायवर्शन</span> <span class="mini-tag tag-blue">Online</span></li>
+                    <li class="t2-item2" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> खसरा पी-1-2 रिकॉर्ड</span> <span class="mini-tag tag-green">Certified</span></li>
+                    <li class="t2-item3" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> TNCP व नगर निगम नक्शा</span> <span class="mini-tag tag-orange">Approved</span></li>
+                    <li class="t2-item4" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> प्लॉट खरीदी एवं बिक्री</span> <span class="mini-tag tag-purple">Best Deal</span></li>
+                </ul>
+            </div>
+            <div class="card-action-box">
+                <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20जमीन%20और%20रेकॉर्ड्स%20(नामांतरण/खसरा/नक्शा)%20की%20सेवाएं%20चाहिए।" class="card-action" target="_blank">
+                    <span class="wa-action-text">WhatsApp पर पूछें</span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- 3. सभी प्रकार के बीमा (Insurance) -->
         <div class="card card-3">
-            <span class="card-number">03</span>
-            <div>
-                <div class="icon-box"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-                <h3 class="t3-head">सभी प्रकार के लोन</h3>
-                <ul>
-                    <li class="t3-item1"><i class="fa-solid fa-check"></i> होम लोन (Home Loan)</li>
-                    <li class="t3-item2"><i class="fa-solid fa-check"></i> प्लॉट लोन (Plot Loan)</li>
-                    <li class="t3-item3"><i class="fa-solid fa-check"></i> पर्सनल लोन (Personal Loan)</li>
-                    <li class="t3-item4"><i class="fa-solid fa-check"></i> कार लोन (Car Loan)</li>
-                </ul>
-            </div>
-            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20लोन%20(Home/Plot/Personal/Car)%20के%20लिए%20जानकारी%20चाहिए।" class="card-action" target="_blank">
-                <span class="wa-action-text">WhatsApp पर पूछें</span>
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-        </div>
-
-        <!-- Tab 4: All Types of Insurance (Bima) -->
-        <div class="card card-4">
-            <span class="card-number">04</span>
-            <div>
+            <div class="card-top-head">
+                <span class="card-number">03</span>
                 <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
-                <h3 class="t4-head">सभी प्रकार के बीमा (Insurance)</h3>
+                <h3 class="t3-head" ondblclick="sendItemToWA(this.innerText)">सभी प्रकार के बीमा (Insurance)</h3>
+            </div>
+            <div class="card-body">
                 <ul>
-                    <li class="t4-item1"><i class="fa-solid fa-check"></i> LIC बीमा पॉलिसी</li>
-                    <li class="t4-item2"><i class="fa-solid fa-check"></i> कार व टू-व्हीलर (2-Wheeler) बीमा</li>
-                    <li class="t4-item3"><i class="fa-solid fa-check"></i> ई-रिक्शा (E-Rickshaw) बीमा</li>
-                    <li class="t4-item4"><i class="fa-solid fa-check"></i> ट्रक व डम्पर (Dumper) बीमा</li>
+                    <li class="t3-item1" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> LIC बीमा पॉलिसी</span> <span class="mini-tag tag-blue">Life</span></li>
+                    <li class="t3-item2" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> कार व टू-व्हीलर (2W) बीमा</span> <span class="mini-tag tag-green">Vehicle</span></li>
+                    <li class="t3-item3" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> ई-रिक्शा (E-Rickshaw) बीमा</span> <span class="mini-tag tag-orange">Commercial</span></li>
+                    <li class="t3-item4" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> ट्रक व डम्पर (Dumper) बीमा</span> <span class="mini-tag tag-purple">Heavy</span></li>
                 </ul>
             </div>
-            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20बीमा%20(LIC/Car/2-Wheeler/E-Rickshaw/Truck/Dumper%20Bima)%20करवाना%20है।" class="card-action" target="_blank">
-                <span class="wa-action-text">WhatsApp पर पूछें</span>
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-        </div>
-
-        <!-- Tab 5: Pollution Certificate (PUC) -->
-        <div class="card card-8">
-            <span class="card-number">05</span>
-            <div>
-                <div class="icon-box"><i class="fa-solid fa-smog"></i></div>
-                <h3 class="t5-head">प्रदूषण प्रमाणपत्र (PUC)</h3>
-                <ul>
-                    <li class="t5-item1"><i class="fa-solid fa-check"></i> ऑनलाइन प्रदूषण (PUC) सर्टिफिकेट</li>
-                    <li class="t5-item2"><i class="fa-solid fa-check"></i> 2-व्हीलर व 4-व्हीलर प्रदूषण जांच</li>
-                    <li class="t5-item3"><i class="fa-solid fa-check"></i> कमर्शियल व्हीकल (ट्रक/डम्पर) PUC</li>
-                    <li class="t5-item4"><i class="fa-solid fa-check"></i> PUC रिन्यूअल व स्टेटस चेक</li>
-                </ul>
+            <div class="card-action-box">
+                <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20बीमा%20(LIC/Car/2-Wheeler/E-Rickshaw/Truck/Dumper%20Bima)%20करवाना%20है।" class="card-action" target="_blank">
+                    <span class="wa-action-text">WhatsApp पर पूछें</span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
             </div>
-            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20गाड़ी%20का%20प्रदूषण%20प्रमाणपत्र%20(Pollution%20Certificate)%20बनवाना%20है।" class="card-action" target="_blank">
-                <span class="wa-action-text">WhatsApp पर पूछें</span>
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
         </div>
 
-        <!-- Tab 6: Tax, GeM & PAN -->
-        <div class="card card-5">
-            <span class="card-number">06</span>
-            <div>
-                <div class="icon-box"><i class="fa-solid fa-file-invoice-dollar"></i></div>
-                <h3 class="t6-head">टैक्स, पैन व GeM</h3>
-                <ul>
-                    <li class="t6-item1"><i class="fa-solid fa-check"></i> नया पेन कार्ड (PAN Card)</li>
-                    <li class="t6-item2"><i class="fa-solid fa-check"></i> GST / PF / ITR फाइलिंग</li>
-                    <li class="t6-item3"><i class="fa-solid fa-check"></i> GeM Seller Profile & Bidding</li>
-                    <li class="t6-item4"><i class="fa-solid fa-check"></i> कोर्ट मैरिज / विवाह पंजीयन</li>
-                </ul>
-            </div>
-            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20GST,%20ITR,%20PAN%20या%20GeM%20की%20सेवा%20चाहिए।" class="card-action" target="_blank">
-                <span class="wa-action-text">WhatsApp पर पूछें</span>
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
-        </div>
-
-        <!-- Tab 7: Stamp & Registry -->
-        <div class="card card-6">
-            <span class="card-number">07</span>
-            <div>
+        <!-- 4. स्टाम्प व रजिस्ट्री सेवाएं -->
+        <div class="card card-4">
+            <div class="card-top-head">
+                <span class="card-number">04</span>
                 <div class="icon-box"><i class="fa-solid fa-file-contract"></i></div>
-                <h3 class="t7-head">स्टाम्प व रजिस्ट्री सेवाएं</h3>
+                <h3 class="t4-head" ondblclick="sendItemToWA(this.innerText)">स्टाम्प व रजिस्ट्री सेवाएं</h3>
+            </div>
+            <div class="card-body">
                 <ul>
-                    <li class="t7-item1"><i class="fa-solid fa-check"></i> स्टाम्प पंजीकरण व प्रॉपर्टी रजिस्ट्री</li>
-                    <li class="t7-item2"><i class="fa-solid fa-check"></i> बिक्री / खरीद नामा</li>
-                    <li class="t7-item3"><i class="fa-solid fa-check"></i> बैंक लोन बंधपत्र (EM)</li>
-                    <li class="t7-item4"><i class="fa-solid fa-check"></i> वसीयतनामा / दान पत्र / पट्टा</li>
+                    <li class="t4-item1" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> स्टाम्प व प्रॉपर्टी रजिस्ट्री</span> <span class="mini-tag tag-blue">Legal</span></li>
+                    <li class="t4-item2" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> बिक्री / खरीद नामा</span> <span class="mini-tag tag-green">Deed</span></li>
+                    <li class="t4-item3" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> बैंक लोन बंधपत्र (EM)</span> <span class="mini-tag tag-orange">Bank Bond</span></li>
+                    <li class="t4-item4" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> वसीयतनामा / दान पत्र / पट्टा</span> <span class="mini-tag tag-purple">Official</span></li>
                 </ul>
             </div>
-            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20स्टाम्प,%20रजिस्ट्री%20या%20बंधपत्र%20की%20सेवा%20चाहिए।" class="card-action" target="_blank">
-                <span class="wa-action-text">WhatsApp पर पूछें</span>
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
+            <div class="card-action-box">
+                <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20स्टाम्प,%20रजिस्ट्री%20या%20बंधपत्र%20की%20सेवा%20चाहिए।" class="card-action" target="_blank">
+                    <span class="wa-action-text">WhatsApp पर पूछें</span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
         </div>
 
-        <!-- Tab 8: Document Verification -->
-        <div class="card card-7">
-            <span class="card-number">08</span>
-            <div>
-                <div class="icon-box"><i class="fa-solid fa-file-circle-check"></i></div>
-                <h3 class="t8-head">डॉक्युमेंट वेरिफिकेशन</h3>
+        <!-- 5. सभी प्रकार के लोन -->
+        <div class="card card-5">
+            <div class="card-top-head">
+                <span class="card-number">05</span>
+                <div class="icon-box"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                <h3 class="t5-head" ondblclick="sendItemToWA(this.innerText)">सभी प्रकार के लोन</h3>
+            </div>
+            <div class="card-body">
                 <ul>
-                    <li class="t8-item1"><i class="fa-solid fa-check"></i> Property Due Diligence</li>
-                    <li class="t8-item2"><i class="fa-solid fa-check"></i> Encumbrance Certificate (भारमुक्त)</li>
-                    <li class="t8-item3"><i class="fa-solid fa-check"></i> Sale / Lease Deed Vetting</li>
-                    <li class="t8-item4"><i class="fa-solid fa-check"></i> Legal Opinion Before Purchase</li>
+                    <li class="t5-item1" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> टू-व्हीलर लोन (2W Loan)</span> <span class="mini-tag tag-blue">Low Rate</span></li>
+                    <li class="t5-item2" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> कार लोन (Car Loan)</span> <span class="mini-tag tag-green">Auto</span></li>
+                    <li class="t5-item3" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> पर्सनल लोन (Personal Loan)</span> <span class="mini-tag tag-orange">Personal</span></li>
+                    <li class="t5-item4" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> बिज़नेस लोन (Business Loan)</span> <span class="mini-tag tag-purple">Business</span></li>
+                    <li class="t5-item5" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> होम लोन (Home Loan)</span> <span class="mini-tag tag-blue">Home</span></li>
+                    <li class="t5-item6" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> प्लॉट व पट्टा लोन</span> <span class="mini-tag tag-green">Property</span></li>
+                    <li class="t5-item7" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> एजुकेशन लोन (Education Loan)</span> <span class="mini-tag tag-orange">Education</span></li>
                 </ul>
             </div>
-            <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20प्रॉपर्टी%20डॉक्युमेंट%20वेरीफिकेशन%20और%20लीगल%20ओपिनियन%20की%20जानकारी%20चाहिए।" class="card-action" target="_blank">
-                <span class="wa-action-text">WhatsApp पर पूछें</span>
-                <i class="fa-brands fa-whatsapp"></i>
-            </a>
+            <div class="card-action-box">
+                <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20टू-व्हीलर/कार/पर्सनल/बिज़नेस/होम/प्लॉट/एजुकेशन%20लोन%20की%20जानकारी%20चाहिए।" class="card-action" target="_blank">
+                    <span class="wa-action-text">WhatsApp पर पूछें</span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- 6. डॉक्युमेंट वेरिफिकेशन -->
+        <div class="card card-6">
+            <div class="card-top-head">
+                <span class="card-number">06</span>
+                <div class="icon-box"><i class="fa-solid fa-file-circle-check"></i></div>
+                <h3 class="t6-head" ondblclick="sendItemToWA(this.innerText)">डॉक्युमेंट वेरिफिकेशन</h3>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li class="t6-item1" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> प्रॉपर्टी की जांच (Due Diligence)</span> <span class="mini-tag tag-blue">Check</span></li>
+                    <li class="t6-item2" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> Encumbrance (भार-मुक्त) Cert.</span> <span class="mini-tag tag-green">EC Cert</span></li>
+                    <li class="t6-item3" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> बिक्री / लीज़ डीड कानूनी जांच</span> <span class="mini-tag tag-orange">Vetting</span></li>
+                    <li class="t6-item4" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> खरीदने से पहले कानूनी सलाह</span> <span class="mini-tag tag-purple">Advocate</span></li>
+                </ul>
+            </div>
+            <div class="card-action-box">
+                <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20प्रॉपर्टी%20डॉक्युमेंट%20वेरीफिकेशन%20और%20लीगल%20ओपिनियन/भार-मुक्त%20प्रमाण%20की%20जानकारी%20चाहिए।" class="card-action" target="_blank">
+                    <span class="wa-action-text">WhatsApp पर पूछें</span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- 7. टैक्स, पैन व GeM -->
+        <div class="card card-7">
+            <div class="card-top-head">
+                <span class="card-number">07</span>
+                <div class="icon-box"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                <h3 class="t7-head" ondblclick="sendItemToWA(this.innerText)">टैक्स, पैन व GeM</h3>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li class="t7-item1" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> नया पेन कार्ड (PAN Card)</span> <span class="mini-tag tag-blue">New PAN</span></li>
+                    <li class="t7-item2" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> GST / TDS / PF / ITR रिफंड</span> <span class="mini-tag tag-green">Refund</span></li>
+                    <li class="t7-item3" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> GeM Seller Profile & Bidding</span> <span class="mini-tag tag-orange">GeM Portal</span></li>
+                    <li class="t7-item4" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> कोर्ट मैरिज / विवाह पंजीयन</span> <span class="mini-tag tag-purple">Marriage</span></li>
+                </ul>
+            </div>
+            <div class="card-action-box">
+                <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20GST,%20TDS,%20ITR%20Refund,%20PAN%20या%20GeM%20की%20सेवा%20चाहिए।" class="card-action" target="_blank">
+                    <span class="wa-action-text">WhatsApp पर पूछें</span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- 8. प्रदूषण प्रमाणपत्र (PUC) -->
+        <div class="card card-8">
+            <div class="card-top-head">
+                <span class="card-number">08</span>
+                <div class="icon-box"><i class="fa-solid fa-smog"></i></div>
+                <h3 class="t8-head" ondblclick="sendItemToWA(this.innerText)">प्रदूषण प्रमाणपत्र (PUC)</h3>
+            </div>
+            <div class="card-body">
+                <ul>
+                    <li class="t8-item1" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> ऑनलाइन प्रदूषण (PUC) सर्टिफिकेट</span> <span class="mini-tag tag-blue">Instant</span></li>
+                    <li class="t8-item2" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> 2W व 4-व्हीलर प्रदूषण जांच</span> <span class="mini-tag tag-green">Testing</span></li>
+                    <li class="t8-item3" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> कमर्शियल (ट्रक/डम्पर) PUC</span> <span class="mini-tag tag-orange">Heavy</span></li>
+                    <li class="t8-item4" ondblclick="sendItemToWA(this.innerText)"><span class="item-left"><i class="fa-solid fa-circle-check"></i> PUC रिन्यूअल व स्टेटस चेक</span> <span class="mini-tag tag-purple">Renewal</span></li>
+                </ul>
+            </div>
+            <div class="card-action-box">
+                <a href="https://wa.me/919806191441?text=नमस्ते!%20मुझे%20गाड़ी%20का%20प्रदूषण%20प्रमाणपत्र%20(Pollution%20Certificate)%20बनवाना%20है।" class="card-action" target="_blank">
+                    <span class="wa-action-text">WhatsApp पर पूछें</span>
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+            </div>
         </div>
 
     </div>
@@ -470,6 +544,13 @@
 </div>
 
 <script>
+    function sendItemToWA(text) {
+        let cleanedText = text.replace(/✔|✓/g, '').trim();
+        let message = `नमस्ते! मुझे "${cleanedText}" की सेवा/जानकारी चाहिए।`;
+        let waUrl = `https://wa.me/919806191441?text=${encodeURIComponent(message)}`;
+        window.open(waUrl, '_blank');
+    }
+
     let currentLang = 'hi';
 
     const translations = {
@@ -482,53 +563,56 @@
             waActionText: "WhatsApp पर पूछें",
             footerTerms: "* नियम एवं शर्तें लागू | Online Kiosk Financial Services",
             
-            t1Head: "जमीन व रिकॉर्ड्स",
-            t1Item1: "नामांतरण - डायवर्शन",
-            t1Item2: "खसरा पी-1-2 रिकॉर्ड",
-            t1Item3: "TNCP व नगर निगम नक्शा",
-            t1Item4: "प्लॉट खरीदी व बिक्री",
+            t1Head: "बैंकिंग व व्यापार रजिस्ट्रेशन",
+            t1Item1: "आधार पेमेंट निकासी (AEPS)",
+            t1Item2: "मनी ट्रांसफर (DMT) / E-KYC",
+            t1Item3: "MSME / उद्यम रजिस्ट्रेशन",
+            t1Item4: "गुमास्ता व व्यापारिक लाइसेंस",
 
-            t2Head: "बैंकिंग व व्यापार रजिस्ट्रेशन",
-            t2Item1: "आधार पेमेंट निकासी (AEPS)",
-            t2Item2: "मनी ट्रांसफर (DMT) / E-KYC",
-            t2Item3: "MSME / उद्यम रजिस्ट्रेशन कार्ड",
-            t2Item4: "गुमास्ता लाइसेंस (Shop Licence)",
+            t2Head: "जमीन व रिकॉर्ड्स",
+            t2Item1: "नामांतरण - डायवर्शन",
+            t2Item2: "खसरा पी-1-2 रिकॉर्ड",
+            t2Item3: "TNCP व नगर निगम नक्शा",
+            t2Item4: "प्लॉट खरीदी एवं बिक्री",
 
-            t3Head: "सभी प्रकार के लोन",
-            t3Item1: "होम लोन (Home Loan)",
-            t3Item2: "प्लॉट लोन (Plot Loan)",
-            t3Item3: "पर्सनल लोन (Personal Loan)",
-            t3Item4: "कार लोन (Car Loan)",
+            t3Head: "सभी प्रकार के बीमा (Insurance)",
+            t3Item1: "LIC बीमा पॉलिसी",
+            t3Item2: "कार व टू-व्हीलर (2W) बीमा",
+            t3Item3: "ई-रिक्शा (E-Rickshaw) बीमा",
+            t3Item4: "ट्रक व डम्पर (Dumper) बीमा",
 
-            t4Head: "सभी प्रकार के बीमा (Insurance)",
-            t4Item1: "LIC बीमा पॉलिसी",
-            t4Item2: "कार व टू-व्हीलर (2-Wheeler) बीमा",
-            t4Item3: "ई-रिक्शा (E-Rickshaw) बीमा",
-            t4Item4: "ट्रक व डम्पर (Dumper) बीमा",
+            t4Head: "स्टाम्प व रजिस्ट्री सेवाएं",
+            t4Item1: "स्टाम्प व प्रॉपर्टी रजिस्ट्री",
+            t4Item2: "बिक्री / खरीद नामा",
+            t4Item3: "बैंक लोन बंधपत्र (EM)",
+            t4Item4: "वसीयतनामा / दान पत्र / पट्टा",
 
-            t5Head: "प्रदूषण प्रमाणपत्र (PUC)",
-            t5Item1: "ऑनलाइन प्रदूषण (PUC) सर्टिफिकेट",
-            t5Item2: "2-व्हीलर व 4-व्हीलर प्रदूषण जांच",
-            t5Item3: "कमर्शियल व्हीकल (ट्रक/डम्पर) PUC",
-            t5Item4: "PUC रिन्यूअल व स्टेटस चेक",
+            t5Head: "सभी प्रकार के लोन",
+            t5Item1: "टू-व्हीलर लोन (2W Loan)",
+            t5Item2: "कार लोन (Car Loan)",
+            t5Item3: "पर्सनल लोन (Personal Loan)",
+            t5Item4: "बिज़नेस लोन (Business Loan)",
+            t5Item5: "होम लोन (Home Loan)",
+            t5Item6: "प्लॉट व पट्टा लोन",
+            t5Item7: "एजुकेशन लोन (Education Loan)",
 
-            t6Head: "टैक्स, पैन व GeM",
-            t6Item1: "नया पेन कार्ड (PAN Card)",
-            t6Item2: "GST / PF / ITR फाइलिंग",
-            t6Item3: "GeM Seller Profile & Bidding",
-            t6Item4: "कोर्ट मैरिज / विवाह पंजीयन",
+            t6Head: "डॉक्युमेंट वेरिफिकेशन",
+            t6Item1: "प्रॉपर्टी की जांच (Due Diligence)",
+            t6Item2: "Encumbrance (भार-मुक्त) Cert.",
+            t6Item3: "बिक्री / लीज़ डीड कानूनी जांच",
+            t6Item4: "खरीदने से पहले कानूनी सलाह",
 
-            t7Head: "स्टाम्प व रजिस्ट्री सेवाएं",
-            t7Item1: "स्टाम्प पंजीकरण व प्रॉपर्टी रजिस्ट्री",
-            t7Item2: "बिक्री / खरीद नामा",
-            t7Item3: "बैंक लोन बंधपत्र (EM)",
-            t7Item4: "वसीयतनामा / दान पत्र / पट्टा",
+            t7Head: "टैक्स, पैन व GeM",
+            t7Item1: "नया पेन कार्ड (PAN Card)",
+            t7Item2: "GST / TDS / PF / ITR रिफंड",
+            t7Item3: "GeM Seller Profile & Bidding",
+            t7Item4: "कोर्ट मैरिज / विवाह पंजीयन",
 
-            t8Head: "डॉक्युमेंट वेरिफिकेशन",
-            t8Item1: "Property Due Diligence",
-            t8Item2: "Encumbrance Certificate (भारमुक्त)",
-            t8Item3: "Sale / Lease Deed Vetting",
-            t8Item4: "Legal Opinion Before Purchase"
+            t8Head: "प्रदूषण प्रमाणपत्र (PUC)",
+            t8Item1: "ऑनलाइन प्रदूषण (PUC) सर्टिफिकेट",
+            t8Item2: "2W व 4-व्हीलर प्रदूषण जांच",
+            t8Item3: "कमर्शियल (ट्रक/डम्पर) PUC",
+            t8Item4: "PUC रिन्यूअल व स्टेटस चेक"
         },
         en: {
             badge: "Digital Online Kiosk",
@@ -539,53 +623,56 @@
             waActionText: "Ask on WhatsApp",
             footerTerms: "* Terms & Conditions Apply | Online Kiosk Financial Services",
 
-            t1Head: "Land & Property Records",
-            t1Item1: "Mutation & Diversion",
-            t1Item2: "Khasra P-1-2 Records",
-            t1Item3: "TNCP & Nagar Nigam Map",
-            t1Item4: "Plot Purchase & Sale",
+            t1Head: "Banking & Business Registration",
+            t1Item1: "Aadhaar Cash Withdrawal (AEPS)",
+            t1Item2: "Money Transfer (DMT) / E-KYC",
+            t1Item3: "MSME / Udyam Registration",
+            t1Item4: "Gumasta & Business Licenses",
 
-            t2Head: "Banking & Business Registration",
-            t2Item1: "Aadhaar Cash Withdrawal (AEPS)",
-            t2Item2: "Money Transfer (DMT) / E-KYC",
-            t2Item3: "MSME / Udyam Card Registration",
-            t2Item4: "Gumasta License (Shop Act)",
+            t2Head: "Land & Property Records",
+            t2Item1: "Mutation & Diversion",
+            t2Item2: "Khasra P-1-2 Records",
+            t2Item3: "TNCP & Nagar Nigam Map",
+            t2Item4: "Plot Purchase & Sale",
 
-            t3Head: "All Types of Loans",
-            t3Item1: "Home Loan",
-            t3Item2: "Plot Loan",
-            t3Item3: "Personal Loan",
-            t3Item4: "Car Loan",
+            t3Head: "All Types of Insurance",
+            t3Item1: "LIC Insurance Policy",
+            t3Item2: "Car & Two-Wheeler Insurance",
+            t3Item3: "E-Rickshaw Insurance",
+            t3Item4: "Truck & Dumper Insurance",
 
-            t4Head: "All Types of Insurance",
-            t4Item1: "LIC Insurance Policy",
-            t4Item2: "Car & Two-Wheeler Insurance",
-            t4Item3: "E-Rickshaw Insurance",
-            t4Item4: "Truck & Dumper Insurance",
+            t4Head: "Stamp & Registry Services",
+            t4Item1: "Stamp Reg. & Property Registry",
+            t4Item2: "Sale Deed / Purchase Deed",
+            t4Item3: "Bank Loan Bond (EM)",
+            t4Item4: "Will / Gift Deed / Lease",
 
-            t5Head: "Pollution Certificate (PUC)",
-            t5Item1: "Online PUC Certificate",
-            t5Item2: "2-Wheeler & 4-Wheeler Testing",
-            t5Item3: "Commercial Vehicle (Truck/Dumper) PUC",
-            t5Item4: "PUC Renewal & Status Check",
+            t5Head: "All Types of Loans",
+            t5Item1: "Two-Wheeler Loan (2W)",
+            t5Item2: "Car Loan",
+            t5Item3: "Personal Loan",
+            t5Item4: "Business Loan",
+            t5Item5: "Home Loan",
+            t5Item6: "Plot & Patta Loan",
+            t5Item7: "Education Loan",
 
-            t6Head: "Tax, PAN & GeM Services",
-            t6Item1: "New PAN Card",
-            t6Item2: "GST / PF / ITR Filing",
-            t6Item3: "GeM Seller Profile & Bidding",
-            t6Item4: "Court Marriage / Marriage Reg.",
+            t6Head: "Document Verification",
+            t6Item1: "Property Due Diligence",
+            t6Item2: "Encumbrance Certificate",
+            t6Item3: "Sale / Lease Deed Vetting",
+            t6Item4: "Legal Advice Before Purchase",
 
-            t7Head: "Stamp & Registry Services",
-            t7Item1: "Stamp Reg. & Property Registry",
-            t7Item2: "Sale Deed / Purchase Deed",
-            t7Item3: "Bank Loan Bond (EM)",
-            t7Item4: "Will / Gift Deed / Lease",
+            t7Head: "Tax, PAN & GeM Services",
+            t7Item1: "New PAN Card",
+            t7Item2: "GST / TDS / PF / ITR Refund",
+            t7Item3: "GeM Seller Profile & Bidding",
+            t7Item4: "Court Marriage / Marriage Reg.",
 
-            t8Head: "Document Verification",
-            t8Item1: "Property Due Diligence",
-            t8Item2: "Encumbrance Certificate",
-            t8Item3: "Sale / Lease Deed Vetting",
-            t8Item4: "Legal Opinion Before Purchase"
+            t8Head: "Pollution Certificate (PUC)",
+            t8Item1: "Online PUC Certificate",
+            t8Item2: "2W & 4-Wheeler Testing",
+            t8Item3: "Commercial Vehicle (Truck/Dumper) PUC",
+            t8Item4: "PUC Renewal & Status Check"
         }
     };
 
@@ -600,59 +687,60 @@
         document.getElementById('hdr-wa-text').innerText = langData.hdrWaText;
         document.getElementById('footer-terms').innerText = langData.footerTerms;
 
-        // Action text on cards
         document.querySelectorAll('.wa-action-text').forEach(el => {
             el.innerText = langData.waActionText;
         });
 
-        // Tab Content Dynamic Updates
         document.querySelector('.t1-head').innerText = langData.t1Head;
-        document.querySelector('.t1-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t1Item1}`;
-        document.querySelector('.t1-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t1Item2}`;
-        document.querySelector('.t1-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t1Item3}`;
-        document.querySelector('.t1-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t1Item4}`;
+        document.querySelector('.t1-item1 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t1Item1}`;
+        document.querySelector('.t1-item2 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t1Item2}`;
+        document.querySelector('.t1-item3 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t1Item3}`;
+        document.querySelector('.t1-item4 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t1Item4}`;
 
         document.querySelector('.t2-head').innerText = langData.t2Head;
-        document.querySelector('.t2-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t2Item1}`;
-        document.querySelector('.t2-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t2Item2}`;
-        document.querySelector('.t2-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t2Item3}`;
-        document.querySelector('.t2-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t2Item4}`;
+        document.querySelector('.t2-item1 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t2Item1}`;
+        document.querySelector('.t2-item2 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t2Item2}`;
+        document.querySelector('.t2-item3 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t2Item3}`;
+        document.querySelector('.t2-item4 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t2Item4}`;
 
         document.querySelector('.t3-head').innerText = langData.t3Head;
-        document.querySelector('.t3-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t3Item1}`;
-        document.querySelector('.t3-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t3Item2}`;
-        document.querySelector('.t3-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t3Item3}`;
-        document.querySelector('.t3-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t3Item4}`;
+        document.querySelector('.t3-item1 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t3Item1}`;
+        document.querySelector('.t3-item2 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t3Item2}`;
+        document.querySelector('.t3-item3 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t3Item3}`;
+        document.querySelector('.t3-item4 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t3Item4}`;
 
         document.querySelector('.t4-head').innerText = langData.t4Head;
-        document.querySelector('.t4-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t4Item1}`;
-        document.querySelector('.t4-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t4Item2}`;
-        document.querySelector('.t4-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t4Item3}`;
-        document.querySelector('.t4-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t4Item4}`;
+        document.querySelector('.t4-item1 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t4Item1}`;
+        document.querySelector('.t4-item2 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t4Item2}`;
+        document.querySelector('.t4-item3 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t4Item3}`;
+        document.querySelector('.t4-item4 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t4Item4}`;
 
         document.querySelector('.t5-head').innerText = langData.t5Head;
-        document.querySelector('.t5-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t5Item1}`;
-        document.querySelector('.t5-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t5Item2}`;
-        document.querySelector('.t5-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t5Item3}`;
-        document.querySelector('.t5-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t5Item4}`;
+        document.querySelector('.t5-item1 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t5Item1}`;
+        document.querySelector('.t5-item2 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t5Item2}`;
+        document.querySelector('.t5-item3 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t5Item3}`;
+        document.querySelector('.t5-item4 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t5Item4}`;
+        document.querySelector('.t5-item5 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t5Item5}`;
+        document.querySelector('.t5-item6 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t5Item6}`;
+        document.querySelector('.t5-item7 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t5Item7}`;
 
         document.querySelector('.t6-head').innerText = langData.t6Head;
-        document.querySelector('.t6-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t6Item1}`;
-        document.querySelector('.t6-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t6Item2}`;
-        document.querySelector('.t6-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t6Item3}`;
-        document.querySelector('.t6-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t6Item4}`;
+        document.querySelector('.t6-item1 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t6Item1}`;
+        document.querySelector('.t6-item2 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t6Item2}`;
+        document.querySelector('.t6-item3 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t6Item3}`;
+        document.querySelector('.t6-item4 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t6Item4}`;
 
         document.querySelector('.t7-head').innerText = langData.t7Head;
-        document.querySelector('.t7-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t7Item1}`;
-        document.querySelector('.t7-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t7Item2}`;
-        document.querySelector('.t7-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t7Item3}`;
-        document.querySelector('.t7-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t7Item4}`;
+        document.querySelector('.t7-item1 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t7Item1}`;
+        document.querySelector('.t7-item2 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t7Item2}`;
+        document.querySelector('.t7-item3 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t7Item3}`;
+        document.querySelector('.t7-item4 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t7Item4}`;
 
         document.querySelector('.t8-head').innerText = langData.t8Head;
-        document.querySelector('.t8-item1').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t8Item1}`;
-        document.querySelector('.t8-item2').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t8Item2}`;
-        document.querySelector('.t8-item3').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t8Item3}`;
-        document.querySelector('.t8-item4').innerHTML = `<i class="fa-solid fa-check"></i> ${langData.t8Item4}`;
+        document.querySelector('.t8-item1 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t8Item1}`;
+        document.querySelector('.t8-item2 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t8Item2}`;
+        document.querySelector('.t8-item3 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t8Item3}`;
+        document.querySelector('.t8-item4 .item-left').innerHTML = `<i class="fa-solid fa-circle-check"></i> ${langData.t8Item4}`;
     }
 </script>
 
