@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StartPay Legal & Finance Property Solutions - Smart Affidavit & Stamp Tool</title>
+    <style id="dynamic-stamp-style">
+        @page {
+            size: 8.05in 12in;
+            margin-top: 1.0in;
+            margin-bottom: 1.50in;
+            margin-left: 0.50in;
+            margin-right: 0.50in;
+            @bottom-center { content: ""; }
+        }
+        @page :first {
+            margin-top: 4.50in;
+            margin-bottom: 1.50in;
+        }
+    </style>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        body {
+            font-family: 'Kohinoor Devanagari', 'FreeSerif', 'Noto Sans Devanagari', 'Segoe UI', Arial, sans-serif;
+            font-size: 13pt;
+            line-height: 1.8;
+            color: #000;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+        }
+        .container {
+            max-width: 850px;
+            margin: 20px auto;
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        /* BRANDING HEADER - SCREEN ONLY */
+        .branding-header {
+            background-color: #f8fafc;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 18px 16px;
+            text-align: center;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        .tagline-wrapper { margin-bottom: 10px; }
+        .tagline-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 4px;
+        }
+        .tagline-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #b91c1c, transparent);
+        }
+        .tagline-text {
+            color: #dc2626;
+            font-size: 15pt;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+        .tagline-subtext {
+            color: #b91c1c;
+            font-size: 10.5pt;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-top: 2px;
+        }
+        .branding-title {
+            color: #003399;
+            font-size: 22pt;
+            font-weight: 800;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        .branding-subtitle {
+            font-size: 13pt;
+            font-weight: bold;
+            color: #1e293b;
+            margin-top: 6px;
+            margin-bottom: 16px;
+        }
+        .phone-highlight {
+            color: #008000;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .buttons-grid-header {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed #cbd5e1;
+        }
+        .btn-link, button.btn {
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 10px 8px;
+            text-align: center;
+            font-size: 9.5pt;
+            font-weight: 700;
+            color: #1e293b;
+            text-decoration: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            font-family: inherit;
+        }
+        .btn-link:hover, button.btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+        }
+        .btn-green { color: #008000; border-color: #86efac; }
+        .btn-blue { color: #003399; border-color: #93c5fd; }
+        .btn-purple { color: #6b21a8; border-color: #d8b4fe; }
+        .btn-red { color: #b91c1c; border-color: #fca5a5; }
+
+        .credit-score-btn {
+            background: linear-gradient(135deg, #0057B8, #003C9E) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #60A5FA !important;
+            box-shadow: 0 4px 15px rgba(0, 87, 184, 0.35) !important;
+            font-weight: 900 !important;
+        }
+        .credit-score-btn:hover {
+            background: linear-gradient(135deg, #00479A, #002D9C) !important;
+            transform: translateY(-2px) !important;
+        }
+
+        /* DISCLAIMER BOX FULL WITH BORDER */
+        .disclaimer-container {
+            border: 2px dashed #b91c1c;
+            background-color: #fffcfc;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+        .disclaimer-header {
+            text-align: center;
+            color: #881337;
+            font-weight: 800;
+            font-size: 13pt;
+            margin-bottom: 12px;
+        }
+        .disclaimer-stamp-badge {
+            display: block;
+            margin: 0 auto 10px auto;
+            background: #ffffff;
+            border: 1.5px solid #b91c1c;
+            border-radius: 8px;
+            padding: 6px 16px;
+            color: #991b1b;
+            font-weight: 800;
+            font-size: 11pt;
+            width: fit-content;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .disclaimer-note {
+            text-align: center;
+            color: #b91c1c;
+            font-size: 10pt;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+        .disclaimer-body {
+            background: #ffffff;
+            border-left: 4px solid #b91c1c;
+            border-radius: 6px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+        .disclaimer-title {
+            font-weight: 800;
+            color: #991b1b;
+            font-size: 11pt;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .disclaimer-list {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 9.5pt;
+            color: #334155;
+            line-height: 1.6;
+        }
+        .disclaimer-list li {
+            margin-bottom: 6px;
+        }
+
+        /* SMART CONTROL PANEL */
+        .control-panel {
+            background: #eff6ff;
+            border: 1.5px solid #93c5fd;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .panel-title {
+            font-size: 11pt;
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .inputs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .input-box.full-width {
+            grid-column: 1 / -1;
+        }
+        .input-box label {
+            font-size: 9pt;
+            font-weight: bold;
+            color: #334155;
+        }
+        .input-box input, .input-box select {
+            padding: 8px;
+            border: 1.5px solid #94a3b8;
+            border-radius: 6px;
+            font-size: 9.5pt;
+            font-weight: bold;
+            outline: none;
+            background: #ffffff;
+        }
+        .purpose-select {
+            border-color: #2563eb !important;
+            background-color: #f0f7ff !important;
+            color: #1e40af !important;
+            font-size: 10pt !important;
+        }
+        .apply-btn {
+            grid-column: 1 / -1;
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 10.5pt;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: background 0.2s ease;
+        }
+        .apply-btn:hover { background: #1d4ed8; }
+
+        /* FIELD & STYLES */
+        .field-row {
+            margin-bottom: 12px;
+            font-size: 13pt;
+            border-bottom: 1.5px dashed #dc2626;
+            padding-bottom: 4px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+        .field-label {
+            font-weight: bold;
+            width: 145px;
+            flex-shrink: 0;
+            color: #000;
+        }
+        .colon-symbol {
+            font-weight: bold;
+            margin-right: 6px;
+            color: #dc2626;
+            flex-shrink: 0;
+        }
+        .editable-field {
+            flex-grow: 1;
+            font-weight: 700;
+            color: #e53e3e;
+            outline: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .editable-field:focus { background-color: #fef2f2; }
+
+        /* MODAL STYLES */
+        .modal {
+            display: none !important;
+            position: fixed !important;
+            inset: 0 !important;
+            background: rgba(0, 0, 0, 0.6) !important;
+            z-index: 99999 !important;
+            align-items: center !important;
+            justify-content: center !important;
+            padding: 15px !important;
+        }
+        .modal.show { display: flex !important; }
+        .modal-box {
+            background: #ffffff !important;
+            border-radius: 18px !important;
+            padding: 20px !important;
+            max-width: 600px !important;
+            width: 100% !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25) !important;
+            position: relative !important;
+            max-height: 90vh !important;
+            overflow: auto !important;
+        }
+        .close-btn {
+            border: none;
+            background: #EEEEEE;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        /* CREDIT SCORE MODAL */
+        .credit-modal-box {
+            position: relative;
+            background: #FFFFFF;
+            width: 100%;
+            max-width: 980px;
+            max-height: 94vh;
+            overflow: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
+        }
+        .credit-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 20;
+            width: 40px;
+            height: 40px;
+            border: 0;
+            border-radius: 50%;
+            background: #FF0000;
+            color: #FFFFFF;
+            font-size: 28px;
+            line-height: 1;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,.18);
+        }
+        .credit-demo {
+            display: grid;
+            grid-template-columns: 34% 66%;
+            min-height: 520px;
+        }
+        .credit-info {
+            background: linear-gradient(145deg, #0068D8, #003C9E);
+            color: #FFFFFF;
+            padding: 34px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .credit-info h2 { margin: 0 0 10px; font-size: 28px; color: #FFF; }
+        .startpay-demo-label {
+            display: inline-block;
+            margin: 0 0 12px;
+            background: #FF0000;
+            color: #FFFFFF;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 900;
+        }
+        .credit-points { display: grid; gap: 12px; }
+        .credit-point {
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 12px;
+            padding: 11px 12px;
+            font-size: 13px;
+        }
+        .credit-form { padding: 30px; }
+        .credit-form-head h3 { margin: 0 0 5px; font-size: 24px; color: #111; }
+        .credit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .credit-field.full { grid-column: 1 / -1; }
+        .credit-field label { display: block; margin-bottom: 6px; font-size: 13px; font-weight: 800; color: #333; }
+        .credit-field input { min-height: 44px; padding: 8px 12px; border: 1.5px solid #CBD5E1; border-radius: 8px; font-size: 13px; width: 100%; }
+        .gender-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .gender-option { position: relative; }
+        .gender-option input { position: absolute; opacity: 0; pointer-events: none; }
+        .gender-option span {
+            display: flex; align-items: center; justify-content: center;
+            min-height: 44px; border: 1.5px solid #CBD5E1; border-radius: 10px;
+            font-size: 13px; font-weight: 700; cursor: pointer; background: #FFFFFF;
+        }
+        .gender-option input:checked + span { border-color: #0057B8; background: #EAF2FF; color: #0057B8; }
+        .credit-consent { margin-top: 16px; padding: 12px; border-radius: 10px; background: #F7F9FC; border: 1px solid #E3E8F0; font-size: 11px; line-height: 1.5; color: #555; }
+        .credit-submit { width: 100%; border: 0; border-radius: 11px; min-height: 48px; margin-top: 14px; background: #0057B8; color: #FFFFFF; font-weight: 900; cursor: pointer; font-size: 15px; }
+
+        @media print {
+            body { background-color: transparent; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; }
+            .no-print, .branding-header, .disclaimer-container, .control-panel, .buttons-grid-header, .modal { display: none !important; }
+            .field-row { border-bottom: 1px dotted #000000 !important; }
+            .colon-symbol { color: #000000 !important; }
+            .editable-field { color: #000000 !important; }
+        }
+
+        .doc-body { background: #ffffff; transition: padding 0.3s ease; }
+        .header-title { text-align: center; font-weight: bold; font-size: 16pt; margin-bottom: 20px; text-decoration: underline; }
+        .point-block { margin-bottom: 16px; text-align: justify; }
+        .field-list { margin-top: 12px; margin-left: 10px; }
+        .footer-section { margin-top: 40px; width: 100%; page-break-inside: avoid; }
+        .date-location-block { float: left; font-size: 13pt; font-weight: bold; margin-top: 25px; line-height: 2.0; }
+        .signature-box { float: right; text-align: center; width: 260px; }
+        .signature-space { height: 50px; }
+        .signature-title { font-weight: bold; font-size: 13pt; }
+        .signature-subtitle { font-size: 11pt; color: #333; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+
+        @media(max-width:700px){
+            .credit-modal-box { max-height: 96vh; border-radius: 15px; }
+            .credit-demo { grid-template-columns: 1fr; }
+            .credit-info { padding: 22px 18px; }
+            .credit-form { padding: 20px 16px 22px; }
+            .credit-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="docContainer">
+
+    <!-- BRANDING HEADER -->
+    <div class="branding-header no-print">
+        <div class="tagline-wrapper">
+            <div class="tagline-container">
+                <div class="tagline-line"></div>
+                <div class="tagline-text">शुभ शुरुआत &nbsp;•&nbsp; स्टार्ट पे के साथ &nbsp;◆</div>
+                <div class="tagline-line"></div>
+            </div>
+            <div class="tagline-subtext">“आपकी सुविधा &nbsp;•&nbsp; हमारी प्राथमिकता &nbsp;•&nbsp; सही मार्गदर्शन”</div>
+        </div>
+        <div class="branding-title">StartPay Legal & Finance Property Solutions</div>
+        <div class="branding-subtitle">
+            by Anurag Rai | <a href="tel:9340726600" class="phone-highlight">☎ 9340726600</a>
+        </div>
+
+        <div class="buttons-grid-header">
+            <button class="btn btn-blue" onclick="window.print()">🖨️ Print PDF</button>
+            <button class="btn btn-download" onclick="window.print()">📥 Download PDF</button>
+            <a href="https://api.whatsapp.com/send?phone=919340726600&text=Hello%20StartPay,%20I%20need%20help%20with%20Affidavit%20Format" target="_blank" class="btn-link btn-green">💬 WhatsApp Help</a>
+            <button class="btn btn-blue" onclick="handleShare()">📤 Auto Share</button>
+            <a href="https://api.whatsapp.com/send?phone=919340726600&text=Please%20Call%20Me%20Back%20regarding%20StartPay%20Legal%20Solutions" target="_blank" class="btn-link btn-purple">📲 WhatsApp Callback Share</a>
+            <a href="tel:9340726600" class="btn-link btn-green">📞 Call Now</a>
+            <button class="btn btn-red" onclick="openTerms()">⚖️ Terms (नियम और शर्तें लागू)</button>
+            <a href="https://startpayonline.com/" target="_blank" class="btn-link btn-blue">🌐 Website</a>
+            
+            <!-- CREDIT SCORE BUTTON TRIGGER -->
+            <button class="btn credit-score-btn" onclick="handleCreditScoreTabClick()">📊 Check your Credit Score</button>
+        </div>
+    </div>
+
+    <!-- FULL DISCLAIMER BOX INSIDE RED DASHED BORDER -->
+    <div class="disclaimer-container no-print">
+        <div class="disclaimer-header">[ स्टैम्प पेपर स्थान नमूना / STAMP PAPER PREVIEW DEMO ]</div>
+        <div class="disclaimer-stamp-badge">Stamp Paper Demo Specimen</div>
+        <div class="disclaimer-note">(नोट: प्रिंट निकालते समय ऊपर दिख रहा स्टैम्प का चित्र, हेडर और नोटिस स्वतः हट जाएंगे और भौतिक स्टैम्प पेपर पर केवल मैटर छपेगा)</div>
+        
+        <div class="disclaimer-body">
+            <div class="disclaimer-title">
+                🛡️ वैधानिक सूचना, नियम व विधिक चेतावनी (Legal Disclaimer & Statutory Warning):
+            </div>
+            <ol class="disclaimer-list">
+                <li><strong>तकनीकी व संपादन सुगमता:</strong> यह वेब-फ़ॉर्मेट केवल उपयोगकर्ताओं के सुगम कार्य-प्रवाह, त्वरित संपादन एवं दस्तावेज़ीकरण सहायता हेतु एक तकनीकी प्रारूप (Template) के रूप में प्रदान किया गया है।</li>
+                <li><strong>दुरुपयोग एवं जालसाजी पर सख्त पाबंदी:</strong> इस प्रारूप या स्टैम्प छवि का किसी भी प्रकार का अनधिकृत उपयोग, कूटरचना (Forgery), जालसाजी अथवा गलत तथ्य दर्ज कर प्रस्तुत करना भारतीय न्याय संहिता (BNS) व संबंधित विधिक धाराओं के अंतर्गत गंभीर दंडनीय अपराध है।</li>
+                <li><strong>उपयोगकर्ता का व्यक्तिगत उत्तरदायित्व:</strong> इस प्रारूप में प्रविष्ट की गई किसी भी जानकारी, तथ्य या इसके उपयोग हेतु उपयोगकर्ता स्वयं पूर्णतः उत्तरदायी होगा। किसी भी प्रकार के अवैध/गलत उपयोग की स्थिति में प्रयोक्ता के विरुद्ध नियमानुसार वैधानिक एवं कानूनी कार्यवाही की जाएगी।</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ADVANCED CONTROL PANEL (PURPOSE DROPDOWN + AUTOSAVE + LAYOUT TOGGLE) -->
+    <div class="control-panel no-print">
+        <div class="panel-title">
+            ⚙️ स्मार्ट शपथ पत्र टूल कंट्रोलर (Purpose, Margins & Auto-Save)
+        </div>
+
+        <div class="inputs-grid">
+            <!-- 1. PURPOSE DROPDOWN FEATURE -->
+            <div class="input-box full-width">
+                <label>📋 शपथ पत्र का उद्देश्य (Select Affidavit Purpose):</label>
+                <select id="affidavitPurpose" class="purpose-select" onchange="changeAffidavitPurpose()">
+                    <option value="flat">🏠 फ्लैट / प्लॉट आवंटन एवं निविदा (Flat / Plot Allocation & Tender)</option>
+                    <option value="name_change">✍️ नाम परिवर्तन / त्रुटि सुधार (Name Correction & Declaration)</option>
+                    <option value="income">💰 आय प्रमाण एवं घोषणा (Income Proof Declaration)</option>
+                    <option value="address">📍 निवास / पता सत्यापन (Address Verification)</option>
+                    <option value="loan">🏦 बैंक लोन दस्तावेज़ सत्यापन (Loan Document & Property Verification)</option>
+                </select>
+            </div>
+
+            <!-- 2. LAYOUT / MARGIN SETTINGS -->
+            <div class="input-box">
+                <label>पेपर साइज़ (Paper Size)</label>
+                <select id="selPaperSize">
+                    <option value="custom" selected>Custom Stamp (8.05 × 12 in)</option>
+                    <option value="a4">A4 Paper (8.27 × 11.69 in)</option>
+                    <option value="legal">Legal Paper (8.5 × 14 in)</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <label>Page 1 Top Margin (इंच)</label>
+                <input type="number" id="p1Top" value="4.50" step="0.25">
+            </div>
+            <div class="input-box">
+                <label>Page 1 Bottom Margin (इंच)</label>
+                <input type="number" id="p1Bottom" value="1.50" step="0.25">
+            </div>
+            <div class="input-box">
+                <label>Left Margin (इंच)</label>
+                <input type="number" id="pLeft" value="0.50" step="0.1">
+            </div>
+            <div class="input-box">
+                <label>Right Margin (इंच)</label>
+                <input type="number" id="pRight" value="0.50" step="0.1">
+            </div>
+            <div class="input-box">
+                <label>Page 2+ Top Margin (इंच)</label>
+                <input type="number" id="p2Top" value="1.0" step="0.25">
+            </div>
+            <div class="input-box">
+                <label>Page 2+ Bottom Margin (इंच)</label>
+                <input type="number" id="p2Bottom" value="1.50" step="0.25">
+            </div>
+
+            <button type="button" class="apply-btn" onclick="applyCustomSettings()">⚙️ सेटिंग्स एवं मार्जिन लागू करें (Save Settings)</button>
+        </div>
+    </div>
+
+    <!-- DOCUMENT CONTENT -->
+    <div class="doc-body" id="docBodyContent">
+
+        <div class="header-title" id="affidavitTitle">भाग – दो : शपथ पत्र</div>
+
+        <div class="point-block">
+            <strong>1-</strong> मैं, शपथकर्ता, शपथपूर्वक निम्नानुसार कथन करता/करती हूँ कि –
+            
+            <div class="field-list">
+                <div class="field-row">
+                    <span class="field-label">मेरा नाम</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" id="field_name" contenteditable="true">श्रीमती राधा डेमो</span>
+                </div>
+                <div class="field-row">
+                    <span class="field-label">पिता / पति का नाम</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" id="field_father" contenteditable="true">श्री श्याम डेमो</span>
+                </div>
+                <div class="field-row">
+                    <span class="field-label">पता</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" id="field_address" contenteditable="true">94 यहए जा सकता है ओनली डेमो एमपी 480001</span>
+                </div>
+                <div class="field-row">
+                    <span class="field-label">व्यवसाय</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" id="field_occupation" contenteditable="true">ट्रेडर्स डेमो</span>
+                </div>
+                <div class="field-row">
+                    <span class="field-label">आयु</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" id="field_age" contenteditable="true">46 वर्ष डेमो</span>
+                </div>
+                <div class="field-row">
+                    <span class="field-label">वार्षिक आय</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" id="field_income" contenteditable="true">₹3,00,000/- डेमो</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- DYNAMIC POINTS CONTAINERS ACCORDING TO PURPOSE DROPDOWN -->
+        <div id="dynamicPointsContainer">
+            <div class="point-block">
+                <strong>2-</strong> यह कि निविदा प्रपत्र के अंतर्गत प्रदान की गई समस्त जानकारी सही है तथा इसमें किसी भी सारभूत तथ्य को छिपाया नहीं गया है।
+            </div>
+            <div class="point-block">
+                <strong>3-</strong> यह कि मैंने निविदा संबंधी निबंधन शर्तों तथा सम्पत्ति के उपयोग के बारे में प्राधिकरण के नियमों को पूर्णतः समझ लिया है तथा ये निबंधन तथा शर्तें / नियम मुझे पूर्ण रूप से स्वीकार्य हैं।
+            </div>
+            <div class="point-block">
+                <strong>4-</strong> यह कि यदि निविदा के अंतर्गत मेरे द्वारा प्रस्तुत की गई किसी जानकारी को गलत/ दुष्प्रेरणकारी पाया जाता है, तो प्राधिकरण को मेरी निविदा को अस्वीकार करने तथा प्रतिभूति राशि (अर्नेस्ट मनी) को जब्त करने का अधिकार सुरक्षित रहेगा तथा तत्पश्चात् इस निविदा के अंतर्गत आवंटित की गई सम्पत्ति को भी रद्द करने का अधिकार भी सुरक्षित रहेगा।
+            </div>
+            <div class="point-block">
+                <strong>5-</strong> यह कि यह शपथ पत्र प्राधिकरण द्वारा विज्ञापित अर्थात् सम्पत्ति / क्रमांक <span class="editable-field" id="field_prop_no" contenteditable="true" style="min-width: 120px; border-bottom: 1.5px dashed #dc2626; display: inline-block;">FLAT – 3002</span> के आवंटन हेतु निविदा प्रस्तुत करने के लिए मेरे द्वारा प्राधिकरण को प्रस्तुत किया जा रहा है।
+            </div>
+        </div>
+
+        <div class="footer-section clearfix">
+            <div class="date-location-block">
+                <div>दिनांक : <span class="editable-field" id="field_date" contenteditable="true" style="border-bottom: 1.5px dashed #dc2626; display: inline-block;">12.09.2026 डेमो</span></div>
+                <div>स्थान : <span class="editable-field" id="field_location" contenteditable="true" style="border-bottom: 1.5px dashed #dc2626; display: inline-block;">जबलपुर डेमो</span></div>
+            </div>
+            
+            <div class="signature-box">
+                <div class="signature-space"></div>
+                <div class="signature-title">शपथकर्ता</div>
+                <div class="signature-subtitle">(निविदा प्रस्तुतकर्ता / प्राधिकृत हस्ताक्षरकर्ता)</div>
+                <div style="margin-top: 15px; font-weight: bold;">निविदादाता के हस्ताक्षर</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TERMS MODAL -->
+<div id="termsModal" class="modal no-print">
+    <div class="modal-box">
+        <div class="modal-head">
+            <h2 style="font-size:14pt; font-weight:800; color:#003399; margin:0;">⚖️ नियम और शर्तें (Terms & Conditions)</h2>
+            <button type="button" class="close-btn" onclick="closeModal('termsModal')">×</button>
+        </div>
+        <div style="font-size:10.5pt; color:#334155; line-height:1.6; margin-bottom:18px;">
+            1. यह फ़ॉर्मेट केवल उपयोगकर्ताओं के सुगम संपादन और त्वरित दस्तावेज़ीकरण सहायता के लिए प्रदान किया गया है।<br>
+            2. किसी भी प्रकार की गलत जानकारी या अनधिकृत उपयोग के लिए प्रयोक्ता स्वयं जिम्मेदार होंगे।<br>
+            3. प्रिंट निकालते समय 4.50" स्टैम्प गैप मार्जिन और दूसरे पेज पर 1-इंच मार्जिन का ध्यान रखें।
+        </div>
+    </div>
+</div>
+
+<!-- WORKING CREDIT SCORE ENQUIRY MODAL (WITH AUTO REDIRECT TO http://sp.startpayonline.com/creditmantri137) -->
+<div class="modal no-print" id="creditScoreModal">
+    <div class="credit-modal-box">
+        <button type="button" class="credit-modal-close" onclick="closeCreditScoreDemo()" aria-label="Close Credit Score form">×</button>
+        <div class="credit-demo">
+            <div class="credit-info">
+                <div>
+                    <h2>Check your Credit Score</h2>
+                    <div class="startpay-demo-label">Demo only - StartPay</div>
+                    <p>Demo only — StartPay credit-score enquiry form. Fill in your details for WhatsApp enquiry and authorised next-step processing.</p>
+
+                    <div class="credit-points">
+                        <div class="credit-point">✓ Free enquiry demo</div>
+                        <div class="credit-point">✓ No score impact from this demo form</div>
+                        <div class="credit-point">✓ Simple and secure information flow</div>
+                    </div>
+                </div>
+                <div class="credit-secure">🔒 Demo only - StartPay · PAN is collected for KYC / CIBIL Verification & Income Tax Compliance.</div>
+            </div>
+
+            <div class="credit-form">
+                <div class="credit-form-head">
+                    <div>
+                        <h3>Tell us about you</h3>
+                        <p>Enter your details for a StartPay credit-score enquiry.</p>
+                    </div>
+                    <span class="credit-demo-badge">Demo only - StartPay</span>
+                </div>
+
+                <form id="creditScoreForm" onsubmit="submitCreditScoreDemo(event)">
+                    <div class="credit-grid">
+                        <div class="credit-field">
+                            <label for="creditFirstName">First Name <span style="color:red;">*</span></label>
+                            <input id="creditFirstName" name="firstName" type="text" autocomplete="off" required placeholder="Enter first name">
+                        </div>
+
+                        <div class="credit-field">
+                            <label for="creditLastName">Last Name <span style="color:red;">*</span></label>
+                            <input id="creditLastName" name="lastName" type="text" autocomplete="off" required placeholder="Enter last name">
+                        </div>
+
+                        <div class="credit-field full">
+                            <label>Gender <span style="color:red;">*</span></label>
+                            <div class="gender-row">
+                                <label class="gender-option"><input type="radio" name="gender" value="Male" required><span>Male</span></label>
+                                <label class="gender-option"><input type="radio" name="gender" value="Female"><span>Female</span></label>
+                                <label class="gender-option"><input type="radio" name="gender" value="Other"><span>Other</span></label>
+                            </div>
+                        </div>
+
+                        <div class="credit-field full">
+                            <label for="creditPhone">Phone Number <span style="color:red;">*</span></label>
+                            <input id="creditPhone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" autocomplete="off" required placeholder="Enter 10-digit mobile number">
+                        </div>
+
+                        <div class="credit-field">
+                            <label for="creditDob">Date of Birth <span style="color:red;">*</span></label>
+                            <input id="creditDob" name="dob" type="date" required>
+                        </div>
+
+                        <div class="credit-field">
+                            <label for="creditPin">Pin Code <span style="color:red;">*</span></label>
+                            <input id="creditPin" name="pin" type="text" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" autocomplete="off" required placeholder="Enter 6-digit PIN code">
+                        </div>
+
+                        <div class="credit-field full">
+                            <label for="creditPan">PAN Card <span style="color:red;">*</span> <small>(Mandatory / अनिवार्य)</small></label>
+                            <input id="creditPan" name="pan" type="text" maxlength="10" minlength="10" pattern="[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}" autocomplete="off" required placeholder="Enter 10-digit PAN">
+                            <small style="display:block;margin-top:5px;color:#666;font-size:11px;">For KYC, CIBIL Verification & Income Tax Compliance</small>
+                        </div>
+
+                        <div class="credit-field full">
+                            <label for="creditEmail">Personal Email Id <small>(optional)</small></label>
+                            <input id="creditEmail" name="email" type="email" autocomplete="off" placeholder="Enter personal email">
+                        </div>
+                    </div>
+
+                    <div class="credit-consent">
+                        <label><input type="checkbox" id="creditConsent" required> I understand this is a StartPay demo form. My entered enquiry details, including PAN, may be sent to StartPay on WhatsApp, and the authorised credit-score link will open after submission.</label>
+                    </div>
+
+                    <button class="credit-submit" type="submit">📲 Submit → WhatsApp + Open Link</button>
+                    <p class="credit-demo-note">Demo only - StartPay · No credit report is fetched by this HTML form.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const WHATSAPP_NUMBER = "919340726600";
+    // REPLACED REDIRECTION LINK TO YOUR EXACT SPECIFIED URL
+    const CREDIT_SCORE_LINK = "http://sp.startpayonline.com/creditmantri137";
+    let creditScoreSubmitted = false;
+
+    // 1. DYNAMIC PURPOSE DROPDOWN LOGIC
+    function changeAffidavitPurpose() {
+        var purpose = document.getElementById('affidavitPurpose').value;
+        var titleElem = document.getElementById('affidavitTitle');
+        var container = document.getElementById('dynamicPointsContainer');
+
+        if (purpose === 'flat') {
+            titleElem.innerText = "भाग – दो : शपथ पत्र (सम्पत्ति / फ्लैट आवंटन)";
+            container.innerHTML = `
+                <div class="point-block"><strong>2-</strong> यह कि निविदा प्रपत्र के अंतर्गत प्रदान की गई समस्त जानकारी सही है तथा इसमें किसी भी सारभूत तथ्य को छिपाया नहीं गया है।</div>
+                <div class="point-block"><strong>3-</strong> यह कि मैंने निविदा संबंधी निबंधन शर्तों तथा सम्पत्ति के उपयोग के बारे में प्राधिकरण के नियमों को पूर्णतः समझ लिया है तथा ये निबंधन तथा शर्तें / नियम मुझे पूर्ण रूप से स्वीकार्य हैं।</div>
+                <div class="point-block"><strong>4-</strong> यह कि यदि निविदा के अंतर्गत मेरे द्वारा प्रस्तुत की गई किसी जानकारी को गलत/ दुष्प्रेरणकारी पाया जाता है, तो प्राधिकरण को मेरी निविदा को अस्वीकार करने तथा प्रतिभूति राशि को जब्त करने का अधिकार सुरक्षित रहेगा।</div>
+                <div class="point-block"><strong>5-</strong> यह कि यह शपथ पत्र प्राधिकरण द्वारा विज्ञापित सम्पत्ति क्रमांक <span class="editable-field" id="field_prop_no" contenteditable="true" style="min-width: 120px; border-bottom: 1.5px dashed #dc2626; display: inline-block;">FLAT – 3002</span> के आवंटन हेतु मेरे द्वारा प्रस्तुत किया जा रहा है।</div>
+            `;
+        } else if (purpose === 'name_change') {
+            titleElem.innerText = "शपथ पत्र : नाम परिवर्तन एवं घोषणा";
+            container.innerHTML = `
+                <div class="point-block"><strong>2-</strong> यह कि मेरे सभी सरकारी एवं गैर-सरकारी दस्तावेज़ों में मेरा नाम विभिन्न रूपों में दर्ज है, परंतु वे सभी नाम एक ही व्यक्ति यानी मेरे हैं।</div>
+                <div class="point-block"><strong>3-</strong> यह कि भविष्य में मुझे <span class="editable-field" contenteditable="true" style="border-bottom: 1.5px dashed #dc2626; display: inline-block;">[सही नाम दर्ज करें]</span> नाम से जाना एवं पहचाना जावे।</div>
+                <div class="point-block"><strong>4-</strong> यह कि उक्त शपथ पत्र में दी गई समस्त जानकारी पूर्णतः सत्य एवं सही है।</div>
+            `;
+        } else if (purpose === 'income') {
+            titleElem.innerText = "शपथ पत्र : स्व-प्रमाणित आय घोषणा";
+            container.innerHTML = `
+                <div class="point-block"><strong>2-</strong> यह कि मेरी समस्त स्रोतों (कृषि/व्यवसाय/मजदूरी) से कुल वार्षिक आय ₹<span class="editable-field" contenteditable="true" style="border-bottom: 1.5px dashed #dc2626; display: inline-block;">3,00,000/-</span> है।</div>
+                <div class="point-block"><strong>3-</strong> यह कि मेरे परिवार में मेरे अतिरिक्त अन्य कोई आय अर्जित करने वाला सदस्य नहीं है।</div>
+                <div class="point-block"><strong>4-</strong> यह कि यह आय घोषणा पत्र शासकीय योजनाओं एवं लाभ प्राप्त करने हेतु प्रस्तुत किया जा रहा है।</div>
+            `;
+        } else if (purpose === 'address') {
+            titleElem.innerText = "शपथ पत्र : निवास एवं पता सत्यापन";
+            container.innerHTML = `
+                <div class="point-block"><strong>2-</strong> यह कि मैं उपरोक्‍त पते पर विगत <span class="editable-field" contenteditable="true" style="border-bottom: 1.5px dashed #dc2626; display: inline-block;">10 वर्षों</span> से स्थायी रूप से निवास कर रहा/रही हूँ।</div>
+                <div class="point-block"><strong>3-</strong> यह कि मेरा वर्तमान पता ही मेरा पत्राचार एवं स्थायी पता है।</div>
+            `;
+        } else if (purpose === 'loan') {
+            titleElem.innerText = "शपथ पत्र : बैंक लोन एवं दस्तावेज़ सत्यापन";
+            container.innerHTML = `
+                <div class="point-block"><strong>2-</strong> यह कि मेरे द्वारा बैंक/वित्तीय संस्था को प्रस्तुत किए गए सभी संपत्ति दस्तावेज़ एवं KYC पूर्णतः मूल एवं वैध हैं।</div>
+                <div class="point-block"><strong>3-</strong> यह कि उक्त संपत्ति पर पूर्व से कोई भी विवाद या अन्य बैंक का प्रभार (Charge) बकाया नहीं है।</div>
+            `;
+        }
+        setupAutoSaveEvents();
+    }
+
+    // 2. LOCALSTORAGE AUTO-SAVE & RESTORE FEATURE
+    function setupAutoSaveEvents() {
+        var fields = document.querySelectorAll('.editable-field');
+        fields.forEach(function(field, index) {
+            field.addEventListener('input', function() {
+                var fieldId = field.id || ('auto_field_' + index);
+                localStorage.setItem('affidavit_' + fieldId, field.innerText);
+            });
+        });
+    }
+
+    function restoreAutoSavedData() {
+        var fields = document.querySelectorAll('.editable-field');
+        fields.forEach(function(field, index) {
+            var fieldId = field.id || ('auto_field_' + index);
+            var savedValue = localStorage.getItem('affidavit_' + fieldId);
+            if (savedValue !== null) {
+                field.innerText = savedValue;
+            }
+        });
+    }
+
+    // 3. CUSTOM MARGINS & PRINT SWITCHER
+    function applyCustomSettings() {
+        var sizeType = document.getElementById('selPaperSize').value;
+        var p1TopVal = document.getElementById('p1Top').value;
+        var p1BottomVal = document.getElementById('p1Bottom').value;
+        var pLeftVal = document.getElementById('pLeft').value;
+        var pRightVal = document.getElementById('pRight').value;
+        var p2TopVal = document.getElementById('p2Top').value;
+        var p2BottomVal = document.getElementById('p2Bottom').value;
+
+        var p1Top = (p1TopVal || '4.50') + 'in';
+        var p1Bottom = (p1BottomVal || '1.50') + 'in';
+        var pLeft = (pLeftVal || '0.50') + 'in';
+        var pRight = (pRightVal || '0.50') + 'in';
+        var p2Top = (p2TopVal || '1.0') + 'in';
+        var p2Bottom = (p2BottomVal || '1.50') + 'in';
+
+        var sizeStr = '8.05in 12in';
+        if (sizeType === 'a4') sizeStr = 'A4';
+        if (sizeType === 'legal') sizeStr = 'legal';
+
+        var styleTag = document.getElementById('dynamic-stamp-style');
+        styleTag.innerHTML = `
+            @page {
+                size: ` + sizeStr + `;
+                margin-top: ` + p2Top + `;
+                margin-bottom: ` + p2Bottom + `;
+                margin-left: ` + pLeft + `;
+                margin-right: ` + pRight + `;
+            }
+            @page :first {
+                margin-top: ` + p1Top + `;
+                margin-bottom: ` + p1Bottom + `;
+            }
+        `;
+
+        var docBody = document.getElementById('docBodyContent');
+        if (docBody) {
+            docBody.style.paddingLeft = pLeft;
+            docBody.style.paddingRight = pRight;
+        }
+
+        alert('✅ सेटिंग्स सफलतापूर्वक लागू और ऑटो-सेव कर दी गई हैं!');
+    }
+
+    function handleShare() {
+        if (navigator.share) {
+            navigator.share({
+                title: 'StartPay Legal Affidavit Format',
+                text: 'StartPay Legal & Finance Solutions by Anurag Rai | ☎ 9340726600',
+                url: window.location.href
+            }).catch(() => {});
+        } else {
+            navigator.clipboard.writeText(window.location.href);
+            alert('StartPay Link copied to clipboard!');
+        }
+    }
+
+    function openTerms() {
+        document.getElementById('termsModal').classList.add('show');
+    }
+
+    function closeModal(id) {
+        document.getElementById(id).classList.remove('show');
+    }
+
+    /* CREDIT SCORE MODAL HANDLERS */
+    function openCreditScoreDemo(){
+        document.getElementById("creditScoreModal").classList.add("show");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeCreditScoreDemo(){
+        document.getElementById("creditScoreModal").classList.remove("show");
+        document.body.style.overflow = "";
+    }
+
+    function handleCreditScoreTabClick(){
+        if(creditScoreSubmitted){
+            window.open(CREDIT_SCORE_LINK, "_blank", "noopener,noreferrer");
+            return;
+        }
+        openCreditScoreDemo();
+    }
+
+    function submitCreditScoreDemo(e){
+        e.preventDefault();
+
+        const panInput = document.getElementById("creditPan");
+        if(panInput){ panInput.value = panInput.value.trim().toUpperCase(); }
+
+        const form = document.getElementById("creditScoreForm");
+        if(!form.checkValidity()){
+            form.reportValidity();
+            return;
+        }
+
+        const firstName = document.getElementById("creditFirstName").value.trim();
+        const lastName = document.getElementById("creditLastName").value.trim();
+        const gender = document.querySelector('input[name="gender"]:checked')?.value || "Not provided";
+        const phone = document.getElementById("creditPhone").value.trim();
+        const dob = document.getElementById("creditDob").value;
+        const pin = document.getElementById("creditPin").value.trim();
+        const pan = document.getElementById("creditPan").value.trim().toUpperCase();
+        const email = document.getElementById("creditEmail").value.trim();
+
+        const message = `📊 *StartPay Credit Score Enquiry*\n\n*Demo only - StartPay*\n\n*Name:* ${firstName} ${lastName}\n*Gender:* ${gender}\n*Mobile:* ${phone}\n*Date of Birth:* ${dob || "Not provided"}\n*PAN Card:* ${pan}\n*PIN Code:* ${pin}\n*Email:* ${email || "Not provided"}\n\nPlease assist with my credit score enquiry.`;
+
+        const whatsappUrl = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+
+        creditScoreSubmitted = true;
+
+        window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+        setTimeout(function(){
+            window.open(CREDIT_SCORE_LINK, "_blank", "noopener,noreferrer");
+        }, 450);
+
+        closeCreditScoreDemo();
+
+        alert("Demo enquiry WhatsApp पर भेजी गई है। अब Credit Score link (http://sp.startpayonline.com/creditmantri137) भी खोला जा रहा है।");
+    }
+
+    // INITIALIZATION ON LOAD
+    window.addEventListener('DOMContentLoaded', function() {
+        setupAutoSaveEvents();
+        restoreAutoSavedData();
+    });
+
+    document.getElementById("creditScoreModal").addEventListener("click", function(e){
+        if(e.target === this){
+            closeCreditScoreDemo();
+        }
+    });
+
+    document.addEventListener("keydown", function(e){
+        if(e.key === "Escape"){
+            closeCreditScoreDemo();
+            closeModal('termsModal');
+        }
+    });
+</script>
+
+</body>
+</html>
