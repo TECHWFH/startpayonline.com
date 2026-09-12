@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StartPay Legal & Finance Property Solutions - Affidavit Tool</title>
-    <style id="page-size-style">
-        /* DEFAULT PAGE CONFIGURATION */
+    <title>StartPay Legal & Finance Property Solutions - Custom Stamp Tool</title>
+    <style id="dynamic-stamp-style">
         @page {
-            size: A4;
-            margin-top: 2in; /* EXACT 2 INCH TOP MARGIN ON SECOND AND SUBSEQUENT PAGES */
-            margin-bottom: 20mm;
-            margin-left: 20mm;
-            margin-right: 20mm;
+            size: 8.05in 12in;
+            margin-top: 1.0in;
+            margin-bottom: 1.50in;
+            margin-left: 0.50in;
+            margin-right: 0.50in;
             @bottom-center {
                 content: "";
             }
         }
 
         @page :first {
-            margin-top: 90mm; /* STRICT 90MM TOP MARGIN FOR PHYSICAL STAMP PAPER ON PAGE 1 */
+            margin-top: 4.50in;
+            margin-bottom: 1.50in;
         }
     </style>
     <style>
@@ -36,9 +36,8 @@
             background-color: #f4f6f9;
         }
 
-        /* Container styling */
         .container {
-            max-width: 950px;
+            max-width: 850px;
             margin: 20px auto;
             background: #ffffff;
             padding: 25px;
@@ -52,10 +51,44 @@
             background-color: #f8fafc;
             border: 2px solid #cbd5e1;
             border-radius: 12px;
-            padding: 16px;
+            padding: 18px 16px;
             text-align: center;
-            margin-bottom: 18px;
+            margin-bottom: 16px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+
+        .tagline-wrapper {
+            margin-bottom: 10px;
+        }
+
+        .tagline-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 4px;
+        }
+
+        .tagline-line {
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #b91c1c, transparent);
+        }
+
+        .tagline-text {
+            color: #dc2626;
+            font-size: 15pt;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .tagline-subtext {
+            color: #b91c1c;
+            font-size: 10.5pt;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-top: 2px;
         }
 
         .branding-title {
@@ -71,6 +104,7 @@
             font-weight: bold;
             color: #1e293b;
             margin-top: 6px;
+            margin-bottom: 16px;
         }
 
         .phone-highlight {
@@ -79,68 +113,22 @@
             text-decoration: none;
         }
 
-        /* PAGE SIZE TOGGLE BAR (A4 vs LEGAL) */
-        .page-size-bar {
-            background: #eff6ff;
-            border: 1.5px solid #93c5fd;
-            border-radius: 10px;
-            padding: 10px 15px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .page-size-title {
-            font-size: 10.5pt;
-            font-weight: bold;
-            color: #1e40af;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .toggle-btn-group {
-            display: flex;
-            gap: 8px;
-        }
-
-        .size-btn {
-            background: #ffffff;
-            border: 1.5px solid #3b82f6;
-            color: #1d4ed8;
-            padding: 6px 14px;
-            border-radius: 6px;
-            font-size: 9.5pt;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .size-btn.active {
-            background: #2563eb;
-            color: #ffffff;
-            border-color: #2563eb;
-            box-shadow: 0 2px 6px rgba(37,99,235,0.3);
-        }
-
-        /* BUTTONS GRID - 9 FULLY FUNCTIONAL ACTION BUTTONS */
-        .buttons-grid {
+        .buttons-grid-header {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 12px;
-            margin-bottom: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 10px;
+            margin-top: 14px;
+            padding-top: 14px;
+            border-top: 1px dashed #cbd5e1;
         }
 
         .btn-link, button.btn {
             background: #ffffff;
             border: 1px solid #cbd5e1;
             border-radius: 8px;
-            padding: 12px 10px;
+            padding: 10px 8px;
             text-align: center;
-            font-size: 10pt;
+            font-size: 9.5pt;
             font-weight: 700;
             color: #1e293b;
             text-decoration: none;
@@ -177,79 +165,178 @@
             border-color: #16a34a !important;
         }
 
-        /* EDITABLE FIELDS IN RED FOR SCREEN EDITING */
-        .editable-field {
-            display: inline-block;
-            border-bottom: 1.5px dashed #dc2626;
-            padding-bottom: 1px;
-            min-width: 180px;
-            font-weight: 700;
-            color: #e53e3e; /* Red color on screen during edit */
+        .disclaimer-container {
+            border: 2px dashed #b91c1c;
+            background-color: #fffcfc;
+            border-radius: 10px;
+            padding: 18px;
+            margin-bottom: 20px;
+        }
+
+        .disclaimer-header {
+            text-align: center;
+            color: #881337;
+            font-weight: 800;
+            font-size: 13pt;
+            margin-bottom: 12px;
+        }
+
+        .disclaimer-stamp-badge {
+            display: block;
+            margin: 0 auto 10px auto;
+            background: #ffffff;
+            border: 1.5px solid #b91c1c;
+            border-radius: 8px;
+            padding: 6px 16px;
+            color: #991b1b;
+            font-weight: 800;
+            font-size: 11pt;
+            width: fit-content;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .disclaimer-note {
+            text-align: center;
+            color: #b91c1c;
+            font-size: 10pt;
+            font-weight: bold;
+            margin-bottom: 14px;
+        }
+
+        .disclaimer-body {
+            background: #ffffff;
+            border-left: 4px solid #b91c1c;
+            border-radius: 6px;
+            padding: 14px 16px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .disclaimer-title {
+            font-weight: 800;
+            color: #991b1b;
+            font-size: 11pt;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .disclaimer-list {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 9.5pt;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .disclaimer-list li {
+            margin-bottom: 6px;
+        }
+
+        .control-panel {
+            background: #eff6ff;
+            border: 1.5px solid #93c5fd;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .panel-title {
+            font-size: 11pt;
+            font-weight: bold;
+            color: #1e40af;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .inputs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .input-box label {
+            font-size: 9pt;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .input-box input, .input-box select {
+            padding: 6px 8px;
+            border: 1px solid #94a3b8;
+            border-radius: 6px;
+            font-size: 9.5pt;
+            font-weight: bold;
             outline: none;
+            background: #ffffff;
+        }
+
+        .apply-btn {
+            grid-column: 1 / -1;
+            background: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 10.5pt;
+            cursor: pointer;
+            margin-top: 5px;
+            transition: background 0.2s ease;
+        }
+
+        .apply-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .field-row {
+            margin-bottom: 12px;
+            font-size: 13pt;
+            border-bottom: 1.5px dashed #dc2626;
+            padding-bottom: 4px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        /* ADJUSTED LABEL WIDTH FOR "पिता / पति का नाम" */
+        .field-label {
+            font-weight: bold;
+            width: 145px;
+            flex-shrink: 0;
+            color: #000;
+        }
+
+        .colon-symbol {
+            font-weight: bold;
+            margin-right: 6px;
+            color: #dc2626;
+            flex-shrink: 0;
+        }
+
+        .editable-field {
+            flex-grow: 1;
+            font-weight: 700;
+            color: #e53e3e;
+            outline: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .editable-field:focus {
             background-color: #fef2f2;
-            border-bottom-color: #b91c1c;
         }
 
-        /* SCREEN FOOTER NOTICE */
-        .screen-footer-notice {
-            margin-top: 35px;
-            padding: 14px;
-            background-color: #f1f5f9;
-            border-left: 4px solid #003399;
-            font-size: 10pt;
-            color: #334155;
-            border-radius: 4px;
-        }
-
-        /* MODAL POPUP FOR TERMS & CREDIT SCORE */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 9999;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .modal-box {
-            background: #ffffff;
-            border-radius: 12px;
-            padding: 25px;
-            max-width: 500px;
-            width: 90%;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-
-        .modal-title {
-            font-size: 14pt;
-            font-weight: 800;
-            color: #003399;
-            margin-bottom: 12px;
-        }
-
-        .modal-body {
-            font-size: 10.5pt;
-            color: #334155;
-            line-height: 1.6;
-            margin-bottom: 18px;
-        }
-
-        .modal-close-btn {
-            background: #003399;
-            color: #fff;
-            border: none;
-            padding: 8px 18px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-            float: right;
-        }
-
-        /* CRITICAL PRINT RULES: AUTOMATICALLY HIDE BRANDING, BAR & BUTTONS ON PRINTING */
         @media print {
             body {
                 background-color: transparent;
@@ -259,18 +346,23 @@
                 padding: 0;
                 max-width: 100%;
             }
-            .no-print, .branding-header, .page-size-bar, .buttons-grid, .screen-footer-notice, .modal-overlay {
+            .no-print, .branding-header, .disclaimer-container, .control-panel, .buttons-grid-header, .modal-overlay {
                 display: none !important;
             }
+            .field-row {
+                border-bottom: 1px dotted #000000 !important;
+            }
+            .colon-symbol {
+                color: #000000 !important;
+            }
             .editable-field {
-                color: #000000 !important; /* Pure Black on physical print */
-                border-bottom: none !important;
+                color: #000000 !important;
             }
         }
 
-        /* DOCUMENT BODY CONTENT */
         .doc-body {
             background: #ffffff;
+            transition: padding 0.3s ease;
         }
 
         .header-title {
@@ -287,23 +379,12 @@
         }
 
         .field-list {
-            margin-top: 8px;
-            margin-left: 20px;
-        }
-
-        .field-row {
-            margin-bottom: 6px;
-            font-size: 13pt;
-        }
-
-        .field-label {
-            display: inline-block;
-            width: 130px;
-            font-weight: bold;
+            margin-top: 12px;
+            margin-left: 10px;
         }
 
         .footer-section {
-            margin-top: 45px;
+            margin-top: 40px;
             width: 100%;
             page-break-inside: avoid;
         }
@@ -347,57 +428,96 @@
 
 <div class="container" id="docContainer">
 
-    <!-- STARTPAY BRANDING HEADER -->
+    <!-- BRANDING HEADER -->
     <div class="branding-header no-print">
+        <div class="tagline-wrapper">
+            <div class="tagline-container">
+                <div class="tagline-line"></div>
+                <div class="tagline-text">शुभ शुरुआत &nbsp;•&nbsp; स्टार्ट पे के साथ &nbsp;◆</div>
+                <div class="tagline-line"></div>
+            </div>
+            <div class="tagline-subtext">“आपकी सुविधा &nbsp;•&nbsp; हमारी प्राथमिकता &nbsp;•&nbsp; सही मार्गदर्शन”</div>
+        </div>
         <div class="branding-title">StartPay Legal & Finance Property Solutions</div>
         <div class="branding-subtitle">
             by Anurag Rai | <a href="tel:9340726600" class="phone-highlight">☎ 9340726600</a>
         </div>
-    </div>
 
-    <!-- PAGE SIZE TOGGLE BAR (A4 / LEGAL) -->
-    <div class="page-size-bar no-print">
-        <div class="page-size-title">
-            📄 पेज साइज़ चयन (Print Paper Size): <span id="currentSizeText" style="color: #2563eb; font-weight: 800;">A4 Size (Default)</span>
+        <div class="buttons-grid-header">
+            <button class="btn btn-blue" onclick="window.print()">🖨️ Print PDF</button>
+            <button class="btn btn-download" onclick="window.print()">📥 Download PDF</button>
+            <a href="https://api.whatsapp.com/send?phone=919340726600&text=Hello%20StartPay,%20I%20need%20help%20with%20Affidavit%20Format" target="_blank" class="btn-link btn-green">💬 WhatsApp Help</a>
+            <button class="btn btn-blue" onclick="handleShare()">📤 Auto Share</button>
+            <a href="https://api.whatsapp.com/send?phone=919340726600&text=Please%20Call%20Me%20Back%20regarding%20StartPay%20Legal%20Solutions" target="_blank" class="btn-link btn-purple">📲 WhatsApp Callback Share</a>
+            <a href="tel:9340726600" class="btn-link btn-green">📞 Call Now</a>
+            <button class="btn btn-red" onclick="openModal('termsModal')">⚖️ Terms (नियम और शर्तें लागू)</button>
+            <a href="https://startpayonline.com/" target="_blank" class="btn-link btn-blue">🌐 Website</a>
+            <button class="btn btn-solid-blue" onclick="openModal('creditModal')">📊 Check your Credit Score</button>
         </div>
-        <div class="toggle-btn-group">
-            <button class="size-btn active" id="btnA4" onclick="setPageSize('A4')">📄 A4 Paper</button>
-            <button class="size-btn" id="btnLegal" onclick="setPageSize('Legal')">📜 Legal Paper (8.5 × 14 in)</button>
+    </div>
+
+    <!-- LEGAL DISCLAIMER BOX -->
+    <div class="disclaimer-container no-print">
+        <div class="disclaimer-header">[ स्टैम्प पेपर स्थान नमूना / STAMP PAPER PREVIEW DEMO ]</div>
+        <div class="disclaimer-stamp-badge">Stamp Paper Demo Specimen</div>
+        <div class="disclaimer-note">(नोट: प्रिंट निकालते समय ऊपर दिख रहा स्टैम्प का चित्र, हेडर और नोटिस स्वतः हट जाएंगे और भौतिक स्टैम्प पेपर पर केवल मैटर छपेगा)</div>
+        
+        <div class="disclaimer-body">
+            <div class="disclaimer-title">
+                🛡️ वैधानिक सूचना, नियम व विधिक चेतावनी (Legal Disclaimer & Statutory Warning):
+            </div>
+            <ol class="disclaimer-list">
+                <li><strong>तकनीकी व संपादन सुगमता:</strong> यह वेब-फ़ॉर्मेट केवल उपयोगकर्ताओं के सुगम कार्य-प्रवाह, त्वरित संपादन एवं दस्तावेज़ीकरण सहायता हेतु एक तकनीकी प्रारूप (Template) के रूप में प्रदान किया गया है।</li>
+                <li><strong>दुरुपयोग एवं जालसाजी पर सख्त पाबंदी:</strong> इस प्रारूप या स्टैम्प छवि का किसी भी प्रकार का अनधिकृत उपयोग, कूटरचना (Forgery), जालसाजी अथवा गलत तथ्य दर्ज कर प्रस्तुत करना भारतीय न्याय संहिता (BNS) व संबंधित विधिक धाराओं के अंतर्गत गंभीर दंडनीय अपराध है।</li>
+                <li><strong>उपयोगकर्ता का व्यक्तिगत उत्तरदायित्व:</strong> इस प्रारूप में प्रविष्ट की गई किसी भी जानकारी, तथ्य या इसके उपयोग हेतु उपयोगकर्ता स्वयं पूर्णतः उत्तरदायी होगा। किसी भी प्रकार के अवैध/गलत उपयोग की स्थिति में प्रयोक्ता के विरुद्ध नियमानुसार वैधानिक एवं कानूनी कार्यवाही की जाएगी।</li>
+            </ol>
         </div>
     </div>
 
-    <!-- ACTION BUTTONS GRID (ALL 9 BUTTONS WITH WORKING LINKS & JS ACTIONS) -->
-    <div class="buttons-grid no-print">
-        <!-- 1. Print PDF -->
-        <button class="btn btn-blue" onclick="window.print()">🖨️ Print PDF</button>
-
-        <!-- 2. Download PDF -->
-        <button class="btn btn-download" onclick="window.print()">📥 Download PDF</button>
-
-        <!-- 3. WhatsApp Help -->
-        <a href="https://api.whatsapp.com/send?phone=919340726600&text=Hello%20StartPay,%20I%20need%20help%20with%20Affidavit%20Format" target="_blank" class="btn-link btn-green">💬 WhatsApp Help</a>
-
-        <!-- 4. Auto Share -->
-        <button class="btn btn-blue" onclick="handleShare()">📤 Auto Share</button>
-
-        <!-- 5. WhatsApp Callback Share -->
-        <a href="https://api.whatsapp.com/send?phone=919340726600&text=Please%20Call%20Me%20Back%20regarding%20StartPay%20Legal%20Solutions" target="_blank" class="btn-link btn-purple">📲 WhatsApp Callback Share</a>
-
-        <!-- 6. Call Now -->
-        <a href="tel:9340726600" class="btn-link btn-green">📞 Call Now</a>
-
-        <!-- 7. Terms -->
-        <button class="btn btn-red" onclick="openModal('termsModal')">⚖️ Terms (नियम और शर्तें लागू)</button>
-
-        <!-- 8. Website (TARGETING https://startpayonline.com/) -->
-        <a href="https://startpayonline.com/" target="_blank" class="btn-link btn-blue">🌐 Website</a>
-
-        <!-- 9. Check Credit Score -->
-        <button class="btn btn-solid-blue" onclick="openModal('creditModal')">📊 Check your Credit Score</button>
+    <!-- ADVANCED STAMP CUSTOM MARGIN & SIZE CONTROLLER PANEL -->
+    <div class="control-panel no-print">
+        <div class="panel-title">
+            📐 स्टैम्प पेपर साइज़ एवं मार्जिन सेटिंग्स (Custom Dimensions & Margins)
+        </div>
+        <div class="inputs-grid">
+            <div class="input-box">
+                <label>पेपर साइज़ (Paper Size)</label>
+                <select id="selPaperSize">
+                    <option value="custom" selected>Custom Stamp (8.05 × 12 in)</option>
+                    <option value="a4">A4 Paper (8.27 × 11.69 in)</option>
+                    <option value="legal">Legal Paper (8.5 × 14 in)</option>
+                </select>
+            </div>
+            <div class="input-box">
+                <label>Page 1 Top Margin (इंच)</label>
+                <input type="number" id="p1Top" value="4.50" step="0.25">
+            </div>
+            <div class="input-box">
+                <label>Page 1 Bottom Margin (इंच)</label>
+                <input type="number" id="p1Bottom" value="1.50" step="0.25">
+            </div>
+            <div class="input-box">
+                <label>Left Margin (इंच)</label>
+                <input type="number" id="pLeft" value="0.50" step="0.1">
+            </div>
+            <div class="input-box">
+                <label>Right Margin (इंच)</label>
+                <input type="number" id="pRight" value="0.50" step="0.1">
+            </div>
+            <div class="input-box">
+                <label>Page 2+ Top Margin (इंच)</label>
+                <input type="number" id="p2Top" value="1.0" step="0.25">
+            </div>
+            <div class="input-box">
+                <label>Page 2+ Bottom Margin (इंच)</label>
+                <input type="number" id="p2Bottom" value="1.50" step="0.25">
+            </div>
+            <button type="button" class="apply-btn" onclick="applyCustomSettings()">⚙️ सेटिंग्स लागू करें - सेव करे</button>
+        </div>
     </div>
 
-    <!-- DOCUMENT CONTENT (PRINTS IN PURE BLACK ON PHYSICAL STAMP PAPER WITH CONTINUOUS TEXT) -->
-    <div class="doc-body">
+    <!-- DOCUMENT CONTENT -->
+    <div class="doc-body" id="docBodyContent">
 
         <div class="header-title">भाग – दो : शपथ पत्र</div>
 
@@ -406,22 +526,35 @@
             
             <div class="field-list">
                 <div class="field-row">
-                    <span class="field-label">मेरा नाम</span> : <span class="editable-field" contenteditable="true">श्रीमती राधा डेमो</span>
+                    <span class="field-label">मेरा नाम</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" contenteditable="true">श्रीमती राधा डेमो</span>
+                </div>
+                <!-- UPDATED LABEL: पिता / पति का नाम -->
+                <div class="field-row">
+                    <span class="field-label">पिता / पति का नाम</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" contenteditable="true">श्री श्याम डेमो</span>
                 </div>
                 <div class="field-row">
-                    <span class="field-label">पति का नाम</span> : <span class="editable-field" contenteditable="true">श्री श्याम डेमो</span>
+                    <span class="field-label">पता</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" contenteditable="true">94 यहए जा सकता है ओनली डेमो एमपी 480001</span>
                 </div>
                 <div class="field-row">
-                    <span class="field-label">पता</span> : <span class="editable-field" contenteditable="true">94 यह फार्गोम एडिट किया जा सकता है ओनली डेमो टेगांव नरसिंहपुर एमपी 487118</span>
+                    <span class="field-label">व्यवसाय</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" contenteditable="true">ट्रेडर्स डेमो</span>
                 </div>
                 <div class="field-row">
-                    <span class="field-label">व्यवसाय</span> : <span class="editable-field" contenteditable="true">ट्रेडर्स डेमो</span>
+                    <span class="field-label">आयु</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" contenteditable="true">46 वर्ष डेमो</span>
                 </div>
                 <div class="field-row">
-                    <span class="field-label">आयु</span> : <span class="editable-field" contenteditable="true">46 वर्ष डेमो</span>
-                </div>
-                <div class="field-row">
-                    <span class="field-label">वार्षिक आय</span> : <span class="editable-field" contenteditable="true">₹3,00,000/- डेमो</span>
+                    <span class="field-label">वार्षिक आय</span>
+                    <span class="colon-symbol">:</span>
+                    <span class="editable-field" contenteditable="true">₹3,00,000/- डेमो</span>
                 </div>
             </div>
         </div>
@@ -439,14 +572,13 @@
         </div>
 
         <div class="point-block">
-            <strong>5-</strong> यह कि यह शपथ पत्र प्राधिकरण द्वारा विज्ञापित अर्थात् सम्पत्ति / क्रमांक <span class="editable-field" contenteditable="true" style="min-width: 120px;">FLAT – 3002</span> के आवंटन हेतु निविदा प्रस्तुत करने के लिए मेरे द्वारा प्राधिकरण को प्रस्तुत किया जा रहा है।
+            <strong>5-</strong> यह कि यह शपथ पत्र प्राधिकरण द्वारा विज्ञापित अर्थात् सम्पत्ति / क्रमांक <span class="editable-field" contenteditable="true" style="min-width: 120px; border-bottom: 1.5px dashed #dc2626; display: inline-block;">FLAT – 3002</span> के आवंटन हेतु निविदा प्रस्तुत करने के लिए मेरे द्वारा प्राधिकरण को प्रस्तुत किया जा रहा है।
         </div>
 
         <div class="footer-section clearfix">
-            <!-- DATE & LOCATION WITH DEMO TAGS -->
             <div class="date-location-block">
-                <div>दिनांक : <span class="editable-field" contenteditable="true">12.09.2026 डेमो</span></div>
-                <div>स्थान : <span class="editable-field" contenteditable="true">जबलपुर डेमो</span></div>
+                <div>दिनांक : <span class="editable-field" contenteditable="true" style="border-bottom: 1.5px dashed #dc2626; display: inline-block;">12.09.2026 डेमो</span></div>
+                <div>स्थान : <span class="editable-field" contenteditable="true" style="border-bottom: 1.5px dashed #dc2626; display: inline-block;">जबलपुर डेमो</span></div>
             </div>
             
             <div class="signature-box">
@@ -459,27 +591,21 @@
 
     </div>
 
-    <!-- SCREEN ONLY FOOTER NOTICE -->
-    <div class="screen-footer-notice no-print">
-        <strong>StartPay Legal & Finance Solutions:</strong> यह वेब प्रारूप केवल स्क्रीन पर एडिटिंग और स्टैम्प पेपर प्रिंटिंग के लिए डिज़ाइन किया गया है। भौतिक प्रिंट निकालते समय ऊपर की सभी सूचनाएं और बटन स्वतः हट जाएंगे।
-    </div>
-
 </div>
 
-<!-- TERMS MODAL -->
+<!-- MODALS -->
 <div id="termsModal" class="modal-overlay">
     <div class="modal-box">
         <div class="modal-title">⚖️ नियम और शर्तें (Terms & Conditions)</div>
         <div class="modal-body">
             1. यह फ़ॉर्मेट केवल उपयोगकर्ताओं के सुगम संपादन और त्वरित दस्तावेज़ीकरण सहायता के लिए प्रदान किया गया है।<br>
             2. किसी भी प्रकार की गलत जानकारी या अनधिकृत उपयोग के लिए प्रयोक्ता स्वयं जिम्मेदार होंगे।<br>
-            3. प्रिंट निकालते समय 90mm स्टैम्प मार्जिन और दूसरे पेज पर 2-इंच मार्जिन का ध्यान रखें।
+            3. प्रिंट निकालते समय 4.50" स्टैम्प गैप मार्जिन और दूसरे पेज पर 1-इंच मार्जिन का ध्यान रखें।
         </div>
         <button class="modal-close-btn" onclick="closeModal('termsModal')">बंद करें</button>
     </div>
 </div>
 
-<!-- CREDIT SCORE MODAL -->
 <div id="creditModal" class="modal-overlay">
     <div class="modal-box">
         <div class="modal-title">📊 Check Your Credit Score</div>
@@ -490,47 +616,49 @@
     </div>
 </div>
 
-<!-- JAVASCRIPT FOR DYNAMIC BUTTON WORKING & PAGE SIZE SWITCHING -->
 <script>
-    function setPageSize(size) {
-        var styleTag = document.getElementById('page-size-style');
-        var btnA4 = document.getElementById('btnA4');
-        var btnLegal = document.getElementById('btnLegal');
-        var sizeText = document.getElementById('currentSizeText');
+    function applyCustomSettings() {
+        var sizeType = document.getElementById('selPaperSize').value;
+        var p1TopVal = document.getElementById('p1Top').value;
+        var p1BottomVal = document.getElementById('p1Bottom').value;
+        var pLeftVal = document.getElementById('pLeft').value;
+        var pRightVal = document.getElementById('pRight').value;
+        var p2TopVal = document.getElementById('p2Top').value;
+        var p2BottomVal = document.getElementById('p2Bottom').value;
 
-        if (size === 'Legal') {
-            styleTag.innerHTML = `
-                @page {
-                    size: legal; /* 8.5 x 14 inches */
-                    margin-top: 2in; /* 2 inch top margin on 2nd and next pages */
-                    margin-bottom: 20mm;
-                    margin-left: 20mm;
-                    margin-right: 20mm;
-                }
-                @page :first {
-                    margin-top: 90mm; /* 90mm top margin on page 1 */
-                }
-            `;
-            btnLegal.classList.add('active');
-            btnA4.classList.remove('active');
-            sizeText.innerText = 'Legal Paper Size (8.5 × 14 in / 215.9 × 355.6 mm)';
-        } else {
-            styleTag.innerHTML = `
-                @page {
-                    size: A4;
-                    margin-top: 2in; /* 2 inch top margin on 2nd and next pages */
-                    margin-bottom: 20mm;
-                    margin-left: 20mm;
-                    margin-right: 20mm;
-                }
-                @page :first {
-                    margin-top: 90mm; /* 90mm top margin on page 1 */
-                }
-            `;
-            btnA4.classList.add('active');
-            btnLegal.classList.remove('active');
-            sizeText.innerText = 'A4 Size (Default)';
+        var p1Top = (p1TopVal || '4.50') + 'in';
+        var p1Bottom = (p1BottomVal || '1.50') + 'in';
+        var pLeft = (pLeftVal || '0.50') + 'in';
+        var pRight = (pRightVal || '0.50') + 'in';
+        var p2Top = (p2TopVal || '1.0') + 'in';
+        var p2Bottom = (p2BottomVal || '1.50') + 'in';
+
+        var sizeStr = '8.05in 12in';
+        if (sizeType === 'a4') sizeStr = 'A4';
+        if (sizeType === 'legal') sizeStr = 'legal';
+
+        var styleTag = document.getElementById('dynamic-stamp-style');
+        styleTag.innerHTML = `
+            @page {
+                size: ` + sizeStr + `;
+                margin-top: ` + p2Top + `;
+                margin-bottom: ` + p2Bottom + `;
+                margin-left: ` + pLeft + `;
+                margin-right: ` + pRight + `;
+            }
+            @page :first {
+                margin-top: ` + p1Top + `;
+                margin-bottom: ` + p1Bottom + `;
+            }
+        `;
+
+        var docBody = document.getElementById('docBodyContent');
+        if (docBody) {
+            docBody.style.paddingLeft = pLeft;
+            docBody.style.paddingRight = pRight;
         }
+
+        alert('✅ सेटिंग्स सफलतापूर्वक लागू और सेव कर दी गई हैं!\n(Page 1 Top: ' + p1Top + ', Page 2+ Top: ' + p2Top + ', Page 2+ Bottom: ' + p2Bottom + ')');
     }
 
     function handleShare() {
