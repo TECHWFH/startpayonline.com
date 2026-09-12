@@ -308,7 +308,6 @@
             overflow: hidden;
         }
 
-        /* ADJUSTED LABEL WIDTH FOR "पिता / पति का नाम" */
         .field-label {
             font-weight: bold;
             width: 145px;
@@ -335,6 +334,59 @@
 
         .editable-field:focus {
             background-color: #fef2f2;
+        }
+
+        /* MODAL OVERLAY FIX - STRICTLY HIDDEN UNTIL OPENED VIA JS BUTTON */
+        .modal-overlay {
+            display: none !important; /* HIDDEN BY DEFAULT ON PAGE LOAD */
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            background: rgba(0, 0, 0, 0.6) !important;
+            z-index: 99999 !important;
+            align-items: center !important;
+            justify-content: center !important;
+        }
+
+        .modal-overlay.active {
+            display: flex !important; /* SHOW ONLY WHEN ACTIVE CLASS IS ADDED */
+        }
+
+        .modal-box {
+            background: #ffffff !important;
+            border-radius: 12px !important;
+            padding: 25px !important;
+            max-width: 500px !important;
+            width: 90% !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+            position: relative !important;
+        }
+
+        .modal-title {
+            font-size: 14pt !important;
+            font-weight: 800 !important;
+            color: #003399 !important;
+            margin-bottom: 12px !important;
+        }
+
+        .modal-body {
+            font-size: 10.5pt !important;
+            color: #334155 !important;
+            line-height: 1.6 !important;
+            margin-bottom: 18px !important;
+        }
+
+        .modal-close-btn {
+            background: #003399 !important;
+            color: #fff !important;
+            border: none !important;
+            padding: 8px 18px !important;
+            border-radius: 6px !important;
+            font-weight: bold !important;
+            cursor: pointer !important;
+            float: right !important;
         }
 
         @media print {
@@ -530,7 +582,6 @@
                     <span class="colon-symbol">:</span>
                     <span class="editable-field" contenteditable="true">श्रीमती राधा डेमो</span>
                 </div>
-                <!-- UPDATED LABEL: पिता / पति का नाम -->
                 <div class="field-row">
                     <span class="field-label">पिता / पति का नाम</span>
                     <span class="colon-symbol">:</span>
@@ -593,8 +644,8 @@
 
 </div>
 
-<!-- MODALS -->
-<div id="termsModal" class="modal-overlay">
+<!-- POPUP MODALS WITH STRICT DISPLAY & JAVASCRIPT TOGGLE LOGIC -->
+<div id="termsModal" class="modal-overlay no-print">
     <div class="modal-box">
         <div class="modal-title">⚖️ नियम और शर्तें (Terms & Conditions)</div>
         <div class="modal-body">
@@ -606,7 +657,7 @@
     </div>
 </div>
 
-<div id="creditModal" class="modal-overlay">
+<div id="creditModal" class="modal-overlay no-print">
     <div class="modal-box">
         <div class="modal-title">📊 Check Your Credit Score</div>
         <div class="modal-body">
@@ -674,12 +725,19 @@
         }
     }
 
+    // FIXED MODAL FUNCTIONALITY - ADD & REMOVE ACTIVE CLASS STRICTLY
     function openModal(id) {
-        document.getElementById(id).style.display = 'flex';
+        var modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.add('active');
+        }
     }
 
     function closeModal(id) {
-        document.getElementById(id).style.display = 'none';
+        var modal = document.getElementById(id);
+        if (modal) {
+            modal.classList.remove('active');
+        }
     }
 </script>
 
