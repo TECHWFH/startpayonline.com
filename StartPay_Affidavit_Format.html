@@ -153,10 +153,16 @@
         .btn-purple { color: #6b21a8; border-color: #d8b4fe; }
         .btn-red { color: #b91c1c; border-color: #fca5a5; }
         
-        .btn-solid-blue {
-            background: #0052cc !important;
-            color: #ffffff !important;
-            border-color: #0052cc !important;
+        .credit-score-btn {
+            background: linear-gradient(135deg, #0057B8, #003C9E) !important;
+            color: #FFFFFF !important;
+            border: 1.5px solid #60A5FA !important;
+            box-shadow: 0 4px 15px rgba(0, 87, 184, 0.35) !important;
+            font-weight: 900 !important;
+        }
+        .credit-score-btn:hover {
+            background: linear-gradient(135deg, #00479A, #002D9C) !important;
+            transform: translateY(-2px) !important;
         }
 
         .btn-download {
@@ -336,143 +342,316 @@
             background-color: #fef2f2;
         }
 
-        /* MODAL OVERLAY FIX - STRICTLY HIDDEN UNTIL OPENED VIA JS BUTTON */
-        .modal-overlay {
-            display: none !important; /* HIDDEN BY DEFAULT ON PAGE LOAD */
+        /* GENERAL MODAL OVERLAY */
+        .modal {
+            display: none !important;
             position: fixed !important;
-            top: 0 !important;
-            left: 0 !important;
-            width: 100vw !important;
-            height: 100vh !important;
+            inset: 0 !important;
             background: rgba(0, 0, 0, 0.6) !important;
             z-index: 99999 !important;
             align-items: center !important;
             justify-content: center !important;
+            padding: 15px !important;
         }
 
-        .modal-overlay.active {
-            display: flex !important; /* SHOW ONLY WHEN ACTIVE CLASS IS ADDED */
+        .modal.show {
+            display: flex !important;
         }
 
         .modal-box {
             background: #ffffff !important;
-            border-radius: 12px !important;
-            padding: 25px !important;
-            max-width: 500px !important;
-            width: 90% !important;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important;
+            border-radius: 18px !important;
+            padding: 20px !important;
+            max-width: 600px !important;
+            width: 100% !important;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25) !important;
             position: relative !important;
+            max-height: 90vh !important;
+            overflow: auto !important;
         }
 
-        .modal-title {
-            font-size: 14pt !important;
-            font-weight: 800 !important;
-            color: #003399 !important;
-            margin-bottom: 12px !important;
+        .modal-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
-        .modal-body {
-            font-size: 10.5pt !important;
-            color: #334155 !important;
-            line-height: 1.6 !important;
-            margin-bottom: 18px !important;
-        }
-
-        .modal-close-btn {
-            background: #003399 !important;
-            color: #fff !important;
-            border: none !important;
-            padding: 8px 18px !important;
-            border-radius: 6px !important;
-            font-weight: bold !important;
-            cursor: pointer !important;
-            float: right !important;
-        }
-
-        @media print {
-            body {
-                background-color: transparent;
-            }
-            .container {
-                box-shadow: none;
-                padding: 0;
-                max-width: 100%;
-            }
-            .no-print, .branding-header, .disclaimer-container, .control-panel, .buttons-grid-header, .modal-overlay {
-                display: none !important;
-            }
-            .field-row {
-                border-bottom: 1px dotted #000000 !important;
-            }
-            .colon-symbol {
-                color: #000000 !important;
-            }
-            .editable-field {
-                color: #000000 !important;
-            }
-        }
-
-        .doc-body {
-            background: #ffffff;
-            transition: padding 0.3s ease;
-        }
-
-        .header-title {
-            text-align: center;
+        .close-btn {
+            border: none;
+            background: #EEEEEE;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
             font-weight: bold;
-            font-size: 16pt;
-            margin-bottom: 20px;
-            text-decoration: underline;
         }
 
-        .point-block {
-            margin-bottom: 16px;
-            text-align: justify;
-        }
-
-        .field-list {
-            margin-top: 12px;
-            margin-left: 10px;
-        }
-
-        .footer-section {
-            margin-top: 40px;
+        /* CREDIT SCORE ADVANCED STYLES */
+        .credit-modal-box {
+            position: relative;
+            background: #FFFFFF;
             width: 100%;
-            page-break-inside: avoid;
+            max-width: 980px;
+            max-height: 94vh;
+            overflow: auto;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,.25);
         }
 
-        .date-location-block {
-            float: left;
-            font-size: 13pt;
-            font-weight: bold;
-            margin-top: 25px;
-            line-height: 2.0;
+        .credit-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 20;
+            width: 40px;
+            height: 40px;
+            border: 0;
+            border-radius: 50%;
+            background: #FF0000;
+            color: #FFFFFF;
+            font-size: 28px;
+            line-height: 1;
+            font-weight: 900;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,.18);
         }
 
-        .signature-box {
-            float: right;
-            text-align: center;
-            width: 260px;
+        .credit-modal-close:hover {
+            transform: scale(1.05);
         }
 
-        .signature-space {
-            height: 50px;
+        .credit-demo {
+            display: grid;
+            grid-template-columns: 34% 66%;
+            min-height: 520px;
         }
 
-        .signature-title {
-            font-weight: bold;
-            font-size: 13pt;
+        .credit-info {
+            background: linear-gradient(145deg, #0068D8, #003C9E);
+            color: #FFFFFF;
+            padding: 34px 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
 
-        .signature-subtitle {
-            font-size: 11pt;
+        .credit-info h2 {
+            margin: 0 0 10px;
+            font-size: 28px;
+            line-height: 1.15;
+            color: #FFF;
+        }
+
+        .startpay-demo-label {
+            display: inline-block;
+            margin: 0 0 12px;
+            background: #FF0000;
+            color: #FFFFFF;
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 900;
+        }
+
+        .credit-info p {
+            margin: 0 0 22px;
+            line-height: 1.55;
+            font-size: 13px;
+        }
+
+        .credit-points {
+            display: grid;
+            gap: 12px;
+        }
+
+        .credit-point {
+            background: rgba(255,255,255,.12);
+            border: 1px solid rgba(255,255,255,.18);
+            border-radius: 12px;
+            padding: 11px 12px;
+            font-size: 13px;
+        }
+
+        .credit-secure {
+            font-size: 11px;
+            opacity: .9;
+            border-top: 1px solid rgba(255,255,255,.2);
+            padding-top: 15px;
+        }
+
+        .credit-form {
+            padding: 30px;
+        }
+
+        .credit-form-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .credit-form-head h3 {
+            margin: 0 0 5px;
+            font-size: 24px;
+            color: #111;
+        }
+
+        .credit-form-head p {
+            margin: 0;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .credit-demo-badge {
+            background: #EAF2FF;
+            color: #0057B8;
+            border: 1px solid #C9DFFF;
+            padding: 7px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .credit-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .credit-field.full {
+            grid-column: 1 / -1;
+        }
+
+        .credit-field label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 13px;
+            font-weight: 800;
             color: #333;
         }
 
-        .clearfix::after {
-            content: "";
-            clear: both;
-            display: table;
+        .credit-field input {
+            min-height: 44px;
+            padding: 8px 12px;
+            border: 1.5px solid #CBD5E1;
+            border-radius: 8px;
+            font-size: 13px;
+            width: 100%;
+        }
+
+        .gender-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .gender-option {
+            position: relative;
+        }
+
+        .gender-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .gender-option span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 44px;
+            border: 1.5px solid #CBD5E1;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            background: #FFFFFF;
+        }
+
+        .gender-option input:checked + span {
+            border-color: #0057B8;
+            background: #EAF2FF;
+            color: #0057B8;
+        }
+
+        .credit-consent {
+            margin-top: 16px;
+            padding: 12px;
+            border-radius: 10px;
+            background: #F7F9FC;
+            border: 1px solid #E3E8F0;
+            font-size: 11px;
+            line-height: 1.5;
+            color: #555;
+        }
+
+        .credit-consent input {
+            width: auto;
+            min-height: auto;
+            margin-right: 6px;
+        }
+
+        .credit-submit {
+            width: 100%;
+            border: 0;
+            border-radius: 11px;
+            min-height: 48px;
+            margin-top: 14px;
+            background: #0057B8;
+            color: #FFFFFF;
+            font-weight: 900;
+            cursor: pointer;
+            font-size: 15px;
+            transition: background 0.2s;
+        }
+
+        .credit-submit:hover {
+            background: #00479A;
+        }
+
+        .credit-demo-note {
+            text-align: center;
+            margin: 9px 0 0;
+            font-size: 10px;
+            color: #777;
+        }
+
+        @media print {
+            body { background-color: transparent; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; }
+            .no-print, .branding-header, .disclaimer-container, .control-panel, .buttons-grid-header, .modal { display: none !important; }
+            .field-row { border-bottom: 1px dotted #000000 !important; }
+            .colon-symbol { color: #000000 !important; }
+            .editable-field { color: #000000 !important; }
+        }
+
+        .doc-body { background: #ffffff; transition: padding 0.3s ease; }
+        .header-title { text-align: center; font-weight: bold; font-size: 16pt; margin-bottom: 20px; text-decoration: underline; }
+        .point-block { margin-bottom: 16px; text-align: justify; }
+        .field-list { margin-top: 12px; margin-left: 10px; }
+        .footer-section { margin-top: 40px; width: 100%; page-break-inside: avoid; }
+        .date-location-block { float: left; font-size: 13pt; font-weight: bold; margin-top: 25px; line-height: 2.0; }
+        .signature-box { float: right; text-align: center; width: 260px; }
+        .signature-space { height: 50px; }
+        .signature-title { font-weight: bold; font-size: 13pt; }
+        .signature-subtitle { font-size: 11pt; color: #333; }
+        .clearfix::after { content: ""; clear: both; display: table; }
+
+        @media(max-width:700px){
+            .credit-modal-box { max-height: 96vh; border-radius: 15px; }
+            .credit-demo { grid-template-columns: 1fr; }
+            .credit-info { padding: 22px 18px; }
+            .credit-info h2 { font-size: 22px; }
+            .credit-form { padding: 20px 16px 22px; }
+            .credit-grid { grid-template-columns: 1fr; }
+            .credit-field.full { grid-column: auto; }
         }
     </style>
 </head>
@@ -502,9 +681,11 @@
             <button class="btn btn-blue" onclick="handleShare()">📤 Auto Share</button>
             <a href="https://api.whatsapp.com/send?phone=919340726600&text=Please%20Call%20Me%20Back%20regarding%20StartPay%20Legal%20Solutions" target="_blank" class="btn-link btn-purple">📲 WhatsApp Callback Share</a>
             <a href="tel:9340726600" class="btn-link btn-green">📞 Call Now</a>
-            <button class="btn btn-red" onclick="openModal('termsModal')">⚖️ Terms (नियम और शर्तें लागू)</button>
+            <button class="btn btn-red" onclick="openTerms()">⚖️ Terms (नियम और शर्तें लागू)</button>
             <a href="https://startpayonline.com/" target="_blank" class="btn-link btn-blue">🌐 Website</a>
-            <button class="btn btn-solid-blue" onclick="openModal('creditModal')">📊 Check your Credit Score</button>
+            
+            <!-- CREDIT SCORE BUTTON TRIGGER -->
+            <button class="btn credit-score-btn" onclick="handleCreditScoreTabClick()">📊 Check your Credit Score</button>
         </div>
     </div>
 
@@ -644,30 +825,115 @@
 
 </div>
 
-<!-- POPUP MODALS WITH STRICT DISPLAY & JAVASCRIPT TOGGLE LOGIC -->
-<div id="termsModal" class="modal-overlay no-print">
+<!-- TERMS MODAL -->
+<div id="termsModal" class="modal no-print">
     <div class="modal-box">
-        <div class="modal-title">⚖️ नियम और शर्तें (Terms & Conditions)</div>
-        <div class="modal-body">
+        <div class="modal-head">
+            <h2 style="font-size:14pt; font-weight:800; color:#003399; margin:0;">⚖️ नियम और शर्तें (Terms & Conditions)</h2>
+            <button type="button" class="close-btn" onclick="closeModal('termsModal')">×</button>
+        </div>
+        <div style="font-size:10.5pt; color:#334155; line-height:1.6; margin-bottom:18px;">
             1. यह फ़ॉर्मेट केवल उपयोगकर्ताओं के सुगम संपादन और त्वरित दस्तावेज़ीकरण सहायता के लिए प्रदान किया गया है।<br>
             2. किसी भी प्रकार की गलत जानकारी या अनधिकृत उपयोग के लिए प्रयोक्ता स्वयं जिम्मेदार होंगे।<br>
             3. प्रिंट निकालते समय 4.50" स्टैम्प गैप मार्जिन और दूसरे पेज पर 1-इंच मार्जिन का ध्यान रखें।
         </div>
-        <button class="modal-close-btn" onclick="closeModal('termsModal')">बंद करें</button>
     </div>
 </div>
 
-<div id="creditModal" class="modal-overlay no-print">
-    <div class="modal-box">
-        <div class="modal-title">📊 Check Your Credit Score</div>
-        <div class="modal-body">
-            StartPay Legal & Finance Portal (<a href="https://startpayonline.com/" target="_blank">startpayonline.com</a>) के क्रेडिट चेक पोर्टल से जोड़ा जा रहा है। सहायता हेतु कॉल करें: <strong>9340726600</strong>
+<!-- WORKING CREDIT SCORE ENQUIRY MODAL (EXACT SAME AS YOUR SPECIFIED FORM) -->
+<div class="modal no-print" id="creditScoreModal">
+    <div class="credit-modal-box">
+        <button type="button" class="credit-modal-close" onclick="closeCreditScoreDemo()" aria-label="Close Credit Score form">×</button>
+        <div class="credit-demo">
+            <div class="credit-info">
+                <div>
+                    <h2>Check your Credit Score</h2>
+                    <div class="startpay-demo-label">Demo only - StartPay</div>
+                    <p>Demo only — StartPay credit-score enquiry form. Fill in your details for WhatsApp enquiry and authorised next-step processing.</p>
+
+                    <div class="credit-points">
+                        <div class="credit-point">✓ Free enquiry demo</div>
+                        <div class="credit-point">✓ No score impact from this demo form</div>
+                        <div class="credit-point">✓ Simple and secure information flow</div>
+                    </div>
+                </div>
+                <div class="credit-secure">🔒 Demo only - StartPay · PAN is collected for KYC / CIBIL Verification & Income Tax Compliance.</div>
+            </div>
+
+            <div class="credit-form">
+                <div class="credit-form-head">
+                    <div>
+                        <h3>Tell us about you</h3>
+                        <p>Enter your details for a StartPay credit-score enquiry.</p>
+                    </div>
+                    <span class="credit-demo-badge">Demo only - StartPay</span>
+                </div>
+
+                <form id="creditScoreForm" onsubmit="submitCreditScoreDemo(event)">
+                    <div class="credit-grid">
+                        <div class="credit-field">
+                            <label for="creditFirstName">First Name <span style="color:red;">*</span></label>
+                            <input id="creditFirstName" name="firstName" type="text" autocomplete="off" required placeholder="Enter first name">
+                        </div>
+
+                        <div class="credit-field">
+                            <label for="creditLastName">Last Name <span style="color:red;">*</span></label>
+                            <input id="creditLastName" name="lastName" type="text" autocomplete="off" required placeholder="Enter last name">
+                        </div>
+
+                        <div class="credit-field full">
+                            <label>Gender <span style="color:red;">*</span></label>
+                            <div class="gender-row">
+                                <label class="gender-option"><input type="radio" name="gender" value="Male" required><span>Male</span></label>
+                                <label class="gender-option"><input type="radio" name="gender" value="Female"><span>Female</span></label>
+                                <label class="gender-option"><input type="radio" name="gender" value="Other"><span>Other</span></label>
+                            </div>
+                        </div>
+
+                        <div class="credit-field full">
+                            <label for="creditPhone">Phone Number <span style="color:red;">*</span></label>
+                            <input id="creditPhone" name="phone" type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" autocomplete="off" required placeholder="Enter 10-digit mobile number">
+                        </div>
+
+                        <div class="credit-field">
+                            <label for="creditDob">Date of Birth <span style="color:red;">*</span></label>
+                            <input id="creditDob" name="dob" type="date" required>
+                        </div>
+
+                        <div class="credit-field">
+                            <label for="creditPin">Pin Code <span style="color:red;">*</span></label>
+                            <input id="creditPin" name="pin" type="text" inputmode="numeric" maxlength="6" pattern="[0-9]{6}" autocomplete="off" required placeholder="Enter 6-digit PIN code">
+                        </div>
+
+                        <div class="credit-field full">
+                            <label for="creditPan">PAN Card <span style="color:red;">*</span> <small>(Mandatory / अनिवार्य)</small></label>
+                            <input id="creditPan" name="pan" type="text" maxlength="10" minlength="10" pattern="[A-Za-z]{5}[0-9]{4}[A-Za-z]{1}" autocomplete="off" required placeholder="Enter 10-digit PAN">
+                            <small style="display:block;margin-top:5px;color:#666;font-size:11px;">For KYC, CIBIL Verification & Income Tax Compliance</small>
+                        </div>
+
+                        <div class="credit-field full">
+                            <label for="creditEmail">Personal Email Id <small>(optional)</small></label>
+                            <input id="creditEmail" name="email" type="email" autocomplete="off" placeholder="Enter personal email">
+                        </div>
+                    </div>
+
+                    <div class="credit-consent">
+                        <label><input type="checkbox" id="creditConsent" required> I understand this is a StartPay demo form. My entered enquiry details, including PAN, may be sent to StartPay on WhatsApp, and the authorised credit-score link will open after submission.</label>
+                    </div>
+
+                    <button class="credit-submit" type="submit">📲 Submit → WhatsApp + Open Link</button>
+                    <p class="credit-demo-note">Demo only - StartPay · No credit report is fetched by this HTML form.</p>
+                </form>
+            </div>
         </div>
-        <button class="modal-close-btn" onclick="closeModal('creditModal')">बंद करें</button>
     </div>
 </div>
 
 <script>
+    const WHATSAPP_NUMBER = "919340726600";
+    const CREDIT_SCORE_LINK = "https://www.creditmantri.com/o2o/?utm_term=O2O-Agent&utm_source=o2o_commonwealth&dsa_name=Raikiosk_Rai_137";
+    let creditScoreSubmitted = false;
+
     function applyCustomSettings() {
         var sizeType = document.getElementById('selPaperSize').value;
         var p1TopVal = document.getElementById('p1Top').value;
@@ -709,7 +975,7 @@
             docBody.style.paddingRight = pRight;
         }
 
-        alert('✅ सेटिंग्स सफलतापूर्वक लागू और सेव कर दी गई हैं!\n(Page 1 Top: ' + p1Top + ', Page 2+ Top: ' + p2Top + ', Page 2+ Bottom: ' + p2Bottom + ')');
+        alert('✅ सेटिंग्स सफलतापूर्वक लागू और सेव कर दी गई हैं!');
     }
 
     function handleShare() {
@@ -725,20 +991,83 @@
         }
     }
 
-    // FIXED MODAL FUNCTIONALITY - ADD & REMOVE ACTIVE CLASS STRICTLY
-    function openModal(id) {
-        var modal = document.getElementById(id);
-        if (modal) {
-            modal.classList.add('active');
-        }
+    function openTerms() {
+        document.getElementById('termsModal').classList.add('show');
     }
 
     function closeModal(id) {
-        var modal = document.getElementById(id);
-        if (modal) {
-            modal.classList.remove('active');
-        }
+        document.getElementById(id).classList.remove('show');
     }
+
+    /* CREDIT SCORE MODAL HANDLERS */
+    function openCreditScoreDemo(){
+        document.getElementById("creditScoreModal").classList.add("show");
+        document.body.style.overflow = "hidden";
+    }
+
+    function closeCreditScoreDemo(){
+        document.getElementById("creditScoreModal").classList.remove("show");
+        document.body.style.overflow = "";
+    }
+
+    function handleCreditScoreTabClick(){
+        if(creditScoreSubmitted){
+            window.open(CREDIT_SCORE_LINK, "_blank", "noopener,noreferrer");
+            return;
+        }
+        openCreditScoreDemo();
+    }
+
+    function submitCreditScoreDemo(e){
+        e.preventDefault();
+
+        const panInput = document.getElementById("creditPan");
+        if(panInput){ panInput.value = panInput.value.trim().toUpperCase(); }
+
+        const form = document.getElementById("creditScoreForm");
+        if(!form.checkValidity()){
+            form.reportValidity();
+            return;
+        }
+
+        const firstName = document.getElementById("creditFirstName").value.trim();
+        const lastName = document.getElementById("creditLastName").value.trim();
+        const gender = document.querySelector('input[name="gender"]:checked')?.value || "Not provided";
+        const phone = document.getElementById("creditPhone").value.trim();
+        const dob = document.getElementById("creditDob").value;
+        const pin = document.getElementById("creditPin").value.trim();
+        const pan = document.getElementById("creditPan").value.trim().toUpperCase();
+        const email = document.getElementById("creditEmail").value.trim();
+
+        const message = `📊 *StartPay Credit Score Enquiry*\n\n*Demo only - StartPay*\n\n*Name:* ${firstName} ${lastName}\n*Gender:* ${gender}\n*Mobile:* ${phone}\n*Date of Birth:* ${dob || "Not provided"}\n*PAN Card:* ${pan}\n*PIN Code:* ${pin}\n*Email:* ${email || "Not provided"}\n\nPlease assist with my credit score enquiry.`;
+
+        const whatsappUrl = "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message);
+
+        creditScoreSubmitted = true;
+
+        window.open(whatsappUrl, "_blank", "noopener,noreferrer");
+
+        setTimeout(function(){
+            window.open(CREDIT_SCORE_LINK, "_blank", "noopener,noreferrer");
+        }, 450);
+
+        closeCreditScoreDemo();
+
+        alert("Demo enquiry WhatsApp पर भेजी गई है। अब Credit Score link भी खोला जा रहा है।");
+    }
+
+    document.getElementById("creditScoreModal").addEventListener("click", function(e){
+        if(e.target === this){
+            closeCreditScoreDemo();
+        }
+    });
+
+    document.addEventListener("keydown", function(e){
+        if(e.key === "Escape"){
+            closeCreditScoreDemo();
+            closeModal('termsModal');
+        }
+    });
 </script>
 
 </body>
