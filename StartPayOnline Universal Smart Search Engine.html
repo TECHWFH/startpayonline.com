@@ -1,0 +1,818 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StartPayOnline Master Payout Engine & Dynamic Admin Directory</title>
+<style>
+:root{--b:#002D9C;--g:#00A825;--r:#FF0000;--d:#111;--bg:#f5f7fb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--d);font:14px Inter,Arial,sans-serif}
+.wrap{max-width:1700px;margin:auto}
+.brand-header{background:linear-gradient(135deg,#002D9C,#174dcc);color:#fff;padding:20px 16px;text-align:center;position:relative}
+.brand-header h1{margin:0;font:800 24px Poppins,Arial}
+.brand-header h2{margin:6px 0;font-size:18px}
+.brand-header p{margin:6px 0}
+.blessing-text{color:#FF0000;background:#fff;display:inline-block;padding:5px 14px;border-radius:999px;font-weight:900;margin-top:7px}
+
+/* TOP NAV CONTROLS */
+.header-top-nav { display: flex; justify-content: flex-end; gap: 8px; max-width: 1700px; margin: 0 auto 10px auto; flex-wrap:wrap; }
+.btn-nav-top { background: rgba(255, 255, 255, 0.18); color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.4); padding: 7px 14px; border-radius: 99px; font-weight: 800; font-size: 12px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s ease-in-out; }
+.btn-nav-top:hover { background: #ffffff; color: #002D9C; border-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+.btn-add-rule { background: #00A825 !important; color: #fff !important; border-color: #00A825 !important; }
+.btn-add-rule:hover { background: #087b2a !important; }
+
+.action-toolbar{background:#fff;border-bottom:1px solid #ddd}
+.toolbar-inner{display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px;align-items:center}
+.btn-action{padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:800;border:1px solid #d5dae3;cursor:pointer;display:inline-flex;align-items:center;gap:4px;font-size:12px}
+.bg-home{background:#002D9C;color:#fff;border-color:#002D9C}
+.bg-refresh{background:#00A825;color:#fff;border-color:#00A825}
+.bg-print{background:#eef3ff;color:#002D9C}
+.bg-wa{background:#eaf8ed;color:#087b2a}
+.bg-share{background:#f3f4f6;color:#111}
+.bg-call{background:#fff0f0;color:#c00}
+.bg-terms{background:#fff8df;color:#765500}
+.bg-web{background:#eefaf1;color:#087b2a}
+.bg-cibil{background:#f2efff;color:#5b35b1}
+
+.engine-head{display:flex;justify-content:space-between;align-items:center;padding:18px 16px 8px}
+.engine-title{font-size:22px;font-weight:900;color:#002D9C}
+.engine-sub{color:#667085}
+.live{font-weight:900;color:#00A825}
+.bar{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #ddd;padding:12px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.controls input,.controls select{padding:9px 12px;border:1px solid #ccd2dc;border-radius:99px;background:#fff;font-size:12px}
+.controls input{flex:1;min-width:220px}
+.filter-stats{font-size:12px;font-weight:700;color:#002D9C;margin-left:auto;display:flex;gap:12px;align-items:center}
+.btn-reset{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:7px 13px;border-radius:99px;cursor:pointer;font-weight:800;font-size:12px}
+
+.amount-box{background:#fff;border:1px solid #e1e5eb;border-radius:12px;padding:12px 16px;margin:14px 0}
+.amounts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.amounts button,.amounts input{padding:8px 11px;border:1px solid #ccd2dc;border-radius:8px;background:#fff;font-weight:700;font-size:12px}
+.calc-line{margin-top:8px;color:#667085;font-size:13px}
+.calc-line b{color:#002D9C}
+
+.compare-screen-box{background:#fff;border:1px solid #cbd5e1;border-radius:12px;padding:15px;margin-bottom:20px;overflow:auto}
+.compare-table{width:100%;border-collapse:collapse;text-align:center;font-size:11px}
+.compare-table th,.compare-table td{border:1px solid #000;padding:6px 6px;vertical-align:middle}
+.compare-table th{background:#002D9C;color:#fff;font-weight:800;white-space:nowrap}
+.btn-copy{background:#f1f5f9;border:1px solid #cbd5e1;padding:2px 5px;border-radius:4px;font-size:10px;cursor:pointer;color:#334155;margin-left:2px;font-weight:700}
+.btn-delete{background:#fee2e2;border:1px solid #fca5a5;color:#991b1b;padding:2px 6px;border-radius:4px;font-size:10px;cursor:pointer;margin-top:4px;font-weight:700;}
+
+/* BRAND TOOLTIP STYLING */
+.brand-tooltip { position: relative; display: inline-block; cursor: pointer; font-weight: 800; color: var(--b); }
+.brand-tooltip .tooltip-text { visibility: hidden; width: 220px; background-color: #1e293b; color: #fff; text-align: center; border-radius: 6px; padding: 6px 8px; position: absolute; z-index: 10; bottom: 125%; left: 50%; margin-left: -110px; opacity: 0; transition: opacity 0.2s; font-size: 11px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+.brand-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+
+/* RANK BADGES */
+.rank-badge { display: inline-block; padding: 3px 8px; border-radius: 99px; font-weight: 900; font-size: 10px; }
+.rank-1 { background: #fef08a; color: #854d0e; border: 1px solid #eab308; }
+.rank-2 { background: #e2e8f0; color: #334155; border: 1px solid #94a3b8; }
+.rank-3 { background: #ffedd5; color: #9a3412; border: 1px solid #f97316; }
+.btn-ad { background: #15803d; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 11px; text-decoration:none; display:inline-block; }
+
+/* MODAL FORM STYLING */
+.modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 999; display: none; justify-content: center; align-items: center; }
+.modal-card { background: #fff; padding: 24px; border-radius: 12px; max-width: 750px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+.modal-card h3 { margin-top: 0; color: #002D9C; border-bottom: 2px solid #002D9C; padding-bottom: 8px; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.form-group { display: flex; flex-direction: column; gap: 4px; }
+.form-group.full { grid-column: span 2; }
+.form-group label { font-size: 11px; font-weight: 800; color: #334155; }
+.form-group input, .form-group select, .form-group textarea { padding: 8px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; }
+.modal-actions { margin-top: 18px; display: flex; justify-content: flex-end; gap: 10px; }
+.btn-save { background: #00A825; color: #fff; border: none; padding: 9px 18px; border-radius: 6px; font-weight: 800; cursor: pointer; }
+.btn-cancel { background: #64748b; color: #fff; border: none; padding: 9px 18px; border-radius: 6px; font-weight: 800; cursor: pointer; }
+
+footer{text-align:center;margin-top:30px;padding:18px;background:#fff;border-top:1px solid #ddd;font-weight:900;color:#FF0000}
+footer small{display:block;color:#667085;margin-top:5px;font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="brand-header">
+  <div class="header-top-nav">
+    <a href="https://startpayonline.com/" class="btn-nav-top" title="Go to Home Portal">🏠 Home</a>
+    <button onclick="window.location.reload()" class="btn-nav-top" title="Refresh Application">🔄 Refresh Page</button>
+    <button onclick="openRuleModal()" class="btn-nav-top btn-add-rule">➕ Add / Edit Rule &amp; Payout</button>
+    <button onclick="exportJSON()" class="btn-nav-top" style="background:#475569;">📥 Backup Data</button>
+    <label class="btn-nav-top" style="background:#1e293b; cursor:pointer;">
+      📤 Restore Backup <input type="file" id="importFile" accept=".json" style="display:none" onchange="importJSON(event)">
+    </label>
+  </div>
+  <div class="wrap">
+    <h1>StartPay Legal &amp; Finance IT Solutions</h1>
+    <h2>StartPayOnline Master Payout Engine &amp; Bank Directory</h2>
+    <p><a href="https://wa.me/9340726600?text=Hello%20Anurag%20Rai" target="_blank" style="color:#fff;text-decoration:underline;">by Anurag Rai | ☎ 9340726600</a></p>
+    <div class="blessing-text">!! शुभ शुरुआत स्टार्ट पे के साथ !!</div>
+  </div>
+</header>
+
+<div class="action-toolbar">
+  <div class="wrap toolbar-inner">
+    <a href="https://startpayonline.com/" class="btn-action bg-home">🏠 Home</a>
+    <button onclick="window.location.reload()" class="btn-action bg-refresh">🔄 Refresh</button>
+    <button onclick="window.print()" class="btn-action bg-print">🖨️ Print PDF</button>
+    <a href="https://wa.me/9340726600?text=Hello%20StartPay,%20I%20need%20loan%20assistance" target="_blank" class="btn-action bg-wa">💬 WhatsApp Help</a>
+    <button onclick="copyShare()" class="btn-action bg-share">📤 Auto Share</button>
+    <button onclick="callbackShare()" class="btn-action bg-wa">📲 WhatsApp Callback Share</button>
+    <a href="tel:9340726600" class="btn-action bg-call">📞 Call Now</a>
+    <button onclick="showTerms()" class="btn-action bg-terms">⚖ Terms</button>
+    <a href="https://startpayonline.com/" target="_blank" class="btn-action bg-web">🌐 Website</a>
+    <a href="https://startpayonline.com/" target="_blank" class="btn-action bg-cibil">📊 Check Credit Score</a>
+    <a href="https://wa.me/9340726600?text=Enquiry%20from%20StartPay%20Portal" target="_blank" class="btn-action bg-wa">💬 WhatsApp पर Enquiry भेजें</a>
+  </div>
+</div>
+
+<div class="engine-head wrap">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0 8px;width:100%;">
+    <div>
+      <div class="engine-title">StartPayOnline Universal Smart Search Engine</div>
+      <div class="engine-sub">Master Bank Directory • Cross-Mapping • Token Match</div>
+    </div>
+    <span class="live" style="color:#00A825;font-weight:900;">● LIVE CALCULATION</span>
+  </div>
+</div>
+
+<div class="bar">
+  <div class="wrap controls">
+    <input id="q" placeholder="Universal Search (e.g. SBI HL, PNB LAP, HERO HFC, Urban Money, Finwizz)...">
+    <select id="pr">
+      <option value="">All Products</option>
+    </select>
+    <select id="bankCategory">
+      <option value="">All Institution Categories</option>
+      <option value="PSB">Public Sector Banks (PSB)</option>
+      <option value="Private">Domestic Private Sector Banks</option>
+      <option value="SFB">Small Finance Banks (SFB)</option>
+      <option value="RRB">Regional Rural Banks (RRB)</option>
+      <option value="Foreign">Foreign Banks Operating in India</option>
+      <option value="Cooperative">State Co-operative Banks</option>
+      <option value="NBFC">NBFCs (Non-Banking Finance Co.)</option>
+      <option value="HFC">Housing Finance Companies (HFC)</option>
+      <option value="Rule">Master Rules</option>
+    </select>
+    <select id="bank"><option value="">All Lenders / Institutions</option></select>
+    <select id="ch">
+      <option value="">All Channels</option>
+      <option value="DSA">DSA - Direct Selling Agent</option>
+      <option value="DMA">DMA - Direct Marketing Agent</option>
+      <option value="Referral">Referral - Referral Partner</option>
+      <option value="Direct Agent">Direct Agent (DA)</option>
+      <option value="Direct">Direct - Direct Sourcing</option>
+      <option value="RM">RM - Relationship Manager</option>
+    </select>
+    <select id="source">
+      <option value="">All Sources</option>
+    </select>
+    <select id="login">
+      <option value="">All Login Types</option>
+      <option>DSA Login</option>
+      <option>Partner Login</option>
+      <option>RM Login</option>
+      <option>Velocity App Login</option>
+    </select>
+    
+    <div class="filter-stats">
+      <span id="activeFilters">Active Filters: 0</span>
+      <span id="matchCount">Records: 0</span>
+      <button class="btn-reset" onclick="resetAllFilters()">↺ Reset All</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="amount-box">
+    <label><b>Loan Amount (For Auto Calculation)</b></label>
+    <div class="amounts">
+      <button data-amt="500000">₹5 Lakh</button>
+      <button data-amt="1000000">₹10 Lakh</button>
+      <button data-amt="2500000">₹25 Lakh</button>
+      <button data-amt="5000000">₹50 Lakh</button>
+      <button data-amt="10000000">₹1 Cr</button>
+      <button data-amt="20000000">₹2 Cr</button>
+      <input id="amount" type="number" value="500000" min="0" step="1000">
+      <button id="resetAmt">Reset Amount</button>
+    </div>
+    <div class="calc-line">Selected Amount: <b id="amtText">₹5,00,000</b></div>
+  </div>
+
+  <div class="compare-screen-box">
+    <div class="engine-title" style="font-size:16px; margin-bottom:8px;">Compare Screen &amp; Master Directory Output</div>
+    <div style="overflow:auto">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>RANK</th>
+            <th>Source / Brand</th>
+            <th>Institution &amp; Category</th>
+            <th>Product Variant</th>
+            <th>Payout %</th>
+            <th>Amount (GST Excl.)</th>
+            <th>TDS 2%</th>
+            <th>Net Payable (After TDS)</th>
+            <th>GST 18%</th>
+            <th>Amount with GST (Incl.)</th>
+            <th style="color:#a90000;">Final Payout</th>
+            <th>Login Type &amp; Code</th>
+            <th>Action / Promo</th>
+            <th>Min-Max Capping</th>
+            <th>Eligibility Terms (हिंदी)</th>
+            <th>Strategic Value (हिंदी)</th>
+            <th>Custom Notes / Rules</th>
+          </tr>
+        </thead>
+        <tbody id="compareBody">
+          <!-- Dynamic rows populated via JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- ADD / EDIT RULE MODAL WITH OTHER DROPDOWNS -->
+<div id="ruleModal" class="modal-overlay">
+  <div class="modal-card">
+    <h3>➕ Add Naya Payout Rule / Lender</h3>
+    <form id="ruleForm" onsubmit="saveNewRule(event)">
+      <div class="form-grid">
+        <div class="form-group">
+          <label>Source / Brand Name</label>
+          <select id="m_source_select" onchange="checkOtherSource(this)">
+            <option value="ApnaRupee">ApnaRupee</option>
+            <option value="StartPayOnline">StartPayOnline</option>
+            <option value="Master Rules">Master Rules</option>
+            <option value="Urban Money">Urban Money</option>
+            <option value="Andromeda">Andromeda</option>
+            <option value="Finwizz Loans">Finwizz Loans</option>
+            <option value="Digi Loans">Digi Loans</option>
+            <option value="Paisabazaar">Paisabazaar</option>
+            <option value="Other">Other (Type Manually)</option>
+          </select>
+          <input type="text" id="m_source_other" placeholder="Type custom source..." style="display:none; margin-top:5px;">
+        </div>
+
+        <div class="form-group">
+          <label>Institution / Bank Name</label>
+          <input type="text" id="m_lender" placeholder="e.g. Bajaj Housing Finance" required>
+        </div>
+
+        <div class="form-group">
+          <label>Category</label>
+          <select id="m_category">
+            <option value="NBFC">NBFC</option>
+            <option value="HFC">HFC</option>
+            <option value="PSB">PSB</option>
+            <option value="Private">Private Bank</option>
+            <option value="SFB">SFB</option>
+            <option value="RRB">RRB</option>
+            <option value="Foreign">Foreign Bank</option>
+            <option value="Cooperative">Cooperative Bank</option>
+            <option value="Rule">Master Rule</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Product Code / Variant</label>
+          <select id="m_product_select" onchange="checkOtherProduct(this)">
+            <option value="LAP">Loan Against Property [LAP]</option>
+            <option value="HL-NEW">Home Loan – New [HL-NEW]</option>
+            <option value="PL">Personal Loan [PL]</option>
+            <option value="BT">Balance Transfer [BT]</option>
+            <option value="BL-MSME">MSME Business Loan [BL-MSME]</option>
+            <option value="CC">Credit Card [CC]</option>
+            <option value="AL">Auto Loan [AL]</option>
+            <option value="Other">Other (Type Manually)</option>
+          </select>
+          <input type="text" id="m_product_other" placeholder="Type custom product..." style="display:none; margin-top:5px;">
+        </div>
+
+        <div class="form-group full">
+          <label>Payout % ya Rule Formula (Text ya %)</label>
+          <input type="text" id="m_payout" placeholder="e.g. 85% to 90% invoice value / 1.50%" required>
+        </div>
+
+        <div class="form-group">
+          <label>Login Type &amp; Channel</label>
+          <input type="text" id="m_login" placeholder="e.g. DSA Login" value="DSA Login">
+        </div>
+
+        <div class="form-group">
+          <label>DSA / Partner Code</label>
+          <input type="text" id="m_code" placeholder="e.g. 112843 / 177830">
+        </div>
+
+        <div class="form-group">
+          <label>Min-Max Capping</label>
+          <input type="text" id="m_capping" placeholder="e.g. Company Cap / Max ₹15,000 Cap">
+        </div>
+
+        <div class="form-group">
+          <label>Eligibility Terms (हिंदी)</label>
+          <input type="text" id="m_eligibility" placeholder="e.g. ₹10 लाख से अधिक के होम लोन">
+        </div>
+
+        <div class="form-group full">
+          <label>Strategic Value (हिंदी)</label>
+          <input type="text" id="m_strategic" placeholder="e.g. अफोर्डेबल होम लोन में PF 1% + BEL इंश्योरेंस">
+        </div>
+
+        <div class="form-group full">
+          <label>Custom Notes / Extra Rules</label>
+          <textarea id="m_custom" rows="2" placeholder="e.g. Koi bhi alag rule yaha add karo..."></textarea>
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" onclick="closeRuleModal()">Cancel</button>
+        <button type="submit" class="btn-save">💾 Save Rule to Browser</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<footer>
+  StartPay Legal &amp; Finance IT Solutions<br>
+  !! शुभ शुरुआत स्टार्ट पे के साथ !!
+</footer>
+
+<script>
+// 1. BRAND LEGAL MAPPING
+const LEGAL_MAP = {
+  "Finwizz Loans": "Finwizz Financial Services Private Limited",
+  "Finurl": "FINWURL ENTERPRISES PRIVATE LIMITED",
+  "ActivPaisa": "NexQred Fintech Private Limited",
+  "Yenmo": "Yenmo Technologies Private Limited",
+  "WeRize": "Wortgage Technologies Private Limited",
+  "neoFinDesk": "InvestValue Fintech Private Limited",
+  "RecurClub": "Founderlink Technologies Private Limited",
+  "Royal Finserv": "Royal Finserv Consultants Private Limited",
+  "FinexCapital": "Finex capital services Private Limited",
+  "NeoGrowth": "NeoGrowth Credit Private Limited",
+  "TFS": "Thoshika Financial Services Private Limited",
+  "Finway FSC": "REYNAV CAPITAL PRIVATE LIMITED",
+  "Urban Money": "Urban Money Private Limited",
+  "Andromeda": "Andromeda Sales & Distribution Private Limited",
+  "ApnaRupee": "Apnarupee Fin India Private Limited",
+  "Digi Loans": "Star Powerz Digital Technologies Private Limited",
+  "Paisabazaar": "Paisabazaar Marketing and Consulting Private Limited",
+  "StartPayOnline": "Raikios Services Private Limited",
+  "RuLoans": "Ruloans Distribution Services Private Limited",
+  "Master Rules": "StartPay Master Policy Directive"
+};
+
+// 2. PRODUCT MASTER
+const PRODUCT_MASTER = [
+  { code:'PL', name:'Personal Loan', aliases:['pl','personal loan','personal','personal finance'] },
+  { code:'CC', name:'Credit Card', aliases:['cc','credit card','credit cards','card'] },
+  { code:'HL', name:'Home Loan', aliases:['hl','home loan','home','housing loan','fresh home loan'] },
+  { code:'HL-NEW', name:'Home Loan – New', aliases:['hl new','hl-new','home loan new','new home loan','fresh home loan'] },
+  { code:'BT', name:'Balance Transfer', aliases:['bt','balance transfer','transfer','takeover'] },
+  { code:'HL-BT', name:'Home Loan – Balance Transfer', aliases:['hl bt','hl-bt','home bt','hl balance transfer','home loan balance transfer','balance transfer home loan'] },
+  { code:'BT-TOPUP', name:'Balance Transfer with Top-Up Loan', aliases:['bt topup','bt top up','bt-topup','balance transfer topup','balance transfer with top up'] },
+  { code:'TOPUP', name:'Top-Up Loan', aliases:['topup','top up','top-up','top up loan','topup loan'] },
+  { code:'LAP', name:'Loan Against Property', aliases:['lap','loan against property','property loan','mortgage'] },
+  { code:'LRD', name:'Lease Rental Discounting', aliases:['lrd','lease rental discounting','rental discounting'] },
+  { code:'BL-MSME', name:'MSME Business Loan', aliases:['bl','business loan','business finance','msme','mnc','micro small medium enterprise loan'] },
+  { code:'SBL', name:'Small Business Loans', aliases:['sbl','small business loan','small business loans','small business finance'] },
+  { code:'AL', name:'Auto Loan', aliases:['al','auto loan','auto','car loan','car','vehicle finance'] },
+  { code:'VL', name:'Vehicle Loan', aliases:['vl','vehicle loan','vehicle finance'] },
+  { code:'CAR-NEW', name:'Car Loan - New', aliases:['new car','new car loan','car loan new','new vehicle finance'] },
+  { code:'SF', name:'School Funding', aliases:['sf','school funding','school finance'] },
+  { code:'USF', name:'Unsecured School Funding', aliases:['usf','unsecured school funding','unsecured school finance'] },
+  { code:'EQUIP', name:'Equipment Payout', aliases:['equipment payout','equipment finance','equipment loan','machinery finance'] },
+  { code:'MME', name:'Medical/Machinery Equipment', aliases:['mme','medical equipment','machinery equipment','medical machinery finance'] },
+  { code:'EL', name:'Educational Loans', aliases:['el','education loan','educational loan','educational loans','student loan'] },
+  { code:'HCV-LCV-PICKUP', name:'HCV/LCV/Pickup', aliases:['hcv','heavy commercial vehicle','lcv','light commercial vehicle','pickup','pickup finance'] },
+  { code:'HCV-LCV-SCV', name:'HCV/LCV/SCV', aliases:['hcv lcv scv','hcv','lcv','scv','small commercial vehicle','commercial vehicle'] },
+  { code:'LP', name:'Loan Protector', aliases:['lp','loan protector','loan protection'] },
+  { code:'HI', name:'Health Insurance', aliases:['hi','health insurance','medical insurance'] },
+  { code:'PI', name:'Property Insurance', aliases:['pi','property insurance','home insurance'] },
+  { code:'TI', name:'Travel Insurance', aliases:['ti','travel insurance','trip insurance'] },
+  { code:'TL', name:'TL - Terms Loan', aliases:['tl','term loan','terms loan','term loans'] },
+  { code:'LAS', name:'Loan Against Shares / Securities', aliases:['las','loan against shares','loan against securities','securities loan'] }
+];
+
+// 3. MASTER BANK DIRECTORY (200+ INSTITUTIONS)
+const BANK_MASTER = [
+  { name: "State Bank of India", category: "PSB", aliases: ["SBI", "STATE BANK", "STATE"] },
+  { name: "Bank of Baroda", category: "PSB", aliases: ["BOB", "BARODA"] },
+  { name: "Bank of India", category: "PSB" },
+  { name: "Bank of Maharashtra", category: "PSB" },
+  { name: "Canara Bank", category: "PSB" },
+  { name: "Central Bank of India", category: "PSB" },
+  { name: "Indian Bank", category: "PSB" },
+  { name: "Indian Overseas Bank", category: "PSB" },
+  { name: "Punjab & Sind Bank", category: "PSB" },
+  { name: "Punjab National Bank", category: "PSB", aliases: ["PNB", "PUNJAB NATIONAL"] },
+  { name: "UCO Bank", category: "PSB" },
+  { name: "Union Bank of India", category: "PSB" },
+  { name: "Axis Bank Limited", category: "Private", aliases: ["AXIS", "AXIS BANK"] },
+  { name: "Bandhan Bank Limited", category: "Private" },
+  { name: "CSB Bank Limited", category: "Private" },
+  { name: "City Union Bank Limited", category: "Private" },
+  { name: "DCB Bank Limited", category: "Private" },
+  { name: "Dhanlaxmi Bank Limited", category: "Private" },
+  { name: "Federal Bank Limited", category: "Private" },
+  { name: "HDFC Bank Limited", category: "Private", aliases: ["HDFC", "HDFC BANK"] },
+  { name: "ICICI Bank Limited", category: "Private", aliases: ["ICICI", "ICICI BANK"] },
+  { name: "IndusInd Bank Limited", category: "Private" },
+  { name: "IDFC FIRST Bank Limited", category: "Private" },
+  { name: "Kotak Mahindra Bank Limited", category: "Private" },
+  { name: "YES Bank Limited", category: "Private" },
+  { name: "AU Small Finance Bank Limited", category: "SFB", aliases: ["AU", "AU SFB", "AU BANK"] },
+  { name: "Equitas Small Finance Bank Limited", category: "SFB" },
+  { name: "Ujjivan Small Finance Bank Limited", category: "SFB" },
+  { name: "Madhya Pradesh Gramin Bank", category: "RRB" },
+  { name: "Standard Chartered Bank", category: "Foreign" },
+  { name: "HDB Financial Services", category: "NBFC" },
+  { name: "Hero Housing Finance", category: "HFC", aliases: ["HERO", "HERO HOUSING", "HERO HFC"] },
+  { name: "Bajaj Housing Finance", category: "NBFC" }
+];
+
+// 4. INSTITUTION ALIAS DICTIONARY
+const INST_ALIASES = {
+  'State Bank of India': ['sbi', 'state bank', 'state bank of india', 'state'],
+  'Punjab National Bank': ['pnb', 'punjab national', 'punjab national bank'],
+  'Bank of Baroda': ['bob', 'baroda', 'bank of baroda'],
+  'Hero Housing Finance': ['hero', 'hero housing', 'hero housing finance', 'hero hfc'],
+  'HDFC Bank Limited': ['hdfc', 'hdfc bank', 'hdfc bank limited'],
+  'ICICI Bank Limited': ['icici', 'icici bank'],
+  'Axis Bank Limited': ['axis', 'axis bank'],
+  'AU Small Finance Bank Limited': ['au', 'au sfb', 'au bank']
+};
+
+// 5. DEFAULT INITIAL MASTER OFFERS DATABASE
+const DEFAULT_DATA = [
+  {id:1, source:'Paisabazaar',brand:'Paisabazaar',lender:'Punjab National Bank',category:'PSB',product:'HL-NEW',productName:'Home Loan – New',channel:'DSA',code:'HLRLC3847082',payout:'0.90%',login:'DSA Login',type:'Secured',capping:'—',eligibility:'—',strategic:'—',customNote:'Standard Disbursal'},
+  {id:2, source:'ApnaRupee',brand:'ApnaRupee',lender:'Punjab National Bank',category:'PSB',product:'HL-NEW',productName:'Home Loan – New',channel:'DSA',code:'HLRLC3847082',payout:'0.80%',login:'DSA Login',type:'Secured',capping:'—',eligibility:'—',strategic:'—',customNote:'Standard Disbursal'},
+  {id:3, source:'ApnaRupee',brand:'ApnaRupee',lender:'Bajaj Housing Finance',category:'NBFC',product:'LAP',productName:'Loan Against Property [LAP]',channel:'DSA',code:'112843 / 177830',payout:'85% to 90% invoice value',login:'DSA Login',type:'Secured',capping:'Company Cap / Institution Cap',eligibility:'₹10 लाख से अधिक के PF 1% + BEL इंश्योरेंस',strategic:'अफोर्डेबल होम लोन में बिजनेस लोन में 5.13%',customNote:'Primary Priority Preferred Partner'},
+  {id:4, source:'Master Rules',brand:'Master Rules',lender:'Payout Terms & Conditions',category:'Rule',product:'LAP',productName:'Master Rules & Conditions',channel:'DSA',code:'RULE-6',payout:'PB CONNECT: HDFC LAP early pre-close/BT within 12 months can trigger 100%',login:'—',type:'Secured',capping:'Bank Policy Cap / Max ₹15,000 Cap',eligibility:'₹1 लाख से कम के यूज़्ड कार / MUV',strategic:'पर्सनल लोन में 4.04% का यूज़्ड कार में 3.25% का',customNote:'Auto Reversal Trigger Rule'},
+  {id:5, source:'Digi Loans',brand:'Digi Loans',lender:'State Bank of India',category:'PSB',product:'HL-NEW',productName:'Home Loan – New',channel:'DSA',code:'MUMHLC01023',payout:'0.60%',login:'DSA Login',type:'Secured',capping:'—',eligibility:'—',strategic:'—',customNote:'Standard Disbursal'},
+  {id:6, source:'Digi Loans',brand:'Digi Loans',lender:'HDFC Bank Limited',category:'Private',product:'PL',productName:'Personal Loan (>12.50% ROI)',channel:'DSA',code:'322186',payout:'3.04%',login:'DSA Login',type:'Unsecured',capping:'—',eligibility:'—',strategic:'—',customNote:'Standard Disbursal'}
+];
+
+function getStoredData() {
+  const local = localStorage.getItem('STARTPAY_PAYOUT_MASTER_SMART_V3');
+  if (local) {
+    try { return JSON.parse(local); } catch(e) {}
+  }
+  return DEFAULT_DATA;
+}
+
+let D = getStoredData();
+
+function saveDataToStorage() {
+  localStorage.setItem('STARTPAY_PAYOUT_MASTER_SMART_V3', JSON.stringify(D));
+}
+
+const $ = id => document.getElementById(id);
+function esc(s){ return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function copyText(txt){ navigator.clipboard?.writeText(txt).then(()=>alert('Code Copied: '+txt)).catch(()=>alert(txt)); }
+function rupee(n){ return Number(n||0).toLocaleString('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:2}); }
+
+function normalizeText(text) {
+  return String(text || '').toLowerCase().normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '').replace(/&/g, ' and ')
+    .replace(/[-_.,/()]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function getInstitutionAliases(record) {
+  const configured = INST_ALIASES[record.lender] || [];
+  const bank = BANK_MASTER.find(b => b.name === record.lender);
+  const base = [record.lender, ...(bank?.aliases || []), ...configured];
+  const generated = [];
+  base.forEach(v => {
+    const n = normalizeText(v);
+    if (n.includes(' limited')) generated.push(n.replace(/\\blimited\\b/g, '').trim());
+    if (n.includes(' ltd')) generated.push(n.replace(/\\bltd\\b/g, '').trim());
+  });
+  return [...new Set([...base, ...generated].map(normalizeText).filter(Boolean))];
+}
+
+function getProductAliases(record) {
+  const master = PRODUCT_MASTER.find(p => p.code === record.product);
+  return [...new Set([record.product, record.productName, master?.name || '', ...(master?.aliases || [])]
+    .map(normalizeText).filter(Boolean))];
+}
+
+function phraseMatches(text, aliases) {
+  const nText = normalizeText(text);
+  return aliases.some(alias => {
+    const a = normalizeText(alias);
+    return !!a && (nText === a || nText.includes(a));
+  });
+}
+
+function evaluateSmartSearch(record, rawQuery) {
+  if (!String(rawQuery || '').trim()) return { match:true, score:0 };
+  const query = normalizeText(rawQuery);
+  const tokens = query.split(' ').filter(Boolean);
+  const institutionAliases = getInstitutionAliases(record);
+  const productAliases = getProductAliases(record);
+  const otherFields = [record.category, record.channel, record.code, record.brand, record.source,
+    record.login, record.type, record.capping, record.eligibility, record.strategic, record.customNote, LEGAL_MAP[record.brand] || ''].map(normalizeText).filter(Boolean);
+
+  const categoryAliases = {
+    psb:['psb','public sector bank','public sector banks'],
+    private:['private','private bank','private sector bank'],
+    sfb:['sfb','small finance bank','small finance banks'],
+    rrb:['rrb','regional rural bank','regional rural banks','gramin bank','gramin'],
+    foreign:['foreign','foreign bank','foreign banks'],
+    cooperative:['cooperative','co operative','co operative bank','state cooperative bank'],
+    nbfc:['nbfc','non banking finance company','non banking financial company'],
+    hfc:['hfc','housing finance company','housing finance companies'],
+    rule:['rule','master rule','master rules']
+  };
+  const category = normalizeText(record.category);
+  const cats = [...(categoryAliases[category] || []), category].filter(Boolean);
+  let score = 0;
+  let satisfied = 0;
+
+  if (phraseMatches(query, institutionAliases)) score += 50;
+  if (phraseMatches(query, productAliases)) score += 50;
+
+  for (const token of tokens) {
+    let matched = false;
+    if (institutionAliases.some(a => a === token || a.startsWith(token) || token.startsWith(a) || a.split(' ').includes(token))) {
+      matched = true; score += 30;
+    }
+    if (!matched && productAliases.some(a => a === token || a.startsWith(token) || token.startsWith(a) || a.split(' ').includes(token))) {
+      matched = true; score += 30;
+    }
+    if (!matched && cats.some(a => normalizeText(a) === token || normalizeText(a).split(' ').includes(token))) {
+      matched = true; score += 20;
+    }
+    if (!matched && otherFields.some(f => f === token || f.includes(token))) {
+      matched = true; score += 10;
+    }
+    if (matched) satisfied++;
+  }
+  return { match:satisfied === tokens.length, score };
+}
+
+function openRuleModal() { $('ruleModal').style.display = 'flex'; }
+function closeRuleModal() { $('ruleModal').style.display = 'none'; }
+
+function checkOtherSource(sel) {
+  $('m_source_other').style.display = (sel.value === 'Other') ? 'block' : 'none';
+}
+function checkOtherProduct(sel) {
+  $('m_product_other').style.display = (sel.value === 'Other') ? 'block' : 'none';
+}
+
+function saveNewRule(e) {
+  e.preventDefault();
+  let src = $('m_source_select').value;
+  if(src === 'Other') src = $('m_source_other').value.trim() || 'Custom Source';
+
+  let prod = $('m_product_select').value;
+  if(prod === 'Other') prod = $('m_product_other').value.trim() || 'Custom Product';
+
+  const newRule = {
+    id: Date.now(),
+    source: src, brand: src,
+    lender: $('m_lender').value.trim(),
+    category: $('m_category').value,
+    product: prod,
+    productName: prod,
+    channel: 'DSA',
+    payout: $('m_payout').value.trim(),
+    login: $('m_login').value.trim() || 'DSA Login',
+    code: $('m_code').value.trim() || 'N/A',
+    capping: $('m_capping').value.trim() || '—',
+    eligibility: $('m_eligibility').value.trim() || '—',
+    strategic: $('m_strategic').value.trim() || '—',
+    customNote: $('m_custom').value.trim() || '—'
+  };
+
+  D.unshift(newRule);
+  saveDataToStorage();
+  closeRuleModal();
+  $('ruleForm').reset();
+  initDropdowns();
+  render();
+  alert('Rule Successfully Saved to Browser Database!');
+}
+
+function deleteRow(id) {
+  if(confirm('Kya aap is record ko delete karna chahte hain?')) {
+    D = D.filter(x => x.id !== id);
+    saveDataToStorage();
+    render();
+  }
+}
+
+function exportJSON() {
+  const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(D, null, 2));
+  const downloadAnchor = document.createElement('a');
+  downloadAnchor.setAttribute("href", dataStr);
+  downloadAnchor.setAttribute("download", "StartPay_Master_Database.json");
+  document.body.appendChild(downloadAnchor);
+  downloadAnchor.click();
+  downloadAnchor.remove();
+}
+
+function importJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    try {
+      const imported = JSON.parse(e.target.result);
+      if (Array.isArray(imported)) {
+        D = imported;
+        saveDataToStorage();
+        initDropdowns();
+        render();
+        alert('Backup Successfully Restored!');
+      } else {
+        alert('Invalid JSON File format.');
+      }
+    } catch(err) {
+      alert('Error reading JSON file.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+function populateSourcesDropdown() {
+  const sourceSelect = $('source');
+  sourceSelect.innerHTML = '<option value="">All Sources</option>';
+  const uniqueSources = [...new Set([...Object.keys(LEGAL_MAP), ...D.map(x => x.source)])].sort();
+  uniqueSources.forEach(brand => {
+    const opt = document.createElement('option');
+    opt.value = brand;
+    opt.textContent = brand;
+    sourceSelect.appendChild(opt);
+  });
+}
+
+function populateLendersDropdown() {
+  const selectedCat = $('bankCategory').value;
+  const bankSelect = $('bank');
+  bankSelect.innerHTML = '<option value="">All Lenders / Institutions</option>';
+
+  const allLenderNames = [...new Set([...BANK_MASTER.map(b => b.name), ...D.map(x => x.lender)])];
+  allLenderNames.sort().forEach(bName => {
+    const opt = document.createElement('option');
+    opt.value = bName;
+    opt.textContent = bName;
+    bankSelect.appendChild(opt);
+  });
+}
+
+function render() {
+  const q = $('q').value;
+  const selectedProduct = $('pr').value;
+  const selectedBankCat = $('bankCategory').value;
+  const selectedBank = $('bank').value;
+  const selectedChannel = $('ch').value;
+  const selectedSource = $('source').value;
+  const selectedLogin = $('login').value;
+  const amt = Number($('amount').value) || 0;
+  $('amtText').textContent = rupee(amt);
+
+  let activeCount = 0;
+  if (q.trim()) activeCount++;
+  if (selectedProduct) activeCount++;
+  if (selectedBankCat) activeCount++;
+  if (selectedBank) activeCount++;
+  if (selectedChannel) activeCount++;
+  if (selectedSource) activeCount++;
+  if (selectedLogin) activeCount++;
+  $('activeFilters').textContent = `Active Filters: ${activeCount}`;
+
+  const filtered = [];
+  D.forEach(x => {
+    const searchRes = evaluateSmartSearch(x, q);
+    if (!searchRes.match) return;
+
+    if (selectedProduct && x.product !== selectedProduct) return;
+    if (selectedBankCat && x.category !== selectedBankCat) return;
+    if (selectedBank && x.lender !== selectedBank) return;
+    if (selectedChannel && x.channel && !x.channel.toLowerCase().includes(selectedChannel.toLowerCase())) return;
+    if (selectedSource && x.source !== selectedSource) return;
+    if (selectedLogin && x.login && !x.login.toLowerCase().includes(selectedLogin.toLowerCase())) return;
+
+    x._score = searchRes.score;
+    filtered.push(x);
+  });
+
+  $('matchCount').textContent = `Records: ${filtered.length}`;
+
+  let flatRows = filtered.map(x => {
+    const isFixed = x.payout.includes('₹');
+    const numericRate = parseFloat(x.payout.replace(/[^0-9.]/g, '')) || 0;
+    
+    let gross = isFixed ? numericRate : (amt * numericRate / 100);
+    const tds = gross * 2 / 102;
+    const net = gross - tds;
+    const gst = gross * 18 / 100;
+    const incl = gross + gst;
+    const final = incl - tds;
+
+    return {
+      ...x,
+      isFixed,
+      numericRate,
+      gross,
+      tds,
+      net,
+      gst,
+      incl,
+      final,
+      legalFullName: LEGAL_MAP[x.brand] || x.brand
+    };
+  });
+
+  flatRows.sort((a, b) => {
+    if (b._score !== a._score) return b._score - a._score;
+    return b.final - a.final;
+  });
+
+  let html = '';
+  flatRows.forEach((r, idx) => {
+    let rankBadge = `<span class="rank-badge" style="background:#f1f5f9;color:#475569;">#${idx+1}</span>`;
+    if(idx === 0) rankBadge = `<span class="rank-badge rank-1">🥇 Rank 1</span>`;
+    else if(idx === 1) rankBadge = `<span class="rank-badge rank-2">🥈 Rank 2</span>`;
+    else if(idx === 2) rankBadge = `<span class="rank-badge rank-3">🥉 Rank 3</span>`;
+
+    html += `<tr>
+      <td>${rankBadge}</td>
+      <td>
+        <div class="brand-tooltip">
+          ${esc(r.brand)}
+          <span class="tooltip-text">${esc(r.legalFullName)}</span>
+        </div>
+      </td>
+      <td style="text-align:left;"><b>${esc(r.lender)}</b><br><small style="color:#002D9C;font-weight:700;">[${esc(r.category)}]</small></td>
+      <td><b>${esc(r.productName || r.product)}</b></td>
+      <td style="color:#002D9C; font-weight:800; font-size:11px;">${esc(r.payout)}</td>
+      <td>${rupee(r.gross)}</td>
+      <td>${rupee(r.tds)}</td>
+      <td>${rupee(r.net)}</td>
+      <td>${rupee(r.gst)}</td>
+      <td>${rupee(r.incl)}</td>
+      <td style="color:#FF0000; font-weight:800; font-size:12px;">${rupee(r.final)}</td>
+      <td><small><b>${esc(r.login||'—')}</b><br>Code: ${esc(r.code||'N/A')}</small>${r.code?' <button class="btn-copy" onclick="copyText(\''+esc(r.code)+'\')">Copy</button>':''}</td>
+      <td>
+        <a href="https://wa.me/9340726600?text=I%20want%20to%20apply%20for%20${encodeURIComponent(r.lender)}%20${encodeURIComponent(r.productName||r.product)}" target="_blank"><button class="btn-ad">Apply Now</button></a><br>
+        ${r.id ? `<button class="btn-delete" onclick="deleteRow(${r.id})">Delete</button>` : ''}
+      </td>
+      <td style="font-size:10px; color:#475569;">${esc(r.capping||'—')}</td>
+      <td style="font-size:10px; color:#1e293b; max-width:140px;">${esc(r.eligibility||'—')}</td>
+      <td style="font-size:10px; color:#1e293b; max-width:140px;">${esc(r.strategic||'—')}</td>
+      <td style="font-size:10px; color:#b91c1c; font-weight:700;">${esc(r.customNote||'—')}</td>
+    </tr>`;
+  });
+
+  if (!html) {
+    html = '<tr><td colspan="17" style="text-align:center;padding:22px;color:#667085;font-weight:700;">कोई फ़िल्टर रिकॉर्ड नहीं मिला। कृपया अपने फ़िल्टर साफ़ करें या रिसेट बटन दबाएँ।</td></tr>';
+  }
+
+  $('compareBody').innerHTML = html;
+}
+
+function initDropdowns() {
+  const prSelect = $('pr');
+  prSelect.innerHTML = '<option value="">All Products</option>';
+  PRODUCT_MASTER.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.code;
+    opt.textContent = `${p.code} - ${p.name}`;
+    prSelect.appendChild(opt);
+  });
+  populateSourcesDropdown();
+  populateLendersDropdown();
+}
+
+function resetAllFilters() {
+  $('q').value = '';$('pr').value = '';
+  $('bankCategory').value = '';$('bank').value = '';
+  $('ch').value = '';$('source').value = '';
+  $('login').value = '';$('amount').value = 500000;
+  populateLendersDropdown();
+  render();
+}
+
+$('bankCategory').addEventListener('change', () => {
+  populateLendersDropdown();
+  render();
+});
+
+['q','pr','bank','ch','source','login','amount'].forEach(id => {
+  const el = $(id);
+  if (el) el.addEventListener('input', render);
+  if (el && el.tagName === 'SELECT') el.addEventListener('change', render);
+});
+
+document.querySelectorAll('[data-amt]').forEach(b => b.onclick = () => { $('amount').value = b.dataset.amt; render(); });
+$('resetAmt').onclick = () => {$('amount').value = 500000; render(); };
+
+initDropdowns();
+render();
+</script>
+
+</body>
+</html>
