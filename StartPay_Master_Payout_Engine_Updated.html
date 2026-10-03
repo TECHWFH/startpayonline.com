@@ -1,0 +1,2702 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StartPayOnline Master Payout Engine & Bank Directory</title>
+<style>
+:root{--b:#002D9C;--g:#00A825;--r:#FF0000;--d:#111;--bg:#f5f7fb}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--d);font:14px Inter,Arial,sans-serif}
+.wrap{max-width:1500px;margin:auto}
+.brand-header{background:linear-gradient(135deg,#002D9C,#174dcc);color:#fff;padding:24px 16px;text-align:center;position:relative}
+.brand-header h1{margin:0;font:800 24px Poppins,Arial}
+.brand-header h2{margin:6px 0;font-size:18px}
+.brand-header p{margin:6px 0}
+.blessing-text{color:#FF0000;background:#fff;display:inline-block;padding:5px 14px;border-radius:999px;font-weight:900;margin-top:7px}
+
+/* TOP NAV CONTROLS (HOME & REFRESH) */
+.header-top-nav {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  max-width: 1500px;
+  margin: 0 auto 10px auto;
+}
+.btn-nav-top {
+  background: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 14px;
+  border-radius: 99px;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.2s ease-in-out;
+  backdrop-filter: blur(4px);
+}
+.btn-nav-top:hover {
+  background: #ffffff;
+  color: #002D9C;
+  border-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.action-toolbar{background:#fff;border-bottom:1px solid #ddd}
+.toolbar-inner{display:flex;gap:8px;flex-wrap:wrap;padding:10px 16px;align-items:center}
+.btn-action{padding:9px 12px;border-radius:8px;text-decoration:none;font-weight:800;border:1px solid #d5dae3;cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.bg-home{background:#002D9C;color:#fff;border-color:#002D9C}
+.bg-refresh{background:#00A825;color:#fff;border-color:#00A825}
+.bg-print{background:#eef3ff;color:#002D9C}
+.bg-wa{background:#eaf8ed;color:#087b2a}
+.bg-share{background:#f3f4f6;color:#111}
+.bg-call{background:#fff0f0;color:#c00}
+.bg-terms{background:#fff8df;color:#765500}
+.bg-web{background:#eefaf1;color:#087b2a}
+.bg-cibil{background:#f2efff;color:#5b35b1}
+
+.engine-head{display:flex;justify-content:space-between;align-items:center;padding:18px 16px 8px}
+.engine-title{font-size:24px;font-weight:900;color:#002D9C}
+.engine-sub{color:#667085}
+.live{font-weight:900;color:#00A825}
+.bar{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid #ddd;padding:12px}
+.controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.controls input,.controls select{padding:10px;border:1px solid #ccd2dc;border-radius:99px;background:#fff;font-size:13px}
+.controls input{flex:1;min-width:240px}
+.filter-stats{font-size:12px;font-weight:700;color:#002D9C;margin-left:auto;display:flex;gap:12px;align-items:center}
+.btn-reset{background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;padding:8px 14px;border-radius:99px;cursor:pointer;font-weight:800;font-size:12px}
+.btn-reset:hover{background:#fca5a5}
+.amount-box{background:#fff;border:1px solid #e1e5eb;border-radius:12px;padding:14px;margin:14px 0}
+.amounts{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.amounts button,.amounts input{padding:9px 11px;border:1px solid #ccd2dc;border-radius:8px;background:#fff;font-weight:700}
+.calc-line{margin-top:10px;color:#667085}
+.calc-line b{color:#002D9C}
+.compare-screen-box{background:#fff;border:1px solid #cbd5e1;border-radius:12px;padding:15px;margin-bottom:20px;overflow:auto}
+.compare-table{width:100%;border-collapse:collapse;text-align:center;font-size:12px}
+.compare-table th,.compare-table td{border:1px solid #000;padding:6px 8px}
+.compare-table th{background:#f8fafc;color:#111;font-weight:700}
+.btn-copy{background:#f1f5f9;border:1px solid #cbd5e1;padding:2px 6px;border-radius:4px;font-size:11px;cursor:pointer;color:#334155;margin-left:2px;font-weight:600}.btn-copy:hover{background:#e2e8f0}
+
+/* BRAND TOOLTIP STYLING */
+.brand-tooltip { position: relative; display: inline-block; cursor: pointer; font-weight: 800; color: var(--b); }
+.brand-tooltip .tooltip-text { visibility: hidden; width: 220px; background-color: #1e293b; color: #fff; text-align: center; border-radius: 6px; padding: 6px 8px; position: absolute; z-index: 10; bottom: 125%; left: 50%; margin-left: -110px; opacity: 0; transition: opacity 0.2s; font-size: 11px; font-weight: 500; box-shadow: 0 4px 12px rgba(0,0,0,0.15); pointer-events: none; }
+.brand-tooltip .tooltip-text::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #1e293b transparent transparent transparent; }
+.brand-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+
+/* RANK BADGES */
+.rank-badge { display: inline-block; padding: 3px 8px; border-radius: 99px; font-weight: 900; font-size: 11px; }
+.rank-1 { background: #fef08a; color: #854d0e; border: 1px solid #eab308; }
+.rank-2 { background: #e2e8f0; color: #334155; border: 1px solid #94a3b8; }
+.rank-3 { background: #ffedd5; color: #9a3412; border: 1px solid #f97316; }
+.btn-ad { background: #15803d; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 11px; }
+.btn-ad:hover { background: #166534; }
+
+footer{text-align:center;margin-top:30px;padding:18px;background:#fff;border-top:1px solid #ddd;font-weight:900;color:#FF0000}
+footer small{display:block;color:#667085;margin-top:5px;font-weight:600}
+</style>
+</head>
+<body>
+
+<header class="brand-header">
+  <div class="header-top-nav">
+    <a href="https://startpayonline.com/" class="btn-nav-top" title="Go to Home Portal">🏠 Home</a>
+    <button onclick="window.location.reload()" class="btn-nav-top" title="Refresh Application">🔄 Refresh Page</button>
+  </div>
+  <div class="wrap">
+    <h1>StartPay Legal &amp; Finance IT Solutions</h1>
+    <h2>StartPayOnline Master Payout Engine &amp; Bank Directory</h2>
+    <p><a href="https://wa.me/9340726600?text=Hello%20Anurag%20Rai" target="_blank" style="color:#fff;text-decoration:underline;">by Anurag Rai | ☎ 9340726600</a></p>
+    <div class="blessing-text">!! शुभ शुरुआत स्टार्ट पे के साथ !!</div>
+  </div>
+</header>
+
+<div class="action-toolbar">
+  <div class="wrap toolbar-inner">
+    <a href="https://startpayonline.com/" class="btn-action bg-home">🏠 Home</a>
+    <button onclick="window.location.reload()" class="btn-action bg-refresh">🔄 Refresh</button>
+    <button onclick="window.print()" class="btn-action bg-print">🖨️ Print PDF</button>
+    <a href="https://wa.me/9340726600?text=Hello%20StartPay,%20I%20need%20loan%20assistance" target="_blank" class="btn-action bg-wa">💬 WhatsApp Help</a>
+    <button onclick="copyShare()" class="btn-action bg-share">📤 Auto Share</button>
+    <button onclick="callbackShare()" class="btn-action bg-wa">📲 WhatsApp Callback Share</button>
+    <a href="tel:9340726600" class="btn-action bg-call">📞 Call Now</a>
+    <button onclick="showTerms()" class="btn-action bg-terms">⚖ Terms</button>
+    <a href="https://startpayonline.com/" target="_blank" class="btn-action bg-web">🌐 Website</a>
+    <a href="https://startpayonline.com/" target="_blank" class="btn-action bg-cibil">📊 Check Credit Score</a>
+    <a href="https://wa.me/9340726600?text=Enquiry%20from%20StartPay%20Portal" target="_blank" class="btn-action bg-wa">💬 WhatsApp पर Enquiry भेजें</a>
+  </div>
+</div>
+
+<div class="engine-head wrap">
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 0 8px;width:100%;">
+    <div>
+      <div class="engine-title">StartPayOnline Universal Smart Search Engine</div>
+      <div class="engine-sub">Master Bank Directory • Cross-Mapping • Token Match</div>
+    </div>
+    <span class="live" style="color:#00A825;font-weight:900;">● LIVE CALCULATION</span>
+  </div>
+</div>
+
+<div class="bar">
+  <div class="wrap controls">
+    <input id="q" placeholder="Universal Search (e.g. SBI HL, PNB LAP, HERO HFC, Urban Money, Finwizz)...">
+    <select id="pr">
+      <option value="">All Products</option>
+    </select>
+    <select id="bankCategory">
+      <option value="">All Institution Categories</option>
+      <option value="PSB">Public Sector Banks (PSB)</option>
+      <option value="Private">Domestic Private Sector Banks</option>
+      <option value="SFB">Small Finance Banks (SFB)</option>
+      <option value="RRB">Regional Rural Banks (RRB)</option>
+      <option value="Foreign">Foreign Banks Operating in India</option>
+      <option value="Cooperative">State Co-operative Banks</option>
+      <option value="NBFC">NBFCs (Non-Banking Finance Co.)</option>
+      <option value="HFC">Housing Finance Companies (HFC)</option>
+    </select>
+    <select id="bank"><option value="">All Lenders / Institutions</option></select>
+    <select id="ch">
+      <option value="">All Channels</option>
+      <option value="DSA">DSA - Direct Selling Agent</option>
+      <option value="DMA">DMA - Direct Marketing Agent</option>
+      <option value="Referral">Referral - Referral Partner</option>
+      <option value="Direct Agent">Direct Agent (DA)</option>
+      <option value="Direct">Direct - Direct Sourcing</option>
+      <option value="RM">RM - Relationship Manager</option>
+    </select>
+    <select id="source">
+      <option value="">All Sources</option>
+    </select>
+    <select id="login">
+      <option value="">All Login Types</option>
+      <option>DSA Login</option>
+      <option>Partner Login</option>
+      <option>RM Login</option>
+      <option>Velocity App Login</option>
+    </select>
+    
+    <div class="filter-stats">
+      <span id="activeFilters">Active Filters: 0</span>
+      <span id="matchCount">Records: 0</span>
+      <button class="btn-reset" onclick="resetAllFilters()">↺ Reset All</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="amount-box">
+    <label><b>Loan Amount (For Auto Calculation)</b></label>
+    <div class="amounts">
+      <button data-amt="500000">₹5 Lakh</button>
+      <button data-amt="1000000">₹10 Lakh</button>
+      <button data-amt="2500000">₹25 Lakh</button>
+      <button data-amt="5000000">₹50 Lakh</button>
+      <button data-amt="10000000">₹1 Cr</button>
+      <button data-amt="20000000">₹2 Cr</button>
+      <input id="amount" type="number" value="500000" min="0" step="1000">
+      <button id="resetAmt">Reset Amount</button>
+    </div>
+    <div class="calc-line">Selected Amount: <b id="amtText">₹5,00,000</b></div>
+  </div>
+
+  <div class="compare-screen-box">
+    <div class="engine-title" style="font-size:16px; margin-bottom:8px;">Compare Screen &amp; Master Directory Output</div>
+    <div style="overflow:auto">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>RANK</th>
+            <th>Source / Brand</th>
+            <th>Institution &amp; Category</th>
+            <th>Product Variant</th>
+            <th>Payout %</th>
+            <th>Amount (GST Excl.)</th>
+            <th>TDS 2%</th>
+            <th>Net Payable (After TDS)</th>
+            <th>GST 18%</th>
+            <th>Amount with GST (Incl.)</th>
+            <th style="color:#a90000;">Final Payout</th>
+            <th>Login Type &amp; Code</th>
+            <th>Action / Promo</th>
+          </tr>
+        </thead>
+        <tbody id="compareBody">
+          <!-- Dynamic rows populated via JavaScript -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<footer><div>!! शुभ शुरुआत स्टार्ट पे के साथ !!</div><small>StartPay Legal &amp; Finance IT Solutions</small></footer>
+
+<script>
+// 1. BRAND LEGAL MAPPING
+const LEGAL_MAP = {
+  "Finwizz Loans": "Finwizz Financial Services Private Limited",
+  "Finurl": "FINWURL ENTERPRISES PRIVATE LIMITED",
+  "ActivPaisa": "NexQred Fintech Private Limited",
+  "Yenmo": "Yenmo Technologies Private Limited",
+  "WeRize": "Wortgage Technologies Private Limited",
+  "neoFinDesk": "InvestValue Fintech Private Limited",
+  "RecurClub": "Founderlink Technologies Private Limited",
+  "Royal Finserv": "Royal Finserv Consultants Private Limited",
+  "FinexCapital": "Finex capital services Private Limited",
+  "NeoGrowth": "NeoGrowth Credit Private Limited",
+  "TFS": "Thoshika Financial Services Private Limited",
+  "Finway FSC": "REYNAV CAPITAL PRIVATE LIMITED",
+  "Urban Money": "Urban Money Private Limited",
+  "Andromeda": "Andromeda Sales & Distribution Private Limited",
+  "ApnaRupee": "Apnarupee Fin India Private Limited",
+  "Digi Loans": "Star Powerz Digital Technologies Private Limited",
+  "Paisabazaar": "Paisabazaar Marketing and Consulting Private Limited",
+  "StartPayOnline": "Raikios Services Private Limited",
+  "RuLoans": "Ruloans Distribution Services Private Limited"
+};
+
+// 2. PRODUCT MASTER
+const PRODUCT_MASTER = [
+  { code:'PL', name:'Personal Loan', aliases:['pl','personal loan','personal','personal finance'] },
+  { code:'CC', name:'Credit Card', aliases:['cc','credit card','credit cards','card'] },
+  { code:'HL', name:'Home Loan', aliases:['hl','home loan','home','housing loan','fresh home loan'] },
+  { code:'HL-NEW', name:'Home Loan – New', aliases:['hl new','hl-new','home loan new','new home loan','fresh home loan'] },
+  { code:'BT', name:'Balance Transfer', aliases:['bt','balance transfer','transfer','takeover'] },
+  { code:'HL-BT', name:'Home Loan – Balance Transfer', aliases:['hl bt','hl-bt','home bt','hl balance transfer','home loan balance transfer','balance transfer home loan'] },
+  { code:'BT-TOPUP', name:'Balance Transfer with Top-Up Loan', aliases:['bt topup','bt top up','bt-topup','balance transfer topup','balance transfer with top up'] },
+  { code:'TOPUP', name:'Top-Up Loan', aliases:['topup','top up','top-up','top up loan','topup loan'] },
+  { code:'LAP', name:'Loan Against Property', aliases:['lap','loan against property','property loan','mortgage'] },
+  { code:'LRD', name:'Lease Rental Discounting', aliases:['lrd','lease rental discounting','rental discounting'] },
+  { code:'BL-MSME', name:'MSME Business Loan', aliases:['bl','business loan','business finance','msme','mnc','micro small medium enterprise loan'] },
+  { code:'SBL', name:'Small Business Loans', aliases:['sbl','small business loan','small business loans','small business finance'] },
+  { code:'AL', name:'Auto Loan', aliases:['al','auto loan','auto','car loan','car','vehicle finance'] },
+  { code:'VL', name:'Vehicle Loan', aliases:['vl','vehicle loan','vehicle finance'] },
+  { code:'CAR-NEW', name:'Car Loan - New', aliases:['new car','new car loan','car loan new','new vehicle finance'] },
+  { code:'SF', name:'School Funding', aliases:['sf','school funding','school finance'] },
+  { code:'USF', name:'Unsecured School Funding', aliases:['usf','unsecured school funding','unsecured school finance'] },
+  { code:'EQUIP', name:'Equipment Payout', aliases:['equipment payout','equipment finance','equipment loan','machinery finance'] },
+  { code:'MME', name:'Medical/Machinery Equipment', aliases:['mme','medical equipment','machinery equipment','medical machinery finance'] },
+  { code:'EL', name:'Educational Loans', aliases:['el','education loan','educational loan','educational loans','student loan'] },
+  { code:'HCV-LCV-PICKUP', name:'HCV/LCV/Pickup', aliases:['hcv','heavy commercial vehicle','lcv','light commercial vehicle','pickup','pickup finance'] },
+  { code:'HCV-LCV-SCV', name:'HCV/LCV/SCV', aliases:['hcv lcv scv','hcv','lcv','scv','small commercial vehicle','commercial vehicle'] },
+  { code:'LP', name:'Loan Protector', aliases:['lp','loan protector','loan protection'] },
+  { code:'HI', name:'Health Insurance', aliases:['hi','health insurance','medical insurance'] },
+  { code:'PI', name:'Property Insurance', aliases:['pi','property insurance','home insurance'] },
+  { code:'TI', name:'Travel Insurance', aliases:['ti','travel insurance','trip insurance'] },
+  { code:'TL', name:'TL - Terms Loan', aliases:['tl','term loan','terms loan','term loans'] },
+  { code:'LAS', name:'Loan Against Shares / Securities', aliases:['las','loan against shares','loan against securities','securities loan'] }
+];
+
+// 3. MASTER BANK DIRECTORY (200+ INSTITUTIONS)
+const BANK_MASTER = [
+  // Public Sector Banks (PSBs)
+  { name: "State Bank of India", category: "PSB", aliases: ["SBI", "STATE BANK", "STATE"] },
+  { name: "Bank of Baroda", category: "PSB", aliases: ["BOB", "BARODA"] },
+  { name: "Bank of India", category: "PSB" },
+  { name: "Bank of Maharashtra", category: "PSB" },
+  { name: "Canara Bank", category: "PSB" },
+  { name: "Central Bank of India", category: "PSB" },
+  { name: "Indian Bank", category: "PSB" },
+  { name: "Indian Overseas Bank", category: "PSB" },
+  { name: "Punjab & Sind Bank", category: "PSB" },
+  { name: "Punjab National Bank", category: "PSB", aliases: ["PNB", "PUNJAB NATIONAL"] },
+  { name: "UCO Bank", category: "PSB" },
+  { name: "Union Bank of India", category: "PSB" },
+
+  // Domestic Private Sector Banks
+  { name: "Axis Bank Limited", category: "Private", aliases: ["AXIS", "AXIS BANK"] },
+  { name: "Bandhan Bank Limited", category: "Private" },
+  { name: "CSB Bank Limited", category: "Private" },
+  { name: "City Union Bank Limited", category: "Private" },
+  { name: "DCB Bank Limited", category: "Private" },
+  { name: "Dhanlaxmi Bank Limited", category: "Private" },
+  { name: "Federal Bank Limited", category: "Private" },
+  { name: "HDFC Bank Limited", category: "Private", aliases: ["HDFC", "HDFC BANK"] },
+  { name: "ICICI Bank Limited", category: "Private", aliases: ["ICICI", "ICICI BANK"] },
+  { name: "IndusInd Bank Limited", category: "Private" },
+  { name: "IDFC FIRST Bank Limited", category: "Private" },
+  { name: "Jammu & Kashmir Bank Limited", category: "Private" },
+  { name: "Karnataka Bank Limited", category: "Private" },
+  { name: "Karur Vysya Bank Limited", category: "Private" },
+  { name: "Kotak Mahindra Bank Limited", category: "Private" },
+  { name: "Nainital Bank Limited", category: "Private" },
+  { name: "RBL Bank Limited", category: "Private" },
+  { name: "South Indian Bank Limited", category: "Private" },
+  { name: "Tamilnad Mercantile Bank Limited", category: "Private" },
+  { name: "YES Bank Limited", category: "Private" },
+  { name: "IDBI Bank Limited", category: "Private" },
+
+  // Small Finance Banks (SFBs)
+  { name: "AU Small Finance Bank Limited", category: "SFB", aliases: ["AU", "AU SFB", "AU BANK"] },
+  { name: "Capital Small Finance Bank Limited", category: "SFB" },
+  { name: "Equitas Small Finance Bank Limited", category: "SFB" },
+  { name: "ESAF Small Finance Bank Limited", category: "SFB" },
+  { name: "Suryoday Small Finance Bank Limited", category: "SFB" },
+  { name: "Ujjivan Small Finance Bank Limited", category: "SFB" },
+  { name: "Utkarsh Small Finance Bank Limited", category: "SFB" },
+  { name: "slice Small Finance Bank Limited", category: "SFB" },
+  { name: "Jana Small Finance Bank Limited", category: "SFB" },
+  { name: "Shivalik Small Finance Bank Limited", category: "SFB" },
+  { name: "Unity Small Finance Bank Limited", category: "SFB" },
+
+  // Regional Rural Banks (RRBs)
+  { name: "Andhra Pradesh Grameena Bank", category: "RRB" },
+  { name: "Assam Gramin Bank", category: "RRB" },
+  { name: "Arunachal Pradesh Rural Bank", category: "RRB" },
+  { name: "Bihar Gramin Bank", category: "RRB" },
+  { name: "Chhattisgarh Gramin Bank", category: "RRB" },
+  { name: "Gujarat Gramin Bank", category: "RRB" },
+  { name: "Haryana Gramin Bank", category: "RRB" },
+  { name: "Himachal Pradesh Gramin Bank", category: "RRB" },
+  { name: "Jharkhand Gramin Bank", category: "RRB" },
+  { name: "Jammu and Kashmir Grameen Bank", category: "RRB" },
+  { name: "Karnataka Grameena Bank", category: "RRB" },
+  { name: "Kerala Grameena Bank", category: "RRB" },
+  { name: "Maharashtra Gramin Bank", category: "RRB" },
+  { name: "Madhya Pradesh Gramin Bank", category: "RRB" },
+  { name: "Manipur Rural Bank", category: "RRB" },
+  { name: "Meghalaya Rural Bank", category: "RRB" },
+  { name: "Mizoram Rural Bank", category: "RRB" },
+  { name: "Nagaland Rural Bank", category: "RRB" },
+  { name: "Odisha Grameen Bank", category: "RRB" },
+  { name: "Punjab Gramin Bank", category: "RRB" },
+  { name: "Puducherry Grama Bank", category: "RRB" },
+  { name: "Rajasthan Gramin Bank", category: "RRB" },
+  { name: "Tamil Nadu Grama Bank", category: "RRB" },
+  { name: "Telangana Grameena Bank", category: "RRB" },
+  { name: "Tripura Gramin Bank", category: "RRB" },
+  { name: "Uttar Pradesh Gramin Bank", category: "RRB" },
+  { name: "Uttarakhand Gramin Bank", category: "RRB" },
+  { name: "West Bengal Gramin Bank", category: "RRB" },
+
+  // Foreign Banks Operating in India
+  { name: "AB Bank PLC", category: "Foreign" },
+  { name: "American Express Banking Corporation", category: "Foreign" },
+  { name: "Barclays Bank Plc.", category: "Foreign" },
+  { name: "Citibank N.A.", category: "Foreign" },
+  { name: "DBS Bank India Limited", category: "Foreign" },
+  { name: "Deutsche Bank A.G.", category: "Foreign" },
+  { name: "Standard Chartered Bank", category: "Foreign" },
+
+  // State Co-operative / Apex Banks
+  { name: "The Madhya Pradesh Rajya Sahakari Bank Maryadit", category: "Cooperative" },
+  { name: "The Maharashtra State Co-operative Bank Ltd.", category: "Cooperative" },
+  { name: "The Uttar Pradesh State Co-operative Bank Limited", category: "Cooperative" },
+
+  // NBFCs & HFCs
+  { name: "HDB Financial Services", category: "NBFC" },
+  { name: "Hero Housing Finance", category: "HFC", aliases: ["HERO", "HERO HOUSING", "HERO HFC"] },
+  { name: "Grihum Housing Finance", category: "HFC" },
+  { name: "Bajaj Housing Finance", category: "HFC" },
+  { name: "PNB Housing Finance", category: "HFC" },
+  { name: "NeoGrowth Credit Private Limited", category: "NBFC" }
+];
+
+// 4. INSTITUTION ALIAS DICTIONARY
+const INST_ALIASES = {
+  'State Bank of India': ['sbi', 'state bank', 'state bank of india', 'state'],
+  'Punjab National Bank': ['pnb', 'punjab national', 'punjab national bank'],
+  'Bank of Baroda': ['bob', 'baroda', 'bank of baroda'],
+  'Hero Housing Finance': ['hero', 'hero housing', 'hero housing finance', 'hero hfc'],
+  'HDFC Bank Limited': ['hdfc', 'hdfc bank', 'hdfc bank limited'],
+  'ICICI Bank Limited': ['icici', 'icici bank'],
+  'Axis Bank Limited': ['axis', 'axis bank'],
+  'AU Small Finance Bank Limited': ['au', 'au sfb', 'au bank']
+};
+
+// 5. MASTER LENDER OFFERS DATABASE
+const D = [
+  {
+    "source": "Finwizz Loans",
+    "brand": "Finwizz Loans",
+    "lender": "Punjab National Bank",
+    "category": "PSB",
+    "product": "HL-NEW",
+    "productName": "Home Loan – New",
+    "channel": "DSA",
+    "code": "HLRLC3847082",
+    "payout": "0.90%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "Urban Money",
+    "brand": "Urban Money",
+    "lender": "Punjab National Bank",
+    "category": "PSB",
+    "product": "HL-NEW",
+    "productName": "Home Loan – New",
+    "channel": "DSA",
+    "code": "HLRLC3847082",
+    "payout": "0.85%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "Andromeda",
+    "brand": "Andromeda",
+    "lender": "Punjab National Bank",
+    "category": "PSB",
+    "product": "HL-BT",
+    "productName": "Home Loan – Balance Transfer",
+    "channel": "DSA",
+    "code": "HLRLC3847082",
+    "payout": "0.85%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "Finurl",
+    "brand": "Finurl",
+    "lender": "Punjab National Bank",
+    "category": "PSB",
+    "product": "LAP",
+    "productName": "Loan Against Property",
+    "channel": "DSA",
+    "code": "HLRLC3847082",
+    "payout": "0.85%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "ActivPaisa",
+    "brand": "ActivPaisa",
+    "lender": "Punjab National Bank",
+    "category": "PSB",
+    "product": "BL-MSME",
+    "productName": "MSME Business Loan",
+    "channel": "DSA",
+    "code": "PNBMSME01",
+    "payout": "1.00%",
+    "login": "DSA Login",
+    "type": "Unsecured"
+  },
+  {
+    "source": "WeRize",
+    "brand": "WeRize",
+    "lender": "State Bank of India",
+    "category": "PSB",
+    "product": "HL-NEW",
+    "productName": "Home Loan – New",
+    "channel": "DSA",
+    "code": "MUMHLC01023",
+    "payout": "0.60%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "neoFinDesk",
+    "brand": "neoFinDesk",
+    "lender": "State Bank of India",
+    "category": "PSB",
+    "product": "LAP",
+    "productName": "Loan Against Property",
+    "channel": "DSA",
+    "code": "MUMHLC01023",
+    "payout": "0.65%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "RecurClub",
+    "brand": "RecurClub",
+    "lender": "State Bank of India",
+    "category": "PSB",
+    "product": "CC",
+    "productName": "Credit Card",
+    "channel": "DSA",
+    "code": "SBICC01",
+    "payout": "₹2,500",
+    "login": "DSA Login",
+    "type": "Unsecured"
+  },
+  {
+    "source": "Yenmo",
+    "brand": "Yenmo",
+    "lender": "State Bank of India",
+    "category": "PSB",
+    "product": "AL",
+    "productName": "Car Loan",
+    "channel": "DSA",
+    "code": "SBICAR01",
+    "payout": "0.70%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "Royal Finserv",
+    "brand": "Royal Finserv",
+    "lender": "HDFC Bank Limited",
+    "category": "Private",
+    "product": "LAP",
+    "productName": "Loan Against Property",
+    "channel": "DSA",
+    "code": "352617 / PMAC",
+    "payout": "1.10%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "FinexCapital",
+    "brand": "FinexCapital",
+    "lender": "HDFC Bank Limited",
+    "category": "Private",
+    "product": "HL-NEW",
+    "productName": "Home Loan – New",
+    "channel": "DSA",
+    "code": "PMAC",
+    "payout": "0.90%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "NeoGrowth",
+    "brand": "NeoGrowth",
+    "lender": "HDFC Bank Limited",
+    "category": "Private",
+    "product": "PL",
+    "productName": "Personal Loan (>12.50% ROI)",
+    "channel": "DSA",
+    "code": "322186",
+    "payout": "3.04%",
+    "login": "DSA Login",
+    "type": "Unsecured"
+  },
+  {
+    "source": "TFS",
+    "brand": "TFS",
+    "lender": "Bank of Baroda",
+    "category": "PSB",
+    "product": "HL-NEW",
+    "productName": "Home Loan – New",
+    "channel": "DSA",
+    "code": "CDSA01014",
+    "payout": "0.80%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "Finway FSC",
+    "brand": "Finway FSC",
+    "lender": "Hero Housing Finance",
+    "category": "HFC",
+    "product": "HL-NEW",
+    "productName": "Home Loan – New (Unnati)",
+    "channel": "DSA",
+    "code": "DSA1174",
+    "payout": "2.10%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "StartPayOnline",
+    "brand": "StartPayOnline",
+    "lender": "HDB Financial Services",
+    "category": "NBFC",
+    "product": "LAP",
+    "productName": "Loan Against Property",
+    "channel": "DSA",
+    "code": "40071",
+    "payout": "2.13%",
+    "login": "DSA Login",
+    "type": "Secured"
+  },
+  {
+    "source": "DIGILOAN",
+    "brand": "DigiLoans",
+    "lender": "GRIHUM HOUSING",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "2572",
+    "payout": "2.00% / 2.13%",
+    "login": "Partner Login",
+    "rule": "Above 10 Lakhs",
+    "original": "GRIHUM HOUSING (above 10 lakhs)-LAP | 2572 | 2.00% / 2.13%",
+    "legalCompany": "Star Powerz Digital Technologies Pvt. Ltd"
+  },
+  {
+    "source": "STARTPAY",
+    "brand": "StartPayOnline / StartPay",
+    "lender": "Cent Bank Home Finance Ltd",
+    "product": "Home Loan / LAP",
+    "channel": "DSA - PAN INDIA",
+    "code": "PANIND4",
+    "payout": "Partner Code / lender record",
+    "login": "Partner Login",
+    "legalCompany": "Raikios Services Private Limited"
+  },
+  {
+    "source": "STARTPAY",
+    "brand": "StartPayOnline / StartPay",
+    "lender": "Bank of Maharashtra",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "55744",
+    "payout": "Partner Code / lender record",
+    "login": "DSA Login",
+    "legalCompany": "Raikios Services Private Limited"
+  },
+  {
+    "source": "STARTPAY",
+    "brand": "StartPayOnline / StartPay",
+    "lender": "Car Loans",
+    "product": "Car Loan",
+    "channel": "Partner",
+    "code": "Oracle ID: 49397 / DCID",
+    "payout": "New / Old / Topup",
+    "login": "Partner Login",
+    "legalCompany": "Raikios Services Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bank of Baroda",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "CDSA01014",
+    "payout": "HL/BT 0.80% New / 0.90% BT · LAP/LRD Case-wise",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bank of India",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "BSACORP003",
+    "payout": "HL/BT 0.80% New / 0.85% BT · LAP/LRD Case-wise",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bank of Maharashtra",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "D315602",
+    "payout": "HL/BT 0.90% · LAP/LRD 0.90%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Maharashtra Gramin Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "DSA/05/2026-27",
+    "payout": "HL/BT 85% of invoice value · LAP/LRD 85% of invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Central Bank of India",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "C1149003",
+    "payout": "HL/BT 0.80% New / 0.85% BT · LAP/LRD 85% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "IDBI Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "CDSAAPNAR",
+    "payout": "HL/BT 0.85% · LAP/LRD N/A",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Indian Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "DSAZ043113309",
+    "payout": "HL/BT 0.80% New / 0.85% BT · LAP/LRD 1.00%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Indian Overseas Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "DSA22562023070163",
+    "payout": "HL/BT 0.80% New / 0.90% BT · LAP/LRD N/A",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Punjab National Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "HLRLC3847082",
+    "payout": "HL/BT 0.80% New / 0.85% BT · LAP/LRD N/A",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Punjab National Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "PCSLDSA3807",
+    "payout": "HL/BT N/A · LAP/LRD N/A",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Union Bank of India (Pune, Satara, Baramati)",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "PUNE00041",
+    "payout": "HL/BT 0.85% of invoice value · LAP/LRD 0.60%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "UBI Services",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "P5617",
+    "payout": "HL/BT 0.55% · LAP/LRD N/A",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Punjab & Sind Bank (Only MH & Goa)",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "Z80200082",
+    "payout": "HL/BT 0.55% · LAP/LRD N/A",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "PNB Card and Services",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "PCSLDSA3807",
+    "payout": "HL/BT 0.60% · LAP/LRD 0.55%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "UCO Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "V02026020911326",
+    "payout": "HL/BT 0.80% New / 0.90% BT above 30 lakh · LAP/LRD 0.60%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "State Bank of India",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "MUMHLC01023",
+    "payout": "HL/BT 0.60% New / 0.70% Above 1 Cr & Takeover · LAP: up to 1 Cr min 20% disbursement; above 1 Cr min 50%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "AU Small Bank Ltd",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "AVHL00165 / AVSL00652",
+    "payout": "HL/BT 0.75% · LAP/LRD 90% of invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Axis Bank (All India / Asha)",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "140016PUN",
+    "payout": "HL/BT 90% invoice value / 0.90% · LAP/LRD 90% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bandhan Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "9724",
+    "payout": "HL/BT 0.90% · LAP/LRD 0.90%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Clix Capital",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "10600",
+    "payout": "HL/BT N/A · LAP/LRD 1.20%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Cosmos Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "PRO2026C0001",
+    "payout": "HL/BT 0.85% · LAP/LRD 0.64%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "CSB Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "371",
+    "payout": "HL/BT N/A · LAP/LRD 0.63%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "DCB Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "PUN1492",
+    "payout": "HL/BT 0.50% · LAP/LRD 0.50%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Deutsche Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "PR570",
+    "payout": "HL/BT N/A · LAP/LRD 1.20%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Federal Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "3284",
+    "payout": "HL/BT 80% invoice value · LAP/LRD 80% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "ICICI Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "327107",
+    "payout": "HL/BT 0.75% · No payout below 30L · LAP/LRD 1.10%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "IDFC First Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "68029",
+    "payout": "HL/BT 90% invoice value · LAP/LRD 90% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "IndusInd Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "IBLV3250",
+    "payout": "HL/BT 0.60% · LAP/LRD N/A",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "HDFC Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "352617",
+    "payout": "HL/BT 0.90% · LAP/LRD 1.10% (LAP Division)",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Karnataka Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "DSA000001452",
+    "payout": "HL/BT 85% invoice value · LAP/LRD 85% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Kotak Mahindra Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "615462008",
+    "payout": "HL/BT 90% invoice value · LAP/LRD 90% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "SVC Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "SVCBLGROMGAR1122",
+    "payout": "HL/BT 0.85% · LAP/LRD 1.30%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "The South Indian Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "AFI767",
+    "payout": "HL/BT 0.90% · LAP/LRD 1.00%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Yes Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "25021DSAAHLPUN53",
+    "payout": "HL/BT 85% invoice value Prime/Affordable · LAP/LRD 85% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bhagini Nivedita Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "200125",
+    "payout": "HL/BT 0.90% · LAP/LRD 1.30% (Prime)",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Saraswat Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "CCBGPUNPL00001",
+    "payout": "HL/BT 0.85% · LAP/LRD 1.25% (Affordable)",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Navjeevan Co-op Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "NJCB0002",
+    "payout": "HL/BT 0.85% · LAP/LRD blank",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Aavas Financiers Ltd",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "2908",
+    "payout": "0.80% / 1.00%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Aditya Birla Capital",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "DAUPUN04694 / DAA421013873",
+    "payout": "0.80% / 0.93% / 1.30%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Tyger Housing",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "HL0481",
+    "payout": "0.90% / 0.90%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Anand Rathi",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "DSA/PUN/1774",
+    "payout": "N/A / 0.80%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Arka Fincap Ltd",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "DSA0329",
+    "payout": "N/A / 0.85%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Axis Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "AFLR282",
+    "payout": "0.85% / 85% of invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bajaj Housing Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "112843 / 177830",
+    "payout": "85% to 90% invoice value / 85% to 90% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bajaj Finance Limited",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "10010084",
+    "payout": "N/A / 85% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bajaj Finserv (Affordable)",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "1011024200.00%",
+    "payout": "90% invoice value / 90% invoice value · VERIFY CODE",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Cent Bank Home Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "PANIND07",
+    "payout": "0.85% / 0.65%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Cholamandalam (LAP)",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "3097000.00%",
+    "payout": "N/A / 85% on receivable amount · VERIFY CODE",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Cholamandalam (Home Loan)",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "11003886",
+    "payout": "85% on receivable amount / N/A",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Nido Housing Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "9890",
+    "payout": "0.85% invoice value / N/A",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Fedbank Financial Services",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "PUNDSA0039",
+    "payout": "N/A / 1.00%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "GIC Housing Finance Ltd",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "HAD/AFI/27",
+    "payout": "0.85% / 1.05%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Godrej Finance / HFC",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "DSNATPNQ000790",
+    "payout": "1.20% Prime/Aff / 1.20% Prime/Aff",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "HDB Financial Services",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "40071",
+    "payout": "N/A / 1.30%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Hero FinCorp",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "PUND0036",
+    "payout": "N/A / 1.25%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Hero Housing Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "DSA0370",
+    "payout": "0.80% / 1.10%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Hinduja Housing Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "127713",
+    "payout": "85% invoice value / 85% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "ICICI Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "327107",
+    "payout": "0.70% below 20L / 1.10%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "ICICI HFC",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "251857",
+    "payout": "90% invoice value / 90% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Jio Finance Ltd",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "900000814",
+    "payout": "0.95% / 1.40%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "IIFL",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "113522",
+    "payout": "90% invoice value / 90% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "L & T Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "SP Financial Services",
+    "payout": "0.90% / 1.35%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "LIC HFL",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "CAS0013",
+    "payout": "0.85% / 0.90%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Motilal Oswal",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "FR57206",
+    "payout": "0.63% / 0.63%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "PNB HFL",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "PIM DMA|2006 56564",
+    "payout": "0.90% + insurance 2% / 1.35% + insurance 2% · VERIFY CODE",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Poonawalla Fincorp Ltd",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "FMH01573",
+    "payout": "N/A / 1.25%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "RBL Bank",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "DSAAPNAR",
+    "payout": "85% invoice value / 85% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Shriram Housing Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "HPUENSE10",
+    "payout": "0.50% / 0.67%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Star H. Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "STAR/DSA/24-25121/",
+    "payout": "0.80% / 0.80%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Sundaram Housing Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "701107",
+    "payout": "0.90% / 0.90%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Tata Capital HFL",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "8093011",
+    "payout": "0.90% / 1.35%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "UGRO Capital",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "GP030CHU0450",
+    "payout": "N/A / 1.20%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Ujjivan Small Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "4403C2899",
+    "payout": "0.40% / 0.40%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Utkarsh Small Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "R901K561",
+    "payout": "N/A / 1.14%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "West End Housing Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "WEHFL/MH/01/24",
+    "payout": "0.50% / 0.50%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Easy Home Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "EHFL/DSA/00881",
+    "payout": "0.80% / 0.80%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Ramkrishna Pure Finance",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "RKPF00509011125",
+    "payout": "N/A / 1.70%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Sammaan Capital Ltd",
+    "product": "Home Loan / LAP",
+    "channel": "DSA",
+    "code": "99971869",
+    "payout": "0.60% / 1.15%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bank of India",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "BSACORP003",
+    "payout": "1.75%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bank of Maharashtra",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "D315602",
+    "payout": "1.75%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bandhan Bank",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "DSAMUM250061",
+    "payout": "90% of invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Central Bank of India",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "C1149003",
+    "payout": "1.25%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Cosmos Bank",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "PRO2026C0001",
+    "payout": "85% of invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Indian Overseas Bank",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "VDSA22562023070026",
+    "payout": "1.75%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Karnataka Bank",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "DSA000001452",
+    "payout": "0.80%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Saraswat Bank",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "CCBGPUNAL1035",
+    "payout": "1.00%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Punjab & Sind Bank",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "Z80200082",
+    "payout": "0.80%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "IDBI Bank",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "CDSAELARPL",
+    "payout": "1.50%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Maharashtra Gramin Bank",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "DSA/05/2026-27",
+    "payout": "85% invoice value",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "UCO Bank",
+    "product": "Car Loan - New",
+    "channel": "DSA",
+    "code": "V02026051323553",
+    "payout": "1.50%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "HDFC Bank",
+    "product": "Personal Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.24% / As Per Slab",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "ICICI Bank",
+    "product": "Personal Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.24% / 0.0224",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "IDFC Capital",
+    "product": "Personal Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.36% / 0.0236",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Axis Bank",
+    "product": "Personal Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.24% / As Per Slab",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Axis Finance",
+    "product": "Personal Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.00% / 0.02",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Aditya Birla",
+    "product": "Personal Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.40% / 0.024",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bajaj Finance",
+    "product": "Personal Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.16% / 0.0216",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Kotak",
+    "product": "Personal Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.24% / 0.0224",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Tata Capital",
+    "product": "Personal Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.40% / 0.024",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Aditya Birla Finance Ltd",
+    "product": "Business Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.40% / 2.40%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Axis Bank Ltd",
+    "product": "Business Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.40% / 2.40%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Bajaj Finance Ltd (Prime)",
+    "product": "Business Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.16% / 2.16%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "HDFC Bank Ltd",
+    "product": "Business Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.50% / 2.50%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "ICICI Bank Ltd",
+    "product": "Business Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.50% / 2.50%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "APNARUPEE FIN INDIA",
+    "brand": "ApnaRupee",
+    "lender": "Tata Capital Ltd (BL)",
+    "product": "Business Loan",
+    "channel": "DSA",
+    "code": "",
+    "payout": "2.50% / 2.50%",
+    "login": "DSA Login",
+    "legalCompany": "Apnarupee Fin India Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Punjab National Bank",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "CDSA00000050",
+    "payout": "0.90% Flat · Fresh/BT · Min 10% disbursement",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Canara Bank",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "CDSA00000050",
+    "payout": "0.82% Fresh / 0.90% BT · Min 10% disbursement · Min loan ₹50L · Existing customer not eligible · Tier 1/State Capitals",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Bank of India",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "BSACORP027",
+    "payout": "0.82% Fresh / 0.90% BT · Min 10% disbursement",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Bank of Baroda",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "CDSA01034",
+    "payout": "0.82% Fresh / 0.90% BT · Min 20% disbursement · Existing customer not eligible",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "HDFC Bank",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "PMAC",
+    "payout": "0.90% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Axis Bank",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "DSA659GURMORT",
+    "payout": "0.90% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Federal Bank",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "3196",
+    "payout": "0.90% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Bajaj Housing Finance",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "125678",
+    "payout": "0.90% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Tata Capital Housing Finance",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "8057034",
+    "payout": "0.90% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "L&T Finance",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "DSA_PMCPL",
+    "payout": "0.90% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Piramal Housing Finance",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "P02E3DEYM5",
+    "payout": "0.85% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "ICICI HFC",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "373372",
+    "payout": "0.90% Gross",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "TruHome Finance",
+    "product": "Home Loan",
+    "channel": "DSA",
+    "code": "D300626099",
+    "payout": "0.90% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Axis Bank",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "CON1558GUR",
+    "payout": "0.50% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "IDBI Bank",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "Paisabazaar.com",
+    "payout": "0.50% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "PNB Housing Finance",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "CNT00045606",
+    "payout": "0.75% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Bajaj Housing Finance",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "5708",
+    "payout": "0.50% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Tata Capital Housing Finance",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "10006459",
+    "payout": "0.50% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "ICICI HFC",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "373372",
+    "payout": "0.50% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Jio Finance",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "900000536",
+    "payout": "0.50% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "L&T Finance",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "Paisabazaar",
+    "payout": "0.50% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "HomeFirst Finance",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "PaisaBazaar",
+    "payout": "0.50% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Easy Home Finance",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "EHFL/DSA/00862",
+    "payout": "0.90% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "TruHome Finance",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "D300626099",
+    "payout": "0.70% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Mahindra Finance",
+    "product": "Home Loan",
+    "channel": "Referral",
+    "code": "2120PA220",
+    "payout": "0.50% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Axis Bank",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "DSA659GURMORT",
+    "payout": "0.90% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "HDFC Bank",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "PMAC",
+    "payout": "1.10% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Federal Bank",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "3196",
+    "payout": "1.30% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Bajaj Housing Finance",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "125678",
+    "payout": "0.80% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Tata Capital Housing Finance",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "8057034",
+    "payout": "1.30% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Piramal Capital & Housing Finance",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "P02E3DEYM5",
+    "payout": "1.20% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "L&T Finance",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "DSA_PMCPL",
+    "payout": "1.30% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "ICICI HFC",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "373372",
+    "payout": "1.30% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "TruHome Finance",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "D300626099",
+    "payout": "1.30% Net",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Axis Bank",
+    "product": "LAP",
+    "channel": "Referral",
+    "code": "CON1558GUR",
+    "payout": "0.50% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Bajaj Housing Finance",
+    "product": "LAP",
+    "channel": "Referral",
+    "code": "5708",
+    "payout": "0.60% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Tata Capital Housing Finance",
+    "product": "LAP",
+    "channel": "Referral",
+    "code": "8057034",
+    "payout": "0.90% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Easy Home Finance",
+    "product": "LAP",
+    "channel": "Referral",
+    "code": "EHFL/DSA/00862",
+    "payout": "1.20% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Cholamandalam Finance",
+    "product": "LAP",
+    "channel": "Referral",
+    "code": "20252",
+    "payout": "0.80% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "HomeFirst Finance",
+    "product": "LAP",
+    "channel": "Referral",
+    "code": "PaisaBazaar",
+    "payout": "1.20% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Aditya Birla Finance",
+    "product": "LAP",
+    "channel": "Referral",
+    "code": "DAZABF04147",
+    "payout": "0.90% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "Jio Finance",
+    "product": "LAP",
+    "channel": "Referral",
+    "code": "900000536",
+    "payout": "0.70% Gross",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "ICICI HFC",
+    "product": "LAP",
+    "channel": "Referral",
+    "code": "373372",
+    "payout": "1.30% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "TruHome Finance",
+    "product": "LAP",
+    "channel": "Referral",
+    "code": "D300626099",
+    "payout": "1.30% Net",
+    "login": "Partner Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "HDB Financial Services",
+    "product": "LAP",
+    "channel": "DSA",
+    "code": "2572 / 40071",
+    "payout": "Self Login 2.13% · RM/Referral 2% · Institution Cap",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "PNB",
+    "product": "HL / BT",
+    "channel": "DSA",
+    "code": "HLRLC3847082",
+    "payout": "Self Login 0.85% · RM/Referral 0.80% · Bank Policy",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "PNB Housing",
+    "product": "HL / LAP",
+    "channel": "DSA",
+    "code": "DMA00038867 / CNT00045606",
+    "payout": "Self 0.95% · RM 0.90% · No Hard Cap",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "PB CONNECT",
+    "brand": "Paisabazaar",
+    "lender": "HDFC Bank",
+    "product": "HL / LAP",
+    "channel": "DSA",
+    "code": "352617 / PMAC",
+    "payout": "Self 1.10% · RM 0.90% · Slab Capping",
+    "login": "DSA Login",
+    "legalCompany": "Paisabazaar Marketing and Consulting Private Limited"
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-1",
+    "payout": "PB CONNECT general: successful disbursement and correct mapping/tagging required.",
+    "login": ""
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-2",
+    "payout": "PB CONNECT: PF below prescribed lender norm may reduce payout; lender caps may apply.",
+    "login": "",
+    "status": "Needs verification"
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-3",
+    "payout": "PB CONNECT: realized/encashed amount basis; clawback/recovery may be recovered from partner; applicable TDS applies.",
+    "login": ""
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-4",
+    "payout": "PB CONNECT: Canara Bank source rule says Tier 1 cities and State Capitals eligibility.",
+    "login": ""
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-5",
+    "payout": "PB CONNECT: PNB Home Loan minimum 10% disbursement; PNB BT cheque 60-day encashment rule.",
+    "login": ""
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-6",
+    "payout": "PB CONNECT: HDFC LAP early pre-close/BT within 12 months can trigger 100% clawback.",
+    "login": ""
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-7",
+    "payout": "PB CONNECT: Axis multiple login penalty ₹25,000; fake-doc penalty 5% of loan amount per supplied source.",
+    "login": ""
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-8",
+    "payout": "PB CONNECT: ICICI selected slabs no payout below ₹30 lakh; 12-month closure can trigger full recovery.",
+    "login": ""
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-9",
+    "payout": "ApnaRupee W.E.F. 01.07.2026: waiver/rate adjustment may vary payout; monthly MIS and big-ticket capping; company may modify structure.",
+    "login": ""
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-10",
+    "payout": "ApnaRupee: recovery/cancellation/clawback recoverable; payout on final net disbursement; takeover/foreclosure recovery per bank policy.",
+    "login": ""
+  },
+  {
+    "source": "TERMS",
+    "brand": "Master Rules",
+    "lender": "Payout Terms & Conditions",
+    "product": "Terms",
+    "channel": "",
+    "code": "RULE-11",
+    "payout": "ApnaRupee: TDS inclusive; GST extra for registered vendors subject to GSTR-2B confirmation; advance payout 10% less than current payout.",
+    "login": ""
+  }
+];;
+
+const $ = id => document.getElementById(id);
+function esc(s){ return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function copyText(txt){ navigator.clipboard?.writeText(txt).then(()=>alert('Code Copied: '+txt)).catch(()=>alert(txt)); }
+function rupee(n){ return Number(n||0).toLocaleString('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:2}); }
+
+function normalizeText(text) {
+  return String(text || '').toLowerCase().normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '').replace(/&/g, ' and ')
+    .replace(/[-_.,/()]+/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function getInstitutionAliases(record) {
+  const configured = INST_ALIASES[record.lender] || [];
+  const bank = BANK_MASTER.find(b => b.name === record.lender);
+  const base = [record.lender, ...(bank?.aliases || []), ...configured];
+  const generated = [];
+  base.forEach(v => {
+    const n = normalizeText(v);
+    if (n.includes(' limited')) generated.push(n.replace(/\\blimited\\b/g, '').trim());
+    if (n.includes(' ltd')) generated.push(n.replace(/\\bltd\\b/g, '').trim());
+  });
+  return [...new Set([...base, ...generated].map(normalizeText).filter(Boolean))];
+}
+
+function getProductAliases(record) {
+  const master = PRODUCT_MASTER.find(p => p.code === record.product);
+  return [...new Set([record.product, record.productName, master?.name || '', ...(master?.aliases || [])]
+    .map(normalizeText).filter(Boolean))];
+}
+
+function phraseMatches(text, aliases) {
+  const nText = normalizeText(text);
+  return aliases.some(alias => {
+    const a = normalizeText(alias);
+    return !!a && (nText === a || nText.includes(a));
+  });
+}
+
+function evaluateSmartSearch(record, rawQuery) {
+  if (!String(rawQuery || '').trim()) return { match:true, score:0 };
+  const query = normalizeText(rawQuery);
+  const tokens = query.split(' ').filter(Boolean);
+  const institutionAliases = getInstitutionAliases(record);
+  const productAliases = getProductAliases(record);
+  const otherFields = [record.category, record.channel, record.code, record.brand, record.source,
+    record.login, record.type, LEGAL_MAP[record.brand] || ''].map(normalizeText).filter(Boolean);
+
+  const categoryAliases = {
+    psb:['psb','public sector bank','public sector banks'],
+    private:['private','private bank','private sector bank'],
+    sfb:['sfb','small finance bank','small finance banks'],
+    rrb:['rrb','regional rural bank','regional rural banks','gramin bank','gramin'],
+    foreign:['foreign','foreign bank','foreign banks'],
+    cooperative:['cooperative','co operative','co operative bank','state cooperative bank'],
+    nbfc:['nbfc','non banking finance company','non banking financial company'],
+    hfc:['hfc','housing finance company','housing finance companies']
+  };
+  const category = normalizeText(record.category);
+  const cats = [...(categoryAliases[category] || []), category].filter(Boolean);
+  let score = 0;
+  let satisfied = 0;
+
+  if (phraseMatches(query, institutionAliases)) score += 50;
+  if (phraseMatches(query, productAliases)) score += 50;
+
+  for (const token of tokens) {
+    let matched = false;
+    if (institutionAliases.some(a => a === token || a.startsWith(token) || token.startsWith(a) || a.split(' ').includes(token))) {
+      matched = true; score += 30;
+    }
+    if (!matched && productAliases.some(a => a === token || a.startsWith(token) || token.startsWith(a) || a.split(' ').includes(token))) {
+      matched = true; score += 30;
+    }
+    if (!matched && cats.some(a => normalizeText(a) === token || normalizeText(a).split(' ').includes(token))) {
+      matched = true; score += 20;
+    }
+    if (!matched && otherFields.some(f => f === token || f.includes(token))) {
+      matched = true; score += 10;
+    }
+    if (matched) satisfied++;
+  }
+  return { match:satisfied === tokens.length, score };
+}
+
+function populateSourcesDropdown() {
+  const sourceSelect = $('source');
+  sourceSelect.innerHTML = '<option value="">All Sources</option>';
+  Object.keys(LEGAL_MAP).sort().forEach(brand => {
+    const opt = document.createElement('option');
+    opt.value = brand;
+    opt.textContent = brand;
+    sourceSelect.appendChild(opt);
+  });
+}
+
+function populateLendersDropdown() {
+  const selectedCat = $('bankCategory').value;
+  const bankSelect = $('bank');
+  bankSelect.innerHTML = '<option value="">All Lenders / Institutions</option>';
+
+  const filteredBanks = BANK_MASTER.filter(b => !selectedCat || b.category === selectedCat);
+  filteredBanks.sort((a,b)=>a.name.localeCompare(b.name)).forEach(b => {
+    const opt = document.createElement('option');
+    opt.value = b.name;
+    opt.textContent = `${b.name} (${b.category})`;
+    bankSelect.appendChild(opt);
+  });
+}
+
+function render() {
+  const q = $('q').value;
+  const selectedProduct = $('pr').value;
+  const selectedBankCat = $('bankCategory').value;
+  const selectedBank = $('bank').value;
+  const selectedChannel = $('ch').value;
+  const selectedSource = $('source').value;
+  const selectedLogin = $('login').value;
+  const amt = Number($('amount').value) || 0;
+  $('amtText').textContent = rupee(amt);
+
+  let activeCount = 0;
+  if (q.trim()) activeCount++;
+  if (selectedProduct) activeCount++;
+  if (selectedBankCat) activeCount++;
+  if (selectedBank) activeCount++;
+  if (selectedChannel) activeCount++;
+  if (selectedSource) activeCount++;
+  if (selectedLogin) activeCount++;
+  $('activeFilters').textContent = `Active Filters: ${activeCount}`;
+
+  const filtered = [];
+  D.forEach(x => {
+    const searchRes = evaluateSmartSearch(x, q);
+    if (!searchRes.match) return;
+
+    if (selectedProduct && x.product !== selectedProduct) return;
+    if (selectedBankCat && x.category !== selectedBankCat) return;
+    if (selectedBank && x.lender !== selectedBank) return;
+    if (selectedChannel && !x.channel.toLowerCase().includes(selectedChannel.toLowerCase())) return;
+    if (selectedSource && x.source !== selectedSource) return;
+    if (selectedLogin && !x.login.toLowerCase().includes(selectedLogin.toLowerCase())) return;
+
+    x._score = searchRes.score;
+    filtered.push(x);
+  });
+
+  $('matchCount').textContent = `Records: ${filtered.length}`;
+
+  let flatRows = filtered.map(x => {
+    const isFixed = x.payout.includes('₹');
+    const numericRate = parseFloat(x.payout.replace(/[^0-9.]/g, '')) || 0;
+    
+    let gross = isFixed ? numericRate : (amt * numericRate / 100);
+    const tds = gross * 2 / 102;
+    const net = gross - tds;
+    const gst = gross * 18 / 100;
+    const incl = gross + gst;
+    const final = incl - tds;
+
+    return {
+      ...x,
+      isFixed,
+      numericRate,
+      gross,
+      tds,
+      net,
+      gst,
+      incl,
+      final,
+      legalFullName: LEGAL_MAP[x.brand] || x.brand
+    };
+  });
+
+  flatRows.sort((a, b) => {
+    if (b._score !== a._score) return b._score - a._score;
+    return b.final - a.final;
+  });
+
+  let html = '';
+  flatRows.forEach((r, idx) => {
+    let rankBadge = `<span class="rank-badge" style="background:#f1f5f9;color:#475569;">#${idx+1}</span>`;
+    if(idx === 0) rankBadge = `<span class="rank-badge rank-1">🥇 Rank 1</span>`;
+    else if(idx === 1) rankBadge = `<span class="rank-badge rank-2">🥈 Rank 2</span>`;
+    else if(idx === 2) rankBadge = `<span class="rank-badge rank-3">🥉 Rank 3</span>`;
+
+    html += `<tr>
+      <td>${rankBadge}</td>
+      <td>
+        <div class="brand-tooltip">
+          ${esc(r.brand)}
+          <span class="tooltip-text">${esc(r.legalFullName)}</span>
+        </div>
+      </td>
+      <td style="text-align:left;"><b>${esc(r.lender)}</b><br><small style="color:#002D9C;font-weight:700;">[${esc(r.category)}]</small></td>
+      <td><b>${esc(r.productName)}</b></td>
+      <td style="color:#002D9C; font-weight:800; font-size:13px;">${esc(r.payout)}</td>
+      <td>${rupee(r.gross)}</td>
+      <td>${rupee(r.tds)}</td>
+      <td>${rupee(r.net)}</td>
+      <td>${rupee(r.gst)}</td>
+      <td>${rupee(r.incl)}</td>
+      <td style="color:#FF0000; font-weight:800; font-size:13px;">${rupee(r.final)}</td>
+      <td><small><b>${esc(r.login||'—')}</b><br>Code: ${esc(r.code||'N/A')}</small>${r.code?' <button class="btn-copy" onclick="copyText(\''+esc(r.code)+'\')">Copy</button>':''}</td>
+      <td><a href="https://wa.me/9340726600?text=I%20want%20to%20apply%20for%20${encodeURIComponent(r.lender)}%20${encodeURIComponent(r.productName)}" target="_blank"><button class="btn-ad">Apply Now</button></a></td>
+    </tr>`;
+  });
+
+  if (!html) {
+    html = '<tr><td colspan="13" style="text-align:center;padding:22px;color:#667085;font-weight:700;">कोई फ़िल्टर रिकॉर्ड नहीं मिला। कृपया अपने फ़िल्टर साफ़ करें या रिसेट बटन दबाएँ।</td></tr>';
+  }
+
+  $('compareBody').innerHTML = html;
+}
+
+function initDropdowns() {
+  const prSelect = $('pr');
+  PRODUCT_MASTER.forEach(p => {
+    const opt = document.createElement('option');
+    opt.value = p.code;
+    opt.textContent = `${p.code} - ${p.name}`;
+    prSelect.appendChild(opt);
+  });
+  populateSourcesDropdown();
+  populateLendersDropdown();
+}
+
+function resetAllFilters() {
+  $('q').value = '';$('pr').value = '';
+  $('bankCategory').value = '';$('bank').value = '';
+  $('ch').value = '';$('source').value = '';
+  $('login').value = '';$('amount').value = 500000;
+  populateLendersDropdown();
+  render();
+}
+
+$('bankCategory').addEventListener('change', () => {
+  populateLendersDropdown();
+  render();
+});
+
+['q','pr','bank','ch','source','login','amount'].forEach(id => {
+  const el = $(id);
+  if (el) el.addEventListener('input', render);
+  if (el && el.tagName === 'SELECT') el.addEventListener('change', render);
+});
+
+document.querySelectorAll('[data-amt]').forEach(b => b.onclick = () => { $('amount').value = b.dataset.amt; render(); });
+$('resetAmt').onclick = () => {$('amount').value = 500000; render(); };
+
+initDropdowns();
+render();
+</script>
+
+</body>
+</html>
