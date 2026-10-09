@@ -1,1 +1,13 @@
-
+{
+  "services": [
+    {
+      "category_hi": "वाहन एवं RC सेवाएँ",
+      "category_en": "Vehicle & RC Services",
+      "name_hi": "डुप्लीकेट RC सहायता",
+      "name_en": "Duplicate RC Assistance",
+      "description_hi": "डुप्लीकेट RC आवेदन की जानकारी एवं सहायता",
+      "description_en": "Duplicate RC application guidance",
+      "enabled": true
+    }
+  ]
+}
