@@ -19,4 +19,16 @@
       "enabled": true
     }
   ]
+},
+{
+     {
+      "category_hi": "वसीयतनामा",
+      "category_en": "Will deed",
+      "name_hi": "दान विलेख",
+      "name_en": "Gift Deed",
+      "description_hi": "पट्टा विलेख",
+      "description_en": "Lease Deed",
+      "enabled": true
+    }
+  ]
 }
