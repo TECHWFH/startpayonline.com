@@ -19,4 +19,17 @@
       "enabled": true
     }
   ]
+},
+{
+  "services": [
+    {
+      "category_hi": "22",
+      "category_en": "22",
+      "name_hi": "23 तेस्त",
+      "name_en": "23 test",
+      "description_hi": "24 25",
+      "description_en": "24 25",
+      "enabled": true
+    }
+  ]
 }
