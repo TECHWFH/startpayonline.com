@@ -17,18 +17,16 @@
       "description_hi": "पट्टा विलेख",
       "description_en": "Lease Deed",
       "enabled": true
-    }
-  ]
-},
-{     
-      "category_hi": "वसीयतनामा",
-      "category_en": "Will deed",
-      "name_hi": "दान विलेख",
-      "name_en": "Gift Deed",
-      "description_hi": "पट्टा विलेख",
-      "description_en": "Lease Deed",
+    },
+    {
+  "services": [
+    {
+      "category_hi": "22",
+      "category_en": "22",
+      "name_hi": "23 तेस्त",
+      "name_en": "23 test",
+      "description_hi": "24 25",
+      "description_en": "24 25",
       "enabled": true
-    }
-  ]
-}
+    },
 
