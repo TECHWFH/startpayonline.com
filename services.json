@@ -8,11 +8,7 @@
       "description_hi": "डुप्लीकेट RC आवेदन की जानकारी एवं सहायता",
       "description_en": "Duplicate RC application guidance",
       "enabled": true
-    }
-  ]
-}
-{
-  "services": [
+    },
     {
       "category_hi": "सिविल न्यायालय प्रकरण",
       "category_en": "Civil Court Case",
