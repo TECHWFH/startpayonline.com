@@ -1,22 +1,201 @@
-<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OKFS Service Manager</title><style>
-:root{--b:#002D9C;--g:#00A825;--ink:#17233d;--muted:#61708a;--bg:#f2f6ff}*{box-sizing:border-box}body{margin:0;font-family:system-ui,'Noto Sans Devanagari',sans-serif;background:var(--bg);color:var(--ink)}header{background:linear-gradient(115deg,#002D9C,#124dc9);color:#fff;padding:24px 18px}header .wrap{max-width:1100px;margin:auto}h1{font-size:clamp(23px,4vw,34px);line-height:1.5;margin:0}header p{margin:5px 0 0;color:#e4edff}.wrap{max-width:1100px;margin:22px auto;padding:0 14px}.panel{background:white;border:1px solid #dce5f4;border-radius:16px;padding:18px;box-shadow:0 4px 20px #002d9c0a;margin-bottom:16px}.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}h2{font-size:19px;margin:0 0 12px}button,.btn{border:0;background:var(--b);color:white;padding:11px 15px;border-radius:9px;cursor:pointer;font-weight:700;font:inherit}button:hover{filter:brightness(1.09)}button:disabled{opacity:.5;cursor:not-allowed}.green{background:var(--g)}.ghost{background:#e9effb;color:var(--b)}.danger{background:#fff0f0;color:#b21c28;border:1px solid #f5c7c7}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}label{display:block;font-weight:650;font-size:13px;margin:0 0 5px}input,textarea,select{width:100%;border:1px solid #bfcce1;border-radius:9px;padding:11px;font:inherit;color:#17233d;background:#fff}textarea{min-height:80px;resize:vertical}.span{grid-column:1/-1}.note{font-size:13px;color:var(--muted);line-height:1.7}.status{font-weight:650;color:#005d19}.warn{color:#a32a22}.pill{display:inline-block;border-radius:100px;padding:4px 10px;background:#eaf2ff;color:#1744a2;font-size:12px;font-weight:700}.service{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid #e1e8f5;border-radius:10px;padding:12px;margin-top:8px}.service strong{display:block}.service small{color:var(--muted)}.service .row{flex-shrink:0}.help{background:#e9f6ec;border-left:4px solid var(--g);padding:12px;border-radius:8px;line-height:1.7}.empty{padding:20px;text-align:center;color:var(--muted)}@media(max-width:680px){.grid{grid-template-columns:1fr}.service{align-items:stretch;flex-direction:column}.service .row button{flex:1}header{padding:18px 12px}}@media print{header,.controls,button{display:none!important}}
-</style></head><body><header><div class="wrap"><h1>ऑनलाइन कियोस्क फाइनेंशियल सर्विसेज</h1><p>Service Manager • Add / Edit / Delete • StartPay Legal & Finance IT Solutions</p></div></header><main class="wrap"><section class="panel"><div class="top"><div><h2>Service Data खोलें</h2><div class="note">अपनी मौजूदा <b>services.json</b> खोलें। पुरानी Services सुरक्षित रखकर बदलाव करें।</div></div><span id="count" class="pill">0 Services</span></div><div class="row controls" style="margin-top:12px"><label class="btn" style="cursor:pointer;background:#002D9C;color:white;padding:11px 15px;border-radius:9px;margin:0">📁 services.json चुनें<input type="file" id="file" accept=".json,application/json" hidden></label><button class="ghost" id="online">🌐 GitHub Pages से Data लाएँ</button><button class="green" id="download">⬇️ Updated services.json डाउनलोड</button></div><p id="status" class="note" role="status">शुरू करने के लिए JSON फाइल चुनें या वेबसाइट से डेटा लाएँ।</p></section><section class="panel"><h2 id="formTitle">➕ नई Service जोड़ें</h2><form id="form" class="grid"><div><label for="category_hi">Category (हिंदी) *</label><input id="category_hi" required list="cats" placeholder="जैसे वाहन एवं RC सेवाएँ"><datalist id="cats"></datalist></div><div><label for="category_en">Category (English)</label><input id="category_en" placeholder="Vehicle & RC Services"></div><div><label for="name_hi">Service Name (हिंदी) *</label><input id="name_hi" required placeholder="जैसे डुप्लीकेट RC सहायता"></div><div><label for="name_en">Service Name (English)</label><input id="name_en" placeholder="Duplicate RC Assistance"></div><div><label for="description_hi">जानकारी (हिंदी)</label><textarea id="description_hi" placeholder="इस सेवा का संक्षिप्त विवरण"></textarea></div><div><label for="description_en">Description (English)</label><textarea id="description_en"></textarea></div><div class="span row"><label style="display:flex;align-items:center;gap:8px"><input id="enabled" type="checkbox" checked style="width:auto"> Service वेबसाइट पर दिखाएँ (Enabled)</label></div><div class="span row controls"><button type="submit" class="green" id="save">➕ Service जोड़ें</button><button type="button" class="ghost" id="reset">Form साफ करें</button></div></form></section><section class="panel"><div class="top"><h2>📋 Services की सूची</h2><input id="search" placeholder="🔎 Service खोजें…" style="max-width:310px"></div><div id="list"></div></section><section class="panel"><h2>GitHub पर कैसे अपडेट करें?</h2><div class="help">1. ऊपर से <b>Updated services.json डाउनलोड</b> करें।<br>2. <a href="https://github.com/TECHWFH/startpayonline.com/blob/OKFS/services.json" target="_blank" rel="noopener">OKFS Branch की services.json</a> खोलें।<br>3. GitHub में <b>Upload files</b> से इसी नाम की फाइल Replace करें, या फाइल खोलकर <b>Edit</b> में डाउनलोड की हुई JSON सामग्री Paste करें।<br>4. <b>Commit changes</b> करें। Deployment के बाद नई Service वेबसाइट पर दिखेगी।</div><p class="note">यह Manager केवल आपके Browser में Data Edit करता है। GitHub पर सीधे Save नहीं करता। GitHub Password या Token यहाँ न डालें। Delete करने पर फाइल डाउनलोड/Commit करने तक लाइव वेबसाइट नहीं बदलेगी।</p></section></main><script>
+<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>StartPay OKFS Service Manager V3</title><style>
+:root{--blue:#002D9C;--green:#00A825;--bg:#f1f5ff;--ink:#15223a}*{box-sizing:border-box}body{font-family:system-ui,'Noto Sans Devanagari',sans-serif;background:var(--bg);color:var(--ink);margin:0}header{background:linear-gradient(110deg,#002D9C,#174fc4);color:#fff;padding:22px 16px}header>div,main{max-width:1120px;margin:auto}h1{margin:0;font-size:clamp(23px,4vw,32px)}header p{margin:5px 0}main{padding:16px}.panel{background:white;border:1px solid #dce4f4;border-radius:15px;padding:17px;margin:0 0 15px;box-shadow:0 3px 15px #002d9c0b}h2{font-size:19px;margin:0 0 12px}.row{display:flex;flex-wrap:wrap;align-items:center;gap:9px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{display:block;font-weight:650;font-size:13px;margin:0 0 5px}input,textarea{font:inherit;width:100%;padding:10px;border:1px solid #b7c7e1;border-radius:8px;color:var(--ink)}input[type=checkbox]{width:auto}textarea{min-height:82px;resize:vertical}button,.filebtn{font:inherit;cursor:pointer;background:var(--blue);color:white;border:0;border-radius:9px;padding:10px 13px;font-weight:650}.green{background:var(--green)}.secondary{background:#e8eefb;color:var(--blue)}.red{background:#ffeded;color:#a51520}.note{color:#64718a;font-size:13px;line-height:1.7}.span{grid-column:1/-1}.service{border:1px solid #dde6f4;border-radius:10px;padding:12px;margin:8px 0;display:flex;align-items:center;justify-content:space-between;gap:10px}.service small{display:block;color:#69758a;margin-top:4px}.pill{background:#e7efff;color:var(--blue);padding:5px 10px;border-radius:20px;font-size:12px;font-weight:700}.hidden{opacity:.65}.alert{padding:10px;border-radius:8px;background:#eff8f1;color:#176027}.warn{background:#fff4e6;color:#855000}.top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}@media(max-width:650px){.grid{grid-template-columns:1fr}.service{align-items:stretch;flex-direction:column}.service .row button{flex:1}}@media print{button,.controls{display:none}}
+</style></head><body><header><div><h1>StartPay • OKFS Service Manager V3.6 • Live Dual Auto Replace</h1><p>हिंदी + English | Service Add / Edit / Delete | Safe JSON Management</p></div></header><main>
+<section class="panel"><div class="top"><h2>📂 Service Data</h2><span id="count" class="pill">0 Services</span></div><div class="row controls"><label class="filebtn" style="margin:0">📁 services.json खोलें<input id="file" type="file" accept=".json,application/json" hidden></label><button id="online" class="secondary">🌐 Website से Load</button><button id="restore" class="secondary">↩️ Saved Draft खोलें</button><button id="download" class="green">⬇️ services.json Download</button></div><p id="status" class="alert" role="status">पहले services.json खोलें या Website से Load करें। नई Service जोड़ने पर वह तुरंत नीचे सूची में दिखेगी।</p><p class="note">Browser Draft इसी डिवाइस में रहता है। Live GitHub Website अपने-आप अपडेट नहीं होती। JSON Download के बाद ही GitHub पर अलग से Commit करें。</p></section>
+<section class="panel"><div class="top"><h2>🌐 Hindi ↔ English सहायता</h2><label><input type="checkbox" id="auto" checked> Auto Suggestion ON</label></div><p class="note">Roman Hindi के सामान्य शब्दों पर Space / Enter दबाने से Unicode हिंदी बनेगी। Save से पहले दोनों Fields Live Auto Replace होंगे। Auto Suggestion OFF करने पर दोनों Fields स्वतंत्र रहेंगे।</p><div class="row"><button type="button" id="enToHi" class="secondary">English → Hindi Replace</button><button type="button" id="hiToEn" class="secondary">Hindi → English Replace</button><button type="button" id="fixAll" class="green">✍️ पूरी हिंदी सुधारें</button><button type="button" id="resetSuggestions" class="secondary">Auto Suggestions Reset</button></div><div class="row" style="margin-top:10px"><input id="wrongWord" style="max-width:230px" placeholder="English / Roman शब्द, जैसे Land"><input id="rightWord" style="max-width:230px" placeholder="सही हिंदी, जैसे भूमि"><input id="englishMeaning" style="max-width:230px" placeholder="सही English Meaning (वैकल्पिक)"><button type="button" id="saveWord" class="secondary">📘 शब्द याद रखें</button></div><p id="langStatus" class="note">उदाहरण: NAMANTRAN, namantaran, khasra, jabalpur, praman patra — आप हिंदी को स्वयं सुधार सकते हैं।</p></section>
+<section class="panel"><h2 id="formTitle">➕ नई Service जोड़ें</h2><form id="form" class="grid"><div><label for="category_hi">Category (हिंदी) *</label><input id="category_hi" required list="cats" placeholder="जैसे राजस्व एवं भूमि सेवाएँ"><datalist id="cats"></datalist></div><div><label for="category_en">Category (English)</label><input id="category_en" placeholder="Land & Revenue Services"></div><div><label for="name_hi">Service Name (हिंदी) *</label><input id="name_hi" required placeholder="जैसे नामांतरण"></div><div><label for="name_en">Service Name (English)</label><input id="name_en" placeholder="Land Mutation"></div><div><label for="description_hi">जानकारी (हिंदी)</label><textarea id="description_hi"></textarea></div><div><label for="description_en">Description (English)</label><textarea id="description_en"></textarea></div><div class="span"><label><input id="enabled" type="checkbox" checked> वेबसाइट पर दिखाएँ (Enabled)</label></div><div class="span row controls"><button id="save" class="green" type="submit">➕ Service जोड़ें</button><button id="clear" type="button" class="secondary">Form साफ करें</button></div></form></section>
+<section class="panel"><div class="top"><h2>📋 Services की सूची</h2><input id="search" style="max-width:320px" placeholder="🔎 हिंदी / English में खोजें"></div><div id="list" class="note">पहले डेटा लोड करें।</div></section>
+<section class="panel"><h2>कैसे इस्तेमाल करें?</h2><p class="note">1. पहले Website से Load या services.json खोलें। 2. Service जोड़ें या Edit करें। 3. सूची में बदलाव जाँचें। 4. JSON Download करें। 5. पूरी जाँच के बाद GitHub OKFS Branch में services.json अपडेट करें। पुराने डेटा का Backup जरूर रखें।</p></section></main><script>
 'use strict';
-let documentData={services:[]}, editing=-1, loaded=false;
 const $=id=>document.getElementById(id);
 const fields=['category_hi','category_en','name_hi','name_en','description_hi','description_en'];
-const say=(message,error=false)=>{ $('status').textContent=message;$('status').className=error?'note warn':'note status'; };
-function parseData(raw){const obj=JSON.parse(raw);if(!obj||typeof obj!=='object'||Array.isArray(obj)||!Array.isArray(obj.services))throw Error('JSON में "services" की Array होना जरूरी है।');if(obj.services.some(x=>!x||typeof x!=='object'||Array.isArray(x)))throw Error('कुछ Service Entries गलत Format में हैं।');documentData=obj;loaded=true;resetForm();render();say('डेटा लोड हो गया। अब Service जोड़ें या Edit करें।');}
-$('file').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{parseData(await f.text())}catch(err){say('फाइल नहीं खुली: '+err.message,true)}e.target.value='';});
-$('online').addEventListener('click',async()=>{try{say('वेबसाइट से services.json पढ़ रहे हैं…');const url='https://techwfh.github.io/startpayonline.com/services.json?t='+Date.now();const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);parseData(await res.text())}catch(err){say('Online Data नहीं खुला। अपनी services.json फाइल चुनें। '+err.message,true)}});
-function resetForm(){editing=-1;$('form').reset();$('enabled').checked=true;$('formTitle').textContent='➕ नई Service जोड़ें';$('save').textContent='➕ Service जोड़ें';}
-$('reset').onclick=resetForm;
-$('form').addEventListener('submit',e=>{e.preventDefault();const values={};for(const k of fields)values[k]=$(k).value.trim();if(!values.category_hi||!values.name_hi){say('Category और Service Name (हिंदी) भरें।',true);return;}values.enabled=$('enabled').checked;if(editing<0){const dup=documentData.services.some(s=>s.name_hi===values.name_hi&&s.category_hi===values.category_hi);if(dup&&!confirm('इस नाम की Service पहले से है। फिर भी जोड़ें?'))return;documentData.services.push(values);say('नई Service जोड़ दी। अब JSON डाउनलोड करके GitHub पर Commit करें।')}else{Object.assign(documentData.services[editing],values);say('Service अपडेट हो गई। अब JSON डाउनलोड करके GitHub पर Commit करें।')}resetForm();render();});
-function edit(i){const s=documentData.services[i];if(!s)return;editing=i;for(const k of fields)$(k).value=s[k]??'';$('enabled').checked=s.enabled!==false;$('formTitle').textContent='✏️ Service Edit करें';$('save').textContent='💾 बदलाव सेव करें';$('formTitle').scrollIntoView({behavior:'smooth',block:'start'});}
-function remove(i){const s=documentData.services[i];if(!s||!confirm('"'+(s.name_hi||s.name_en||'Service')+'" हटाएँ? यह बदलाव डाउनलोड की गई JSON में लागू होगा।'))return;documentData.services.splice(i,1);resetForm();render();say('Service हटा दी। GitHub पर Commit होने तक लाइव वेबसाइट नहीं बदलेगी।');}
-function el(tag,cls,text){const x=document.createElement(tag);if(cls)x.className=cls;if(text!==undefined)x.textContent=text;return x;}
-function render(){const arr=documentData.services;$('count').textContent=arr.length+' Services';const categories=[...new Set(arr.map(s=>s.category_hi).filter(Boolean))];$('cats').replaceChildren(...categories.map(v=>{const o=el('option');o.value=v;return o;}));const term=$('search').value.trim().toLocaleLowerCase();const list=$('list');list.replaceChildren();let matches=0;arr.forEach((s,i)=>{const hay=[...fields.map(k=>s[k]||''),s.enabled===false?'disabled':''].join(' ').toLocaleLowerCase();if(term&&!hay.includes(term))return;matches++;const item=el('div','service'),left=el('div');left.append(el('strong','',s.name_hi||s.name_en||'Unnamed Service'),el('small','',(s.category_hi||s.category_en||'No Category')+' • '+(s.enabled===false?'Hidden':'Active')+' • '+(s.name_en||'')));const right=el('div','row');const b1=el('button','ghost','✏️ Edit'),b2=el('button','danger','🗑️ Delete');b1.onclick=()=>edit(i);b2.onclick=()=>remove(i);right.append(b1,b2);item.append(left,right);list.append(item);});if(!matches)list.append(el('div','empty',arr.length?'कोई Service नहीं मिली।':'अभी कोई Service नहीं है।'));}
-$('search').addEventListener('input',render);
-$('download').onclick=()=>{if(!loaded&&!documentData.services.length){if(!confirm('अभी कोई JSON फाइल लोड नहीं की। खाली services.json डाउनलोड करना चाहते हैं?'))return;}const str=JSON.stringify(documentData,null,2)+'\n';const blob=new Blob([str],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='services.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);say('services.json डाउनलोड हो गई। GitHub की OKFS Branch में अपडेट करें।');};
+const pairs=[['category_en','category_hi'],['name_en','name_hi'],['description_en','description_hi']];
+const draftKey='startpay-okfs-manager-v34-draft',wordsKey='startpay-okfs-v34-dictionary';
+let data={services:[]},loaded=false,editing=-1,dirty=false;
+const custom=(()=>{try{return JSON.parse(localStorage.getItem(wordsKey)||'{}')}catch{return {}}})();
+const dictionary=[
+['khatuni','खतौनी','Khatauni'],['khatauni','खतौनी','Khatauni'],['khata','खाता','Account'],['p1','पी-1','P-1'],['p2','पी-2','P-2'],['land','भूमि','Land'],['khatuni','खतौनी','Khatauni'],['khatauni','खतौनी','Khatauni'],['namantaran','नामांतरण','Land Mutation'],['namantran','नामांतरण','Land Mutation'],
+['naamantaran','नामांतरण','Land Mutation'],['namantarn','नामांतरण','Land Mutation'],
+['mutation','नामांतरण','Land Mutation'],['land mutation','भूमि नामांतरण','Land Mutation'],
+['khasra','खसरा','Khasra'],['khasra nakal','खसरा नकल','Khasra Copy'],
+['nakal','नकल','Copy'],['bhu naksha','भू नक्शा','Land Map'],
+['bhu','भू','Land'],['naksha','नक्शा','Map'],['bhulekh','भूलेख','Land Records'],
+['land records','भूमि अभिलेख','Land Records'],['land map','भू नक्शा','Land Map'],
+['diversion','व्यपवर्तन','Land Diversion'],['vyapvartan','व्यपवर्तन','Land Diversion'],
+['land diversion','भूमि व्यपवर्तन','Land Diversion'],
+['registry','रजिस्ट्री','Property Registration'],['registration','पंजीकरण','Registration'],
+['property registration','संपत्ति पंजीकरण','Property Registration'],
+['praman patra','प्रमाण पत्र','Certificate'],['praman','प्रमाण','Certificate'],
+['patra','पत्र','Letter'],['income certificate','आय प्रमाण पत्र','Income Certificate'],
+['caste certificate','जाति प्रमाण पत्र','Caste Certificate'],
+['residence certificate','निवास प्रमाण पत्र','Residence Certificate'],
+['aay','आय','Income'],['jati','जाति','Caste'],['niwas','निवास','Residence'],
+['sewa','सेवा','Service'],['seva','सेवा','Service'],['services','सेवाएँ','Services'],
+['loan','ऋण','Loan'],['home loan','गृह ऋण','Home Loan'],
+['personal loan','व्यक्तिगत ऋण','Personal Loan'],['business loan','व्यवसाय ऋण','Business Loan'],
+['insurance','बीमा','Insurance'],['vehicle','वाहन','Vehicle'],
+['document','दस्तावेज़','Document'],['documents','दस्तावेज़','Documents'],
+['application','आवेदन','Application'],['affidavit','शपथ पत्र','Affidavit'],
+['jabalpur','जबलपुर','Jabalpur'],['startpay','स्टार्टपे','StartPay'],
+['ke','के','of'],['liye','लिए','for'],['ke liye','के लिए','for'],
+['aur','और','and'],['chahiye','चाहिए','required'],['hai','है','is'],
+['ki','की','of'],['ka','का','of'],['me','में','in'],['mein','में','in'],
+['karna','करना','do'],['sudhar','सुधार','Correction'],['nakal','नकल','Copy']
+];
+// Starter terminology: curated locally; government websites were not machine-readable during this build.
+const revenueTerms=[
+ ['hypothecation','हाइपोथिकेशन','Hypothecation'],['hypothecation of vehicle','वाहन दृष्टिबंधक','Vehicle Hypothecation'],
+ ['civil court case','सिविल न्यायालय प्रकरण','Civil Court Case'],['civil court','सिविल न्यायालय','Civil Court'],
+ ['court case','न्यायालय प्रकरण','Court Case'],['revenue court','राजस्व न्यायालय','Revenue Court'],
+ ['land parcel map','भूखंड नक्शा','Land Parcel Map'],['land bhag map','भू-भाग नक्शा','Land Parcel Map'],
+ ['land-bhag map','भू-भाग नक्शा','Land Parcel Map'],['land profile mp','मध्य प्रदेश भूमि विवरण','MP Land Profile'],
+ ['land profl mp','मध्य प्रदेश भूमि विवरण','MP Land Profile'],
+ ['land record copy','भू-अभिलेख प्रतिलिपि','Land Record Copy'],
+ ['khasra p1','खसरा पी-1','Khasra P-1'],['khasra p2','खसरा पी-2','Khasra P-2'],
+ ['khasra p-1','खसरा पी-1','Khasra P-1'],['khasra p-2','खसरा पी-2','Khasra P-2'],
+ ['bhu abhilekh','भू-अभिलेख','Land Records'],['bhu naksha','भू-नक्शा','Land Map'],
+ ['land mutation','भूमि नामांतरण','Land Mutation'],['land diversion','भूमि व्यपवर्तन','Land Diversion'],
+ ['land demarcation','भूमि सीमांकन','Land Demarcation'],['demarcation','सीमांकन','Demarcation'],
+ ['partition','बंटवारा','Partition'],['batwara','बंटवारा','Partition'],
+ ['registry','रजिस्ट्री','Property Registration'],['sale deed','विक्रय विलेख','Sale Deed'],
+ ['gift deed','दान विलेख','Gift Deed'],['lease deed','पट्टा विलेख','Lease Deed'],
+ ['encumbrance certificate','भारमुक्ति प्रमाण पत्र','Encumbrance Certificate'],
+ ['stamp duty','स्टाम्प शुल्क','Stamp Duty'],['registration fee','पंजीयन शुल्क','Registration Fee'],
+ ['property valuation','संपत्ति मूल्यांकन','Property Valuation'],
+ ['sampada','सम्पदा','SAMPADA'],['mp bhulekh','मध्य प्रदेश भूलेख','MP Bhulekh'],
+ ['khatauni','खतौनी','Khatauni'],['khatuni','खतौनी','Khatauni'],
+ ['vyapvartan','व्यपवर्तन','Land Diversion'],['seemankan','सीमांकन','Demarcation'],
+ ['civil','सिविल','Civil'],['court','न्यायालय','Court'],['case','प्रकरण','Case'],
+ ['bhag','भाग','Part'],['map','नक्शा','Map'],['mp','मध्य प्रदेश','MP'],
+ ['land','भूमि','Land'],['profile','विवरण','Profile']
+];
+dictionary.push(...revenueTerms);
+const toHi=new Map(),toEn=new Map();let activeLanguage='en';
+for(const [roman,hi,en] of dictionary){toHi.set(roman,hi);if(!toEn.has(hi))toEn.set(hi,en);}
+for(const [roman,entry] of Object.entries(custom)){const hi=typeof entry==='string'?entry:entry?.hi;const en=typeof entry==='string'?roman:entry?.en||roman;if(/^[a-z ]+$/.test(roman)&&/[\u0900-\u097f]/.test(hi||'')){toHi.set(roman,hi);toEn.set(hi,en);}}
+for(const [hi,en] of [['हाइपोथिकेशन','Hypothecation'],['सिविल न्यायालय प्रकरण','Civil Court Case'],['भू-भाग नक्शा','Land Parcel Map'],['भूमि नामांतरण','Land Mutation'],['खसरा नकल','Khasra Copy'],['भू नक्शा','Land Map'],['भूमि व्यपवर्तन','Land Diversion'],['आय प्रमाण पत्र','Income Certificate'],['जाति प्रमाण पत्र','Caste Certificate'],['निवास प्रमाण पत्र','Residence Certificate']])toEn.set(hi,en);
+function replacePhrases(text,map,roman){
+ const keys=[...map.keys()].sort((a,b)=>b.length-a.length);
+ if(roman){
+  const escapeRe=k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+  const pattern=new RegExp('(?<![A-Za-z])(?:'+keys.map(escapeRe).join('|')+')(?![A-Za-z])','gi');
+  return text.replace(pattern,m=>map.get(m.toLowerCase())||m);
+ }
+ // Single pass: never retranslate newly produced English words.
+ const pattern=new RegExp(keys.map(k=>k.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|'),'g');
+ return text.replace(pattern,m=>map.get(m)||m);
+}
+// Offline phonetic fallback for unfamiliar Roman words (best-effort, not dictionary translation).
+const vowelTokens=[['aa','आ','ा'],['ai','ऐ','ै'],['au','औ','ौ'],['ee','ई','ी'],['ii','ई','ी'],['oo','ऊ','ू'],['ou','औ','ौ'],['a','अ',''],['i','इ','ि'],['u','उ','ु'],['e','ए','े'],['o','ओ','ो']];
+const consonants=[['ksh','क्ष'],['chh','छ'],['sh','श'],['kh','ख'],['gh','घ'],['ch','च'],['jh','झ'],['th','थ'],['dh','ध'],['ph','फ'],['bh','भ'],['ng','ङ'],['ny','ञ'],['sh','श'],['k','क'],['g','ग'],['c','क'],['j','ज'],['t','त'],['d','द'],['n','न'],['p','प'],['b','ब'],['m','म'],['y','य'],['r','र'],['l','ल'],['v','व'],['w','व'],['s','स'],['h','ह'],['f','फ'],['z','ज़'],['q','क'],['x','क्स']];
+function phonetic(word){
+ const lower=word.toLowerCase();let out='',i=0;
+ while(i<lower.length){
+  const c=consonants.find(([k])=>lower.startsWith(k,i));
+  if(c){i+=c[0].length;const v=vowelTokens.find(([k])=>lower.startsWith(k,i));
+   if(v){out+=c[1]+v[2];i+=v[0].length;}
+   else {out+=c[1];if(i<lower.length&&consonants.some(([k])=>lower.startsWith(k,i)))out+='्';}
+  }else{const v=vowelTokens.find(([k])=>lower.startsWith(k,i));if(v){out+=v[1];i+=v[0].length;}else{out+=word[i];i++;}}
+ }
+ return out;
+}
+const toHindi=text=>replacePhrases(text,toHi,true).replace(/[A-Za-z]{2,}/g,w=>phonetic(w));
+const romanMap={'ा':'a','ि':'i','ी':'ee','ु':'u','ू':'oo','े':'e','ै':'ai','ो':'o','ौ':'au','ं':'n','ँ':'n','ः':'h','्':'','़':''};
+const letterMap={'अ':'a','आ':'aa','इ':'i','ई':'ee','उ':'u','ऊ':'oo','ए':'e','ऐ':'ai','ओ':'o','औ':'au','क':'k','ख':'kh','ग':'g','घ':'gh','च':'ch','छ':'chh','ज':'j','झ':'jh','ट':'t','ठ':'th','ड':'d','ढ':'dh','त':'t','थ':'th','द':'d','ध':'dh','न':'n','प':'p','फ':'ph','ब':'b','भ':'bh','म':'m','य':'y','र':'r','ल':'l','व':'v','श':'sh','ष':'sh','स':'s','ह':'h','ण':'n','ञ':'ny','ङ':'ng','ड़':'d','ढ़':'dh','क्ष':'ksh','त्र':'tr','ज्ञ':'gy'};
+function romanize(word){let out='';for(const ch of word){if(letterMap[ch]!==undefined)out+=letterMap[ch];else if(romanMap[ch]!==undefined)out+=romanMap[ch];else out+=ch;}return out;}
+const toEnglish=text=>replacePhrases(text,toEn,false).replace(/[\u0900-\u097f]+/g,romanize);
+function status(message,warn=false){$('status').textContent=message;$('status').className=warn?'alert warn':'alert';}
+function lang(message){$('langStatus').textContent=message;}
+function suggest(sourceId,force=false){
+ const pair=pairs.find(p=>p.includes(sourceId));if(!pair)return;
+ const isEn=sourceId===pair[0],target=$(isEn?pair[1]:pair[0]),source=$(sourceId);
+ if(!$('auto').checked&&!force)return;
+ const value=(isEn?toHindi:toEnglish)(source.value);
+ target.value=value; // live replacement before Save, in either direction
+ lang('Live Auto Replace: '+(value||'फ़ील्ड खाली'));
+}
+function convertSelection(el,separator){
+ const p=el.selectionStart,q=el.selectionEnd;if(p!==q)return false;
+ const before=el.value.slice(0,p),match=before.match(/([A-Za-z]+)$/);
+ if(!match)return false;
+ const word=match[1],converted=toHi.get(word.toLowerCase());
+ if(!converted||converted===word)return false;
+ el.setRangeText(converted+separator,p-word.length,p,'end');
+ lang(word+' → '+converted);suggest(el.id);return true;
+}
+for(const [en,hi] of pairs){$(en).addEventListener('focus',()=>{activeLanguage='en';lang('English → Hindi चालू');});$(hi).addEventListener('focus',()=>{activeLanguage='hi';lang('Hindi → English चालू');});}
+for(const id of ['category_hi','name_hi','description_hi']){
+ const el=$(id);
+ el.addEventListener('keydown',e=>{
+  if(!$('auto').checked||e.isComposing||e.ctrlKey||e.altKey||e.metaKey)return;
+  if(![' ','Enter','Tab'].includes(e.key))return;
+  if(e.key==='Enter'&&e.shiftKey)return;
+  if(e.key==='Tab'){convertSelection(el,'');return;}
+  const sep=e.key==='Enter'&&el.tagName==='TEXTAREA'?'\n':' ';
+  if(convertSelection(el,sep))e.preventDefault();
+ });
+ el.addEventListener('paste',e=>{
+  if(!$('auto').checked)return;
+  const raw=e.clipboardData?.getData('text');if(!raw)return;
+  const converted=toHindi(raw);if(converted===raw)return;
+  e.preventDefault();el.setRangeText(converted,el.selectionStart,el.selectionEnd,'end');
+  lang('Paste Converted');suggest(id);
+ });
+ el.addEventListener('blur',()=>{if(!$('auto').checked)return;const value=toHindi(el.value);if(value!==el.value){el.value=value;lang('Hindi text corrected');}suggest(id);});
+ el.addEventListener('input',()=>suggest(id));
+}
+for(const [en,hi] of pairs){
+ $(en).addEventListener('blur',()=>suggest(en));
+ $(en).addEventListener('input',()=>suggest(en));
+}
+function allSuggestions(englishSource){
+ let count=0;
+ for(const [en,hi] of pairs){
+  const source=$(englishSource?en:hi),target=$(englishSource?hi:en);
+  if(!source.value.trim())continue;
+  const result=englishSource?toHindi(source.value):toEnglish(source.value);
+  if(result!==source.value){target.value=result;count++;}
+ }
+ lang(count+' Fields Replace हुए।');
+}
+$('enToHi').onclick=()=>allSuggestions(true);
+$('hiToEn').onclick=()=>allSuggestions(false);
+$('resetSuggestions').onclick=()=>{allSuggestions(activeLanguage==='en');lang('Active direction: '+(activeLanguage==='en'?'English → Hindi':'Hindi → English'));};
+$('fixAll').onclick=()=>{let count=0;for(const id of ['category_hi','name_hi','description_hi']){const el=$(id),newText=toHindi(el.value);if(newText!==el.value){el.value=newText;count++;suggest(id);}}lang(count+' Hindi Fields सुधरे। अनजान शब्द सुरक्षित रखे गए।');};
+$('wrongWord').addEventListener('focus',()=>{activeLanguage='en'});$('rightWord').addEventListener('focus',()=>{activeLanguage='hi'});
+$('saveWord').onclick=()=>{
+ const roman=$('wrongWord').value.trim().toLowerCase(),hi=$('rightWord').value.trim(),en=$('englishMeaning').value.trim()||roman.split(' ').map(w=>w[0].toUpperCase()+w.slice(1)).join(' ');
+ if(!/^[a-z]+(?: [a-z]+)*$/.test(roman)||!/[\u0900-\u097f]/.test(hi)){lang('Roman शब्द और सही हिंदी लिखें।');return;}
+ toHi.set(roman,hi);toEn.set(hi,en);custom[roman]={hi,en};for(const id of ['category_hi','name_hi','description_hi']){if($(id).value.toLowerCase().includes(roman)){$(id).value=toHindi($(id).value);suggest(id);}}
+ try{localStorage.setItem(wordsKey,JSON.stringify(custom));lang('Dictionary में दोनों दिशाओं में सुरक्षित: '+roman+' ↔ '+hi);}
+ catch{lang('शब्द इस Session में उपलब्ध है, Browser Save नहीं हुआ।');}
+};
+function valid(raw){const obj=JSON.parse(raw);if(!obj||!Array.isArray(obj.services))throw Error('JSON में services Array चाहिए।');return obj;}
+function reset(){editing=-1;$('form').reset();$('enabled').checked=true;$('formTitle').textContent='➕ नई Service जोड़ें';$('save').textContent='➕ Service जोड़ें';}
+function load(obj,source){if(dirty&&!confirm('मौजूदा बदलाव हटाकर नया डेटा लोड करें?'))return;data=obj;loaded=true;dirty=false;reset();render();status(source+' से '+data.services.length+' Services लोड हुईं।');}
+$('file').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{load(valid(await f.text()),'फाइल');}catch(err){status(err.message,true);}e.target.value='';};
+$('online').onclick=async()=>{try{status('Website से डेटा लोड हो रहा है...');const r=await fetch('https://techwfh.github.io/startpayonline.com/services.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);load(valid(await r.text()),'Website');}catch(err){status('Load नहीं हुआ: '+err.message,true);}};
+$('restore').onclick=()=>{try{const raw=localStorage.getItem(draftKey);if(!raw)throw Error('Saved Draft नहीं मिला');load(valid(raw),'Draft');}catch(err){status(err.message,true);}};
+function saveDraft(){dirty=true;try{localStorage.setItem(draftKey,JSON.stringify(data));status('Browser Draft Saved. Live Website नहीं बदली।');}catch(err){status('Draft Save नहीं हुआ; JSON Download करें: '+err.message,true);}}
+$('clear').onclick=reset;
+$('form').onsubmit=e=>{e.preventDefault();const s={};for(const k of fields)s[k]=$(k).value.trim();s.enabled=$('enabled').checked;if(!s.category_hi||!s.name_hi){status('Hindi Category और Service Name आवश्यक हैं',true);return;}if(editing<0)data.services.push(s);else Object.assign(data.services[editing],s);loaded=true;saveDraft();reset();render();};
+function edit(i){const s=data.services[i];if(!s)return;reset();editing=i;for(const k of fields)$(k).value=s[k]||'';$('enabled').checked=s.enabled!==false;$('formTitle').textContent='✏️ Service Edit करें';$('save').textContent='💾 Service अपडेट करें';}
+function remove(i){if(!confirm('Service हटाएँ?'))return;data.services.splice(i,1);saveDraft();reset();render();}
+function toggle(i){data.services[i].enabled=data.services[i].enabled===false;saveDraft();render();}
+function make(tag,value,cls){const el=document.createElement(tag);if(value!==undefined)el.textContent=value;if(cls)el.className=cls;return el;}
+function render(){
+ const list=$('list');list.replaceChildren();$('count').textContent=data.services.length+' Services';
+ const cats=[...new Set(data.services.map(s=>s.category_hi).filter(Boolean))];
+ $('cats').replaceChildren(...cats.map(x=>{const o=document.createElement('option');o.value=x;return o;}));
+ const term=$('search').value.toLowerCase();let count=0;
+ data.services.forEach((s,i)=>{if(term&&!fields.some(k=>String(s[k]||'').toLowerCase().includes(term)))return;count++;
+ const item=make('div',undefined,'service'+(s.enabled===false?' hidden':'')),info=make('div'),buttons=make('div',undefined,'row');
+ info.append(make('strong',s.name_hi||s.name_en||'Unnamed'),make('small',(s.category_hi||s.category_en||'')+' • '+(s.name_en||'')+' • '+(s.enabled===false?'Hidden':'Active')));
+ for(const [title,css,action] of [['✏️ Edit','secondary',()=>edit(i)],[s.enabled===false?'👁 Show':'🙈 Hide','secondary',()=>toggle(i)],['🗑 Delete','red',()=>remove(i)]]){const b=make('button',title,css);b.type='button';b.onclick=action;buttons.append(b);}
+ item.append(info,buttons);list.append(item);});
+ if(!count)list.append(make('p','कोई Service नहीं मिली।','note'));
+}
+$('search').oninput=render;
+$('download').onclick=()=>{if(!loaded&&!data.services.length){status('पहले Service Load या Add करें',true);return;}const blob=new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='services.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 render();
 </script></body></html>
