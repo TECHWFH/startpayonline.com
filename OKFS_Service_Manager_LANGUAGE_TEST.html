@@ -1,0 +1,71 @@
+<!doctype html><html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OKFS Service Manager</title><style>
+:root{--b:#002D9C;--g:#00A825;--ink:#17233d;--muted:#61708a;--bg:#f2f6ff}*{box-sizing:border-box}body{margin:0;font-family:system-ui,'Noto Sans Devanagari',sans-serif;background:var(--bg);color:var(--ink)}header{background:linear-gradient(115deg,#002D9C,#124dc9);color:#fff;padding:24px 18px}header .wrap{max-width:1100px;margin:auto}h1{font-size:clamp(23px,4vw,34px);line-height:1.5;margin:0}header p{margin:5px 0 0;color:#e4edff}.wrap{max-width:1100px;margin:22px auto;padding:0 14px}.panel{background:white;border:1px solid #dce5f4;border-radius:16px;padding:18px;box-shadow:0 4px 20px #002d9c0a;margin-bottom:16px}.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}h2{font-size:19px;margin:0 0 12px}button,.btn{border:0;background:var(--b);color:white;padding:11px 15px;border-radius:9px;cursor:pointer;font-weight:700;font:inherit}button:hover{filter:brightness(1.09)}button:disabled{opacity:.5;cursor:not-allowed}.green{background:var(--g)}.ghost{background:#e9effb;color:var(--b)}.danger{background:#fff0f0;color:#b21c28;border:1px solid #f5c7c7}.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}label{display:block;font-weight:650;font-size:13px;margin:0 0 5px}input,textarea,select{width:100%;border:1px solid #bfcce1;border-radius:9px;padding:11px;font:inherit;color:#17233d;background:#fff}textarea{min-height:80px;resize:vertical}.span{grid-column:1/-1}.note{font-size:13px;color:var(--muted);line-height:1.7}.status{font-weight:650;color:#005d19}.warn{color:#a32a22}.pill{display:inline-block;border-radius:100px;padding:4px 10px;background:#eaf2ff;color:#1744a2;font-size:12px;font-weight:700}.service{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid #e1e8f5;border-radius:10px;padding:12px;margin-top:8px}.service strong{display:block}.service small{color:var(--muted)}.service .row{flex-shrink:0}.help{background:#e9f6ec;border-left:4px solid var(--g);padding:12px;border-radius:8px;line-height:1.7}.empty{padding:20px;text-align:center;color:var(--muted)}@media(max-width:680px){.grid{grid-template-columns:1fr}.service{align-items:stretch;flex-direction:column}.service .row button{flex:1}header{padding:18px 12px}}@media print{header,.controls,button{display:none!important}}
+</style></head><body><header><div class="wrap"><h1>ऑनलाइन कियोस्क फाइनेंशियल सर्विसेज</h1><p>Service Manager • Add / Edit / Delete • StartPay Legal & Finance IT Solutions</p></div></header><main class="wrap"><section class="panel"><div class="top"><div><h2>Service Data खोलें</h2><div class="note">अपनी मौजूदा <b>services.json</b> खोलें। पुरानी Services सुरक्षित रखकर बदलाव करें।</div></div><span id="count" class="pill">0 Services</span></div><div class="row controls" style="margin-top:12px"><label class="btn" style="cursor:pointer;background:#002D9C;color:white;padding:11px 15px;border-radius:9px;margin:0">📁 services.json चुनें<input type="file" id="file" accept=".json,application/json" hidden></label><button class="ghost" id="online">🌐 GitHub Pages से Data लाएँ</button><button class="green" id="download">⬇️ Updated services.json डाउनलोड</button></div><p id="status" class="note" role="status">शुरू करने के लिए JSON फाइल चुनें या वेबसाइट से डेटा लाएँ।</p></section><section class="panel"><h2 id="formTitle">➕ नई Service जोड़ें</h2><form id="form" class="grid"><div><label for="category_hi">Category (हिंदी) *</label><input id="category_hi" required list="cats" placeholder="जैसे वाहन एवं RC सेवाएँ"><datalist id="cats"></datalist></div><div><label for="category_en">Category (English)</label><input id="category_en" placeholder="Vehicle & RC Services"></div><div><label for="name_hi">Service Name (हिंदी) *</label><input id="name_hi" required placeholder="जैसे डुप्लीकेट RC सहायता"></div><div><label for="name_en">Service Name (English)</label><input id="name_en" placeholder="Duplicate RC Assistance"></div><div><label for="description_hi">जानकारी (हिंदी)</label><textarea id="description_hi" placeholder="इस सेवा का संक्षिप्त विवरण"></textarea></div><div><label for="description_en">Description (English)</label><textarea id="description_en"></textarea></div><div class="span row"><label style="display:flex;align-items:center;gap:8px"><input id="enabled" type="checkbox" checked style="width:auto"> Service वेबसाइट पर दिखाएँ (Enabled)</label></div><div class="span row controls"><button type="submit" class="green" id="save">➕ Service जोड़ें</button><button type="button" class="ghost" id="reset">Form साफ करें</button></div></form></section><section class="panel"><h2>🌐 Hindi ↔ English सहायता (Testing)</h2><p class="note">शब्दकोश आधारित सुझाव हैं। दोनों भाषाओं में लिखा हुआ टेक्स्ट आप स्वयं बदल सकते हैं। अनजान शब्द जस के तस रहते हैं। किसी फील्ड को अपने-आप ओवरराइट नहीं किया जाएगा।</p><label style="display:flex;align-items:center;gap:8px"><input id="phonetic" type="checkbox" checked style="width:auto"> हिंदी फील्ड में Roman शब्द लिखकर Space दबाने पर ज्ञात शब्द बदलें</label><div class="row" style="margin-top:12px"><button type="button" class="ghost" id="enToHi">English → Hindi सुझाव</button><button type="button" class="ghost" id="hiToEn">Hindi → English सुझाव</button></div><p id="languageStatus" class="note" role="status">Category, Service Name और Description के लिए सुझाव उपलब्ध हैं।</p></section><section class="panel"><div class="top"><h2>📋 Services की सूची</h2><input id="search" placeholder="🔎 Service खोजें…" style="max-width:310px"></div><div id="list"></div></section><section class="panel"><h2>GitHub पर कैसे अपडेट करें?</h2><div class="help">1. ऊपर से <b>Updated services.json डाउनलोड</b> करें।<br>2. <a href="https://github.com/TECHWFH/startpayonline.com/blob/OKFS/services.json" target="_blank" rel="noopener">OKFS Branch की services.json</a> खोलें।<br>3. GitHub में <b>Upload files</b> से इसी नाम की फाइल Replace करें, या फाइल खोलकर <b>Edit</b> में डाउनलोड की हुई JSON सामग्री Paste करें।<br>4. <b>Commit changes</b> करें। Deployment के बाद नई Service वेबसाइट पर दिखेगी।</div><p class="note">यह Manager केवल आपके Browser में Data Edit करता है। GitHub पर सीधे Save नहीं करता। GitHub Password या Token यहाँ न डालें। Delete करने पर फाइल डाउनलोड/Commit करने तक लाइव वेबसाइट नहीं बदलेगी।</p></section></main><script>
+'use strict';
+let documentData={services:[]}, editing=-1, loaded=false;
+const $=id=>document.getElementById(id);
+const fields=['category_hi','category_en','name_hi','name_en','description_hi','description_en'];
+const say=(message,error=false)=>{ $('status').textContent=message;$('status').className=error?'note warn':'note status'; };
+function parseData(raw){const obj=JSON.parse(raw);if(!obj||typeof obj!=='object'||Array.isArray(obj)||!Array.isArray(obj.services))throw Error('JSON में "services" की Array होना जरूरी है।');if(obj.services.some(x=>!x||typeof x!=='object'||Array.isArray(x)))throw Error('कुछ Service Entries गलत Format में हैं।');documentData=obj;loaded=true;resetForm();render();say('डेटा लोड हो गया। अब Service जोड़ें या Edit करें।');}
+$('file').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{parseData(await f.text())}catch(err){say('फाइल नहीं खुली: '+err.message,true)}e.target.value='';});
+$('online').addEventListener('click',async()=>{try{say('वेबसाइट से services.json पढ़ रहे हैं…');const url='https://techwfh.github.io/startpayonline.com/services.json?t='+Date.now();const res=await fetch(url,{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);parseData(await res.text())}catch(err){say('Online Data नहीं खुला। अपनी services.json फाइल चुनें। '+err.message,true)}});
+function resetForm(){editing=-1;$('form').reset();$('enabled').checked=true;$('formTitle').textContent='➕ नई Service जोड़ें';$('save').textContent='➕ Service जोड़ें';}
+$('reset').onclick=resetForm;
+$('form').addEventListener('submit',e=>{e.preventDefault();const values={};for(const k of fields)values[k]=$(k).value.trim();if(!values.category_hi||!values.name_hi){say('Category और Service Name (हिंदी) भरें।',true);return;}values.enabled=$('enabled').checked;if(editing<0){const dup=documentData.services.some(s=>s.name_hi===values.name_hi&&s.category_hi===values.category_hi);if(dup&&!confirm('इस नाम की Service पहले से है। फिर भी जोड़ें?'))return;documentData.services.push(values);say('नई Service जोड़ दी। अब JSON डाउनलोड करके GitHub पर Commit करें।')}else{Object.assign(documentData.services[editing],values);say('Service अपडेट हो गई। अब JSON डाउनलोड करके GitHub पर Commit करें।')}resetForm();render();});
+function edit(i){const s=documentData.services[i];if(!s)return;editing=i;for(const k of fields)$(k).value=s[k]??'';$('enabled').checked=s.enabled!==false;$('formTitle').textContent='✏️ Service Edit करें';$('save').textContent='💾 बदलाव सेव करें';$('formTitle').scrollIntoView({behavior:'smooth',block:'start'});}
+function remove(i){const s=documentData.services[i];if(!s||!confirm('"'+(s.name_hi||s.name_en||'Service')+'" हटाएँ? यह बदलाव डाउनलोड की गई JSON में लागू होगा।'))return;documentData.services.splice(i,1);resetForm();render();say('Service हटा दी। GitHub पर Commit होने तक लाइव वेबसाइट नहीं बदलेगी।');}
+function el(tag,cls,text){const x=document.createElement(tag);if(cls)x.className=cls;if(text!==undefined)x.textContent=text;return x;}
+function render(){const arr=documentData.services;$('count').textContent=arr.length+' Services';const categories=[...new Set(arr.map(s=>s.category_hi).filter(Boolean))];$('cats').replaceChildren(...categories.map(v=>{const o=el('option');o.value=v;return o;}));const term=$('search').value.trim().toLocaleLowerCase();const list=$('list');list.replaceChildren();let matches=0;arr.forEach((s,i)=>{const hay=[...fields.map(k=>s[k]||''),s.enabled===false?'disabled':''].join(' ').toLocaleLowerCase();if(term&&!hay.includes(term))return;matches++;const item=el('div','service'),left=el('div');left.append(el('strong','',s.name_hi||s.name_en||'Unnamed Service'),el('small','',(s.category_hi||s.category_en||'No Category')+' • '+(s.enabled===false?'Hidden':'Active')+' • '+(s.name_en||'')));const right=el('div','row');const b1=el('button','ghost','✏️ Edit'),b2=el('button','danger','🗑️ Delete');b1.onclick=()=>edit(i);b2.onclick=()=>remove(i);right.append(b1,b2);item.append(left,right);list.append(item);});if(!matches)list.append(el('div','empty',arr.length?'कोई Service नहीं मिली।':'अभी कोई Service नहीं है।'));}
+$('search').addEventListener('input',render);
+$('download').onclick=()=>{if(!loaded&&!documentData.services.length){if(!confirm('अभी कोई JSON फाइल लोड नहीं की। खाली services.json डाउनलोड करना चाहते हैं?'))return;}const str=JSON.stringify(documentData,null,2)+'\n';const blob=new Blob([str],{type:'application/json;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='services.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);say('services.json डाउनलोड हो गई। GitHub की OKFS Branch में अपडेट करें।');};
+render();
+
+/* Offline language helpers: no external API and no changes to services.json schema. */
+const dictionary=[
+['namantaran','नामांतरण'],['naamantaran','नामांतरण'],['namantar','नामांतरण'],['नमन्त्र','नामांतरण'],['नामान्तरण','नामांतरण'],
+['khasra','खसरा'],['nakal','नकल'],['registry','रजिस्ट्री'],['bhulekh','भूलेख'],['aavedan','आवेदन'],
+['diversion','व्यपवर्तन'],['jabalpur','जबलपुर'],['garha','गढ़ा'],['rai','राय'],
+['mutation of land records','भूमि अभिलेख नामांतरण'],['vehicle & rc services','वाहन एवं RC सेवाएँ'],
+['duplicate rc assistance','डुप्लीकेट RC सहायता'],['home loan','होम लोन'],
+['affidavit','शपथ पत्र'],['property','संपत्ति'],['loan','ऋण'],['insurance','बीमा'],
+['services','सेवाएँ'],['service','सेवा'],['documents','दस्तावेज़'],['document','दस्तावेज़']
+];
+const forward=new Map(dictionary.map(([a,b])=>[a.toLocaleLowerCase('en'),b]));
+const backward=new Map();
+for(const [a,b] of dictionary)if(!backward.has(b))backward.set(b,a);
+function convertKnownWords(value,toHindi){
+ const dict=toHindi?forward:backward;
+ const exact=dict.get(toHindi?value.trim().toLocaleLowerCase('en'):value.trim());
+ if(exact)return exact;
+ return value.replace(toHindi?/[A-Za-z]+(?:\s+[A-Za-z]+)*/g:/[\u0900-\u097F]+(?:\s+[\u0900-\u097F]+)*/g,chunk=>{
+   const key=toHindi?chunk.toLocaleLowerCase('en'):chunk;
+   const full=dict.get(key);if(full)return full;
+   return chunk.replace(toHindi?/[A-Za-z]+/g:/[\u0900-\u097F]+/g,w=>dict.get(toHindi?w.toLocaleLowerCase('en'):w)||w);
+ });
+}
+const languagePairs=[['category_en','category_hi'],['name_en','name_hi'],['description_en','description_hi']];
+function languageSuggestion(toHindi){
+ let changes=0,skipped=0;
+ for(const [en,hi] of languagePairs){
+  const from=$(toHindi?en:hi),target=$(toHindi?hi:en);
+  if(!from.value.trim())continue;
+  const suggested=convertKnownWords(from.value,toHindi);
+  if(suggested===from.value){skipped++;continue;}
+  if(target.value.trim()&&target.value.trim()!==suggested){skipped++;continue;}
+  target.value=suggested;changes++;
+ }
+ $('languageStatus').textContent=changes+' फील्ड में सुझाव भरे गए। '+skipped+' फील्ड अपरिवर्तित रहे। भरे हुए अलग टेक्स्ट को नहीं बदला गया।';
+}
+$('enToHi').onclick=()=>languageSuggestion(true);
+$('hiToEn').onclick=()=>languageSuggestion(false);
+for(const id of ['category_hi','name_hi','description_hi']){
+ $(id).addEventListener('input',e=>{
+  if(!$('phonetic').checked||!e.data||!/[\s,.;!?]/.test(e.data))return;
+  const input=e.target,pos=input.selectionStart;
+  if(pos===null||input.selectionStart!==input.selectionEnd)return;
+  const before=input.value.slice(0,pos),after=input.value.slice(pos);
+  const converted=convertKnownWords(before,true);
+  if(converted!==before){input.value=converted+after;input.setSelectionRange(converted.length,converted.length);}
+ });
+}
+</script></body></html>
