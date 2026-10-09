@@ -22,7 +22,7 @@ render();
 
 /* Offline language helpers: no external API and no changes to services.json schema. */
 const dictionary=[
-['namantaran','नामांतरण'],['naamantaran','नामांतरण'],['namantar','नामांतरण'],['नमन्त्र','नामांतरण'],['नामान्तरण','नामांतरण'],
+['namantran','नामांतरण'],['namantaran','नामांतरण'],['naamantaran','नामांतरण'],['namantar','नामांतरण'],['नमन्त्र','नामांतरण'],['नामान्तरण','नामांतरण'],
 ['khasra','खसरा'],['nakal','नकल'],['registry','रजिस्ट्री'],['bhulekh','भूलेख'],['aavedan','आवेदन'],
 ['diversion','व्यपवर्तन'],['jabalpur','जबलपुर'],['garha','गढ़ा'],['rai','राय'],
 ['mutation of land records','भूमि अभिलेख नामांतरण'],['vehicle & rc services','वाहन एवं RC सेवाएँ'],
@@ -59,13 +59,29 @@ function languageSuggestion(toHindi){
 $('enToHi').onclick=()=>languageSuggestion(true);
 $('hiToEn').onclick=()=>languageSuggestion(false);
 for(const id of ['category_hi','name_hi','description_hi']){
- $(id).addEventListener('input',e=>{
-  if(!$('phonetic').checked||!e.data||!/[\s,.;!?]/.test(e.data))return;
-  const input=e.target,pos=input.selectionStart;
-  if(pos===null||input.selectionStart!==input.selectionEnd)return;
-  const before=input.value.slice(0,pos),after=input.value.slice(pos);
-  const converted=convertKnownWords(before,true);
-  if(converted!==before){input.value=converted+after;input.setSelectionRange(converted.length,converted.length);}
+ const field=$(id);
+ function convertAtCaret(){
+  if(!$('phonetic').checked)return false;
+  const pos=field.selectionStart;
+  if(pos===null||pos!==field.selectionEnd)return false;
+  const before=field.value.slice(0,pos),after=field.value.slice(pos);
+  const match=before.match(/([A-Za-z]+)(\s*)$/);
+  if(!match)return false;
+  const hindi=forward.get(match[1].toLowerCase());
+  if(!hindi)return false;
+  const changed=before.slice(0,-match[0].length)+hindi+match[2];
+  field.value=changed+after;
+  field.setSelectionRange(changed.length,changed.length);
+  $('languageStatus').textContent=match[1]+' → '+hindi;
+  return true;
+ }
+ field.addEventListener('keydown',e=>{
+  if(e.key===' '&&!e.isComposing&&$('phonetic').checked&&convertAtCaret()){
+   e.preventDefault();field.setRangeText(' ',field.selectionStart,field.selectionEnd,'end');
+  }
+ });
+ field.addEventListener('input',e=>{
+  if(e.inputType==='insertText'&&/\s/.test(e.data||''))convertAtCaret();
  });
 }
 </script></body></html>
