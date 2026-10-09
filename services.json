@@ -9,7 +9,7 @@
       "description_en": "24 25",
       "enabled": true
     },
-    {
+{
       "category_hi": "वसीयतनामा",
       "category_en": "Will deed",
       "name_hi": "दान विलेख",
@@ -19,11 +19,15 @@
       "enabled": true
     },
     {
-      "category_hi": "22",
-      "category_en": "22",
-      "name_hi": "23 तेस्त",
-      "name_en": "23 test",
-      "description_hi": "24 25",
-      "description_en": "24 25",
+      "category_hi": "27",
+      "category_en": "27",
+      "name_hi": "28 टेस्ट",
+      "name_en": "28 test",
+      "description_hi": "277 277",
+      "description_en": "244 244",
       "enabled": true
-    },
+    }
+  ]
+}
+
+    
