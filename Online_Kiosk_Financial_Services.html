@@ -390,6 +390,12 @@
 .header-section #hdr-wa-btn{order:2!important;align-self:center!important}
 .header-section .vehicle-tools{justify-content:center!important}
 @media(max-width:600px){.header-section .kiosk-brand-logo{width:min(94%,340px)!important;max-width:340px!important;max-height:140px!important}.header-section{gap:8px!important}.header-section .header-title-box h1#main-title{font-size:clamp(1.35rem,5.4vw,1.8rem)!important;line-height:1.75!important}}
+
+/* Additional cards from services.json; existing cards remain untouched */
+.json-service-group .vehicle-item{min-height:72px}
+.json-service-group .vehicle-item strong{line-height:1.5}
+.json-service-group .vehicle-item button{margin-top:6px}
+.json-service-group .vehicle-item:focus-visible{outline:2px solid #002d9c}
 </style>
 </head>
 <body>
@@ -1008,6 +1014,74 @@ function askVehicleGroup(event,link){
   window.open('https://wa.me/919806191441?text='+encodeURIComponent(msg),'_blank','noopener');
   return false;
 }
+
+/* OPTIONAL ADD-ON: new cards are read from services.json on GitHub Pages.
+   Existing 01–18 cards and all old actions remain unchanged. */
+(function(){
+  const WA='919806191441';
+  const grid=document.getElementById('vehicle-grid');
+  if(!grid)return;
+  const safe=v=>String(v==null?'':v).trim();
+  const el=(tag,cls,text)=>{const node=document.createElement(tag);if(cls)node.className=cls;if(text!=null)node.textContent=text;return node;};
+  const ask=(name)=>{
+    const msg='नमस्ते! मुझे "'+name+'" सेवा की जानकारी चाहिए। कृपया आवश्यक दस्तावेज, शुल्क और प्रक्रिया बताएं।';
+    window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank','noopener');
+  };
+  const read=(s,...keys)=>{for(const k of keys){if(s[k]!=null&&safe(s[k]))return safe(s[k]);}return '';};
+  function renderServices(data){
+    const rows=Array.isArray(data)?data:(data&&Array.isArray(data.services)?data.services:[]);
+    const groups=new Map();
+    for(const entry of rows){
+      if(!entry||typeof entry!=='object'||entry.enabled===false||entry.active===false)continue;
+      const hi=read(entry,'name_hi','hi','name');
+      if(!hi)continue;
+      const en=read(entry,'name_en','en')||hi;
+      const category=read(entry,'category_hi','category','group')||'अन्य ऑनलाइन सेवाएँ';
+      const categoryEn=read(entry,'category_en')||category;
+      const description=read(entry,'description_hi','description','details_hi');
+      const descriptionEn=read(entry,'description_en','details_en')||description;
+      const key=category+'\u0000'+categoryEn;
+      if(!groups.has(key))groups.set(key,{category,categoryEn,items:[]});
+      groups.get(key).items.push({hi,en,description,descriptionEn});
+    }
+    let n=19;
+    for(const group of groups.values()){
+      const section=el('section','vehicle-group json-service-group');
+      section.dataset.hi=group.category;section.dataset.en=group.categoryEn;
+      const head=el('h3');head.title=group.category;
+      head.append(el('span','vehicle-card-number',String(n++).padStart(2,'0')));
+      head.append(document.createTextNode(' ✦ '));
+      const title=el('span','vehicle-i18n',group.category);
+      title.dataset.hi=group.category;title.dataset.en=group.categoryEn;head.append(title);section.append(head);
+      for(const service of group.items){
+        const item=el('div','vehicle-item');item.dataset.hi=service.hi;item.dataset.en=service.en;
+        const strong=el('strong');strong.append(document.createTextNode('✓ '));
+        const name=el('span','vehicle-i18n',service.hi);
+        name.dataset.hi=service.hi;name.dataset.en=service.en;strong.append(name);item.append(strong);
+        if(service.description){const p=el('p','vehicle-i18n',service.description);p.dataset.hi=service.description;p.dataset.en=service.descriptionEn;item.append(p);}
+        const btn=el('button','', 'पूछें ↗');btn.type='button';btn.dataset.service=service.hi;
+        btn.addEventListener('click',e=>{e.stopPropagation();ask(currentLang==='en'?service.en:service.hi);});
+        item.append(btn);item.tabIndex=0;item.setAttribute('role','button');
+        item.addEventListener('click',e=>{if(!e.target.closest('button'))ask(currentLang==='en'?service.en:service.hi);});
+        item.addEventListener('keydown',e=>{if(e.target===item&&(e.key==='Enter'||e.key===' ')){e.preventDefault();ask(currentLang==='en'?service.en:service.hi);}});
+        section.append(item);
+      }
+      const box=el('div','vehicle-card-action-box');const link=el('a','vehicle-card-action');
+      link.href='https://wa.me/'+WA;link.target='_blank';link.rel='noopener';
+      const icon=el('i','fa-brands fa-whatsapp');icon.setAttribute('aria-hidden','true');link.append(icon);
+      link.append(document.createTextNode(' '));link.append(el('span','vehicle-card-action-label','WhatsApp पर पूछें'));
+      link.addEventListener('click',e=>{e.preventDefault();const names=[...section.querySelectorAll('.vehicle-item:not([hidden])')].map(x=>x.dataset.hi);const list=names.length?names:group.items.map(x=>x.hi);ask(group.category+' — '+list.join(', '));});
+      box.append(link);section.append(box);grid.append(section);
+    }
+    if(typeof refreshVehicleLanguage==='function')refreshVehicleLanguage();
+    if(typeof filterAllServices==='function')filterAllServices();
+  }
+  fetch('./services.json',{cache:'no-store'})
+    .then(response=>{if(!response.ok)throw Error('services.json HTTP '+response.status);return response.json();})
+    .then(renderServices)
+    .catch(error=>{console.info('Optional services.json not loaded; original services remain available.',error.message);});
+})();
+
 </script>
 
 </body>
