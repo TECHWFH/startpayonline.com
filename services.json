@@ -11,3 +11,16 @@
     }
   ]
 }
+{
+  "services": [
+    {
+      "category_hi": "सिविल न्यायालय प्रकरण",
+      "category_en": "Civil Court Case",
+      "name_hi": "भूखंड नक्शा",
+      "name_en": "Land Parcel Map",
+      "description_hi": "लैंड मॉर्गेज",
+      "description_en": "Land Mortgage",
+      "enabled": true
+    }
+  ]
+}
