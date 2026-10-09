@@ -18,9 +18,7 @@
       "description_en": "Lease Deed",
       "enabled": true
     },
-    {
-  "services": [
-    {
+        {
       "category_hi": "22",
       "category_en": "22",
       "name_hi": "23 तेस्त",
@@ -29,4 +27,3 @@
       "description_en": "24 25",
       "enabled": true
     },
-
