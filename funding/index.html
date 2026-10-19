@@ -78,7 +78,7 @@ function translateUI(){const walker=document.createTreeWalker(document.body,Node
 function switchLang(v){lang=v;translateUI();updatePreview()}
 async function copyText(t,msg){try{await navigator.clipboard.writeText(t);$('copyFeedback').textContent=tr(msg)}catch{prompt('Copy / कॉपी करें',t)}}
 function copyReport(){copyText(reportLines().map(tr).join('\n'),'रिपोर्ट कॉपी हो गई')}
-const portalURL='https://startpay-property-fund-demo.sharpclove17.chatgpt.site';
+const portalURL='https://sp.startpayonline.com/seller_bt_loan_fund';
 function sharePortal(){copyText(portalURL,'पोर्टल लिंक कॉपी हो गया');window.open('https://wa.me/?text='+encodeURIComponent('StartPay Universal Market Value Funding/Loan Policy V1.1\n'+portalURL),'_blank','noopener')}
 new MutationObserver(()=>{translateUI()}).observe(document.querySelector('main'),{childList:true,subtree:true});
 
