@@ -75,7 +75,7 @@ function setupPhotoEditor(row){
 let spAIImportPromise=null;
 async function photoRemoveBackground(bitmap){
  // Limit input pixels to reduce browser memory pressure; retain original preview until success.
- const maxEdge=1024,scale=Math.min(1,maxEdge/Math.max(bitmap.width,bitmap.height));
+ const maxEdge=300,scale=Math.min(1,maxEdge/Math.max(bitmap.width,bitmap.height));
  const temp=document.createElement('canvas');temp.width=Math.max(1,Math.round(bitmap.width*scale));temp.height=Math.max(1,Math.round(bitmap.height*scale));
  temp.getContext('2d').drawImage(bitmap,0,0,temp.width,temp.height);
  const blob=await new Promise((ok,bad)=>temp.toBlob(b=>b?ok(b):bad(Error('Image conversion failed')),'image/png'));
