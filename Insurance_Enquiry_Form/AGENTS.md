@@ -7,3 +7,7 @@
 - After publishing, inspect the deployment result and fetch the clean public URL to verify the expected version and content. Never call a source commit alone LIVE.
 - Share clean links without UTM, tracking parameters, or version query strings.
 - Public form URL: https://techwfh.github.io/startpayonline.com/Insurance_Enquiry_Form/
+
+- Do not add AI-provider attribution, badges, promotional links, or Open in ChatGPT/Gemini/other assistant controls to the HTML. Keep only user-approved StartPay branding and functional links.
+- Do not append attribution/tracking parameters to shared links. Preserve essential functional parameters such as WhatsApp message text.
+- HTML uses no-referrer for outgoing links; client/browser UI outside the page is not controlled by this HTML.
