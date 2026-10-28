@@ -1,13 +1,18 @@
 # Insurance form publishing rules
 
-- The user means the latest updated version when asking whether a link is LIVE.
-- GitHub Pages currently publishes from the OKFS branch. Changes only on main do not publish this form. Recheck the publishing source before a future deployment.
-- Before replacing the published Insurance_Enquiry_Form/index.html, back up its exact content under a distinct versioned filename in the same folder on the publishing branch.
-- Preserve other pages and branding. Increment the displayed form version for content or behavior changes.
-- After publishing, inspect the deployment result and fetch the clean public URL to verify the expected version and content. Never call a source commit alone LIVE.
-- Share clean links without UTM, tracking parameters, or version query strings.
-- Public form URL: https://techwfh.github.io/startpayonline.com/Insurance_Enquiry_Form/
+- LIVE means the latest updated version is visible on the public page, not merely committed to GitHub.
+- GitHub Pages currently publishes from OKFS. Verify the publishing source before future updates; main alone does not publish.
+- Back up the exact prior index.html with a versioned filename in the same folder on the publishing branch before replacing it.
+- Increment the displayed version for changes. Preserve other pages, approved branding and behavior.
+- Verify deployment success and fetch the clean public URL to confirm the expected version before declaring LIVE.
+- Public URL: https://techwfh.github.io/startpayonline.com/Insurance_Enquiry_Form/
 
-- Do not add AI-provider attribution, badges, promotional links, or Open in ChatGPT/Gemini/other assistant controls to the HTML. Keep only user-approved StartPay branding and functional links.
-- Do not append attribution/tracking parameters to shared links. Preserve essential functional parameters such as WhatsApp message text.
-- HTML uses no-referrer for outgoing links; client/browser UI outside the page is not controlled by this HTML.
+## StartPay Clean Branding & User-Controlled URL Policy
+
+1. Preserve every user-supplied URL, UTM value and URL parameter exactly. Do not strip or change them without authorization.
+2. Never add assistant-origin attribution such as utm_source=chatgpt, utm_source=gemini, ref=ai, cgpt, openai, GPT or similar identity markers to links on your own initiative.
+3. Do not add unnecessary AI-provider names, badges, Open in ChatGPT/Gemini controls, or AI-generated attribution in titles, footers, share links or visible UI.
+4. Use only the user's approved StartPay logo, branding, copyright and developer-credit format.
+5. Apply this policy to demos and final HTML forms, software, calculators and live links.
+6. Preserve required technical code, libraries, functional URL arguments and security parameters. Do not remove them merely because their names resemble identity markers.
+7. This is a branding and user-controlled URL policy, not a general ban on tracking or UTM parameters. Do not inject automatic tracking-parameter removal.
