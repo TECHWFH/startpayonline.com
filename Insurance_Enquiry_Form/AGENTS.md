@@ -22,3 +22,11 @@
 - User-approved StartPay warning/error color is #FF0000. Duplicate-record alerts must use red text/border and a light red background, consistent with field errors.
 - Do not rely on color alone: retain the explicit warning heading, match reasons and clear action labels.
 - This is the project's approved design rule; do not describe red as a universal legal requirement.
+
+## Approved record ID and colors
+
+- New IDs use SPO-INS-DD-MM-YYYY-NNN-XXXX: Indian-time creation date, daily local sequence and four-character random suffix. Preserve IDs of existing records and on edits.
+- Display ordinary dates as DD/MM/YYYY. Keep machine storage dates in their required format.
+- Offer Copy ID and Copy Without Hyphens; copy plain text without color or markup.
+- ID prefix/sequence: Royal Blue #2457FF. ID date/random suffix and Save: Bright Green #00A825. Information: Bright Pink #FF006F. Edit: Bright Orange #E65100. Errors/warnings: Red #FF0000.
+- Preserve original logo and approved branding; these colors apply to designated controls/ID segments.
