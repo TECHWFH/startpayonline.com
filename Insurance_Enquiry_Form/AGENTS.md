@@ -28,5 +28,7 @@
 - New IDs use SPO-INS-DD-MM-YYYY-NNN-XXXX: Indian-time creation date, daily local sequence and four-character random suffix. Preserve IDs of existing records and on edits.
 - Display ordinary dates as DD/MM/YYYY. Keep machine storage dates in their required format.
 - Offer Copy ID and Copy Without Hyphens; copy plain text without color or markup.
-- ID prefix/sequence: Royal Blue #2457FF. ID date/random suffix and Save: Bright Green #00A825. Information: Bright Pink #FF006F. Edit: Bright Orange #E65100. Errors/warnings: Red #FF0000.
+- Record ID prefix: Original StartPay Primary Blue #002D9C; date: Bright Green #00A825; sequence: Bright Orange #E65100; random suffix: Purple #9333EA. Royal Blue #2457FF is available for other UI controls. Keep the full ID on one line when practical, with both copy formats.
+- Information: Bright Pink #FF006F. Save: Bright Green #00A825. Edit: Bright Orange #E65100. Errors/warnings/Delete: Red #FF0000.
+- In sections with multiple actions, use distinct task-based colors consistently (Preview Royal Blue, Copy Pink, Print/Export Purple). Preserve explicit labels; color is not the sole identifier.
 - Preserve original logo and approved branding; these colors apply to designated controls/ID segments.
