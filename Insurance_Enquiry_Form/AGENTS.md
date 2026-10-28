@@ -16,3 +16,9 @@
 5. Apply this policy to demos and final HTML forms, software, calculators and live links.
 6. Preserve required technical code, libraries, functional URL arguments and security parameters. Do not remove them merely because their names resemble identity markers.
 7. This is a branding and user-controlled URL policy, not a general ban on tracking or UTM parameters. Do not inject automatic tracking-parameter removal.
+
+## Approved warning style
+
+- User-approved StartPay warning/error color is #FF0000. Duplicate-record alerts must use red text/border and a light red background, consistent with field errors.
+- Do not rely on color alone: retain the explicit warning heading, match reasons and clear action labels.
+- This is the project's approved design rule; do not describe red as a universal legal requirement.
