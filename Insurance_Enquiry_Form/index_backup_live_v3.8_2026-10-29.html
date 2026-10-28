@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>StartPay | Insurance Products Enquiry v3.8</title><style>
+:root{--blue:#002D9C;--green:#00A825;--red:#FF0000;--ink:#14213b;--muted:#66748c;--line:#dce5f0;--bg:#f4f8ff}*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,'Noto Sans Devanagari','Noto Sans Bengali',Arial,sans-serif}.wrap{max-width:760px;margin:18px auto 100px;padding:0 14px}.hero{background:white;border:1px solid var(--line);border-top:6px solid var(--blue);border-radius:18px;overflow:hidden;box-shadow:0 12px 35px #002d9c0e}.top{padding:20px 22px 15px;background:linear-gradient(125deg,#e8efff,white 60%,#e9fff0)}.brand{font-size:26px;font-weight:900;color:var(--blue);letter-spacing:-1px}.brand span{color:var(--green)}.tag{color:var(--red);font-weight:800;font-size:12px;margin-top:3px}.headrow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.pill{font-size:12px;background:#fff;border:1px solid #d6e3ff;padding:7px 10px;border-radius:50px;color:var(--blue);font-weight:700}h1{font-size:22px;margin:15px 0 5px;color:#102b65}p.sub{margin:0;color:var(--muted);font-size:13px}.langbar{display:flex;gap:7px;flex-wrap:wrap;margin:17px 0 0}.langbar button{padding:8px 13px;border:1px solid #c7d6ec;background:#fff;color:#263d64;border-radius:9px;cursor:pointer;font-weight:750}.langbar button.active{background:var(--blue);color:white;border-color:var(--blue)}form{padding:19px 22px 23px}.section{font-size:14px;color:var(--blue);font-weight:850;border-bottom:2px solid #e4ebfa;padding-bottom:8px;margin:6px 0 16px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}.field{min-width:0}.field.full{grid-column:1/-1}label{display:block;font-size:13px;font-weight:750;margin:0 0 7px}input,select,textarea{width:100%;border:1px solid #ccd8e8;border-radius:10px;background:white;padding:12px 11px;color:#182b48;font:inherit;font-size:14px;outline:none;min-height:45px}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #002d9c14}textarea{resize:vertical;min-height:65px}.hint{font-size:11px;color:var(--muted);margin-top:5px}.hidden{display:none!important}.line{height:1px;background:var(--line);margin:21px 0}.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:21px}button.action{border:0;padding:12px 17px;border-radius:10px;font-weight:800;cursor:pointer;background:var(--blue);color:white}.action.secondary{background:#edf3ff;color:var(--blue);border:1px solid #cbdcfb}.action.danger{background:#fff0f0;color:#c10000;border:1px solid #ffd2d2}.note{font-size:12px;color:#6d7790;margin:17px 0 0;line-height:1.6}.footer{background:var(--blue);color:white;text-align:center;padding:13px;font-weight:800;font-size:13px}.footer span{color:#83ef9c}.float{position:fixed;right:18px;bottom:19px;display:flex;gap:8px;align-items:center;z-index:10}.float button{border:0;box-shadow:0 5px 20px #0b314a40;cursor:pointer;font-weight:850}.wa{background:#08a84e;color:white;border-radius:50px;padding:14px 18px}.smallfloat{background:white;color:var(--blue);padding:13px;border-radius:50px}.toast{position:fixed;left:50%;bottom:82px;transform:translateX(-50%);background:#152b50;color:white;padding:10px 15px;border-radius:9px;display:none;font-size:13px;z-index:20}.preview{background:#f8fbff;border:1px dashed #b7c9e9;padding:15px;border-radius:12px;white-space:pre-wrap;font-size:13px;line-height:1.8;overflow-wrap:anywhere}.status{background:#eef9f1;color:#17642e;padding:9px 12px;border-radius:8px;font-size:12px;font-weight:700;margin-top:14px}@media(max-width:560px){.wrap{margin:0 auto 85px;padding:0}.hero{border-radius:0}.top{padding:16px}.brand{font-size:24px}h1{font-size:19px}form{padding:16px}.grid{grid-template-columns:1fr;gap:13px}.float{right:10px;bottom:10px}.wa{padding:13px 15px}}@media print{body{background:white}.wrap{margin:0 auto}.hero{box-shadow:none}.langbar,.actions,.float,.no-print{display:none!important}.footer{print-color-adjust:exact}}
+ .floatlang{background:#002D9C!important;color:#fff!important;border:2px solid #00A825!important;min-width:47px;min-height:46px;font-weight:800!important;white-space:nowrap}.floatlang:focus-visible{outline:3px solid #00A825;outline-offset:2px}@media(max-width:560px){.float{flex-wrap:wrap;justify-content:flex-end;max-width:calc(100vw - 20px)}.floatlang{min-width:44px}} </style><style id="startpay-ten-language-style">.language-picker{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;margin-top:7px}.language-picker label{font-weight:750;color:#002D9C;font-size:13px;margin:0}.language-picker select{width:min(100%,330px);min-height:46px;background:white;border:1px solid #aabddd;border-radius:10px}.langbar button{min-height:44px}.langbar button.active{background:#002D9C;color:#fff}@media(max-width:560px){.language-picker{align-items:stretch}.language-picker select{width:100%}.float{bottom:calc(10px + env(safe-area-inset-bottom,0px))}.wrap{margin-bottom:115px}}@media print{.language-picker{display:none!important}}</style><style id="owned-by-v13-style">.owner-label-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}.owner-label-row label{margin:0}.owner-info{width:25px;height:25px;min-height:25px;flex:0 0 25px;border-radius:50%;border:1.5px solid #002D9C;background:#eaf0ff;color:#002D9C;font-size:15px;font-weight:900;cursor:pointer;line-height:1}.owner-info:focus-visible{outline:3px solid #00A825;outline-offset:2px}.owner-tooltip{background:#eef4ff;border:1px solid #c3d3f7;color:#193c75;padding:10px 12px;border-radius:9px;line-height:1.5;margin-top:8px}.owner-tooltip.hidden{display:none!important}</style><style id="owner-v14-css">.owner-entity{margin-top:12px}.owner-entity input{min-height:45px}</style><style id="customer-v18">.same-wa{display:flex;align-items:center;gap:9px;margin-top:10px;font-weight:650;font-size:13px;cursor:pointer}.same-wa input{width:19px;height:19px;min-height:19px;accent-color:#00A825;flex:none}.same-wa span{line-height:1.4}#customerGrid input{min-height:45px}@media(max-width:560px){#customerGrid{grid-template-columns:1fr}}</style><style id="policy-info-v21">.policy-info-hint{background:#eef4ff;border:1px solid #c3d3f7;color:#193c75;border-radius:9px;padding:10px 12px;margin:3px 0 10px;font-size:12px;line-height:1.6}.policy-info-hint.hidden{display:none!important}.owner-label-row{align-items:center}.owner-label-row label{min-width:0}.owner-info{touch-action:manipulation}</style><style id="policy-info-v22-fix">.policy-info-hint{padding:12px 14px!important;white-space:normal!important;overflow-wrap:break-word!important}.policy-info-hint p{margin:0 0 9px;line-height:1.7;font-size:13px;color:#193c75}.policy-info-hint p:last-child{margin-bottom:0;border-top:1px solid #c3d3f7;padding-top:9px}.owner-label-row{flex-wrap:wrap}.owner-label-row label{flex:0 1 auto;overflow-wrap:anywhere}.owner-info{min-width:26px;min-height:26px}</style><style id="startpay-contact-v24-style">.phone-group{display:flex;align-items:stretch;width:100%;min-width:0}.phone-prefix{flex:0 0 auto;display:flex;align-items:center;justify-content:center;min-width:88px;padding:0 10px;border:1px solid #ccd8e8;border-right:0;border-radius:10px 0 0 10px;background:#edf3ff;color:#002D9C;font-weight:850;white-space:nowrap}.phone-group input{min-width:0;flex:1;border-radius:0 10px 10px 0}.email-group{display:flex;align-items:center;gap:5px;min-width:0}.email-group #emailLocal{min-width:0;flex:1 1 50%;width:40%}.email-group #emailDomain{min-width:0;flex:1 1 50%;width:48%;padding-left:7px;padding-right:4px}.email-at{font-weight:800;color:#002D9C}.email-group+#emailCustomDomain{margin-top:8px}#email{margin-top:8px;background:#f5f8fd;color:#304766}#emailHelp.error{color:#bb1515}@media(max-width:380px){.phone-prefix{min-width:78px;padding:0 7px}.email-group{flex-wrap:wrap}.email-group #emailLocal{width:calc(100% - 26px);flex:1}.email-group #emailDomain{width:100%;flex:1 0 100%}}</style><style>.startpay-edit-hint{display:flex;align-items:center;gap:6px;margin-top:6px;color:#00A825;font-size:11.5px;line-height:1.45;font-weight:650}.startpay-pencil{font-size:16px;font-weight:900;line-height:1;color:#00A825}.startpay-edit-hint[data-hint-for="emailDomain"]{margin-top:8px}@media(max-width:420px){.startpay-edit-hint{font-size:11px}}</style>
+<style id="startpay-v27-round-actions">
+.actions{display:flex!important;flex-wrap:wrap!important;gap:15px 12px!important;justify-content:center!important;align-items:flex-start!important}
+.actions .action{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;gap:7px!important;background:transparent!important;color:#17305a!important;border:0!important;box-shadow:none!important;min-width:95px!important;max-width:120px!important;flex:1 1 95px!important;padding:0!important;font-size:12px!important;line-height:1.35!important;text-align:center!important}
+.actions .action .action-svg{box-sizing:content-box;width:25px!important;height:25px!important;padding:16px!important;min-width:25px;min-height:25px;border-radius:50%!important;background:#00A825;color:#fff;box-shadow:0 5px 15px #002d9c25;transition:transform .15s ease}
+.actions #copybtn .action-svg{background:#002D9C}
+.actions #previewbtn .action-svg{background:#1686D9}
+.actions #printbtn .action-svg{background:#6945BD}
+.actions #reset .action-svg{background:#FF0000}
+.actions #exportPNG .action-svg{background:#00A825}
+.actions #exportJPG .action-svg{background:#E06A00}
+.actions .action:active .action-svg{transform:scale(.94)}
+.actions .action:focus-visible{outline:3px solid #00A825;outline-offset:4px;border-radius:10px}
+.startpay-call-float{position:fixed;right:12px;top:calc(50% - 85px);width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:#FF0000;color:#FFFFFF;border-radius:50%;box-shadow:0 5px 19px #74000055;z-index:35;text-decoration:none}
+.startpay-call-float .action-svg{width:27px;height:27px}
+.floatlang{position:fixed!important;right:12px!important;top:calc(50% - 18px)!important;bottom:auto!important;width:56px!important;height:56px!important;min-width:56px!important;min-height:56px!important;padding:0!important;border-radius:50%!important;z-index:35!important}
+.float{z-index:30}
+@media(max-width:560px){.actions .action{min-width:78px!important;flex:1 1 78px!important;font-size:11px!important}.actions .action .action-svg{padding:13px!important;width:24px!important;height:24px!important}.startpay-call-float{right:10px;top:calc(50% - 80px)}.floatlang{right:10px!important}}
+@media print{.startpay-call-float{display:none!important}}
+</style>
+<style id="sp-saved-style">
+#sp-saved{margin:20px 0;padding:18px;border:1px solid #d7e2ef;border-radius:16px;background:#f8fbff}
+#sp-saved h3{margin:0 0 12px;color:#002D9C;font-size:18px}
+#sp-saved .saved-controls{display:flex;flex-wrap:wrap;gap:9px;margin:12px 0}
+#sp-saved button{border:0;border-radius:10px;padding:11px 13px;color:white;background:#002D9C;cursor:pointer;font-weight:700;font-size:13px}
+#sp-saved button[data-action="save"]{background:#00A825}
+#sp-saved button[data-action="update"]{background:#176db0}
+#sp-saved button[data-action="new"]{background:#00A825}
+#sp-saved button[data-action="delete"]{background:#FF0000}
+#sp-saved button[data-action="csv"]{background:#5d43a8}
+#sp-saved button:disabled{opacity:.45;cursor:not-allowed}
+#sp-saved select{width:100%;max-width:100%;min-height:45px;border:1px solid #bdcddd;border-radius:10px;background:white;padding:9px;color:#17305a}
+#sp-saved .saved-note{font-size:12px;color:#526278;line-height:1.6}
+#sp-saved #sp-saved-message{font-size:13px;font-weight:600;color:#002D9C;min-height:18px}
+@media print{#sp-saved{display:none!important}}
+</style><style id="sp-v29-home-style">
+#sp-floating-home{position:fixed;right:12px;top:calc(50% + 53px);width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:#002D9C;color:#fff;border:2px solid white;border-radius:50%;box-shadow:0 5px 18px #002d9c55;z-index:36;cursor:pointer}
+#sp-floating-home:focus-visible{outline:3px solid #00A825;outline-offset:3px}
+@media(max-width:560px){#sp-floating-home{right:10px}}
+@media print{#sp-floating-home{display:none!important}}
+</style><style id="sp-v30-styles">.sp-header-quick{display:flex;justify-content:center;align-items:start;gap:clamp(18px,6vw,58px);margin:15px auto 17px}.sp-header-action{display:flex;flex-direction:column;align-items:center;gap:7px;color:#002D9C;font-size:12px;font-weight:700;text-decoration:none;border:0;background:transparent;cursor:pointer;padding:0;min-width:72px}.sp-quick-circle{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;color:white;box-shadow:0 5px 14px #002d9c28}.sp-blue{background:#002D9C}.sp-red{background:#FF0000}.sp-green{background:#00A825}.sp-header-action:focus-visible{outline:3px solid #00A825;outline-offset:3px;border-radius:10px}.sp-submit-panel{padding:16px;margin:20px 0;background:#f4fff6;border:1px solid #bfe5c8;border-radius:14px;text-align:center}.sp-submit-panel button{border:0;border-radius:13px;padding:15px 20px;background:#00A825;color:white;font-weight:800;font-size:16px;width:100%;cursor:pointer}.sp-submit-panel p{font-size:12px;color:#3c5e47;margin:10px 0 0;line-height:1.5}#sp-submit-status{font-weight:700;color:#002D9C}@media(max-width:420px){.sp-quick-circle{width:52px;height:52px}.sp-header-quick{gap:16px}.sp-header-action{font-size:11px}}@media print{.sp-header-quick,.sp-submit-panel{display:none!important}}</style><style id="sp-v31-style">
+.sp-portal-url-box{border:1px solid #d6e2f1;background:#f7fbff;border-radius:14px;padding:12px;margin:15px 0}
+.sp-portal-url-box label{font-size:13px;font-weight:700;color:#002D9C;display:block;margin-bottom:7px}
+.sp-url-row{display:flex;gap:8px;flex-wrap:wrap}
+#sp-public-url{flex:1 1 230px;min-width:0;padding:11px;border:1px solid #aebdd1;border-radius:9px;background:#fff;color:#14213b}
+#sp-save-url{border:0;background:#002D9C;color:#fff;padding:10px 16px;border-radius:9px;font-weight:700}
+.sp-portal-url-box small{display:block;margin-top:7px;color:#526278;line-height:1.5}
+@media print{.sp-portal-url-box{display:none!important}}
+</style><style id="sp-v32-links">#sp-portal-links{margin:16px 0}.sp-links-title{font-weight:800;color:#002D9C;margin-bottom:10px}.sp-link-item{display:flex;flex-direction:column;gap:4px;padding:10px 0;border-bottom:1px solid #dce6f1}.sp-link-item strong{font-size:13px}.sp-link-item a{font-size:14px;overflow-wrap:anywhere;color:#002D9C;text-decoration:underline}.sp-link-item:last-of-type{border:0}</style><style id="sp-v34-logo-style">.sp-logo-circle{background:#fff!important;border:2px solid #002D9C!important;overflow:hidden;display:flex!important;align-items:center;justify-content:center;padding:4px!important;box-shadow:0 3px 11px #002d9c26}.sp-logo-circle img{display:block;max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;border-radius:50%}.sp-logo-action{text-decoration:none}.sp-header-quick{flex-wrap:wrap!important;justify-content:center!important;gap:12px!important}@media(max-width:480px){.sp-logo-circle{padding:3px!important}.sp-header-quick{gap:8px!important}}</style><style id="sp-footer-v36-style">
+.sp-footer-v36{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;padding:22px 10px 25px!important;background:#fff!important;border-top:3px solid #00A825;color:#111!important}
+.sp-footer-v36 a{text-decoration:none}
+.sp-footer-credit{font-size:12px;color:#555!important;font-weight:500}
+.sp-footer-brand{font-size:16px;color:#002D9C!important;font-weight:800}
+.sp-footer-copy{font-size:11px;color:#333!important}
+.sp-footer-tagline{font-size:clamp(11px,2.7vw,15px);color:#FF0000!important;font-weight:800;overflow-wrap:anywhere}
+.sp-footer-icons{display:flex;gap:13px;justify-content:center;align-items:center;margin-top:7px}
+.sp-footer-icons a,.sp-footer-icons button{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:50%;border:0;background:#002D9C;color:white!important;font-size:20px;cursor:pointer;text-decoration:none}
+.sp-footer-icons a:nth-child(2){background:#FF0000}
+.sp-footer-icons button{background:#00A825;font-size:14px;font-weight:800}
+@media print{.sp-footer-icons{display:none!important}}
+</style><style id="sp-footer-call-v37">.sp-footer-icons .sp-footer-red-call{background:#FF0000!important;color:#FFFFFF!important;width:48px!important;height:48px!important;min-width:48px!important;border-radius:50%!important;display:inline-flex!important;align-items:center!important;justify-content:center!important;box-shadow:0 4px 12px #FF000044!important;text-decoration:none!important}.sp-footer-icons .sp-footer-red-call svg{width:24px;height:24px;display:block}.sp-footer-icons .sp-footer-red-call:focus-visible{outline:3px solid #002D9C;outline-offset:3px}</style><style id="sp-v38-print-output">@media print{.actions,.sp-header-quick,.float,.sp-footer-icons,.no-print{display:none!important}.sp-footer{display:block!important;break-inside:avoid;page-break-inside:avoid} .sp-footer a{color:inherit;text-decoration:none}}</style></head><body><div class="wrap"><main class="hero"><header class="top"><div class="headrow"><div><div class="brand">₹ Start<span>Pay</span>Online</div><div class="tag">!! शुभ शुरुआत स्टार्ट पे के साथ !!</div></div><div class="pill">INSURANCE PRODUCTS • ENQUIRY · v3.5</div></div><h1 data-t="title">बीमा जानकारी फॉर्म</h1><div class="sp-header-quick no-print" aria-label="StartPay quick actions"><button type="button" id="sp-portal-share" class="sp-header-action" title="Share Portal Link"><span class="sp-quick-circle sp-blue"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.7 10.6 6.6-4.2m-6.6 7 6.6 4.2"/></svg></span><span id="sp-portal-label">Portal Share</span></button><a class="sp-header-action" href="tel:+919340726600" title="Call +91 9340726600"><span class="sp-quick-circle sp-red"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.5 3a2 2 0 0 1-.6 1.8L7 10.5a16 16 0 0 0 6.5 6.5l2-2a2 2 0 0 1 1.8-.6l3 .5a2 2 0 0 1 1.7 2Z"/></svg></span><span id="sp-call-label">Call Now</span></a><button type="button" id="sp-header-whatsapp" class="sp-header-action" title="Send Insurance Enquiry to +91 9340726600"><span class="sp-quick-circle sp-green"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.4 7.5L3 20l1.1-4.3A8.5 8.5 0 1 1 20 11.5Z"/><path d="M8.4 8.6c.6 2.1 2.4 3.8 4.5 4.6l1.5-1.1 2 1.1-.5 2c-4.1 1.2-8.6-3.4-8.4-7.1Z"/></svg></span><span id="sp-wa-label">WhatsApp</span></button><a class="sp-header-action sp-logo-action" href="https://startpayonline.com/" target="_blank" rel="noopener noreferrer" title="StartPayOnline Website खोलें"><span class="sp-quick-circle sp-logo-circle"><img src="data:image/png;base64,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" alt="StartPay original logo" /></span><span>StartPay Portal</span></a></div><p class="sub" data-t="subtitle">सही बीमा कोटेशन के लिए विवरण चुनें और WhatsApp पर शेयर करें।</p><div class="langbar no-print"><button data-lang="en" type="button">English</button><button class="active" data-lang="hi" type="button">हिन्दी</button><button data-lang="as" type="button">অসমীয়া</button><div class="language-picker"><label for="languageSelect" id="languageLabel">भाषा / Language</label><select aria-label="Choose language" id="languageSelect"><option value="en">English</option><option value="as">অসমীয়া</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option><option value="bn">বাংলা</option><option value="ta">தமிழ்</option><option value="kn">ಕನ್ನಡ</option><option value="te">తెలుగు</option><option value="gu">ગુજરાતી</option><option value="or">ଓଡ଼ିଆ</option></select></div></div></header><form autocomplete="on" id="f"><div class="section" data-t="s1">01 • वाहन का विवरण</div><div class="grid"><div class="field"><label data-t="vehicle" for="vehicle">वाहन का प्रकार *</label><select id="vehicle" required=""></select><div class="startpay-edit-hint" data-hint-for="vehicle" data-hint-type="select"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field"><label data-t="reg" for="reg">वाहन रजिस्ट्रेशन नंबर</label><input id="reg" maxlength="15" placeholder="MP20AB1234" style="text-transform:uppercase"/><div class="startpay-edit-hint" data-hint-for="reg" data-hint-type="vehicle"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field"><div class="owner-label-row"><label data-t="use" for="use">Vehicle Usage</label><button aria-controls="usageHint" aria-expanded="false" aria-label="Vehicle Usage information" class="owner-info" id="usageInfo" title="गाड़ी किस काम के लिए इस्तेमाल होती है?" type="button">i</button></div><select id="use"></select><div class="hint hidden" id="usageHint" role="note">गाड़ी किस काम के लिए इस्तेमाल होती है?</div><div class="startpay-edit-hint" data-hint-for="use" data-hint-type="select"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field"><div class="owner-label-row"><label for="ownedBy" id="ownedByLabel">Owned By (As per RC/RTO) *</label><button aria-controls="ownedByHint" aria-expanded="false" aria-label="Owned By information" class="owner-info" id="ownedByInfo" title="Owned By is the type of the vehicle owner under whom the vehicle is registered." type="button">i</button></div><select id="ownedBy" required=""><option value="">Select</option><option value="individual">Individual / Single</option><option value="company">Company / Firm</option><option value="joint">Joint</option></select><div class="owner-entity hidden" id="ownerEntityBox"><label for="ownerEntityName" id="ownerEntityLabel">Firm / Company / Organisation Name (as per RC)</label><input autocomplete="organization" id="ownerEntityName" placeholder="Enter registered name"/></div><div class="hint owner-tooltip hidden" id="ownedByHint" role="status">Owned By is the type of the vehicle owner under whom the vehicle is registered.</div><div class="startpay-edit-hint" data-hint-for="ownedBy" data-hint-type="select"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div><div class="startpay-edit-hint" data-hint-for="ownerEntityName" data-hint-type="text"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div></div><div class="line"></div><div class="section" id="customerSection">02 • Customer Name</div><div class="grid" id="customerGrid"><div class="field"><label data-t="name" for="name">ग्राहक का नाम</label><input autocomplete="name" id="name"/><div class="startpay-edit-hint" data-hint-for="name" data-hint-type="name"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field"><label for="mobile" id="mobileLabel">Mobile Number</label><div class="phone-group"><span aria-label="India country code" class="phone-prefix">🇮🇳 +91</span><input autocomplete="tel" id="mobile" inputmode="numeric" maxlength="10" pattern="[6-9][0-9]{9}" placeholder="10-digit mobile number" type="tel"/></div><div class="startpay-edit-hint" data-hint-for="mobile" data-hint-type="phone"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field"><label for="whatsapp" id="whatsappLabel">WhatsApp Number</label><div class="phone-group"><span aria-label="India country code" class="phone-prefix">🇮🇳 +91</span><input id="whatsapp" inputmode="numeric" maxlength="10" pattern="[6-9][0-9]{9}" placeholder="10-digit WhatsApp number" type="tel"/></div><label class="same-wa"><input id="sameWhatsapp" type="checkbox"/><span id="sameWhatsappLabel">Same as Mobile Number</span></label><div class="startpay-edit-hint" data-hint-for="whatsapp" data-hint-type="phone"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field"><label for="email" id="emailLabel">Customer Email ID</label><div class="email-group"><input aria-label="Email username" autocomplete="off" id="emailLocal" inputmode="email" placeholder="username" type="text"/><span class="email-at">@</span><select aria-label="Email domain" id="emailDomain"><option value="gmail.com">gmail.com</option><option value="yahoo.com">yahoo.com</option><option value="yahoo.co.in">yahoo.co.in</option><option value="outlook.com">outlook.com</option><option value="hotmail.com">hotmail.com</option><option value="icloud.com">icloud.com</option><option value="rediffmail.com">rediffmail.com</option><option value="custom">Other / Custom</option></select></div><input aria-label="Custom email domain" class="hidden" id="emailCustomDomain" placeholder="company.in" type="text"/><input aria-label="Full email address preview" autocomplete="off" id="email" placeholder="Full email preview (optional)" readonly="" tabindex="-1" type="email"/><div class="hint" id="emailHelp">Email वैकल्पिक है। नाम और Domain चुनें।</div><div class="startpay-edit-hint" data-hint-for="emailLocal" data-hint-type="email"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div><div class="startpay-edit-hint" data-hint-for="emailDomain" data-hint-type="select"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div><div class="startpay-edit-hint" data-hint-for="emailCustomDomain" data-hint-type="email"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div></div><div class="line"></div><div class="section" data-t="s2">03 • पुरानी बीमा पॉलिसी</div><div class="grid"><div class="field"><div class="owner-label-row"><label data-t="status" for="status">पुरानी पॉलिसी की स्थिति *</label><button aria-controls="statusHint" aria-expanded="false" aria-label="status information" class="owner-info" id="statusInfo" title="More information" type="button">i</button></div><div class="policy-info-hint hidden" id="statusHint" role="note"></div><select id="status" required=""></select><div class="startpay-edit-hint" data-hint-for="status" data-hint-type="select"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field"><div class="owner-label-row"><label data-t="oldtype" for="oldtype">पुरानी पॉलिसी का प्रकार</label><button aria-controls="oldtypeHint" aria-expanded="false" aria-label="oldtype information" class="owner-info" id="oldtypeInfo" title="More information" type="button">i</button></div><div class="policy-info-hint hidden" id="oldtypeHint" role="note"></div><select id="oldtype"></select><div class="startpay-edit-hint" data-hint-for="oldtype" data-hint-type="select"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field"><div class="owner-label-row"><label data-t="over90" for="over90">क्या पॉलिसी 90 दिन से अधिक पहले एक्सपायर हुई?</label><button aria-controls="over90Hint" aria-expanded="false" aria-label="over90 information" class="owner-info" id="over90Info" title="More information" type="button">i</button></div><div class="policy-info-hint hidden" id="over90Hint" role="note"></div><select id="over90"></select><div class="hint" data-t="autohint">तारीख दर्ज करने पर उत्तर अपने आप बदलेगा।</div><div class="startpay-edit-hint" data-hint-for="over90" data-hint-type="select"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field" id="datebox"><div class="owner-label-row"><label data-t="expiry" for="expiry">Policy Expiry Date</label><button aria-controls="expiryHint" aria-expanded="false" aria-label="expiry information" class="owner-info" id="expiryInfo" title="More information" type="button">i</button></div><div class="policy-info-hint hidden" id="expiryHint" role="note"></div><input id="expiry" type="date"/><div class="hint" data-t="datehint">तारीख चुनते ही 90 दिनों की स्थिति दिखाई जाएगी।</div><div class="status hidden" id="expiredResult"></div><div class="startpay-edit-hint" data-hint-for="expiry" data-hint-type="date"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field"><div class="owner-label-row"><label data-t="copy" for="copy">पुरानी पॉलिसी की कॉपी</label><button aria-controls="copyHint" aria-expanded="false" aria-label="copy information" class="owner-info" id="copyInfo" title="More information" type="button">i</button></div><div class="policy-info-hint hidden" id="copyHint" role="note"></div><select id="copy"></select><div class="startpay-edit-hint" data-hint-for="copy" data-hint-type="select"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field"><div class="owner-label-row"><label data-t="claim" for="claim">पिछली अवधि में बीमा क्लेम लिया था?</label><button aria-controls="claimHint" aria-expanded="false" aria-label="claim information" class="owner-info" id="claimInfo" title="More information" type="button">i</button></div><div class="policy-info-hint hidden" id="claimHint" role="note"></div><select id="claim"></select><div class="startpay-edit-hint" data-hint-for="claim" data-hint-type="select"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div><div class="field full"><label data-t="remarks" for="remarks">अन्य जानकारी / टिप्पणी</label><textarea id="remarks" rows="2"></textarea><div class="startpay-edit-hint" data-hint-for="remarks" data-hint-type="text"><span aria-hidden="true" class="startpay-pencil">✎</span><span class="startpay-hint-text">यहाँ सही विकल्प चुनें या बदलें</span></div></div></div><div class="actions no-print"><button class="action" id="share" type="button"><svg class="action-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.5 8.5 0 0 1-12.4 7.5L3 20l1.1-4.3A8.5 8.5 0 1 1 20 11.5Z"/><path d="M8.4 8.6c.6 2.1 2.4 3.8 4.5 4.6l1.5-1.1 2 1.1-.5 2c-4.1 1.2-8.6-3.4-8.4-7.1Z"/></svg><span data-t="share">WhatsApp पर शेयर करें</span></button><button class="action secondary" id="copybtn" type="button"><svg class="action-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg><span data-t="copybtn">विवरण कॉपी करें</span></button><button class="action secondary" id="previewbtn" type="button" title="WhatsApp मैसेज देखें"><svg class="action-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.7-6 10-6 10 6 10 6-3.7 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg><span data-t="previewbtn">प्रीव्यू देखें</span></button><button class="action secondary" id="printbtn" type="button"><svg class="action-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v7H6z"/></svg><span data-t="printbtn">Print / PDF</span></button><button class="action danger" type="reset"><svg class="action-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11a9 9 0 1 1 2.6 6.4"/><path d="M3 4v7h7"/></svg><span data-t="reset">नया फॉर्म</span></button><button class="action export-btn export-png" id="exportPNG" type="button" title="PNG image download"><svg class="action-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><path d="m4 18 5-5 3 3 3-4 5 6"/></svg><span>PNG</span></button><button class="action export-btn export-jpg" id="exportJPG" type="button" title="JPG image download"><svg class="action-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8" cy="8" r="1.5"/><path d="m4 18 5-5 3 3 3-4 5 6"/></svg><span>JPG</span></button></div><div class="sp-portal-url-box no-print" id="sp-portal-links"><div class="sp-links-title">🔗 पोर्टल शेयर / Portal Share</div><div class="sp-link-item"><strong>🛡️ Insurance Enquiry Portal</strong><a href="http://sp.startpayonline.com/insurance/" target="_blank" rel="noopener noreferrer">http://sp.startpayonline.com/insurance/</a></div><div class="sp-link-item"><strong>🌐 StartPayOnline Website</strong><a href="https://startpayonline.com/" target="_blank" rel="noopener noreferrer">https://startpayonline.com/</a></div><small>ऊपर Insurance Portal और नीचे मुख्य वेबसाइट का लिंक है। Portal Share बटन Insurance Portal का लिंक शेयर करेगा। वेबसाइट पर यह पेज प्रकाशित होना जरूरी है।</small></div><div class="sp-submit-panel no-print"><button type="button" id="sp-submit-enquiry">✉ Submit Insurance Enquiry • WhatsApp</button><p id="sp-submit-help">फॉर्म भरकर दबाएँ। WhatsApp खुलेगा; ग्राहक Send दबाएगा, तभी आपकी Enquiry पहुँचेगी।</p><p id="sp-submit-status" role="status" aria-live="polite"></p></div><section id="sp-saved" class="no-print" aria-label="Saved insurance forms">
+<h3>💾 सेव किए गए बीमा फॉर्म (अधिकतम 20)</h3>
+<label for="sp-saved-select" style="display:block;margin-bottom:7px;font-weight:700">सेव किया हुआ रिकॉर्ड चुनें / Select saved record</label>
+<select id="sp-saved-select"><option value="">— रिकॉर्ड चुनें / Select Record —</option></select>
+<div class="saved-controls">
+<button type="button" data-action="save">＋ Save &amp; Add</button>
+<button type="button" data-action="update">✎ Edit / Update</button>
+<button type="button" data-action="new">＋ New Form</button>
+<button type="button" data-action="delete">🗑 Delete</button>
+<button type="button" data-action="csv">📊 Excel Export (.CSV)</button>
+</div>
+<div class="saved-note"><strong id="sp-saved-count">0 / 20</strong> · डेटा इसी ब्राउज़र में सेव होगा। Dropdown से रिकॉर्ड चुनकर Edit करें।</div>
+<div id="sp-saved-message" role="status" aria-live="polite"></div>
+</section><div class="hidden" id="previewArea" style="margin-top:17px"><div class="section" data-t="previewtitle">WhatsApp संदेश प्रीव्यू</div><div class="preview" id="previewText"></div></div><p class="note" data-t="note">नोट: यह केवल जानकारी संग्रह का फॉर्म है। 90 दिन की गणना तारीखों का अंतर बताती है; NCB, निरीक्षण और बीमा पात्रता संबंधित बीमा कंपनी के नियमों पर निर्भर है। डेटा सर्वर पर सेव नहीं होता।</p></form><footer class="footer sp-footer-v36" aria-label="StartPay website footer">
+<a href="https://startpayonline.com/" target="_blank" rel="noopener noreferrer" class="sp-footer-credit">Designed &amp; Developed by</a>
+<a href="https://startpayonline.com/" target="_blank" rel="noopener noreferrer" class="sp-footer-brand">StartPay Legal &amp; Finance IT Solutions™</a>
+<a href="https://startpayonline.com/" target="_blank" rel="noopener noreferrer" class="sp-footer-copy">© 2026 StartPay Legal &amp; Finance IT Solutions. All Rights Reserved.</a>
+<a href="https://startpayonline.com/" target="_blank" rel="noopener noreferrer" class="sp-footer-tagline">──────── !! शुभ शुरुआत स्टार्ट पे के साथ !! ────────</a>
+<div class="sp-footer-icons no-print">
+<a href="https://startpayonline.com/" target="_blank" rel="noopener noreferrer" title="Official Website" aria-label="Official Website">🌐</a>
+<a class="sp-footer-red-call" href="tel:+919340726600" title="Call Now: 9340726600" aria-label="Call Now 9340726600"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2A19.79 19.79 0 0 1 2.09 4.18 2 2 0 0 1 4.08 2h3a2 2 0 0 1 1.99 1.72l.49 2.98a2 2 0 0 1-.57 1.72L7.1 10.3a16 16 0 0 0 6.6 6.6l1.88-1.89a2 2 0 0 1 1.72-.57l2.98.5A2 2 0 0 1 22 16.92Z"/></svg></a>
+<button type="button" id="sp-footer-language" title="Switch language: English, हिन्दी, অসমীয়া" aria-label="Switch language">अ/A</button>
+</div>
+</footer></main></div><a class="startpay-call-float no-print" href="tel:+919340726600" aria-label="Call 9340726600" title="Call 9340726600"><svg class="action-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7l.5 3a2 2 0 0 1-.6 1.8L7 10.5a16 16 0 0 0 6.5 6.5l2-2a2 2 0 0 1 1.8-.6l3 .5a2 2 0 0 1 1.7 2Z"/></svg></a><button id="sp-floating-home" type="button" aria-label="Home - ऊपर जाएँ" title="Home / ऊपर जाएँ"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 10 9-7 9 7"/><path d="M5 9v12h14V9"/><path d="M9 21v-8h6v8"/></svg></button><div class="float no-print"><button class="smallfloat floatlang" id="floatlang" type="button" title="Switch language: English, हिन्दी, অসমীয়া" aria-label="Change language">अ/A</button><button class="smallfloat" id="floatcopy" title="Copy">⧉</button><button class="wa" id="floatwa">✆ WhatsApp</button></div><div class="toast" id="toast"></div><script>
+const dict={hi:{title:'बीमा जानकारी फॉर्म',subtitle:'सही बीमा कोटेशन के लिए विवरण चुनें और WhatsApp पर शेयर करें।',s1:'01 • वाहन का विवरण',s2:'03 • पुरानी बीमा पॉलिसी',vehicle:'वाहन का प्रकार *',reg:'वाहन रजिस्ट्रेशन नंबर',use:'वाहन का उपयोग',name:'ग्राहक का नाम',status:'पुरानी पॉलिसी की स्थिति *',oldtype:'पुरानी पॉलिसी का प्रकार',expiry:'पुरानी पॉलिसी समाप्त होने की तारीख',datehint:'तारीख चुनते ही 90 दिनों की स्थिति दिखाई जाएगी।',over90:'क्या पॉलिसी 90 दिन से अधिक पहले एक्सपायर हुई?',autohint:'तारीख दर्ज करने पर उत्तर अपने आप बदलेगा।',copy:'पुरानी पॉलिसी की कॉपी',claim:'पिछली अवधि में बीमा क्लेम लिया था?',remarks:'अन्य जानकारी / टिप्पणी',share:'WhatsApp पर शेयर करें',copybtn:'विवरण कॉपी करें',previewbtn:'प्रीव्यू देखें',printbtn:'Print / PDF',reset:'नया फॉर्म',previewtitle:'WhatsApp संदेश प्रीव्यू',note:'नोट: यह केवल जानकारी संग्रह का फॉर्म है। 90 दिन की गणना तारीखों का अंतर बताती है; NCB, निरीक्षण और बीमा पात्रता संबंधित बीमा कंपनी के नियमों पर निर्भर है। डेटा सर्वर पर सेव नहीं होता।',yes:'हाँ',no:'नहीं',unknown:'जानकारी नहीं',select:'चुनें',vehicleOptions:['टू-व्हीलर','थ्री-व्हीलर','फोर-व्हीलर','अन्य / कमर्शियल'],useOptions:['निजी (Private)','व्यावसायिक (Commercial)','जानकारी नहीं'],statusOptions:['पॉलिसी चालू है','पॉलिसी एक्सपायर हो गई','पुरानी पॉलिसी उपलब्ध नहीं','पुरानी पॉलिसी खो गई','जानकारी नहीं'],oldtypeOptions:['फर्स्ट पार्टी / कॉम्प्रिहेंसिव','थर्ड पार्टी','स्टैंडअलोन ओन डैमेज (OD)','जानकारी नहीं'],copyOptions:['कॉपी उपलब्ध है','कॉपी उपलब्ध नहीं','पॉलिसी खो गई','जानकारी नहीं'],days:n=>'समाप्त हुए '+n+' दिन',future:'पॉलिसी अभी समाप्त नहीं हुई है',today:'आज समाप्त हुई',msg:'वाहन बीमा पूछताछ',required:'कृपया वाहन का प्रकार और पॉलिसी की स्थिति चुनें।',copied:'विवरण कॉपी हो गया',copyfail:'कॉपी नहीं हो सकी; प्रीव्यू से कॉपी करें।'},en:{title:'Insurance Products Enquiry Form',subtitle:'Select details for an insurance quotation and share via WhatsApp.',s1:'01 • Vehicle Details',s2:'03 • Previous Insurance Policy',vehicle:'Vehicle Type *',reg:'Vehicle Registration Number',use:'Vehicle Usage',name:'Customer Name',status:'Previous Policy Status *',oldtype:'Previous Policy Type',expiry:'Previous Policy Expiry Date',datehint:'90-day status is calculated automatically.',over90:'Has the policy been expired for more than 90 days?',autohint:'Automatically updates when expiry date is entered.',copy:'Old Policy Copy',claim:'Any claim in the previous policy period?',remarks:'Other Information / Remarks',share:'Share on WhatsApp',copybtn:'Copy Details',previewbtn:'Show Preview',printbtn:'Print / PDF',reset:'New Form',previewtitle:'WhatsApp Message Preview',note:'Note: For enquiry only. The 90-day calculation is a date difference; NCB, inspection and eligibility depend on insurer rules. No data is stored on a server.',yes:'Yes',no:'No',unknown:'Unknown',select:'Select',vehicleOptions:['Two Wheeler','Three Wheeler','Four Wheeler','Other / Commercial'],useOptions:['Private','Commercial','Unknown'],statusOptions:['Policy Active','Policy Expired','Old Policy Unavailable','Old Policy Lost','Unknown'],oldtypeOptions:['First Party / Comprehensive','Third Party','Standalone Own Damage (OD)','Unknown'],copyOptions:['Copy Available','Copy Unavailable','Policy Lost','Unknown'],days:n=>'Expired '+n+' days ago',future:'Policy has not yet expired',today:'Expired today',msg:'Motor Insurance Enquiry',required:'Please select vehicle type and policy status.',copied:'Details copied',copyfail:'Could not copy; please copy from preview.'},as:{title:'বীমাৰ তথ্য ফৰ্ম',subtitle:'সঠিক বীমা কোটেচনৰ বাবে তথ্য বাছনি কৰি WhatsApp-ত শ্বেয়াৰ কৰক।',s1:'০১ • বাহনৰ তথ্য',s2:'০৩ • পুৰণি বীমা পলিচী',vehicle:'বাহনৰ প্ৰকাৰ *',reg:'বাহনৰ পঞ্জীয়ন নম্বৰ',use:'বাহনৰ ব্যৱহাৰ',name:'গ্ৰাহকৰ নাম',status:'পুৰণি পলিচীৰ অৱস্থা *',oldtype:'পুৰণি পলিচীৰ প্ৰকাৰ',expiry:'পুৰণি পলিচীৰ মেয়াদ শেষ হোৱাৰ তাৰিখ',datehint:'তাৰিখ দিলে ৯০ দিনৰ অৱস্থা নিজে গণনা হ’ব।',over90:'পলিচীৰ মেয়াদ শেষ হোৱা ৯০ দিনতকৈ বেছি হৈছে নেকি?',autohint:'মেয়াদৰ তাৰিখ দিলে উত্তৰ নিজে সলনি হ’ব।',copy:'পুৰণি পলিচীৰ কপি',claim:'পূৰ্বৰ পলিচীৰ সময়ত কোনো ক্লেইম কৰিছিল নেকি?',remarks:'অন্য তথ্য / মন্তব্য',share:'WhatsApp-ত শ্বেয়াৰ',copybtn:'তথ্য কপি কৰক',previewbtn:'প্ৰিভিউ চাওক',printbtn:'Print / PDF',reset:'নতুন ফৰ্ম',previewtitle:'WhatsApp বাৰ্তাৰ প্ৰিভিউ',note:'টোকা: এইখন কেৱল তথ্য সংগ্ৰহৰ ফৰ্ম। ৯০ দিনৰ গণনা তাৰিখৰ পাৰ্থক্য; NCB, পৰিদৰ্শন আৰু যোগ্যতা বীমা কোম্পানীৰ নিয়মৰ ওপৰত নিৰ্ভৰ কৰে। তথ্য চাৰ্ভাৰত সংৰক্ষণ নহয়।',yes:'হয়',no:'নহয়',unknown:'নাজানো',select:'বাছনি কৰক',vehicleOptions:['দুচকীয়া বাহন','তিনিচকীয়া বাহন','চাৰিচকীয়া বাহন','অন্য / বাণিজ্যিক'],useOptions:['ব্যক্তিগত','বাণিজ্যিক','নাজানো'],statusOptions:['পলিচী সক্ৰিয়','পলিচীৰ মেয়াদ শেষ','পুৰণি পলিচী উপলব্ধ নহয়','পুৰণি পলিচী হেৰাইছে','নাজানো'],oldtypeOptions:['ফাৰ্ষ্ট পাৰ্টি / কম্প্ৰিহেনচিভ','থাৰ্ড পাৰ্টি','ষ্টেণ্ডএলোন অন ডেমেজ (OD)','নাজানো'],copyOptions:['কপি আছে','কপি নাই','পলিচী হেৰাইছে','নাজানো'],days:n=>'মেয়াদ শেষ হোৱা '+n+' দিন',future:'পলিচীৰ মেয়াদ এতিয়াও শেষ হোৱা নাই',today:'আজি মেয়াদ শেষ হৈছে',msg:'বাহনৰ বীমাৰ অনুসন্ধান',required:'বাহনৰ প্ৰকাৰ আৰু পলিচীৰ অৱস্থা বাছনি কৰক।',copied:'তথ্য কপি হ’ল',copyfail:'কপি কৰিব পৰা নগ’ল; প্ৰিভিউৰ পৰা কপি কৰক।'}};
+let lang='hi';const $=id=>document.getElementById(id),fields=['vehicle','reg','use','name','status','oldtype','expiry','over90','copy','claim','remarks'];const options={vehicle:'vehicleOptions',use:'useOptions',status:'statusOptions',oldtype:'oldtypeOptions',copy:'copyOptions'};const indexes={};function setOptions(id,arr){const el=$(id),v=el.value;el.innerHTML='';arr.forEach((s,i)=>{let o=document.createElement('option');o.value=String(i);o.textContent=s;el.appendChild(o)});if([...el.options].some(o=>o.value===v))el.value=v}function applyLanguage(l){lang=l;document.documentElement.lang=l;document.querySelectorAll('[data-t]').forEach(el=>el.textContent=dict[l][el.dataset.t]);document.querySelectorAll('[data-lang]').forEach(b=>b.classList.toggle('active',b.dataset.lang===l));for(const [id,key] of Object.entries(options))setOptions(id,[dict[l].select,...dict[l][key]]);setOptions('over90',[dict[l].select,dict[l].yes,dict[l].no,dict[l].unknown]);setOptions('claim',[dict[l].select,dict[l].yes,dict[l].no,dict[l].unknown]);refresh();}function selected(id){let e=$(id);return e.selectedIndex>0?e.options[e.selectedIndex].textContent:'—'}function dayDiff(){if(!$('expiry').value)return null;let d=new Date($('expiry').value+'T12:00:00');if(isNaN(d.getTime()))return null;let now=new Date();let today=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12);return Math.round((today-d)/86400000)}function refresh(){const st=$('status').value;const showDate=st==='2'||st==='1'||st==='4'||st==='5';$('datebox').classList.remove('hidden');let diff=dayDiff();$('expiredResult').classList.toggle('hidden',diff===null||!showDate);if(diff!==null&&showDate){$('expiredResult').textContent=diff>0?dict[lang].days(diff):diff===0?dict[lang].today:dict[lang].future;$('over90').value=diff>90?'1':'2'}else if(!showDate){$('over90').value='0'}if(!$('previewArea').classList.contains('hidden'))$('previewText').textContent=summary()}
+function summary(){const t=dict[lang],lines=['*₹ StartPayOnline — '+t.msg+'*','',t.vehicle+': '+selected('vehicle'),t.reg+': '+($('reg').value.trim().toUpperCase()||'—'),t.use+': '+selected('use'),t.name+': '+($('name').value.trim()||'—'),'',t.status+': '+selected('status'),t.oldtype+': '+selected('oldtype'),t.expiry+': '+($('expiry').value||'—'),t.over90+': '+selected('over90'),t.copy+': '+selected('copy'),t.claim+': '+selected('claim')];const d=dayDiff();if(d!==null)lines.push(d>0?t.days(d):d===0?t.today:t.future);if($('remarks').value.trim())lines.push(t.remarks+': '+$('remarks').value.trim());lines.push('','!! शुभ शुरुआत स्टार्ट पे के साथ !!');return lines.join('\n')}function valid(){if($('vehicle').value==='0'||$('status').value==='0'){alert(dict[lang].required);return false}return true}function share(){document.getElementById('sp-submit-enquiry').click()}async function copyText(){if(!valid())return;let s=summary();try{await navigator.clipboard.writeText(s);toast(dict[lang].copied)}catch(e){$('previewArea').classList.remove('hidden');$('previewText').textContent=s;toast(dict[lang].copyfail)}}function toast(s){let t=$('toast');t.textContent=s;t.style.display='block';setTimeout(()=>t.style.display='none',2500)}document.querySelectorAll('[data-lang]').forEach(b=>b.addEventListener('click',()=>applyLanguage(b.dataset.lang)));$('share').onclick=$('floatwa').onclick=share;$('copybtn').onclick=$('floatcopy').onclick=copyText;$('previewbtn').onclick=()=>{$('previewArea').classList.toggle('hidden');$('previewText').textContent=summary()};$('printbtn').onclick=()=>window.print();$('f').addEventListener('change',refresh);$('f').addEventListener('input',refresh);$('f').addEventListener('reset',()=>setTimeout(()=>{applyLanguage(lang);$('previewArea').classList.add('hidden')},0));
+const extraLanguages={
+mr:{title:'मोटार विमा चौकशी फॉर्म',subtitle:'विमा कोटेशनसाठी माहिती निवडा आणि WhatsApp वर शेअर करा.',s1:'01 • वाहन तपशील',s2:'03 • मागील विमा पॉलिसी',vehicle:'वाहनाचा प्रकार *',reg:'वाहन नोंदणी क्रमांक',use:'वाहनाचा वापर',name:'ग्राहकाचे नाव',status:'मागील पॉलिसीची स्थिती *',oldtype:'मागील पॉलिसीचा प्रकार',expiry:'मागील पॉलिसीची समाप्ती तारीख',over90:'पॉलिसी संपून 90 दिवसांपेक्षा जास्त झाले आहेत का?',copy:'मागील पॉलिसीची प्रत',claim:'मागील कालावधीत क्लेम केला होता का?',remarks:'इतर माहिती / टिपण्णी',share:'WhatsApp वर शेअर करा',copybtn:'तपशील कॉपी करा',previewbtn:'प्रीव्ह्यू पाहा',reset:'नवीन फॉर्म',previewtitle:'WhatsApp संदेश प्रीव्ह्यू',select:'निवडा',yes:'होय',no:'नाही',unknown:'माहित नाही',msg:'मोटार विमा चौकशी',vehicleOptions:['दुचाकी','तीनचाकी','चारचाकी','इतर / व्यावसायिक'],useOptions:['खाजगी','व्यावसायिक','माहित नाही'],statusOptions:['पॉलिसी सक्रिय','पॉलिसी कालबाह्य','जुनी पॉलिसी उपलब्ध नाही','पॉलिसी हरवली','माहित नाही'],oldtypeOptions:['फर्स्ट पार्टी / कॉम्प्रिहेन्सिव्ह','थर्ड पार्टी','स्टँडअलोन ओन डॅमेज (OD)','माहित नाही'],copyOptions:['प्रत उपलब्ध','प्रत उपलब्ध नाही','पॉलिसी हरवली','माहित नाही']},
+bn:{title:'মোটর বীমা অনুসন্ধান ফর্ম',subtitle:'বীমার কোটেশনের জন্য তথ্য নির্বাচন করে WhatsApp-এ শেয়ার করুন।',s1:'01 • গাড়ির বিবরণ',s2:'03 • পূর্ববর্তী বীমা পলিসি',vehicle:'গাড়ির ধরন *',reg:'গাড়ির রেজিস্ট্রেশন নম্বর',use:'গাড়ির ব্যবহার',name:'গ্রাহকের নাম',status:'আগের পলিসির অবস্থা *',oldtype:'আগের পলিসির ধরন',expiry:'পলিসির মেয়াদ শেষের তারিখ',over90:'পলিসির মেয়াদ ৯০ দিনের বেশি আগে শেষ হয়েছে?',copy:'পুরনো পলিসির কপি',claim:'আগের পলিসিতে কোনো দাবি ছিল?',remarks:'অন্যান্য তথ্য / মন্তব্য',share:'WhatsApp-এ শেয়ার',copybtn:'বিবরণ কপি',previewbtn:'প্রিভিউ দেখুন',reset:'নতুন ফর্ম',previewtitle:'WhatsApp বার্তা প্রিভিউ',select:'নির্বাচন করুন',yes:'হ্যাঁ',no:'না',unknown:'জানা নেই',msg:'মোটর বীমা অনুসন্ধান',vehicleOptions:['দুই চাকা','তিন চাকা','চার চাকা','অন্যান্য / বাণিজ্যিক'],useOptions:['ব্যক্তিগত','বাণিজ্যিক','জানা নেই'],statusOptions:['পলিসি সক্রিয়','পলিসির মেয়াদ শেষ','পলিসি নেই','পলিসি হারিয়ে গেছে','জানা নেই'],oldtypeOptions:['ফার্স্ট পার্টি / কম্প্রিহেনসিভ','থার্ড পার্টি','ওন ড্যামেজ (OD)','জানা নেই'],copyOptions:['কপি আছে','কপি নেই','পলিসি হারিয়ে গেছে','জানা নেই']},
+ta:{title:'மோட்டார் காப்பீட்டு விசாரணை படிவம்',subtitle:'காப்பீட்டு விவரங்களைத் தேர்ந்தெடுத்து WhatsApp-இல் பகிரவும்.',s1:'01 • வாகன விவரங்கள்',s2:'03 • முந்தைய காப்பீடு',vehicle:'வாகன வகை *',reg:'வாகன பதிவு எண்',use:'வாகன பயன்பாடு',name:'வாடிக்கையாளர் பெயர்',status:'முந்தைய பாலிசி நிலை *',oldtype:'முந்தைய பாலிசி வகை',expiry:'பாலிசி முடிவு தேதி',over90:'பாலிசி முடிந்து 90 நாட்களுக்கு மேலாகிவிட்டதா?',copy:'பழைய பாலிசி நகல்',claim:'முந்தைய பாலிசியில் கோரிக்கை உள்ளதா?',remarks:'கூடுதல் தகவல் / குறிப்புகள்',share:'WhatsApp-இல் பகிரவும்',copybtn:'விவரங்களை நகலெடு',previewbtn:'முன்னோட்டம்',reset:'புதிய படிவம்',previewtitle:'WhatsApp செய்தி முன்னோட்டம்',select:'தேர்வு செய்க',yes:'ஆம்',no:'இல்லை',unknown:'தெரியாது',msg:'மோட்டார் காப்பீட்டு விசாரணை',vehicleOptions:['இருசக்கர வாகனம்','முச்சக்கர வாகனம்','நான்கு சக்கர வாகனம்','மற்றவை / வணிகம்'],useOptions:['தனிப்பட்ட','வணிகம்','தெரியாது'],statusOptions:['பாலிசி செயலில் உள்ளது','பாலிசி காலாவதியானது','பாலிசி கிடைக்கவில்லை','பாலிசி தொலைந்தது','தெரியாது'],oldtypeOptions:['முழுமையான காப்பீடு','மூன்றாம் தரப்பு','சொந்த சேதம் (OD)','தெரியாது'],copyOptions:['நகல் உள்ளது','நகல் இல்லை','பாலிசி தொலைந்தது','தெரியாது']},
+kn:{title:'ಮೋಟಾರ್ ವಿಮೆ ವಿಚಾರಣೆ ಫಾರ್ಮ್',subtitle:'ವಿಮೆ ವಿವರಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ WhatsApp ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ.',s1:'01 • ವಾಹನ ವಿವರಗಳು',s2:'03 • ಹಿಂದಿನ ವಿಮಾ ಪಾಲಿಸಿ',vehicle:'ವಾಹನದ ಪ್ರಕಾರ *',reg:'ವಾಹನ ನೋಂದಣಿ ಸಂಖ್ಯೆ',use:'ವಾಹನ ಬಳಕೆ',name:'ಗ್ರಾಹಕರ ಹೆಸರು',status:'ಹಿಂದಿನ ಪಾಲಿಸಿ ಸ್ಥಿತಿ *',oldtype:'ಹಿಂದಿನ ಪಾಲಿಸಿ ಪ್ರಕಾರ',expiry:'ಪಾಲಿಸಿ ಮುಕ್ತಾಯ ದಿನಾಂಕ',over90:'ಪಾಲಿಸಿ ಮುಗಿದು 90 ದಿನಗಳಿಗಿಂತ ಹೆಚ್ಚಾಗಿದೆಯೇ?',copy:'ಹಳೆಯ ಪಾಲಿಸಿ ಪ್ರತಿ',claim:'ಹಿಂದಿನ ಅವಧಿಯಲ್ಲಿ ಕ್ಲೈಮ್ ಇದೆಯೇ?',remarks:'ಇತರ ಮಾಹಿತಿ / ಟಿಪ್ಪಣಿ',share:'WhatsApp ನಲ್ಲಿ ಹಂಚಿಕೊಳ್ಳಿ',copybtn:'ವಿವರಗಳನ್ನು ನಕಲಿಸಿ',previewbtn:'ಮುನ್ನೋಟ',reset:'ಹೊಸ ಫಾರ್ಮ್',previewtitle:'WhatsApp ಸಂದೇಶ ಮುನ್ನೋಟ',select:'ಆಯ್ಕೆಮಾಡಿ',yes:'ಹೌದು',no:'ಇಲ್ಲ',unknown:'ಗೊತ್ತಿಲ್ಲ',msg:'ಮೋಟಾರ್ ವಿಮೆ ವಿಚಾರಣೆ',vehicleOptions:['ದ್ವಿಚಕ್ರ ವಾಹನ','ತ್ರಿಚಕ್ರ ವಾಹನ','ನಾಲ್ಕು ಚಕ್ರ','ಇತರೆ / ವಾಣಿಜ್ಯ'],useOptions:['ಖಾಸಗಿ','ವಾಣಿಜ್ಯ','ಗೊತ್ತಿಲ್ಲ'],statusOptions:['ಪಾಲಿಸಿ ಸಕ್ರಿಯ','ಪಾಲಿಸಿ ಅವಧಿ ಮುಗಿದಿದೆ','ಪಾಲಿಸಿ ಲಭ್ಯವಿಲ್ಲ','ಪಾಲಿಸಿ ಕಳೆದುಹೋಗಿದೆ','ಗೊತ್ತಿಲ್ಲ'],oldtypeOptions:['ಸಮಗ್ರ ವಿಮೆ','ಥರ್ಡ್ ಪಾರ್ಟಿ','ಓನ್ ಡ್ಯಾಮೇಜ್ (OD)','ಗೊತ್ತಿಲ್ಲ'],copyOptions:['ಪ್ರತಿ ಲಭ್ಯ','ಪ್ರತಿ ಲಭ್ಯವಿಲ್ಲ','ಪಾಲಿಸಿ ಕಳೆದುಹೋಗಿದೆ','ಗೊತ್ತಿಲ್ಲ']},
+te:{title:'మోటార్ బీమా విచారణ ఫారం',subtitle:'బీమా వివరాలను ఎంచుకుని WhatsAppలో షేర్ చేయండి.',s1:'01 • వాహన వివరాలు',s2:'03 • పాత బీమా పాలసీ',vehicle:'వాహన రకం *',reg:'వాహన రిజిస్ట్రేషన్ నంబర్',use:'వాహన వినియోగం',name:'కస్టమర్ పేరు',status:'పాత పాలసీ స్థితి *',oldtype:'పాత పాలసీ రకం',expiry:'పాలసీ ముగింపు తేదీ',over90:'పాలసీ ముగిసి 90 రోజులకు మించిందా?',copy:'పాత పాలసీ కాపీ',claim:'గత పాలసీలో క్లెయిమ్ ఉందా?',remarks:'ఇతర సమాచారం / వ్యాఖ్యలు',share:'WhatsAppలో షేర్',copybtn:'వివరాలు కాపీ',previewbtn:'ప్రివ్యూ',reset:'కొత్త ఫారం',previewtitle:'WhatsApp సందేశ ప్రివ్యూ',select:'ఎంచుకోండి',yes:'అవును',no:'కాదు',unknown:'తెలియదు',msg:'మోటార్ బీమా విచారణ',vehicleOptions:['ద్విచక్ర వాహనం','మూడు చక్రాలు','నాలుగు చక్రాలు','ఇతర / వాణిజ్య'],useOptions:['వ్యక్తిగత','వాణిజ్య','తెలియదు'],statusOptions:['పాలసీ అమల్లో ఉంది','పాలసీ ముగిసింది','పాలసీ అందుబాటులో లేదు','పాలసీ పోయింది','తెలియదు'],oldtypeOptions:['సమగ్ర బీమా','థర్డ్ పార్టీ','ఓన్ డ్యామేజ్ (OD)','తెలియదు'],copyOptions:['కాపీ ఉంది','కాపీ లేదు','పాలసీ పోయింది','తెలియదు']},
+gu:{title:'મોટર વીમા પૂછપરછ ફોર્મ',subtitle:'વીમાની માહિતી પસંદ કરીને WhatsApp પર શેર કરો.',s1:'01 • વાહનની વિગતો',s2:'03 • અગાઉની વીમા પોલિસી',vehicle:'વાહનનો પ્રકાર *',reg:'વાહન રજિસ્ટ્રેશન નંબર',use:'વાહનનો ઉપયોગ',name:'ગ્રાહકનું નામ',status:'અગાઉની પોલિસીની સ્થિતિ *',oldtype:'અગાઉની પોલિસીનો પ્રકાર',expiry:'પોલિસીની સમાપ્તિ તારીખ',over90:'પોલિસી પૂરી થયાને 90 દિવસથી વધુ થયા છે?',copy:'જૂની પોલિસીની નકલ',claim:'અગાઉની પોલિસીમાં ક્લેમ કર્યો હતો?',remarks:'અન્ય માહિતી / નોંધ',share:'WhatsApp પર શેર કરો',copybtn:'વિગતો કોપી કરો',previewbtn:'પ્રિવ્યૂ જુઓ',reset:'નવું ફોર્મ',previewtitle:'WhatsApp મેસેજ પ્રિવ્યૂ',select:'પસંદ કરો',yes:'હા',no:'ના',unknown:'ખબર નથી',msg:'મોટર વીમા પૂછપરછ',vehicleOptions:['બે પૈડાં','ત્રણ પૈડાં','ચાર પૈડાં','અન્ય / વ્યાપારી'],useOptions:['ખાનગી','વ્યાપારી','ખબર નથી'],statusOptions:['પોલિસી ચાલુ છે','પોલિસી સમાપ્ત','પોલિસી ઉપલબ્ધ નથી','પોલિસી ખોવાઈ ગઈ','ખબર નથી'],oldtypeOptions:['કોમ્પ્રિહેન્સિવ','થર્ડ પાર્ટી','ઓન ડેમેજ (OD)','ખબર નથી'],copyOptions:['નકલ ઉપલબ્ધ','નકલ નથી','પોલિસી ખોવાઈ ગઈ','ખબર નથી']},
+or:{title:'ମୋଟର ବୀମା ଅନୁସନ୍ଧାନ ଫର୍ମ',subtitle:'ବୀମା ବିବରଣୀ ବାଛି WhatsApp ରେ ସେୟାର କରନ୍ତୁ।',s1:'01 • ଯାନ ବିବରଣୀ',s2:'03 • ପୂର୍ବ ବୀମା ପଲିସି',vehicle:'ଯାନର ପ୍ରକାର *',reg:'ଯାନ ପଞ୍ଜୀକରଣ ନମ୍ବର',use:'ଯାନର ବ୍ୟବହାର',name:'ଗ୍ରାହକଙ୍କ ନାମ',status:'ପୂର୍ବ ପଲିସି ସ୍ଥିତି *',oldtype:'ପୂର୍ବ ପଲିସି ପ୍ରକାର',expiry:'ପଲିସି ଶେଷ ତାରିଖ',over90:'ପଲିସି ଶେଷ ହେବାର 90 ଦିନରୁ ଅଧିକ ହୋଇଛି କି?',copy:'ପୁରୁଣା ପଲିସି କପି',claim:'ପୂର୍ବ ପଲିସିରେ କ୍ଲେମ ଥିଲା କି?',remarks:'ଅନ୍ୟାନ୍ୟ ସୂଚନା / ମନ୍ତବ୍ୟ',share:'WhatsApp ରେ ସେୟାର',copybtn:'ବିବରଣୀ କପି',previewbtn:'ପ୍ରିଭ୍ୟୁ',reset:'ନୂଆ ଫର୍ମ',previewtitle:'WhatsApp ମେସେଜ ପ୍ରିଭ୍ୟୁ',select:'ବାଛନ୍ତୁ',yes:'ହଁ',no:'ନା',unknown:'ଜଣାନାହିଁ',msg:'ମୋଟର ବୀମା ଅନୁସନ୍ଧାନ',vehicleOptions:['ଦୁଇ ଚକିଆ','ତିନି ଚକିଆ','ଚାରି ଚକିଆ','ଅନ୍ୟ / ବାଣିଜ୍ୟିକ'],useOptions:['ବ୍ୟକ୍ତିଗତ','ବାଣିଜ୍ୟିକ','ଜଣାନାହିଁ'],statusOptions:['ପଲିସି ସକ୍ରିୟ','ପଲିସି ଶେଷ','ପଲିସି ଉପଲବ୍ଧ ନାହିଁ','ପଲିସି ହଜିଛି','ଜଣାନାହିଁ'],oldtypeOptions:['ସମ୍ପୂର୍ଣ୍ଣ ବୀମା','ଥାର୍ଡ ପାର୍ଟି','ଓନ ଡ୍ୟାମେଜ (OD)','ଜଣାନାହିଁ'],copyOptions:['କପି ଅଛି','କପି ନାହିଁ','ପଲିସି ହଜିଛି','ଜଣାନାହିଁ']}
+};
+for(const [code,values] of Object.entries(extraLanguages)){
+ const base={...dict.en,...values};
+ base.datehint=values.datehint||dict.en.datehint;
+ base.autohint=values.autohint||dict.en.autohint;
+ base.note=values.note||dict.en.note;
+ base.required=values.required||dict.en.required;
+ base.copied=values.copied||dict.en.copied;
+ base.copyfail=values.copyfail||dict.en.copyfail;
+ base.days=n=>n+' days since expiry';
+ dict[code]=base;
+}
+const nativeApplyLanguage=applyLanguage;
+applyLanguage=function(code){
+ if(!dict[code])code='en';
+ nativeApplyLanguage(code);
+ document.getElementById('languageSelect').value=code;
+};
+document.getElementById('languageSelect').addEventListener('change',e=>applyLanguage(e.target.value));
+
+
+// Insurance products: stable option order across all ten languages.
+const insuranceProductList=[
+ 'Two Wheeler',
+ 'Bike / Two Wheeler',
+ 'Three Wheeler',
+ 'Car Insurance',
+ 'Commercial Vehicle → GCV → Auto E-Rickshaw',
+ 'PCV Commercial Vehicle → Taxi / Cab',
+ 'Home Insurance New',
+ 'Home Insurance Old',
+ 'Travel → Travel Insurance',
+ 'Health → Health Insurance',
+ 'Misc – JCB etc',
+ 'Personal Accident',
+ 'Cyber Insurance Plans',
+ 'Pet Insurance Plans'
+];
+const productLabels={
+ en:['01 • Insurance Products','Insurance Product *'],
+ hi:['01 • बीमा उत्पाद','बीमा उत्पाद *'],
+ as:['০১ • বীমা প্ৰডাক্ট','বীমা প্ৰডাক্ট *'],
+ mr:['01 • विमा उत्पादने','विमा उत्पादन *'],
+ bn:['০১ • বীমা পণ্য','বীমা পণ্য *'],
+ ta:['01 • காப்பீட்டு தயாரிப்புகள்','காப்பீட்டு தயாரிப்பு *'],
+ kn:['01 • ವಿಮಾ ಉತ್ಪನ್ನಗಳು','ವಿಮಾ ಉತ್ಪನ್ನ *'],
+ te:['01 • బీమా ఉత్పత్తులు','బీమా ఉత్పత్తి *'],
+ gu:['01 • વીમા ઉત્પાદનો','વીમા ઉત્પાદન *'],
+ or:['୦୧ • ବୀମା ଉତ୍ପାଦ','ବୀମା ଉତ୍ପାଦ *']
+};
+for(const [code,labels] of Object.entries(productLabels)){
+ dict[code].s1=labels[0];
+ dict[code].vehicle=labels[1];
+ dict[code].vehicleOptions=[...insuranceProductList];
+}
+
+
+// Owned By: stable stored values, translated visible options, and WhatsApp summary.
+const ownedByText={
+ en:['Owned By (As per RC/RTO) *','Owned By is the type of the vehicle owner under whom the vehicle is registered.','Select','Individual','Company'],
+ hi:['वाहन किसके नाम पर पंजीकृत है? *','Owned By से आशय उस मालिक के प्रकार से है जिसके नाम पर वाहन पंजीकृत है।','चुनें','व्यक्ति (Individual)','कंपनी (Company)'],
+ as:['বাহন কাৰ নামত পঞ্জীয়ন কৰা হৈছে? *','Owned By মানে বাহনখন যাৰ নামত পঞ্জীয়ন কৰা হৈছে সেই মালিকৰ প্ৰকাৰ।','বাছনি কৰক','ব্যক্তি','কোম্পানী'],
+ mr:['वाहन कोणाच्या नावावर आहे? *','वाहन ज्या मालकाच्या नावावर नोंदणीकृत आहे त्याचा प्रकार.','निवडा','व्यक्ती','कंपनी'],
+ bn:['গাড়ি কার নামে নিবন্ধিত? *','গাড়িটি যে মালিকের নামে নিবন্ধিত, তার ধরন।','নির্বাচন করুন','ব্যক্তি','কোম্পানি'],
+ ta:['வாகன உரிமையாளர் வகை *','வாகனம் பதிவு செய்யப்பட்டுள்ள உரிமையாளரின் வகை.','தேர்வு செய்க','தனிநபர்','நிறுவனம்'],
+ kn:['ವಾಹನ ಮಾಲೀಕರ ಪ್ರಕಾರ *','ವಾಹನ ಯಾರ ಹೆಸರಿನಲ್ಲಿ ನೋಂದಾಯಿತವಾಗಿದೆ ಎಂಬ ಮಾಲೀಕರ ಪ್ರಕಾರ.','ಆಯ್ಕೆಮಾಡಿ','ವ್ಯಕ್ತಿ','ಕಂಪನಿ'],
+ te:['వాహన యజమాని రకం *','వాహనం ఎవరి పేరుతో నమోదై ఉందో ఆ యజమాని రకం.','ఎంచుకోండి','వ్యక్తి','కంపెనీ'],
+ gu:['વાહન માલિકનો પ્રકાર *','વાહન જેના નામે નોંધાયેલ છે તે માલિકનો પ્રકાર.','પસંદ કરો','વ્યક્તિ','કંપની'],
+ or:['ଯାନ ମାଲିକଙ୍କ ପ୍ରକାର *','ଯାନ ଯାହାଙ୍କ ନାମରେ ପଞ୍ଜୀକୃତ, ସେହି ମାଲିକଙ୍କ ପ୍ରକାର।','ବାଛନ୍ତୁ','ବ୍ୟକ୍ତି','କମ୍ପାନୀ']
+};
+const ownerChoices={
+ en:['Select','Individual / Single','Company / Firm','Joint'],
+ hi:['चुनें','Individual / Single (व्यक्ति / सिंगल )','Company / Firm (कंपनी / फर्म )','Joint (संयुक्त )'],
+ as:['বাছনি কৰক','ব্যক্তি / একক','কোম্পানী / ফাৰ্ম','যৌথ'],
+ mr:['निवडा','व्यक्ती / एकल','कंपनी / फर्म','संयुक्त'],
+ bn:['নির্বাচন করুন','ব্যক্তি / একক','কোম্পানি / ফার্ম','যৌথ'],
+ ta:['தேர்வு செய்க','தனிநபர் / ஒற்றை','நிறுவனம் / ஃபர்ம்','கூட்டு'],
+ kn:['ಆಯ್ಕೆಮಾಡಿ','ವ್ಯಕ್ತಿ / ಏಕ','ಕಂಪನಿ / ಸಂಸ್ಥೆ','ಜಂಟಿ'],
+ te:['ఎంచుకోండి','వ్యక్తి / సింగిల్','కంపెనీ / ఫర్మ్','ఉమ్మడి'],
+ gu:['પસંદ કરો','વ્યક્તિ / એકલ','કંપની / ફર્મ','સંયુક્ત'],
+ or:['ବାଛନ୍ତୁ','ବ୍ୟକ୍ତି / ଏକକ','କମ୍ପାନୀ / ଫାର୍ମ','ଯୌଥ']
+};
+const ownerEntityLabels={hi:'फर्म / कंपनी / संस्था का नाम (RC के अनुसार)',as:'ফাৰ্ম / কোম্পানী / সংস্থাৰ নাম (RC অনুসৰি)',mr:'फर्म / कंपनी / संस्थेचे नाव (RC नुसार)',bn:'ফার্ম / কোম্পানি / সংস্থার নাম (RC অনুযায়ী)',ta:'நிறுவனத்தின் பெயர் (RC படி)',kn:'ಸಂಸ್ಥೆಯ ಹೆಸರು (RC ಪ್ರಕಾರ)',te:'సంస్థ పేరు (RC ప్రకారం)',gu:'ફર્મ / કંપનીનું નામ (RC મુજબ)',or:'ସଂସ୍ଥାର ନାମ (RC ଅନୁସାରେ)',en:'Firm / Company / Organisation Name (as per RC)'};
+function updateOwnerEntity(){
+ const value=document.getElementById('ownedBy').value;
+ const box=document.getElementById('ownerEntityBox');
+ const show=value==='company'||value==='joint';
+ box.classList.toggle('hidden',!show);
+ document.getElementById('ownerEntityName').required=show;
+}
+const applyLanguageBeforeOwned=applyLanguage;
+applyLanguage=function(code){
+ applyLanguageBeforeOwned(code);
+ const t=ownedByText[code]||ownedByText.en;
+ document.getElementById('ownedByLabel').textContent=t[0];
+ document.getElementById('ownedByHint').textContent=t[1];
+ document.getElementById('ownedByInfo').title=t[1];
+ const el=document.getElementById('ownedBy');
+ const names=ownerChoices[code]||ownerChoices.en;
+ [...el.options].forEach((o,i)=>{o.textContent=names[i]||o.textContent});
+ document.getElementById('ownerEntityLabel').textContent=ownerEntityLabels[code]||ownerEntityLabels.en;
+ updateOwnerEntity();
+};
+const summaryBeforeOwned=summary;
+summary=function(){
+ const msg=summaryBeforeOwned();
+ const t=ownedByText[lang]||ownedByText.en;
+ const owned=document.getElementById('ownedBy');
+ const line=t[0].replace(' *','')+': '+(owned.value?owned.options[owned.selectedIndex].textContent:'—');
+ const vehicleLine=dict[lang].use+': '+selected('use');
+ const rows=msg.split('\n');
+ const at=rows.findIndex(x=>x===vehicleLine);
+ rows.splice(at>=0?at+1:4,0,line);
+ const entity=document.getElementById('ownerEntityName').value.trim();
+ if((owned.value==='company'||owned.value==='joint')&&entity){
+  const pos=rows.indexOf(line);
+  rows.splice(pos+1,0,(ownerEntityLabels[lang]||ownerEntityLabels.en)+': '+entity);
+ }
+ return rows.join('\n');
+};
+document.getElementById('ownedBy').addEventListener('change',()=>{updateOwnerEntity();refresh()});
+document.getElementById('ownerEntityName').addEventListener('input',refresh);
+document.getElementById('f').addEventListener('reset',()=>setTimeout(()=>{document.getElementById('ownerEntityName').value='';updateOwnerEntity()},0));
+document.getElementById('ownedByInfo').addEventListener('click',function(){
+ const tip=document.getElementById('ownedByHint');
+ const opening=tip.classList.contains('hidden');
+ tip.classList.toggle('hidden',!opening);
+ this.setAttribute('aria-expanded',String(opening));
+});
+const _applyLanguageExpiry=applyLanguage;
+applyLanguage=function(code){
+ _applyLanguageExpiry(code);
+ const labels={en:'Policy Expiry Date',hi:'पॉलिसी समाप्ति तिथि',as:'পলিচীৰ মেয়াদ শেষৰ তাৰিখ',mr:'पॉलिसी समाप्ती तारीख',bn:'পলিসির মেয়াদ শেষের তারিখ',ta:'பாலிசி முடிவு தேதி',kn:'ಪಾಲಿಸಿ ಮುಕ್ತಾಯ ದಿನಾಂಕ',te:'పాలసీ ముగింపు తేదీ',gu:'પોલિસી સમાપ્તિ તારીખ',or:'ପଲିସି ଶେଷ ତାରିଖ'};
+ document.querySelector('label[for="expiry"]').textContent=labels[code]||labels.en;
+};
+applyLanguage('hi');
+</script><script id="startpay-customer-v18">
+(()=>{
+const words={en:['02 • Customer Name','Mobile Number','WhatsApp Number','Same as Mobile Number','Customer Email ID'],hi:['02 • ग्राहक का नाम एवं संपर्क','मोबाइल नंबर','व्हाट्सऐप नंबर','मोबाइल नंबर जैसा ही','ग्राहक की ईमेल आईडी'],as:['০২ • গ্ৰাহকৰ নাম আৰু যোগাযোগ','মোবাইল নম্বৰ','WhatsApp নম্বৰ','মোবাইল নম্বৰৰ সৈতে একে','গ্ৰাহকৰ ইমেইল আইডি'],mr:['02 • ग्राहकाचे नाव व संपर्क','मोबाइल क्रमांक','WhatsApp क्रमांक','मोबाइल क्रमांकासारखाच','ग्राहकाचा ईमेल'],bn:['০২ • গ্রাহকের নাম ও যোগাযোগ','মোবাইল নম্বর','WhatsApp নম্বর','মোবাইল নম্বরের মতোই','গ্রাহকের ইমেইল'],ta:['02 • வாடிக்கையாளர் பெயர் மற்றும் தொடர்பு','மொபைல் எண்','WhatsApp எண்','மொபைல் எண்ணே','வாடிக்கையாளர் மின்னஞ்சல்'],kn:['02 • ಗ್ರಾಹಕರ ಹೆಸರು ಮತ್ತು ಸಂಪರ್ಕ','ಮೊಬೈಲ್ ಸಂಖ್ಯೆ','WhatsApp ಸಂಖ್ಯೆ','ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯಂತೆಯೇ','ಗ್ರಾಹಕರ ಇಮೇಲ್'],te:['02 • కస్టమర్ పేరు మరియు సంప్రదింపు','మొబైల్ నంబర్','WhatsApp నంబర్','మొబైల్ నంబర్‌నే వాడండి','కస్టమర్ ఇమెయిల్'],gu:['02 • ગ્રાહકનું નામ અને સંપર્ક','મોબાઇલ નંબર','WhatsApp નંબર','મોબાઇલ નંબર જેવો જ','ગ્રાહકનો ઈમેલ'],or:['02 • ଗ୍ରାହକଙ୍କ ନାମ ଓ ଯୋଗାଯୋଗ','ମୋବାଇଲ ନମ୍ବର','WhatsApp ନମ୍ବର','ମୋବାଇଲ ନମ୍ବର ସମାନ','ଗ୍ରାହକଙ୍କ ଇମେଲ']};
+const mobile=document.getElementById('mobile'),wa=document.getElementById('whatsapp'),same=document.getElementById('sameWhatsapp');
+function sync(){if(same.checked){wa.value=mobile.value;wa.readOnly=true;wa.style.background='#eef9f1'}else{wa.readOnly=false;wa.style.background=''}}
+same.addEventListener('change',()=>{sync();refresh()});mobile.addEventListener('input',()=>{sync();refresh()});
+const originalApply=applyLanguage;
+applyLanguage=function(code){originalApply(code);const a=words[code]||words.en;['customerSection','mobileLabel','whatsappLabel','sameWhatsappLabel','emailLabel'].forEach((id,i)=>document.getElementById(id).textContent=a[i]);};
+const originalSummary=summary;
+summary=function(){const base=originalSummary();const a=words[lang]||words.en;const parts=[a[1]+': '+(mobile.value||'—'),a[2]+': '+(wa.value||'—'),a[4]+': '+(document.getElementById('email').value||'—')];const tagline='\n!! शुभ शुरुआत स्टार्ट पे के साथ !!';return base.includes(tagline)?base.replace(tagline,'\n'+parts.join('\n')+tagline):base+'\n'+parts.join('\n')};
+document.getElementById('f').addEventListener('reset',()=>setTimeout(sync,0));
+applyLanguage(lang);sync();
+})();
+</script><script id="startpay-vehicle-usage-v20">
+(()=>{
+'use strict';
+const labels={hi:'गाड़ी का उपयोग (Vehicle Usage)',en:'Vehicle Usage',as:'বাহনৰ ব্যৱহাৰ (Vehicle Usage)',mr:'वाहनाचा वापर (Vehicle Usage)',bn:'গাড়ির ব্যবহার (Vehicle Usage)',ta:'வாகனப் பயன்பாடு (Vehicle Usage)',kn:'ವಾಹನ ಬಳಕೆ (Vehicle Usage)',te:'వాహన వినియోగం (Vehicle Usage)',gu:'વાહનનો ઉપયોગ (Vehicle Usage)',or:'ଯାନର ବ୍ୟବହାର (Vehicle Usage)'};
+const explanations={hi:'गाड़ी किस काम के लिए इस्तेमाल होती है? निजी काम या परिवार के लिए Private चुनें। किराया, टैक्सी, माल ढुलाई या व्यवसाय के लिए Commercial चुनें। पता न हो तो Unknown चुनें।',en:'How is the vehicle used? Choose Private for personal/family use; Commercial for taxi, hire, goods transport or business use; Unknown if unsure.',as:'গাড়ীখন কি কামত ব্যৱহাৰ হয়? ব্যক্তিগত কামত Private, ভাড়া বা ব্যৱসায়ৰ বাবে Commercial বাছনি কৰক।',mr:'गाडी कशासाठी वापरली जाते? वैयक्तिक वापरासाठी Private आणि व्यवसाय किंवा भाड्यासाठी Commercial निवडा.',bn:'গাড়িটি কী কাজে ব্যবহার হয়? ব্যক্তিগত কাজে Private, ভাড়া বা ব্যবসার কাজে Commercial নির্বাচন করুন।',ta:'வாகனம் எதற்குப் பயன்படுத்தப்படுகிறது? தனிப்பட்ட பயன்பாட்டுக்கு Private; வணிகத்திற்கு Commercial தேர்வு செய்யவும்.',kn:'ವಾಹನವನ್ನು ಯಾವುದಕ್ಕೆ ಬಳಸುತ್ತಾರೆ? ವೈಯಕ್ತಿಕ ಬಳಕೆಗೆ Private; ವ್ಯಾಪಾರಕ್ಕೆ Commercial ಆಯ್ಕೆಮಾಡಿ.',te:'వాహనాన్ని దేనికి ఉపయోగిస్తున్నారు? వ్యక్తిగత వినియోగానికి Private; వ్యాపారానికి Commercial ఎంచుకోండి.',gu:'વાહનનો ઉપયોગ શેના માટે થાય છે? વ્યક્તિગત ઉપયોગ માટે Private; વ્યવસાય માટે Commercial પસંદ કરો.',or:'ଗାଡ଼ି କେଉଁ କାମରେ ବ୍ୟବହାର ହୁଏ? ବ୍ୟକ୍ତିଗତ ପାଇଁ Private, ବ୍ୟବସାୟ ପାଇଁ Commercial ବାଛନ୍ତୁ।'};
+const opts={hi:['Private – निजी / घरेलू उपयोग','Commercial – किराया / व्यवसाय के लिए','Unknown – जानकारी नहीं'],en:['Private – Personal / Family Use','Commercial – Hire / Business Use','Unknown – Not Sure'],as:['Private – ব্যক্তিগত ব্যৱহাৰ','Commercial – ভাড়া / ব্যৱসায়','Unknown – নাজানো'],mr:['Private – वैयक्तिक / घरगुती वापर','Commercial – भाडे / व्यवसाय','Unknown – माहिती नाही'],bn:['Private – ব্যক্তিগত / পারিবারিক ব্যবহার','Commercial – ভাড়া / ব্যবসা','Unknown – জানা নেই'],ta:['Private – தனிப்பட்ட / குடும்ப பயன்பாடு','Commercial – வாடகை / வணிகம்','Unknown – தெரியாது'],kn:['Private – ವೈಯಕ್ತಿಕ / ಕುಟುಂಬ ಬಳಕೆ','Commercial – ಬಾಡಿಗೆ / ವ್ಯಾಪಾರ','Unknown – ಗೊತ್ತಿಲ್ಲ'],te:['Private – వ్యక్తిగత / కుటుంబ వినియోగం','Commercial – అద్దె / వ్యాపారం','Unknown – తెలియదు'],gu:['Private – વ્યક્તિગત / ઘરેલું ઉપયોગ','Commercial – ભાડું / વ્યવસાય','Unknown – ખબર નથી'],or:['Private – ବ୍ୟକ୍ତିଗତ / ପାରିବାରିକ','Commercial – ଭଡ଼ା / ବ୍ୟବସାୟ','Unknown – ଜଣାନାହିଁ']};
+const nativeApply=applyLanguage;
+applyLanguage=function(code){
+  const d=dict[code]||dict.en;
+  d.use=labels[code]||labels.en;
+  d.useOptions=opts[code]||opts.en;
+  nativeApply(code);
+  document.getElementById('usageHint').textContent=explanations[code]||explanations.en;
+  document.getElementById('usageInfo').title=explanations[code]||explanations.en;
+};
+const button=document.getElementById('usageInfo'),hint=document.getElementById('usageHint');
+button.addEventListener('click',()=>{const show=hint.classList.contains('hidden');hint.classList.toggle('hidden',!show);button.setAttribute('aria-expanded',String(show));});
+applyLanguage(lang);
+})();
+</script><script id="policy-info-buttons-v22">
+(()=>{
+'use strict';
+const info={"status": ["आपकी गाड़ी की पिछली बीमा पॉलिसी अभी चालू है, समाप्त हो गई है या उपलब्ध नहीं है? अपनी पुरानी बीमा पॉलिसी की स्थिति देखकर सही विकल्प चुनें।", "Check whether your previous insurance policy is active, expired, unavailable, or lost. Select the correct status."], "oldtype": ["आपकी गाड़ी का पिछला बीमा किस प्रकार का था? पूरी गाड़ी का बीमा था, केवल थर्ड पार्टी था या सिर्फ अपनी गाड़ी के नुकसान का बीमा था? पुरानी पॉलिसी देखकर सही विकल्प चुनें।", "Select the type of your previous vehicle insurance policy. Check your old policy document if unsure."], "over90": ["क्या आपकी पिछली बीमा पॉलिसी समाप्त हुए 90 दिन से ज्यादा हो गए हैं? यदि 90 दिन से ज्यादा हो गए हैं तो Yes, यदि 90 दिन या उससे कम हुए हैं तो No चुनें। पॉलिसी की समाप्ति तारीख भरने पर यह जानकारी अपने आप निकल जाएगी।", "Has your previous insurance policy been expired for more than 90 days? Select Yes or No. The answer will be calculated automatically from the Policy Expiry Date."], "expiry": ["आपकी पिछली बीमा पॉलिसी किस तारीख को समाप्त हुई थी या होने वाली है? अपनी पुरानी बीमा पॉलिसी में लिखी समाप्ति तारीख देखकर कैलेंडर से सही तारीख चुनें। इससे पता चलेगा कि पॉलिसी समाप्त हुए 90 दिन से ज्यादा हुए हैं या नहीं।", "Select the expiry date mentioned on your previous insurance policy. The system will automatically calculate whether the policy expired more than 90 days ago."], "copy": ["क्या आपके पास पिछली बीमा पॉलिसी की कॉपी है? यदि पुरानी पॉलिसी की PDF, फोटो या कागज की कॉपी है तो Copy Available चुनें। कॉपी नहीं है या खो गई है तो उसी अनुसार विकल्प चुनें।", "Do you have a copy of your previous insurance policy? Select the correct option based on whether the policy document is available, unavailable, or lost."], "claim": ["क्या आपने पिछली बीमा पॉलिसी के दौरान बीमा कंपनी से कोई क्लेम लिया था? यदि गाड़ी के एक्सीडेंट, चोरी या अन्य नुकसान के लिए बीमा कंपनी में क्लेम किया था, तो Yes चुनें। कोई क्लेम नहीं किया था, तो No चुनें। जानकारी नहीं है, तो Unknown चुनें।", "Did you make any insurance claim during your previous policy period? Select Yes, No, or Unknown."]};
+const translatedInfo={"as": {"status": "আপোনাৰ আগৰ বীমা পলিচী এতিয়াও চলি আছে নে মেয়াদ শেষ হৈছে? পুৰণি পলিচীখন চাই সঠিক অৱস্থা বাছনি কৰক।", "oldtype": "আপোনাৰ আগৰ বাহনৰ বীমা সম্পূৰ্ণ কভাৰ, কেৱল থাৰ্ড পাৰ্টি নে কেৱল নিজৰ বাহনৰ ক্ষতিৰ বীমা আছিল? পলিচীখন চাই বাছনি কৰক।", "over90": "আগৰ পলিচীৰ মেয়াদ শেষ হোৱা ৯০ দিনতকৈ বেছি হৈছে নেকি? ৯০ দিনতকৈ বেছি হ’লে Yes, নহ’লে No বাছনি কৰক। মেয়াদৰ তাৰিখ দিলে নিজে গণনা হ’ব।", "expiry": "আগৰ বীমা পলিচীখন কেতিয়া শেষ হৈছে বা হ’ব? পলিচীত লিখা মেয়াদৰ তাৰিখ কেলেণ্ডাৰত বাছনি কৰক। ইয়াৰ পৰা ৯০ দিন পাৰ হৈছে নে নাই গণনা হ’ব।", "copy": "আপোনাৰ ওচৰত আগৰ বীমা পলিচীৰ PDF, ফটো বা কাগজৰ কপি আছেনে? থাকিলে Copy Available, নাথাকিলে বা হেৰালে উপযুক্ত বিকল্প বাছনি কৰক।", "claim": "আগৰ পলিচীৰ সময়ত দুৰ্ঘটনা, চুৰি বা ক্ষতিৰ বাবে বীমা ক্লেইম কৰিছিল নেকি? কৰিলে Yes, নকৰিলে No, নাজানিলে Unknown বাছনি কৰক।"}, "mr": {"status": "तुमची मागील विमा पॉलिसी सध्या सुरू आहे, संपली आहे की उपलब्ध नाही? जुनी पॉलिसी पाहून योग्य स्थिती निवडा.", "oldtype": "मागील वाहन विमा सर्वसमावेशक, फक्त थर्ड पार्टी की फक्त स्वतःच्या वाहनाच्या नुकसानीसाठी होता? जुनी पॉलिसी तपासून निवडा.", "over90": "मागील पॉलिसी संपून 90 दिवसांपेक्षा जास्त झाले आहेत का? जास्त असल्यास Yes, अन्यथा No निवडा. समाप्ती तारीख दिल्यावर आपोआप गणना होईल.", "expiry": "मागील विमा पॉलिसी कोणत्या तारखेला संपली किंवा संपणार आहे? पॉलिसीवरील समाप्ती तारीख कॅलेंडरमधून निवडा. 90 दिवस झाले का ते कळेल.", "copy": "तुमच्याकडे मागील विमा पॉलिसीची PDF, फोटो किंवा कागदी प्रत आहे का? असल्यास Copy Available निवडा; नसल्यास योग्य पर्याय निवडा.", "claim": "मागील पॉलिसीच्या काळात अपघात, चोरी किंवा नुकसानीसाठी विमा क्लेम केला होता का? केला असल्यास Yes, नसल्यास No, माहिती नसल्यास Unknown निवडा."}, "bn": {"status": "আপনার আগের বীমা পলিসি এখনো চালু আছে, মেয়াদ শেষ হয়েছে, নাকি পাওয়া যাচ্ছে না? পুরনো পলিসি দেখে সঠিক অবস্থা বেছে নিন।", "oldtype": "আপনার আগের গাড়ির বীমা কি কম্প্রিহেনসিভ, শুধু থার্ড পার্টি, নাকি শুধু নিজের গাড়ির ক্ষতির জন্য ছিল? পলিসি দেখে বেছে নিন।", "over90": "আগের পলিসির মেয়াদ শেষ হওয়ার পর ৯০ দিনের বেশি হয়েছে কি? বেশি হলে Yes, না হলে No বেছে নিন। মেয়াদ শেষের তারিখ দিলে স্বয়ংক্রিয়ভাবে হিসাব হবে।", "expiry": "আগের বীমা পলিসি কোন তারিখে শেষ হয়েছে বা হবে? পুরনো পলিসিতে লেখা তারিখ ক্যালেন্ডার থেকে বেছে নিন। ৯০ দিনের হিসাব স্বয়ংক্রিয় হবে।", "copy": "আপনার কাছে আগের বীমা পলিসির PDF, ছবি বা কাগজের কপি আছে কি? থাকলে Copy Available, না থাকলে বা হারিয়ে গেলে সঠিক বিকল্প বেছে নিন।", "claim": "আগের পলিসির সময় দুর্ঘটনা, চুরি বা ক্ষতির জন্য কোনো বীমা ক্লেম করেছিলেন কি? করলে Yes, না করলে No, জানা না থাকলে Unknown বেছে নিন।"}, "ta": {"status": "உங்கள் முந்தைய காப்பீட்டு பாலிசி இன்னும் செயலில் உள்ளதா, காலாவதியானதா அல்லது கிடைக்கவில்லையா? பழைய பாலிசியைப் பார்த்து சரியான நிலையைத் தேர்ந்தெடுக்கவும்.", "oldtype": "முந்தைய வாகனக் காப்பீடு முழுமையானதா, மூன்றாம் தரப்பு மட்டும் தானா, அல்லது சொந்த வாகனச் சேதத்திற்கு மட்டும் தானா? பாலிசியைப் பார்த்துத் தேர்ந்தெடுக்கவும்.", "over90": "முந்தைய பாலிசி முடிந்து 90 நாட்களுக்கு மேல் ஆகிவிட்டதா? ஆம் என்றால் Yes, இல்லையெனில் No தேர்ந்தெடுக்கவும். முடிவு தேதியை உள்ளிட்டால் தானாகக் கணக்கிடப்படும்.", "expiry": "முந்தைய காப்பீட்டு பாலிசி எந்தத் தேதியில் முடிந்தது அல்லது முடிவடைகிறது? பாலிசியில் உள்ள தேதியை காலண்டரில் தேர்ந்தெடுக்கவும். 90 நாட்கள் கடந்ததா என்று கணக்கிடப்படும்.", "copy": "பழைய காப்பீட்டு பாலிசியின் PDF, புகைப்படம் அல்லது காகித நகல் உங்களிடம் உள்ளதா? இருந்தால் Copy Available; இல்லையெனில் பொருத்தமான விருப்பத்தைத் தேர்ந்தெடுக்கவும்.", "claim": "முந்தைய பாலிசி காலத்தில் விபத்து, திருட்டு அல்லது சேதத்திற்கு காப்பீட்டு கோரிக்கை செய்தீர்களா? செய்தால் Yes, இல்லையெனில் No, தெரியாவிட்டால் Unknown தேர்ந்தெடுக்கவும்."}, "kn": {"status": "ನಿಮ್ಮ ಹಿಂದಿನ ವಿಮಾ ಪಾಲಿಸಿ ಈಗಲೂ ಚಾಲ್ತಿಯಲ್ಲಿದೆಯೇ, ಅವಧಿ ಮುಗಿದಿದೆಯೇ ಅಥವಾ ಲಭ್ಯವಿಲ್ಲವೇ? ಹಳೆಯ ಪಾಲಿಸಿ ನೋಡಿ ಸರಿಯಾದ ಸ್ಥಿತಿಯನ್ನು ಆಯ್ಕೆಮಾಡಿ.", "oldtype": "ಹಿಂದಿನ ವಾಹನ ವಿಮೆ ಸಮಗ್ರವಾಗಿತ್ತೇ, ಕೇವಲ ಥರ್ಡ್ ಪಾರ್ಟಿಯೇ ಅಥವಾ ನಿಮ್ಮ ವಾಹನದ ಹಾನಿಗೆ ಮಾತ್ರವೇ? ಹಳೆಯ ಪಾಲಿಸಿ ನೋಡಿ ಆಯ್ಕೆಮಾಡಿ.", "over90": "ಹಿಂದಿನ ಪಾಲಿಸಿ ಮುಗಿದು 90 ದಿನಗಳಿಗಿಂತ ಹೆಚ್ಚಾಗಿದೆಯೇ? ಹೆಚ್ಚಾದರೆ Yes, ಇಲ್ಲದಿದ್ದರೆ No ಆಯ್ಕೆಮಾಡಿ. ಮುಕ್ತಾಯ ದಿನಾಂಕ ನೀಡಿದರೆ ಸ್ವಯಂ ಲೆಕ್ಕವಾಗುತ್ತದೆ.", "expiry": "ಹಿಂದಿನ ವಿಮಾ ಪಾಲಿಸಿ ಯಾವ ದಿನಾಂಕಕ್ಕೆ ಮುಗಿದಿದೆ ಅಥವಾ ಮುಗಿಯಲಿದೆ? ಪಾಲಿಸಿಯಲ್ಲಿರುವ ದಿನಾಂಕವನ್ನು ಕ್ಯಾಲೆಂಡರ್‌ನಲ್ಲಿ ಆಯ್ಕೆಮಾಡಿ. 90 ದಿನಗಳ ಲೆಕ್ಕ ಸ್ವಯಂ ಆಗುತ್ತದೆ.", "copy": "ಹಳೆಯ ವಿಮಾ ಪಾಲಿಸಿಯ PDF, ಫೋಟೋ ಅಥವಾ ಕಾಗದದ ಪ್ರತಿ ನಿಮ್ಮಲ್ಲಿದೆಯೇ? ಇದ್ದರೆ Copy Available, ಇಲ್ಲದಿದ್ದರೆ ಸೂಕ್ತ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ.", "claim": "ಹಿಂದಿನ ಪಾಲಿಸಿ ಅವಧಿಯಲ್ಲಿ ಅಪಘಾತ, ಕಳ್ಳತನ ಅಥವಾ ಹಾನಿಗಾಗಿ ವಿಮಾ ಕ್ಲೈಮ್ ಮಾಡಿದ್ದೀರಾ? ಮಾಡಿದ್ದರೆ Yes, ಇಲ್ಲದಿದ್ದರೆ No, ಗೊತ್ತಿಲ್ಲದಿದ್ದರೆ Unknown ಆಯ್ಕೆಮಾಡಿ."}, "te": {"status": "మీ పాత బీమా పాలసీ ఇప్పటికీ అమల్లో ఉందా, గడువు ముగిసిందా లేదా అందుబాటులో లేదా? పాత పాలసీ చూసి సరైన స్థితిని ఎంచుకోండి.", "oldtype": "మీ పాత వాహన బీమా సమగ్ర బీమానా, కేవలం థర్డ్ పార్టీయా లేదా మీ వాహన నష్టానికి మాత్రమేనా? పాత పాలసీ చూసి ఎంచుకోండి.", "over90": "పాత పాలసీ గడువు ముగిసి 90 రోజులకు మించిందా? మించితే Yes, లేకపోతే No ఎంచుకోండి. గడువు తేదీ ఇస్తే ఆటోమేటిక్‌గా లెక్కిస్తుంది.", "expiry": "పాత బీమా పాలసీ ఏ తేదీన ముగిసింది లేదా ముగియనుంది? పాలసీలో ఉన్న తేదీని క్యాలెండర్‌లో ఎంచుకోండి. 90 రోజుల లెక్క ఆటోమేటిక్‌గా వస్తుంది.", "copy": "మీ దగ్గర పాత బీమా పాలసీ PDF, ఫోటో లేదా కాగితం కాపీ ఉందా? ఉంటే Copy Available, లేకపోతే సరైన ఎంపికను ఎంచుకోండి.", "claim": "పాత పాలసీ సమయంలో ప్రమాదం, దొంగతనం లేదా నష్టానికి బీమా క్లెయిమ్ చేశారా? చేస్తే Yes, చేయకపోతే No, తెలియకపోతే Unknown ఎంచుకోండి."}, "gu": {"status": "તમારી અગાઉની વીમા પોલિસી હજુ ચાલુ છે, પૂરી થઈ ગઈ છે કે ઉપલબ્ધ નથી? જૂની પોલિસી જોઈને યોગ્ય સ્થિતિ પસંદ કરો.", "oldtype": "અગાઉનો વાહન વીમો સંપૂર્ણ હતો, માત્ર થર્ડ પાર્ટી હતો કે ફક્ત તમારા વાહનના નુકસાન માટે હતો? જૂની પોલિસી જોઈને પસંદ કરો.", "over90": "અગાઉની પોલિસી પૂરી થયાને 90 દિવસથી વધુ થયા છે? વધુ થયા હોય તો Yes, નહિતર No પસંદ કરો. સમાપ્તિ તારીખ આપવાથી આપમેળે ગણતરી થશે.", "expiry": "અગાઉની વીમા પોલિસી કઈ તારીખે પૂરી થઈ હતી અથવા થવાની છે? પોલિસી પરની તારીખ કેલેન્ડરમાં પસંદ કરો. 90 દિવસની ગણતરી આપમેળે થશે.", "copy": "તમારી પાસે અગાઉની વીમા પોલિસીની PDF, ફોટો કે કાગળની નકલ છે? હોય તો Copy Available, ન હોય અથવા ખોવાઈ ગઈ હોય તો યોગ્ય વિકલ્પ પસંદ કરો.", "claim": "અગાઉની પોલિસી દરમિયાન અકસ્માત, ચોરી કે નુકસાન માટે વીમા ક્લેમ કર્યો હતો? કર્યો હોય તો Yes, નહિતર No, ખબર ન હોય તો Unknown પસંદ કરો."}, "or": {"status": "ଆପଣଙ୍କ ପୂର୍ବ ବୀମା ପଲିସି ଏବେ ଚାଲୁ ଅଛି, ଶେଷ ହୋଇଛି କିମ୍ବା ଉପଲବ୍ଧ ନାହିଁ? ପୁରୁଣା ପଲିସି ଦେଖି ଠିକ୍ ସ୍ଥିତି ବାଛନ୍ତୁ।", "oldtype": "ପୂର୍ବ ଯାନ ବୀମା ସମ୍ପୂର୍ଣ୍ଣ କଭର, କେବଳ ଥାର୍ଡ ପାର୍ଟି କିମ୍ବା ନିଜ ଯାନର କ୍ଷତି ପାଇଁ ଥିଲା? ପଲିସି ଦେଖି ବାଛନ୍ତୁ।", "over90": "ପୂର୍ବ ପଲିସି ଶେଷ ହୋଇ 90 ଦିନରୁ ଅଧିକ ହୋଇଛି କି? ଅଧିକ ହେଲେ Yes, ନହେଲେ No ବାଛନ୍ତୁ। ତାରିଖ ଦେଲେ ଆପେଆପେ ଗଣନା ହେବ।", "expiry": "ପୂର୍ବ ବୀମା ପଲିସି କେଉଁ ତାରିଖରେ ଶେଷ ହୋଇଛି କିମ୍ବା ହେବ? ପଲିସିରେ ଥିବା ତାରିଖ କ୍ୟାଲେଣ୍ଡରରୁ ବାଛନ୍ତୁ। 90 ଦିନର ହିସାବ ହେବ।", "copy": "ଆପଣଙ୍କ ପାଖରେ ପୂର୍ବ ବୀମା ପଲିସିର PDF, ଫଟୋ କିମ୍ବା କାଗଜ କପି ଅଛି କି? ଥିଲେ Copy Available, ନଥିଲେ ଠିକ୍ ବିକଳ୍ପ ବାଛନ୍ତୁ।", "claim": "ପୂର୍ବ ପଲିସି ସମୟରେ ଦୁର୍ଘଟଣା, ଚୋରି କିମ୍ବା କ୍ଷତି ପାଇଁ ବୀମା କ୍ଲେମ କରିଥିଲେ କି? କରିଥିଲେ Yes, ନହେଲେ No, ଜଣାନଥିଲେ Unknown ବାଛନ୍ତୁ।"}};
+const previousApply=applyLanguage;
+function update(code){
+  for(const [id,values] of Object.entries(info)){
+    const hint=document.getElementById(id+'Hint'),btn=document.getElementById(id+'Info');
+    if(!hint||!btn)continue;
+    hint.replaceChildren();
+    const message=(translatedInfo[code]&&translatedInfo[code][id]) || (code==='en'?values[1]:values[0]);
+    const para=document.createElement('p');
+    para.textContent=message;
+    hint.appendChild(para);
+    btn.title=message;
+    btn.setAttribute('aria-label',message);
+
+  }
+}
+applyLanguage=function(code){previousApply(code);update(code);};
+for(const id of Object.keys(info)){
+ const btn=document.getElementById(id+'Info'),hint=document.getElementById(id+'Hint');
+ if(!btn||!hint)continue;
+ btn.addEventListener('click',()=>{const opening=hint.classList.contains('hidden');hint.classList.toggle('hidden',!opening);btn.setAttribute('aria-expanded',String(opening));});
+}
+update(lang);
+})();
+</script><script id="startpay-contact-v24-functions">
+(()=>{
+'use strict';
+const mobile=document.getElementById('mobile'),wa=document.getElementById('whatsapp'),same=document.getElementById('sameWhatsapp');
+const local=document.getElementById('emailLocal'),domain=document.getElementById('emailDomain'),custom=document.getElementById('emailCustomDomain'),full=document.getElementById('email'),help=document.getElementById('emailHelp');
+const digits=x=>x.replace(/\D/g,'').replace(/^91(?=[6-9]\d{9}$)/,'').slice(0,10);
+function syncPhones(){mobile.value=digits(mobile.value);wa.value=same.checked?mobile.value:digits(wa.value);wa.readOnly=same.checked;wa.style.background=same.checked?'#eef9f1':'';}
+function syncEmail(){const other=domain.value==='custom';custom.classList.toggle('hidden',!other);const name=local.value.trim().replace(/^@/,'');const host=(other?custom.value:domain.value).trim().replace(/^@/,'');full.value=name&&host?name+'@'+host:'';const okay=!name&&!custom.value||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(full.value);help.classList.toggle('error',!okay);help.textContent=okay?'Email optional · Enter username and choose domain':'Enter a valid email username and domain';return okay;}
+function checkPhone(el,required){const v=digits(el.value);el.value=v;if(!v&&!required)return true;return /^[6-9]\d{9}$/.test(v);}
+for(const el of [mobile,wa]){el.addEventListener('input',()=>{syncPhones();if(typeof refresh==='function')refresh()});el.addEventListener('paste',()=>setTimeout(syncPhones,0));}
+same.addEventListener('change',syncPhones);
+for(const el of [local,domain,custom])el.addEventListener('input',()=>{syncEmail();if(typeof refresh==='function')refresh()});
+domain.addEventListener('change',syncEmail);
+const oldValid=valid;
+valid=function(){syncPhones();syncEmail();if(!checkPhone(mobile,true)){alert('Please enter a valid 10-digit Indian mobile number starting with 6, 7, 8 or 9.');mobile.focus();return false}if(!checkPhone(wa,true)){alert('Please enter a valid 10-digit WhatsApp number starting with 6, 7, 8 or 9.');wa.focus();return false}if(!syncEmail()){alert('Please enter a valid email address or leave it blank.');local.focus();return false}return oldValid()};
+const oldSummary=summary;
+summary=function(){syncPhones();syncEmail();let text=oldSummary();const pref=v=>v?'+91'+v:'—';
+const a=(typeof words!=='undefined'&&words[lang])||null;
+if(a){const mobileLabel=a[1],waLabel=a[2];text=text.replace(mobileLabel+': '+(mobile.value||'—'),mobileLabel+': '+pref(mobile.value)).replace(waLabel+': '+(wa.value||'—'),waLabel+': '+pref(wa.value));}
+return text;};
+document.getElementById('f').addEventListener('reset',()=>setTimeout(()=>{syncPhones();syncEmail()},0));
+syncPhones();syncEmail();
+})();
+</script><script id="startpay-pencil-guides-v25">(()=>{'use strict';const guides={"en": ["Select or change the correct option here", "Enter or edit your details here", "Enter or edit your name here", "Enter or edit a 10-digit mobile number here", "Enter or edit your email address here", "Choose or change the date from the calendar here", "Enter or edit your amount / number here", "Select or change your percentage here"], "hi": ["यहाँ सही विकल्प चुनें या बदलें", "यहाँ अपना विवरण लिखें या बदलें", "यहाँ अपना नाम लिखें या बदलें", "यहाँ 10 अंकों का मोबाइल नंबर लिखें या बदलें", "यहाँ अपनी ईमेल आईडी लिखें या बदलें", "यहाँ कैलेंडर से तारीख चुनें या बदलें", "यहाँ अपनी राशि / संख्या लिखें या बदलें", "यहाँ अपना प्रतिशत चुनें या बदलें"], "as": ["ইয়াত সঠিক বিকল্প বাছনি কৰক বা সলনি কৰক", "ইয়াত আপোনাৰ তথ্য লিখক বা সলনি কৰক", "ইয়াত আপোনাৰ নাম লিখক বা সলনি কৰক", "ইয়াত ১০ সংখ্যাৰ মোবাইল নম্বৰ লিখক বা সলনি কৰক", "ইয়াত ইমেইল ঠিকনা লিখক বা সলনি কৰক", "ইয়াত কেলেণ্ডাৰৰ পৰা তাৰিখ বাছনি কৰক বা সলনি কৰক", "ইয়াত পৰিমাণ বা সংখ্যা লিখক বা সলনি কৰক", "ইয়াত শতাংশ বাছনি কৰক বা সলনি কৰক"], "mr": ["येथे योग्य पर्याय निवडा किंवा बदला", "येथे आपली माहिती लिहा किंवा बदला", "येथे आपले नाव लिहा किंवा बदला", "येथे 10 अंकी मोबाइल नंबर लिहा किंवा बदला", "येथे ईमेल आयडी लिहा किंवा बदला", "येथे कॅलेंडरमधून तारीख निवडा किंवा बदला", "येथे रक्कम / संख्या लिहा किंवा बदला", "येथे टक्केवारी निवडा किंवा बदला"], "bn": ["এখানে সঠিক বিকল্প বেছে নিন বা পরিবর্তন করুন", "এখানে আপনার তথ্য লিখুন বা পরিবর্তন করুন", "এখানে আপনার নাম লিখুন বা পরিবর্তন করুন", "এখানে ১০ সংখ্যার মোবাইল নম্বর লিখুন বা পরিবর্তন করুন", "এখানে ইমেইল ঠিকানা লিখুন বা পরিবর্তন করুন", "এখানে ক্যালেন্ডার থেকে তারিখ বেছে নিন বা পরিবর্তন করুন", "এখানে পরিমাণ / সংখ্যা লিখুন বা পরিবর্তন করুন", "এখানে শতাংশ বেছে নিন বা পরিবর্তন করুন"], "ta": ["இங்கே சரியான விருப்பத்தைத் தேர்ந்தெடுக்கவும் அல்லது மாற்றவும்", "இங்கே உங்கள் விவரங்களை உள்ளிடவும் அல்லது மாற்றவும்", "இங்கே உங்கள் பெயரை உள்ளிடவும் அல்லது மாற்றவும்", "இங்கே 10 இலக்க மொபைல் எண்ணை உள்ளிடவும் அல்லது மாற்றவும்", "இங்கே மின்னஞ்சலை உள்ளிடவும் அல்லது மாற்றவும்", "இங்கே காலண்டரில் தேதியைத் தேர்ந்தெடுக்கவும் அல்லது மாற்றவும்", "இங்கே தொகை / எண்ணை உள்ளிடவும் அல்லது மாற்றவும்", "இங்கே சதவீதத்தைத் தேர்ந்தெடுக்கவும் அல்லது மாற்றவும்"], "kn": ["ಇಲ್ಲಿ ಸರಿಯಾದ ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ ಅಥವಾ ಬದಲಿಸಿ", "ಇಲ್ಲಿ ನಿಮ್ಮ ವಿವರಗಳನ್ನು ನಮೂದಿಸಿ ಅಥವಾ ಬದಲಿಸಿ", "ಇಲ್ಲಿ ನಿಮ್ಮ ಹೆಸರನ್ನು ನಮೂದಿಸಿ ಅಥವಾ ಬದಲಿಸಿ", "ಇಲ್ಲಿ 10 ಅಂಕಿಯ ಮೊಬೈಲ್ ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ ಅಥವಾ ಬದಲಿಸಿ", "ಇಲ್ಲಿ ಇಮೇಲ್ ವಿಳಾಸವನ್ನು ನಮೂದಿಸಿ ಅಥವಾ ಬದಲಿಸಿ", "ಇಲ್ಲಿ ಕ್ಯಾಲೆಂಡರ್‌ನಿಂದ ದಿನಾಂಕ ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ಬದಲಿಸಿ", "ಇಲ್ಲಿ ಮೊತ್ತ / ಸಂಖ್ಯೆಯನ್ನು ನಮೂದಿಸಿ ಅಥವಾ ಬದಲಿಸಿ", "ಇಲ್ಲಿ ಶೇಕಡಾವಾರು ಆಯ್ಕೆಮಾಡಿ ಅಥವಾ ಬದಲಿಸಿ"], "te": ["ఇక్కడ సరైన ఎంపికను ఎంచుకోండి లేదా మార్చండి", "ఇక్కడ మీ వివరాలను నమోదు చేయండి లేదా మార్చండి", "ఇక్కడ మీ పేరును నమోదు చేయండి లేదా మార్చండి", "ఇక్కడ 10 అంకెల మొబైల్ నంబర్‌ను నమోదు చేయండి లేదా మార్చండి", "ఇక్కడ ఈమెయిల్ చిరునామాను నమోదు చేయండి లేదా మార్చండి", "ఇక్కడ క్యాలెండర్‌లో తేదీని ఎంచుకోండి లేదా మార్చండి", "ఇక్కడ మొత్తం / సంఖ్యను నమోదు చేయండి లేదా మార్చండి", "ఇక్కడ శాతాన్ని ఎంచుకోండి లేదా మార్చండి"], "gu": ["અહીં યોગ્ય વિકલ્પ પસંદ કરો અથવા બદલો", "અહીં તમારી વિગતો લખો અથવા બદલો", "અહીં તમારું નામ લખો અથવા બદલો", "અહીં 10 અંકનો મોબાઇલ નંબર લખો અથવા બદલો", "અહીં ઈમેલ સરનામું લખો અથવા બદલો", "અહીં કેલેન્ડરમાંથી તારીખ પસંદ કરો અથવા બદલો", "અહીં રકમ / સંખ્યા લખો અથવા બદલો", "અહીં ટકાવારી પસંદ કરો અથવા બદલો"], "or": ["ଏଠାରେ ଠିକ୍ ବିକଳ୍ପ ବାଛନ୍ତୁ କିମ୍ବା ବଦଳାନ୍ତୁ", "ଏଠାରେ ନିଜ ବିବରଣୀ ଲେଖନ୍ତୁ କିମ୍ବା ବଦଳାନ୍ତୁ", "ଏଠାରେ ନିଜ ନାମ ଲେଖନ୍ତୁ କିମ୍ବା ବଦଳାନ୍ତୁ", "ଏଠାରେ 10 ଅଙ୍କର ମୋବାଇଲ୍ ନମ୍ବର ଲେଖନ୍ତୁ କିମ୍ବା ବଦଳାନ୍ତୁ", "ଏଠାରେ ଇମେଲ୍ ଠିକଣା ଲେଖନ୍ତୁ କିମ୍ବା ବଦଳାନ୍ତୁ", "ଏଠାରେ କ୍ୟାଲେଣ୍ଡରରୁ ତାରିଖ ବାଛନ୍ତୁ କିମ୍ବା ବଦଳାନ୍ତୁ", "ଏଠାରେ ରାଶି / ସଂଖ୍ୟା ଲେଖନ୍ତୁ କିମ୍ବା ବଦଳାନ୍ତୁ", "ଏଠାରେ ପ୍ରତିଶତ ବାଛନ୍ତୁ କିମ୍ବା ବଦଳାନ୍ତୁ"]};const kinds={select:0,text:1,name:2,phone:3,email:4,date:5,amount:6,percent:7};function updateHints(code){const labels=guides[code]||guides.hi;document.querySelectorAll('.startpay-edit-hint').forEach(h=>{const text=h.querySelector('.startpay-hint-text');if(text)text.textContent=labels[kinds[h.dataset.hintType]??1];});}const originalApply=applyLanguage;applyLanguage=function(code){originalApply(code);updateHints(code);};updateHints(typeof lang==='string'?lang:'hi');})();</script><script id="startpay-floating-three-language-v26">
+(function(){
+  const button=document.getElementById('floatlang');
+  if(!button)return;
+  const languages=['en','hi','as'];
+  const labels={en:'English',hi:'हिन्दी',as:'অসমীয়া'};
+  button.addEventListener('click',function(){
+    const active=(typeof lang==='string')?lang:'hi';
+    const index=languages.indexOf(active);
+    const next=languages[(index+1)%languages.length];
+    if(typeof applyLanguage==='function')applyLanguage(next);
+    const picker=document.getElementById('languageSelect');
+    if(picker)picker.value=next;
+  });
+  const oldApplyLanguage=applyLanguage;
+  applyLanguage=function(code){
+    oldApplyLanguage(code);
+    button.title='Language: '+(labels[code]||code)+' — click to switch English / हिन्दी / অসমীয়া';
+    button.setAttribute('aria-label',button.title);
+  };
+  button.title='Language: '+(labels[typeof lang==='string'?lang:'hi']||'हिन्दी')+' — click to switch English / हिन्दी / অসমীয়া';
+})();
+</script>
+<script id="startpay-v27-image-export">
+(function(){
+function exportImage(format){
+ const text=typeof summary==='function'?summary():document.getElementById('previewText').textContent;
+ const lines=text.replace(/\r/g,'').split('\n');
+ const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
+ const width=1080,pad=76,fontSize=29,lineHeight=48,limit=width-pad*2;
+ canvas.width=width;
+ ctx.font='29px system-ui, "Noto Sans Devanagari", "Noto Sans Bengali", sans-serif';
+ const wrapped=[];
+ for(const line of lines){
+   if(!line.trim()){wrapped.push('');continue}
+   let part='';
+   for(const word of line.split(/\s+/)){
+     const test=part?part+' '+word:word;
+     if(ctx.measureText(test).width>limit&&part){wrapped.push(part);part=word}
+     else part=test;
+   }
+   wrapped.push(part);
+ }
+ canvas.height=Math.max(720,290+wrapped.length*lineHeight+245);
+ ctx.fillStyle='#ffffff';ctx.fillRect(0,0,width,canvas.height);
+ ctx.fillStyle='#002D9C';ctx.fillRect(0,0,width,170);
+ ctx.fillStyle='#fff';ctx.font='bold 47px system-ui, sans-serif';
+ ctx.fillText('₹ StartPayOnline',pad,78);
+ ctx.font='25px system-ui, sans-serif';ctx.fillText('INSURANCE PRODUCTS • ENQUIRY',pad,125);
+ ctx.fillStyle='#00A825';ctx.fillRect(0,170,width,7);
+ ctx.fillStyle='#14213b';ctx.font='29px system-ui, "Noto Sans Devanagari", "Noto Sans Bengali", sans-serif';
+ let y=255;
+ for(const line of wrapped){if(line)ctx.fillText(line,pad,y);y+=lineHeight}
+ // Footer: include the professional footer in PNG/JPG, without the old company line.
+ const footerTop=canvas.height-210;
+ ctx.fillStyle='#FF0000';ctx.fillRect(0,footerTop,width,4);
+ ctx.textAlign='center';
+ ctx.fillStyle='#66748c';ctx.font='21px system-ui, sans-serif';
+ ctx.fillText('Designed & Developed by',width/2,footerTop+37);
+ ctx.fillStyle='#002D9C';ctx.font='bold 26px system-ui, sans-serif';
+ ctx.fillText('StartPay Legal & Finance IT Solutions™',width/2,footerTop+77);
+ ctx.fillStyle='#14213b';ctx.font='19px system-ui, sans-serif';
+ ctx.fillText('© 2026 StartPay Legal & Finance IT Solutions. All Rights Reserved.',width/2,footerTop+114);
+ ctx.fillStyle='#FF0000';ctx.font='bold 22px system-ui, "Noto Sans Devanagari", sans-serif';
+ ctx.fillText('!! शुभ शुरुआत स्टार्ट पे के साथ !!',width/2,footerTop+154);
+ ctx.fillStyle='#002D9C';ctx.font='19px system-ui, sans-serif';
+ ctx.fillText('https://startpayonline.com/',width/2,footerTop+188);
+ ctx.textAlign='start';
+ const mime=format==='jpg'?'image/jpeg':'image/png';
+ canvas.toBlob(function(blob){
+   if(!blob){alert('Image export is not supported in this browser.');return}
+   const url=URL.createObjectURL(blob);
+   const a=document.createElement('a');a.href=url;a.download='StartPay_Insurance_Enquiry.'+format;
+   document.body.appendChild(a);a.click();a.remove();
+   setTimeout(()=>URL.revokeObjectURL(url),1500);
+ },mime,0.94);
+}
+for(const ext of ['PNG','JPG']){
+ const button=document.getElementById('export'+ext);
+ if(button)button.addEventListener('click',()=>exportImage(ext.toLowerCase()));
+}
+})();
+</script>
+
+<script id="startpay-saved-forms-v28">
+(function(){
+'use strict';
+const KEY='startpay.insurance.savedForms.v2';
+const LIMIT=20;
+const form=document.getElementById('f');
+const root=document.getElementById('sp-saved');
+const select=document.getElementById('sp-saved-select');
+const counter=document.getElementById('sp-saved-count');
+const message=document.getElementById('sp-saved-message');
+const buttons={};
+root.querySelectorAll('button[data-action]').forEach(b=>buttons[b.dataset.action]=b);
+let records=[];
+let selectedId='';
+let storageOK=true;
+function notice(t){message.textContent=t}
+function read(){
+ try{const x=JSON.parse(localStorage.getItem(KEY)||'[]');records=Array.isArray(x)?x.slice(0,LIMIT):[]}
+ catch(e){storageOK=false;records=[];notice('ब्राउज़र स्टोरेज उपलब्ध नहीं है। डेटा सेव नहीं हो सकेगा।')}
+}
+function write(){
+ try{localStorage.setItem(KEY,JSON.stringify(records));return true}
+ catch(e){storageOK=false;notice('सेव नहीं हो पाया। ब्राउज़र स्टोरेज/प्राइवेट मोड जाँचें।');return false}
+}
+function formFields(){return Array.from(form.querySelectorAll('input,select,textarea')).filter(el=>el.id&&el.type!=='button'&&el.type!=='submit')}
+function capture(){
+ const values={};
+ for(const el of formFields())values[el.id]=el.type==='checkbox'?el.checked:el.value;
+ return values;
+}
+function restore(values){
+ form.reset();
+ // Restore selects after language-specific options have been rendered.
+ if(typeof applyLanguage==='function')applyLanguage(typeof lang==='string'?lang:'hi');
+ for(const el of formFields()){
+  if(!Object.prototype.hasOwnProperty.call(values,el.id))continue;
+  if(el.type==='checkbox')el.checked=!!values[el.id];
+  else el.value=values[el.id];
+ }
+ // Recalculate conditional fields without discarding user input.
+ form.dispatchEvent(new Event('change',{bubbles:true}));
+ form.dispatchEvent(new Event('input',{bubbles:true}));
+}
+function label(r,i){
+ const d=r.values||{};
+ return String(i+1).padStart(2,'0')+' · '+(d.name||'Customer')+' · '+(d.mobile||'No Mobile')+' · '+(d.reg||d.vehicle||'Insurance');
+}
+function render(){
+ const old=selectedId;
+ select.replaceChildren(new Option('— रिकॉर्ड चुनें / Select Record —',''));
+ records.forEach((r,i)=>select.add(new Option(label(r,i),r.id)));
+ selectedId=records.some(r=>r.id===old)?old:'';
+ select.value=selectedId;
+ counter.textContent=records.length+' / '+LIMIT;
+ buttons.save.disabled=records.length>=LIMIT||!storageOK;
+ buttons.update.disabled=!selectedId||!storageOK;
+ buttons.delete.disabled=!selectedId||!storageOK;
+ buttons.csv.disabled=records.length===0;
+}
+function valid(){
+ if(!form.reportValidity())return false;
+ const m=document.getElementById('mobile');
+ if(m&&m.value&&!/^[6-9]\d{9}$/.test(m.value)){notice('मोबाइल नंबर 10 अंकों का सही दर्ज करें।');m.focus();return false}
+ const w=document.getElementById('whatsapp');
+ if(w&&w.value&&!/^[6-9]\d{9}$/.test(w.value)){notice('WhatsApp नंबर 10 अंकों का सही दर्ज करें।');w.focus();return false}
+ return true;
+}
+function newForm(){
+ selectedId='';
+ form.reset();
+ if(typeof applyLanguage==='function')applyLanguage(typeof lang==='string'?lang:'hi');
+ form.dispatchEvent(new Event('change',{bubbles:true}));
+ const preview=document.getElementById('previewArea');
+ if(preview)preview.classList.add('hidden');
+ render();notice('नया खाली फॉर्म तैयार है।');
+}
+buttons.save.addEventListener('click',()=>{
+ if(records.length>=LIMIT){notice('अधिकतम 20 रिकॉर्ड सेव कर सकते हैं। पहले कोई रिकॉर्ड हटाएँ।');return}
+ if(!valid())return;
+ const entry={id:'SP'+Date.now()+'_'+Math.random().toString(36).slice(2,8),createdAt:new Date().toISOString(),updatedAt:new Date().toISOString(),values:capture()};
+ records.push(entry);
+ if(!write()){records.pop();return}
+ selectedId=entry.id;render();notice('रिकॉर्ड सेव हो गया। '+records.length+' / '+LIMIT);
+});
+select.addEventListener('change',()=>{
+ selectedId=select.value;
+ const r=records.find(x=>x.id===selectedId);
+ if(r){restore(r.values||{});notice('रिकॉर्ड लोड हो गया। बदलाव के बाद Edit / Update दबाएँ।')}
+ else notice('रिकॉर्ड चुनें या नया फॉर्म भरें।');
+ render();
+});
+buttons.update.addEventListener('click',()=>{
+ const r=records.find(x=>x.id===selectedId);
+ if(!r){notice('पहले Dropdown से सेव किया हुआ रिकॉर्ड चुनें।');return}
+ if(!valid())return;
+ const old=r.values;r.values=capture();r.updatedAt=new Date().toISOString();
+ if(!write()){r.values=old;return}
+ render();notice('चुना हुआ रिकॉर्ड अपडेट हो गया।');
+});
+buttons.new.addEventListener('click',newForm);
+buttons.delete.addEventListener('click',()=>{
+ const index=records.findIndex(x=>x.id===selectedId);
+ if(index<0){notice('पहले रिकॉर्ड चुनें।');return}
+ if(!confirm('क्या आप चुना हुआ बीमा फॉर्म स्थायी रूप से हटाना चाहते हैं?'))return;
+ const removed=records.splice(index,1)[0];
+ if(!write()){records.splice(index,0,removed);return}
+ newForm();notice('चुना हुआ रिकॉर्ड डिलीट हो गया।');
+});
+function csvEscape(v){
+ const str=String(v==null?'':v);
+ return '"'+str.replace(/"/g,'""')+'"';
+}
+buttons.csv.addEventListener('click',()=>{
+ if(!records.length)return;
+ const keys=[...new Set(records.flatMap(r=>Object.keys(r.values||{})))];
+ const rows=[['Record ID','Created At','Updated At',...keys]];
+ for(const r of records)rows.push([r.id,r.createdAt,r.updatedAt,...keys.map(k=>(r.values||{})[k])]);
+ const csv='\ufeff'+rows.map(row=>row.map(csvEscape).join(',')).join('\r\n');
+ const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download='StartPay_Insurance_Saved_Forms.csv';
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1500);
+ notice('CSV फ़ाइल तैयार है — Excel में खोल सकते हैं।');
+});
+form.addEventListener('reset',()=>{
+ // The original New Form button also resets the form.
+ setTimeout(()=>{selectedId='';render()},0);
+});
+read();render();
+})();
+</script>
+<script id="sp-v29-preview-home">
+(function(){
+ const names={hi:'WhatsApp मैसेज देखें',en:'Preview WhatsApp Message',as:'WhatsApp মেছেজ চাওক',mr:'WhatsApp संदेश पाहा',bn:'WhatsApp মেসেজ দেখুন',ta:'WhatsApp செய்தியைப் பார்க்கவும்',kn:'WhatsApp ಸಂದೇಶ ನೋಡಿ',te:'WhatsApp సందేశం చూడండి',gu:'WhatsApp મેસેજ જુઓ',or:'WhatsApp ମେସେଜ ଦେଖନ୍ତୁ'};
+ const preview=document.getElementById('previewbtn');
+ const title=document.querySelector('[data-t="previewtitle"]');
+ const home=document.getElementById('sp-floating-home');
+ function sync(){
+   const current=(typeof lang!=='undefined'?lang:'hi');
+   const label=names[current]||names.en;
+   const span=preview?.querySelector('[data-t="previewbtn"]');
+   if(span)span.textContent=label;
+   if(preview){preview.title=label;preview.setAttribute('aria-label',label)}
+   if(title)title.textContent=label;
+ }
+ if(typeof applyLanguage==='function'){
+   const prior=applyLanguage;
+   applyLanguage=function(code){const result=prior(code);sync();return result};
+ }
+ home?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+ sync();
+})();
+</script><script id="sp-v30-enquiry">
+(function(){
+'use strict';
+const OWNER='919340726600';
+const translations={
+ hi:['पोर्टल शेयर','कॉल करें','WhatsApp','✉ बीमा पूछताछ भेजें • WhatsApp','फॉर्म भरकर दबाएँ। WhatsApp खुलेगा; ग्राहक Send दबाएगा, तभी आपकी Enquiry पहुँचेगी।'],
+ en:['Share Portal','Call Now','WhatsApp','✉ Submit Insurance Enquiry • WhatsApp','Complete the form, then open WhatsApp and tap Send to deliver your enquiry.'],
+ as:['পৰ্টেল শ্বেয়াৰ','ফোন কৰক','WhatsApp','✉ বীমাৰ অনুসন্ধান পঠিয়াওক • WhatsApp','ফৰ্ম পূৰণ কৰি WhatsApp খোলক আৰু Send টিপক।']
+};
+const $=id=>document.getElementById(id);
+const submit=$('sp-submit-enquiry');
+const status=$('sp-submit-status');
+function currentLang(){return typeof lang!=='undefined'?lang:'hi'}
+function update(){const t=translations[currentLang()]||translations.en;
+ $('sp-portal-label').textContent=t[0];$('sp-call-label').textContent=t[1];$('sp-wa-label').textContent=t[2];submit.textContent=t[3];$('sp-submit-help').textContent=t[4];}
+function value(id){return ($(id)?.value||'').trim()}
+function getEmail(){const local=value('emailLocal'),domain=value('emailDomain');if(!local)return '';return local+'@'+(domain==='custom'?value('emailCustom'):domain)}
+function makeMessage(){
+ const base=typeof summary==='function'?summary():'StartPayOnline Insurance Enquiry';
+ const mobile=value('mobile'),wa=$('sameWhatsapp')?.checked?mobile:value('whatsapp');
+ const contacts=['','📞 Customer Mobile: '+(mobile?'+91 '+mobile:'—'),'💬 Customer WhatsApp: '+(wa?'+91 '+wa:'—')];
+ const email=getEmail();if(email)contacts.push('✉ Customer Email: '+email);
+ return '📩 *NEW INSURANCE ENQUIRY — StartPayOnline*\n\n'+base+'\n'+contacts.join('\n')+'\n\nPlease contact the customer.';
+}
+function send(){
+ const form=$('f');
+ if(!form.checkValidity()){form.reportValidity();status.textContent='कृपया जरूरी जानकारी सही भरें।';return}
+ if(typeof valid==='function'&&!valid()){status.textContent='कृपया जरूरी जानकारी भरें।';return}
+ const mobile=value('mobile');if(!/^[6-9][0-9]{9}$/.test(mobile)){status.textContent='ग्राहक का सही 10-अंकों का मोबाइल नंबर भरें।';$('mobile')?.focus();return}
+ const wa=$('sameWhatsapp')?.checked?mobile:value('whatsapp');if(wa&&!/^[6-9][0-9]{9}$/.test(wa)){status.textContent='WhatsApp नंबर सही भरें।';$('whatsapp')?.focus();return}
+ const link='https://wa.me/'+OWNER+'?text='+encodeURIComponent(makeMessage());
+ status.textContent='WhatsApp खुलेगा। Enquiry भेजने के लिए ग्राहक को Send दबाना होगा।';
+ const win=window.open(link,'_blank','noopener,noreferrer');
+ if(!win){window.location.href=link}
+}
+submit.addEventListener('click',send);
+$('sp-header-whatsapp').addEventListener('click',send);
+const INSURANCE_PORTAL_URL='http://sp.startpayonline.com/insurance/';
+function getPortalUrl(){return INSURANCE_PORTAL_URL;}
+$('sp-portal-share').addEventListener('click',async()=>{
+ const url=getPortalUrl();
+ if(!url){
+  status.textContent='पहले Portal का Public HTTPS Link भरकर Save Link दबाएँ। लोकल HTML (file://) का लिंक ग्राहक नहीं खोल सकेगा।';
+  return;
+ }
+ const text='StartPay Insurance Enquiry Form\n'+url;
+ try{
+  if(navigator.share){await navigator.share({title:'StartPay Insurance Enquiry Form',text:'StartPay Insurance Enquiry Form',url});status.textContent='Portal Share विकल्प खुल गया।';return}
+ }catch(e){if(e.name==='AbortError')return}
+ // Desktop/browser fallback: open WhatsApp to share the public portal URL.
+ const link='https://wa.me/?text='+encodeURIComponent(text);
+ status.textContent='WhatsApp में Portal Link शेयर करने का विकल्प खुलेगा।';
+ const opened=window.open(link,'_blank');
+ if(!opened)window.location.href=link;
+});
+
+if(typeof applyLanguage==='function'){
+ const previous=applyLanguage;
+ applyLanguage=function(code){const r=previous(code);update();return r};
+}
+update();
+})();
+</script><script id="sp-footer-v36-lang">
+(function(){
+ const button=document.getElementById('sp-footer-language');
+ const floating=document.getElementById('floatlang');
+ if(button&&floating)button.addEventListener('click',()=>floating.click());
+})();
+</script></body></html>
