@@ -32,3 +32,7 @@
 - Information: Bright Pink #FF006F. Save: Bright Green #00A825. Edit: Bright Orange #E65100. Errors/warnings/Delete: Red #FF0000.
 - In sections with multiple actions, use distinct task-based colors consistently (Preview Royal Blue, Copy Pink, Print/Export Purple). Preserve explicit labels; color is not the sole identifier.
 - Preserve original logo and approved branding; these colors apply to designated controls/ID segments.
+
+## Smart draft protection
+
+Follow /STARTPAY_AUTOSAVE_POLICY.md. Insurance has a separate project draft plus per-record edit drafts, true three-state storage status with Indian Last Saved time, secret-field exclusions, discard confirmation, and record-version checks before edit restoration/update. Drafts do not count toward 20 Saved Forms. RTO hints are advisory and must preserve unknown-code/BH handling.
