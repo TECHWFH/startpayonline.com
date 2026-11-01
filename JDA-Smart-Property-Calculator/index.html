@@ -393,8 +393,15 @@ input.invalid,select.invalid,textarea.invalid,[aria-invalid="true"]{border-color
     #sp-comparison-preview .sp-payable td,#sp-comparison-preview .sp-payable td:nth-child(3),#sp-comparison-preview .sp-payable .sp-secondary{background:#FFF0F0!important;color:#FF0000!important;border-color:#FFC4C4!important}
   
 #sp-comparison-preview .sp-options{display:grid;gap:9px;margin:12px 0;font-size:12px;color:#002D9C}#sp-comparison-preview .sp-options label{display:flex;gap:9px;align-items:center}#sp-comparison-preview .sp-options input{width:17px;height:17px;accent-color:#00A825}#sp-comparison-preview .sp-total .sp-amount{white-space:normal;overflow-wrap:anywhere}#sp-comparison-preview .sp-expand{overflow-x:auto}
-#sp-comparison-preview .sp-head .sp-kicker,#sp-comparison-preview .sp-head h2,#sp-comparison-preview .sp-head .sp-sub{color:#fff!important}
-#sp-comparison-preview .sp-head .sp-sub span{color:#fff!important}
+/* v5.20: accessible comparison header on white surface; preserve legend colors */
+#sp-comparison-preview .sp-head{background:#fff!important;border-bottom:3px solid #00A825!important}
+#sp-comparison-preview .sp-head .sp-kicker{color:#002D9C!important}
+#sp-comparison-preview .sp-head h2{color:#002D9C!important}
+#sp-comparison-preview .sp-head .sp-sub{color:#334155!important}
+#sp-comparison-preview .sp-head .sp-sub span[style*="#E65100"]{color:#E65100!important;font-weight:800}
+#sp-comparison-preview .sp-head .sp-sub span[style*="#087735"]{color:#087735!important;font-weight:800}
+#sp-comparison-preview .sp-head .sp-sub span[style*="#FF0000"]{color:#FF0000!important;font-weight:800}
+#sp-comparison-preview .sp-head .sp-sub:last-child{padding:9px 10px;background:#f7fafc;border-left:4px solid #FF0000;border-right:4px solid #00A825;border-radius:7px}
 </style>
 <section aria-label="StartPay comparison design sample" class="sp-surface">
 <header class="sp-head">
