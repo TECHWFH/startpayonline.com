@@ -931,7 +931,7 @@ document.addEventListener('input',update);document.addEventListener('change',upd
 for(const id of ['customerTotal','sp-land-total','sp-guide-total','interestResult']){const el=document.getElementById(id);if(el)new MutationObserver(update).observe(el,{childList:true,characterData:true,subtree:true})}
 render();
 })();
-</script><script id="sp-plot-dimensions-v3">
+</script><script id="sp-plot-dimensions-v4">
 (function(){
 'use strict';
 const $=id=>document.getElementById(id),auto=$('spAreaOnly'),length=$('spPlotLength'),width=$('spPlotWidth'),area=$('area'),unit=$('unit'),result=$('spDimensionResult'),help=$('spDimensionHelp');
@@ -942,7 +942,7 @@ const enabled=auto.checked;
 length.disabled=false;width.disabled=false;
 area.readOnly=enabled;
 const l=Number(length.value),w=Number(width.value),valid=length.value!==''&&width.value!==''&&Number.isFinite(l)&&Number.isFinite(w)&&l>0&&w>0;
-result.textContent=valid?fmt(l)+' × '+fmt(w)+' = '+fmt(l*w)+' Sq.Ft.':'Enter valid Length × Width / सही लंबाई और चौड़ाई भरें';
+result.textContent=valid?fmt(l)+' × '+fmt(w)+' = '+fmt(l*w)+' Sq.Ft.':(!enabled&&l===0&&w===0?'0 × 0 = 0 Sq.Ft.':'Enter valid Length × Width / सही लंबाई और चौड़ाई भरें');
 help.textContent=enabled?'Auto Calculate ON: Length × Width fills Property Area above automatically. / ऊपर Property Area अपने आप भरेगा।':'Auto Calculate OFF: Enter Property Area above directly. / ऊपर क्षेत्रफल सीधे भरें।';
 if(apply&&enabled&&valid){
 if(unit.value!=='sqft'){unit.value='sqft';unit.dispatchEvent(new Event('change',{bubbles:true}))}
@@ -958,6 +958,7 @@ for(const el of [length,width]){el.addEventListener('pointerdown',enableDimensio
 const dimensionCard=$('spDimensionsCard');if(dimensionCard){dimensionCard.addEventListener('pointerdown',e=>{if(e.target===dimensionCard||e.target.closest('.sp-dimensions-heading,.sp-dimensions-inputs label,.sp-times,.sp-equals,#spDimensionResult')){if(e.target!==auto&&!e.target.closest('.sp-dimensions-switch'))enableDimensions()}})}
 area.addEventListener('pointerdown',enableDirectArea);
 area.addEventListener('focus',enableDirectArea);
+area.addEventListener('input',()=>{if(!auto.checked){length.value='0';width.value='0';update(false)}});
 document.addEventListener('change',e=>{if(e.target===unit&&auto.checked&&unit.value!=='sqft'){auto.checked=false;update(false)}});
 update(false);
 })();
