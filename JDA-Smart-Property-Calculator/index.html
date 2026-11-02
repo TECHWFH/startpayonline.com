@@ -931,7 +931,7 @@ document.addEventListener('input',update);document.addEventListener('change',upd
 for(const id of ['customerTotal','sp-land-total','sp-guide-total','interestResult']){const el=document.getElementById(id);if(el)new MutationObserver(update).observe(el,{childList:true,characterData:true,subtree:true})}
 render();
 })();
-</script><script id="sp-plot-dimensions-v2">
+</script><script id="sp-plot-dimensions-v3">
 (function(){
 'use strict';
 const $=id=>document.getElementById(id),auto=$('spAreaOnly'),length=$('spPlotLength'),width=$('spPlotWidth'),area=$('area'),unit=$('unit'),result=$('spDimensionResult'),help=$('spDimensionHelp');
@@ -939,7 +939,7 @@ if(!auto||!length||!width||!area||!unit||!result)return;
 const fmt=n=>Number(n).toLocaleString('en-IN',{maximumFractionDigits:6});
 function update(apply){
 const enabled=auto.checked;
-length.disabled=!enabled;width.disabled=!enabled;
+length.disabled=false;width.disabled=false;
 area.readOnly=enabled;
 const l=Number(length.value),w=Number(width.value),valid=length.value!==''&&width.value!==''&&Number.isFinite(l)&&Number.isFinite(w)&&l>0&&w>0;
 result.textContent=valid?fmt(l)+' × '+fmt(w)+' = '+fmt(l*w)+' Sq.Ft.':'Enter valid Length × Width / सही लंबाई और चौड़ाई भरें';
@@ -952,7 +952,12 @@ area.dispatchEvent(new Event('change',{bubbles:true}));
 }}
 auto.addEventListener('change',()=>update(true));
 for(const el of [length,width]){el.addEventListener('input',()=>update(true));el.addEventListener('change',()=>update(true))}
-area.addEventListener('focus',()=>{if(auto.checked){auto.checked=false;update(false)}});
+function enableDimensions(){if(!auto.checked){auto.checked=true;update(true)}}
+function enableDirectArea(){if(auto.checked){auto.checked=false;update(false)}}
+for(const el of [length,width]){el.addEventListener('pointerdown',enableDimensions);el.addEventListener('focus',enableDimensions)}
+const dimensionCard=$('spDimensionsCard');if(dimensionCard){dimensionCard.addEventListener('pointerdown',e=>{if(e.target===dimensionCard||e.target.closest('.sp-dimensions-heading,.sp-dimensions-inputs label,.sp-times,.sp-equals,#spDimensionResult')){if(e.target!==auto&&!e.target.closest('.sp-dimensions-switch'))enableDimensions()}})}
+area.addEventListener('pointerdown',enableDirectArea);
+area.addEventListener('focus',enableDirectArea);
 document.addEventListener('change',e=>{if(e.target===unit&&auto.checked&&unit.value!=='sqft'){auto.checked=false;update(false)}});
 update(false);
 })();
