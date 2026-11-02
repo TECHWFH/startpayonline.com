@@ -376,7 +376,7 @@ body{font-size:clamp(12px,3.5vw,15px)}
 <div class="field"><label>Area Input Unit *</label><select id="unit"><option value="sqft">Sq. Feet</option><option value="sqm">Sq. Meter</option><option value="acre">Acre</option></select></div>
 <div class="field"><label>Property Area *</label><input id="area" type="number" min="0" step="any" value="1000"></div>
 <div class="wide sp-dimensions-card" id="spDimensionsCard">
-<div class="sp-dimensions-heading"><strong>Plot Dimensions / भूखंड की लंबाई × चौड़ाई</strong><label class="sp-dimensions-switch"><input type="checkbox" id="spAreaOnly" checked> Area Only / केवल क्षेत्रफल भरें</label></div>
+<div class="sp-dimensions-heading"><strong>Plot Dimensions / भूखंड की लंबाई × चौड़ाई</strong><label class="sp-dimensions-switch"><input type="checkbox" id="spAreaOnly"> Auto Calculate / लंबाई × चौड़ाई से क्षेत्रफल भरें</label></div>
 <div class="sp-dimensions-inputs"><label>Length / लंबाई (Ft.)<input id="spPlotLength" type="number" min="0" step="any" value="30" disabled></label><span class="sp-times">×</span><label>Width / चौड़ाई (Ft.)<input id="spPlotWidth" type="number" min="0" step="any" value="60" disabled></label><span class="sp-equals">=</span><strong id="spDimensionResult">30 × 60 = 1,800 Sq.Ft.</strong></div>
 <small id="spDimensionHelp">Area Only checked: enter Property Area directly. Uncheck to calculate Length × Width automatically. / केवल क्षेत्रफल भरने के लिए Checkbox लगा रहने दें।</small>
 </div>
@@ -931,16 +931,29 @@ document.addEventListener('input',update);document.addEventListener('change',upd
 for(const id of ['customerTotal','sp-land-total','sp-guide-total','interestResult']){const el=document.getElementById(id);if(el)new MutationObserver(update).observe(el,{childList:true,characterData:true,subtree:true})}
 render();
 })();
-</script><script id="sp-plot-dimensions-v1">
+</script><script id="sp-plot-dimensions-v2">
 (function(){
-const $=id=>document.getElementById(id),only=$('spAreaOnly'),length=$('spPlotLength'),width=$('spPlotWidth'),area=$('area'),unit=$('unit'),result=$('spDimensionResult'),help=$('spDimensionHelp');
-if(!only||!length||!width||!area||!unit)return;
+'use strict';
+const $=id=>document.getElementById(id),auto=$('spAreaOnly'),length=$('spPlotLength'),width=$('spPlotWidth'),area=$('area'),unit=$('unit'),result=$('spDimensionResult'),help=$('spDimensionHelp');
+if(!auto||!length||!width||!area||!unit||!result)return;
 const fmt=n=>Number(n).toLocaleString('en-IN',{maximumFractionDigits:6});
-function update(apply){const manual=only.checked;length.disabled=manual;width.disabled=manual;const l=Number(length.value),w=Number(width.value),valid=length.value!==''&&width.value!==''&&Number.isFinite(l)&&Number.isFinite(w)&&l>0&&w>0;result.textContent=valid?fmt(l)+' × '+fmt(w)+' = '+fmt(l*w)+' Sq.Ft.':'Enter valid Length × Width / सही लंबाई और चौड़ाई भरें';help.textContent=manual?'Area Only: Property Area can be entered directly. / केवल क्षेत्रफल सीधे भरें।':'Dimensions Mode: Property Area is calculated automatically in Sq.Ft. / लंबाई × चौड़ाई से क्षेत्रफल अपने आप निकलेगा।';area.readOnly=!manual;if(apply&&!manual&&valid){if(unit.value!=='sqft'){unit.value='sqft';unit.dispatchEvent(new Event('change',{bubbles:true}))}area.value=String(l*w);area.dispatchEvent(new Event('input',{bubbles:true}));area.dispatchEvent(new Event('change',{bubbles:true}))}}
-only.addEventListener('change',()=>update(true));for(const el of [length,width]){el.addEventListener('input',()=>update(true));el.addEventListener('change',()=>update(true))}
-area.addEventListener('focus',()=>{if(!only.checked){only.checked=true;update(false)}});
-document.addEventListener('change',e=>{if(e.target===unit&&!only.checked&&unit.value!=='sqft'){only.checked=true;update(false)}});
-document.addEventListener('input',e=>{if(e.target===area&&!only.checked){only.checked=true;update(false)}});
+function update(apply){
+const enabled=auto.checked;
+length.disabled=!enabled;width.disabled=!enabled;
+area.readOnly=enabled;
+const l=Number(length.value),w=Number(width.value),valid=length.value!==''&&width.value!==''&&Number.isFinite(l)&&Number.isFinite(w)&&l>0&&w>0;
+result.textContent=valid?fmt(l)+' × '+fmt(w)+' = '+fmt(l*w)+' Sq.Ft.':'Enter valid Length × Width / सही लंबाई और चौड़ाई भरें';
+help.textContent=enabled?'Auto Calculate ON: Length × Width fills Property Area above automatically. / ऊपर Property Area अपने आप भरेगा।':'Auto Calculate OFF: Enter Property Area above directly. / ऊपर क्षेत्रफल सीधे भरें।';
+if(apply&&enabled&&valid){
+if(unit.value!=='sqft'){unit.value='sqft';unit.dispatchEvent(new Event('change',{bubbles:true}))}
+area.value=String(l*w);
+area.dispatchEvent(new Event('input',{bubbles:true}));
+area.dispatchEvent(new Event('change',{bubbles:true}));
+}}
+auto.addEventListener('change',()=>update(true));
+for(const el of [length,width]){el.addEventListener('input',()=>update(true));el.addEventListener('change',()=>update(true))}
+area.addEventListener('focus',()=>{if(auto.checked){auto.checked=false;update(false)}});
+document.addEventListener('change',e=>{if(e.target===unit&&auto.checked&&unit.value!=='sqft'){auto.checked=false;update(false)}});
 update(false);
 })();
 </script></body></html>
