@@ -620,10 +620,14 @@ document.getElementById('reset')?.addEventListener('click',()=>setTimeout(()=>{i
    'Please share loan eligibility, bank ROI, processing fees and required documents.','',
    '*StartPay Legal & Finance IT Solutions™*','!! शुभ शुरुआत स्टार्ट पे के साथ !!'
   ];
-  return lines.join('\\n');
+  return lines.join(String.fromCharCode(10));
  }
- document.querySelectorAll('a[href^="https://wa.me/919340726600"]').forEach(a=>{
-  a.addEventListener('click',()=>{a.href='https://wa.me/'+phone+'?text='+encodeURIComponent(message());});
+ document.querySelectorAll('a[aria-label="WhatsApp"][href*="wa.me/919340726600"]').forEach(a=>{
+  const update=()=>{a.setAttribute('href','https://wa.me/'+phone+'?text='+encodeURIComponent(message()));};
+  a.addEventListener('pointerdown',update,{passive:true});
+  a.addEventListener('focus',update);
+  a.addEventListener('click',update);
+  a.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')update();});
  });
 })();
 </script>
