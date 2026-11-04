@@ -260,6 +260,7 @@ $('years').addEventListener('input',()=>syncMonths(num('years')*12,'years'));$('
 (()=>{
 'use strict';
 const info={
+'Government Bank A / B / C Comparison':['सरकारी बैंक A / B / C तुलना','Compare EMI for three banks using manually entered annual interest rates. These are estimates, not live bank offers. / तीन बैंकों की वार्षिक ब्याज दर स्वयं भरकर EMI की तुलना करें। यह अनुमान है, बैंकों का लाइव ऑफर नहीं।'],
 'Home Loan Amount':['मूल होम लोन राशि','Enter the original loan principal. / बैंक से ली जाने वाली मूल लोन राशि भरें।'],
 'Loan Tenure • Auto Sync':['लोन अवधि • स्वतः सिंक','Years and months update each other automatically. / वर्ष और महीने अपने आप एक-दूसरे के अनुसार बदलते हैं।'],
 'Interest Rate (% per annum)':['ब्याज दर (% वार्षिक)','Enter the exact annual ROI; it will not be rounded. / वार्षिक ब्याज दर जितनी दर्ज करेंगे, उतनी ही रहेगी; ROI राउंड नहीं होगा।'],
@@ -299,7 +300,7 @@ let index=0;
 function addHelp(el,english,hindi,help){if(el.querySelector(':scope > .sp-info'))return;let b=document.createElement('button');b.type='button';b.className='sp-info';b.textContent='ⓘ';b.dataset.spId=String(++index);b.setAttribute('aria-label','Information / जानकारी: '+english);b.setAttribute('title','Information / जानकारी');b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const hi=document.documentElement.lang==='hi';const parts=help.split(' / ');const detail=english==='Strategy'&&hi?'अवधि घटाएँ: EMI लगभग समान रहती है और लोन जल्दी खत्म होता है। EMI घटाएँ: शेष अवधि समान रहती है और मासिक EMI कम होती है।':parts.length>1?(hi?parts.slice(1).join(' / '):parts[0]):help;show(b,hi?hindi:english,detail);});el.appendChild(b);}
 function labelText(el){return [...el.childNodes].filter(n=>n.nodeType===3).map(n=>n.textContent).join(' ').trim().replace(/\s+/g,' ');}
 function init(){
- document.querySelectorAll('.fieldhead label,.controls label,.kpi small,.metric span,h3').forEach(el=>{
+ document.querySelectorAll('.fieldhead label,.controls label,.kpi small,.metric span,h3,#compareFold .compare-title strong').forEach(el=>{
   const english=el.dataset.en||labelText(el)||el.textContent.trim();const v=info[english];if(!v)return;
   el.removeAttribute('data-en');el.removeAttribute('data-hi');
   // Keep the label in its own span so existing language-switch code cannot remove the info button.
