@@ -590,4 +590,41 @@ document.getElementById('lang')?.addEventListener('click',()=>queueMicrotask(()=
 document.getElementById('reset')?.addEventListener('click',()=>setTimeout(()=>{if(amount.value==='3000000'&&document.getElementById('rate')?.value==='6'){type.value='home';paint(false);type.dispatchEvent(new Event('input',{bubbles:true}));}},0));
 })();
 </script>
-<script id="sp-share-v45">(function(){const input=document.getElementById('spPublishedUrl'),status=document.getElementById('spShareStatus');function link(){const v='https://sp.startpayonline.com/emi';input.value=v;if(!v){status.textContent='Enter the approved published calculator URL first.';input.focus();return null}try{const u=new URL(v);if(!['https:','http:'].includes(u.protocol))throw Error();return u.href}catch(e){status.textContent='Please enter a valid http(s) calculator URL.';input.focus();return null}}async function copy(){const u=link();if(!u)return;try{await navigator.clipboard.writeText(u);status.textContent='Calculator link copied.'}catch(e){input.select();status.textContent='Select and copy the calculator link.'}}async function share(){const u=link();if(!u)return;if(navigator.share){try{await navigator.share({title:'StartPay Smart EMI Calculator',url:u})}catch(e){if(e.name!=='AbortError')status.textContent='Sharing not available on this browser.'}}else{try{await navigator.clipboard.writeText(u);status.textContent='Share link copied.'}catch(e){status.textContent='Copy the URL to share.'}}}document.getElementById('spCopyCalculator').addEventListener('click',copy);document.getElementById('spShareCalculator').addEventListener('click',share);document.getElementById('spFooterShare').addEventListener('click',share)})();</script><script>(function(){const fab=document.getElementById('spFab'),toggle=document.getElementById('spFabToggle'),menu=document.getElementById('spFabMenu');if(!fab||!toggle||!menu)return;function setOpen(open){fab.classList.toggle('is-open',open);toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close quick actions':'Open quick actions');menu.setAttribute('aria-hidden',String(!open));menu.querySelectorAll('a,button').forEach(el=>{el.tabIndex=open?0:-1;});}setOpen(false);toggle.addEventListener('click',()=>setOpen(!fab.classList.contains('is-open')));document.addEventListener('pointerdown',e=>{if(!fab.contains(e.target))setOpen(false);});document.addEventListener('keydown',e=>{if(e.key==='Escape')setOpen(false);});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(false)));const share=document.getElementById('spFabShare');share.addEventListener('click',()=>{setOpen(false);const existing=document.getElementById('spFooterShare')||document.getElementById('spShareCalculator');if(existing)existing.click();else if(navigator.share)navigator.share({title:'StartPay EMI Calculator',url:location.href}).catch(()=>{});});})();</script></body></html>
+<script id="sp-share-v45">(function(){const input=document.getElementById('spPublishedUrl'),status=document.getElementById('spShareStatus');function link(){const v='https://sp.startpayonline.com/emi';input.value=v;if(!v){status.textContent='Enter the approved published calculator URL first.';input.focus();return null}try{const u=new URL(v);if(!['https:','http:'].includes(u.protocol))throw Error();return u.href}catch(e){status.textContent='Please enter a valid http(s) calculator URL.';input.focus();return null}}async function copy(){const u=link();if(!u)return;try{await navigator.clipboard.writeText(u);status.textContent='Calculator link copied.'}catch(e){input.select();status.textContent='Select and copy the calculator link.'}}async function share(){const u=link();if(!u)return;if(navigator.share){try{await navigator.share({title:'StartPay Smart EMI Calculator',url:u})}catch(e){if(e.name!=='AbortError')status.textContent='Sharing not available on this browser.'}}else{try{await navigator.clipboard.writeText(u);status.textContent='Share link copied.'}catch(e){status.textContent='Copy the URL to share.'}}}document.getElementById('spCopyCalculator').addEventListener('click',copy);document.getElementById('spShareCalculator').addEventListener('click',share);document.getElementById('spFooterShare').addEventListener('click',share)})();</script><script>(function(){const fab=document.getElementById('spFab'),toggle=document.getElementById('spFabToggle'),menu=document.getElementById('spFabMenu');if(!fab||!toggle||!menu)return;function setOpen(open){fab.classList.toggle('is-open',open);toggle.setAttribute('aria-expanded',String(open));toggle.setAttribute('aria-label',open?'Close quick actions':'Open quick actions');menu.setAttribute('aria-hidden',String(!open));menu.querySelectorAll('a,button').forEach(el=>{el.tabIndex=open?0:-1;});}setOpen(false);toggle.addEventListener('click',()=>setOpen(!fab.classList.contains('is-open')));document.addEventListener('pointerdown',e=>{if(!fab.contains(e.target))setOpen(false);});document.addEventListener('keydown',e=>{if(e.key==='Escape')setOpen(false);});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setOpen(false)));const share=document.getElementById('spFabShare');share.addEventListener('click',()=>{setOpen(false);const existing=document.getElementById('spFooterShare')||document.getElementById('spShareCalculator');if(existing)existing.click();else if(navigator.share)navigator.share({title:'StartPay EMI Calculator',url:location.href}).catch(()=>{});});})();</script><script id="sp-whatsapp-loan-enquiry">
+/* WhatsApp loan enquiry: local calculator values only; customer presses Send manually. */
+(function(){
+ 'use strict';
+ const phone='919340726600';
+ const field=id=>document.getElementById(id);
+ function chosen(id){const el=field(id);return el&&el.selectedOptions&&el.selectedOptions[0]?el.selectedOptions[0].textContent.trim():'—';}
+ function value(id){return field(id)?.value?.trim()||'—';}
+ function message(){
+  const hi=document.documentElement.lang==='hi';
+  const amount=Number(value('amount').replace(/,/g,''));
+  const money=Number.isFinite(amount)&&amount>0?'₹'+Math.round(amount).toLocaleString('en-IN'):'—';
+  const emi=field('emi')?.textContent?.trim()||'—';
+  const months=Number(value('months'));
+  const tenure=Number.isFinite(months)&&months>0?(months%12===0?months/12+(hi?' वर्ष':' Years')+' ('+months+(hi?' महीने)':' Months)'):months+(hi?' महीने':' Months')):'—';
+  const lines=hi?[
+   '🏦 *StartPay – लोन पूछताछ*','','नमस्कार सर, मुझे लोन की जानकारी एवं सहायता चाहिए।','',
+   '📌 लोन प्रोडक्ट: '+chosen('spLoanType'),'📌 लोन उप-प्रकार: '+chosen('spLoanSubType'),
+   '💰 लोन राशि: '+money,'📊 वार्षिक ब्याज दर: '+value('rate')+'%','📅 लोन अवधि: '+tenure,'💳 अनुमानित EMI: '+emi,'',
+   '👤 आवेदक का नाम: ','📱 मोबाइल नंबर: ','📍 शहर / जिला: ','',
+   'कृपया लोन पात्रता, बैंक ब्याज दर, प्रोसेसिंग फीस और जरूरी दस्तावेजों की जानकारी दें।','',
+   '*StartPay Legal & Finance IT Solutions™*','!! शुभ शुरुआत स्टार्ट पे के साथ !!'
+  ]:[
+   '🏦 *StartPay – Loan Enquiry*','','Hello, I need information and assistance regarding a loan.','',
+   '📌 Loan Product: '+chosen('spLoanType'),'📌 Loan Sub-Type: '+chosen('spLoanSubType'),
+   '💰 Loan Amount: '+money,'📊 Interest Rate: '+value('rate')+'% p.a.','📅 Loan Tenure: '+tenure,'💳 Estimated EMI: '+emi,'',
+   '👤 Applicant Name: ','📱 Mobile Number: ','📍 City / District: ','',
+   'Please share loan eligibility, bank ROI, processing fees and required documents.','',
+   '*StartPay Legal & Finance IT Solutions™*','!! शुभ शुरुआत स्टार्ट पे के साथ !!'
+  ];
+  return lines.join('\\n');
+ }
+ document.querySelectorAll('a[href^="https://wa.me/919340726600"]').forEach(a=>{
+  a.addEventListener('click',()=>{a.href='https://wa.me/'+phone+'?text='+encodeURIComponent(message());});
+ });
+})();
+</script>
+</body></html>
