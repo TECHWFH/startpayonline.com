@@ -1029,6 +1029,11 @@ const visible=$('spRInfo').dataset.which;if(visible)$('spRInfo').textContent=for
 root.addEventListener('click',e=>{const b=e.target.closest('[data-sp-r-info]');if(!b)return;const p=$('spRInfo'),id=b.dataset.spRInfo;p.hidden=!p.hidden&&p.dataset.which===id;p.dataset.which=id;p.textContent=formulas[id]||'Fill dates to see the formula.'});
 document.addEventListener('input',e=>{if(e.target.matches('#start,#customYears,#area,#guideline,#spROriginalRent,#spRGuidelineRate,#spRCurrent,#spRRegistered,#spRManualGap,#spROther'))calc()});
 document.addEventListener('change',e=>{if(e.target.matches('#start,#years,#customYears,#area,#unit,#guideline,#spRCurrent,#spRGapMode,#spRManualGap,#spROriginalRent,#spRGuidelineRate,#spROther'))calc()});
+/* Recalculate after legacy case selection and draft restore have finished applying values. */
+document.addEventListener('input',e=>{if(e.target.matches('#start,#years,#customYears,#area,#unit,#case,#authority'))queueMicrotask(calc)});
+document.addEventListener('change',e=>{if(e.target.matches('#start,#years,#customYears,#area,#unit,#case,#authority'))queueMicrotask(calc)});
+window.addEventListener('pageshow',()=>queueMicrotask(calc));
+
 const observer=new MutationObserver(()=>calc());if($('end'))observer.observe($('end'),{attributes:true,attributeFilter:['value']});
 calc();
 })();</script></body></html>
