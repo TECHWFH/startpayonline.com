@@ -169,7 +169,7 @@ body{background:#eef2f8} .panel{background:#fcfdff} .field input:focus-visible,.
 .sp-ex-count{display:inline-block;background:#fff0f0;color:#FF0000;border:1px solid #ffb7b7;border-radius:20px;padding:4px 9px;font-size:12px;font-weight:850;white-space:nowrap}.sp-ex-count.sp-ex-active{background:#ffe4e6;color:#FF0000}.sp-ex-counter-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:8px 0;color:#002D9C;font-size:12px;font-weight:700}.sp-ex-section-title{font-size:13px;font-weight:850;color:#002D9C;margin:8px 0;display:flex;align-items:center;justify-content:space-between;gap:8px}
 
 .sp-ex-ref-list{border:1px solid #c7d2fe;border-radius:12px;margin:12px 0;padding:9px;background:#fafbff}.sp-ex-ref-list summary{cursor:pointer;color:#002D9C;font-weight:800}.sp-ex-ref-inner{display:grid;gap:7px;margin-top:12px}.sp-ex-ref-item{display:flex;align-items:flex-start;gap:9px;padding:9px;border:1px solid #e2e8f0;border-radius:9px;background:#fff}.sp-ex-ref-item input{margin-top:4px;accent-color:#00A825}.sp-ex-ref-item strong{font-size:12px;color:#002D9C}.sp-ex-ref-item small{display:block;font-size:11px;color:#64748b;margin-top:3px}
-</style><style id="spRenewalV513Style">
+</style><style id="spRenewalV513Style">#spRenewalV513 .sp-r-date-row{display:flex;gap:5px;position:relative}#spRenewalV513 .sp-r-date-row>input[type=text]{flex:1;min-width:0}#spRenewalV513 .sp-r-calendar-btn{flex:none;padding:0 12px;border:1px solid #b7c8e8;border-radius:8px;background:#eef6ff;color:#002d9c;font-weight:800}#spRenewalV513 .sp-r-native-picker{position:absolute;right:0;bottom:0;width:1px!important;height:1px!important;opacity:0;pointer-events:none;padding:0!important;border:0!important}
 #spRenewalV513 .sp-r-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}#spRenewalV513 .sp-r-field{min-width:0}#spRenewalV513 .sp-r-field label{display:block;font-weight:700;color:#002D9C;margin-bottom:5px}#spRenewalV513 input,#spRenewalV513 select{width:100%;max-width:100%;padding:10px;border:1px solid #cbd5e1;border-radius:8px;background:white;color:#15233d}#spRenewalV513 .sp-r-result{display:flex;justify-content:space-between;gap:10px;align-items:center;border-bottom:1px solid #e5eaf3;padding:9px 0}#spRenewalV513 .sp-r-result strong{text-align:right;color:#002D9C;font-variant-numeric:tabular-nums}#spRenewalV513 .sp-r-info{background:#e0f2fe;color:#008cff;border:1px solid #7dd3fc;border-radius:50%;width:24px;height:24px;padding:0;margin-left:5px;font-weight:900}#spRenewalV513 .sp-r-total{font-weight:900;color:#00a825;font-size:21px}#spRenewalV513 .sp-r-hint{font-size:12px;color:#66748a}#spRenewalV513 .sp-r-full{grid-column:1/-1}#spRenewalV513 .sp-r-small{font-size:12px}#spRenewalV513 .sp-r-formula{margin:3px 0 8px;padding:9px;border-radius:7px;background:#eef6ff;color:#002d9c}#spRenewalV513 .sp-r-error{color:#ff0000;font-weight:700}@media(max-width:520px){#spRenewalV513 .sp-r-grid{grid-template-columns:minmax(0,1fr)}#spRenewalV513 .sp-r-result{font-size:12px}#spRenewalV513 .sp-r-result strong{font-size:13px}}
 </style>
 <style id="sp-v513-theme">
@@ -427,8 +427,8 @@ body{font-size:clamp(12px,3.5vw,15px)}
 <div class="sp-r-field"><label>Original Lease End • Auto</label><output id="spREnd">—</output></div>
 <div class="sp-r-field"><label>Renewal Start • Auto</label><output id="spRRenewStart">—</output></div>
 <div class="sp-r-field"><label>Renewal Deed End • Auto</label><output id="spRRenewEnd">—</output></div>
-<div class="sp-r-field"><label for="spRCurrent">Calculation / Current Date *</label><input id="spRCurrent" type="date" aria-label="Renewal calculation date"></div>
-<div class="sp-r-field"><label for="spRRegistered">Earlier Deed Registration Date • Reference</label><input id="spRRegistered" type="date"></div>
+<div class="sp-r-field"><label for="spRCurrent">Calculation / Current Date *</label><div class="sp-r-date-row"><input id="spRCurrent" type="text" maxlength="10" inputmode="numeric" autocomplete="off" placeholder="DD/MM/YYYY" required><button class="sp-r-calendar-btn" type="button" data-sp-r-calendar="spRCurrent" aria-label="Choose Calculation / Current Date *">▦</button><input class="sp-r-native-picker" id="spRCurrentPicker" type="date" tabindex="-1" aria-label="Calendar date picker"></div></div>
+<div class="sp-r-field"><label for="spRRegistered">Earlier Deed Registration Date • Reference</label><div class="sp-r-date-row"><input id="spRRegistered" type="text" maxlength="10" inputmode="numeric" autocomplete="off" placeholder="DD/MM/YYYY" ><button class="sp-r-calendar-btn" type="button" data-sp-r-calendar="spRRegistered" aria-label="Choose Earlier Deed Registration Date • Reference">▦</button><input class="sp-r-native-picker" id="spRRegisteredPicker" type="date" tabindex="-1" aria-label="Calendar date picker"></div></div>
 <div class="sp-r-field"><label for="spRGuidelineRate">JDA Guideline Rate (₹/Sq.Ft.)</label><input id="spRGuidelineRate" type="number" min="0" step="any" inputmode="decimal" value="1151"><small class="sp-r-hint">Default ₹1,151 • Editable • Uses existing Property Area</small></div>
 <div class="sp-r-field"><label for="spROriginalRent">Original Annual Rent (₹) • From Deed</label><input id="spROriginalRent" type="number" min="0" step="any" value="1214" inputmode="decimal"></div>
 <div class="sp-r-field"><label for="spRGapMode">Gap Calculation</label><select id="spRGapMode"><option value="auto">Auto • Completed Years</option><option value="manual">Manual • Whole Years</option></select></div>
@@ -1003,10 +1003,19 @@ const addYears=(d,y)=>{const t=new Date(d.getTime());const day=t.getUTCDate(),mo
 const shift=(d,n)=>new Date(d.getTime()+n*86400000);
 const dd=d=>d?String(d.getUTCDate()).padStart(2,'0')+'/'+String(d.getUTCMonth()+1).padStart(2,'0')+'/'+d.getUTCFullYear():'—';
 const duration=(a,b)=>{if(b<a)return null;let y=b.getUTCFullYear()-a.getUTCFullYear();if(addYears(a,y)>b)y--;let anchor=addYears(a,y),m=0;while(m<11){let t=new Date(anchor.getTime());t.setUTCMonth(t.getUTCMonth()+1);if(t>b)break;anchor=t;m++}return {y,m,d:Math.round((b-anchor)/86400000)}};
-const today=new Date();$('spRCurrent').value=[today.getFullYear(),String(today.getMonth()+1).padStart(2,'0'),String(today.getDate()).padStart(2,'0')].join('-');
+const today=new Date();$('spRCurrent').value=String(today.getDate()).padStart(2,'0')+'/'+String(today.getMonth()+1).padStart(2,'0')+'/'+today.getFullYear();
+const toISO=d=>d?d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0'):'';
+function maskDate(v){const d=String(v).replace(/\\D/g,'').slice(0,8);return d.slice(0,2)+(d.length>2?'/'+d.slice(2,4):'')+(d.length>4?'/'+d.slice(4):'')}
+for(const id of ['spRCurrent','spRRegistered']){
+const field=$(id),picker=$(id+'Picker');
+field.addEventListener('input',()=>{const old=field.value,pos=field.selectionStart??old.length,count=old.slice(0,pos).replace(/\\D/g,'').length;field.value=maskDate(old);let p=0,n=0;while(p<field.value.length&&n<count){if(/\\d/.test(field.value[p]))n++;p++}field.setSelectionRange(p,p);picker.value=toISO(parse(field.value));calc()});
+field.addEventListener('blur',()=>{const date=parse(field.value);if(date)field.value=dd(date)});
+picker.addEventListener('change',()=>{if(picker.value){const parts=picker.value.split('-');field.value=parts[2]+'/'+parts[1]+'/'+parts[0];calc()}});
+root.querySelector('[data-sp-r-calendar="'+id+'"]').addEventListener('click',()=>{picker.value=toISO(parse(field.value));if(typeof picker.showPicker==='function')picker.showPicker();else picker.focus()});
+}
 let formulas={};
 function calc(){
-const start=parse($('start')?.value),ys=$('years')?.value,years=ys==='other'?Number($('customYears')?.value):Number(ys),cur=$('spRCurrent').value?new Date($('spRCurrent').value+'T00:00:00Z'):null;
+const start=parse($('start')?.value),ys=$('years')?.value,years=ys==='other'?Number($('customYears')?.value):Number(ys),cur=parse($('spRCurrent').value);
 const set=(id,v)=>{if($(id))$(id).textContent=v};
 set('spRStart',start?dd(start):'—');set('spRYears',Number.isInteger(years)&&years>0?years+' Years':'—');
 if(!start||!Number.isInteger(years)||years<1||!cur||!Number.isFinite(cur.getTime())){$('spRError').textContent='Enter valid Lease Start, Lease Years and Calculation Date.';return}
