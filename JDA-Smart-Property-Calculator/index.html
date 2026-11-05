@@ -855,44 +855,7 @@ for(const [name,id] of fields){if(!$(id))continue;append(name,mask&&['customerNa
 for(const [id,en,hn] of [['sp-land-total','Premium Based Comparison','प्रीमियम आधारित तुलना'],['sp-guide-total','Guideline Based Comparison','गाइडलाइन आधारित तुलना']]){const el=$(id);if(el){const val=el.textContent.trim();rows.push([hi?hn:en,val]);const n=Number(val.replaceAll('₹','').replaceAll(',','').trim());if(val&&Number.isFinite(n)&&n>=0&&typeof window.spExportAmountWords==='function')rows.push([hi?'राशि शब्दों में':'Amount in Words',window.spExportAmountWords(n,hi)])}}
 const interest=$('interestResult');if(interest)for(const line of interest.querySelectorAll('.line')){const name=line.querySelector('span')?.textContent?.trim()||'';if(!name.startsWith('Interest for')&&!name.startsWith('Principal + Interest'))continue;const val=line.querySelector('strong')?.textContent?.trim()||'';rows.push([name,val]);const raw=val.replaceAll('₹','').replaceAll(',','').trim(),n=raw?Number(raw):NaN;if(Number.isFinite(n)&&n>=0&&typeof window.spExportAmountWords==='function')rows.push([hi?'राशि शब्दों में':'Amount in Words',window.spExportAmountWords(n,hi)])}
 rows.push([hi?'पूर्वावलोकन समय':'Preview generated',new Date().toLocaleString('en-IN')]);return rows
-}function refresh(){const rows=summary();$('spRows517').replaceChildren(...rows.map(([name,value])=>{let tr=document.createElement('tr');if(name==='Final Customer Payable'||name==='ग्राहक का कुल देय')tr.className='sp-export-totals';let a=document.createElement('td'),b=document.createElement('td');a.textContent=name;b.textContent=value||'—';tr.append(a,b);return tr}));$('spPageBreak517').hidden=!$('spBreak517').checked;let logo=document.querySelector('header img, .brandlogo, .sp-original-logo img');if(logo)$('spLogo517').src=logo.src;return rows}function content(){return refresh().map(r=>r.join(': ')).join('\n')}function notice(v){$('spExportStatus517').textContent=v}function printPdf(){refresh();let w=window.open('','_blank');if(!w){notice('Allow pop-ups to print or save PDF.');return}let page=$('spPaper517').outerHTML;let styles=`@page{size:A4 portrait;margin:12mm}body{font-family:Arial,'Noto Sans Devanagari',sans-serif;color:#002D9C}#spPaper517{width:100%;box-sizing:border-box}.sp-paper-head{text-align:center;border-bottom:4px solid #00A825}.sp-paper-head img{width:70px;height:70px;object-fit:contain}.sp-paper-head p,.sp-paper-foot strong{color:#FF0000;font-weight:bold}.sp-paper-head h3{color:#002D9C}table{width:100%;border-collapse:collapse;margin:18px 0}td{border-bottom:1px solid #ccd9e9;padding:9px}td:last-child{text-align:right;font-weight:bold}.sp-paper-foot{text-align:center;color:#0000FF;margin-top:24px;font-size:12px}.sp-export-break{border-top:2px dashed #008CFF;margin:20px 0;text-align:center;color:#008CFF}.sp-export-break[hidden]{display:none}`;w.document.open();w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>StartPay JDA A4 Export</title><style>'+styles+'</style></head><body>'+page+'<script id="spRenewalV513Script">(function(){
-'use strict';
-const root=document.getElementById('spRenewalV513');if(!root)return;
-const $=id=>document.getElementById(id),fmt=n=>'₹'+(Number.isFinite(n)?n:0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
-const parse=s=>{const m=String(s||'').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);if(!m)return null;const d=new Date(Date.UTC(+m[3],+m[2]-1,+m[1]));return d.getUTCFullYear()===+m[3]&&d.getUTCMonth()===+m[2]-1&&d.getUTCDate()===+m[1]?d:null};
-const addYears=(d,y)=>{const t=new Date(d.getTime());const day=t.getUTCDate(),month=t.getUTCMonth();t.setUTCDate(1);t.setUTCFullYear(t.getUTCFullYear()+y);t.setUTCMonth(month);t.setUTCDate(Math.min(day,new Date(Date.UTC(t.getUTCFullYear(),month+1,0)).getUTCDate()));return t};
-const shift=(d,n)=>new Date(d.getTime()+n*86400000);
-const dd=d=>d?String(d.getUTCDate()).padStart(2,'0')+'/'+String(d.getUTCMonth()+1).padStart(2,'0')+'/'+d.getUTCFullYear():'—';
-const duration=(a,b)=>{if(b<a)return null;let y=b.getUTCFullYear()-a.getUTCFullYear();if(addYears(a,y)>b)y--;let anchor=addYears(a,y),m=0;while(m<11){let t=new Date(anchor.getTime());t.setUTCMonth(t.getUTCMonth()+1);if(t>b)break;anchor=t;m++}return {y,m,d:Math.round((b-anchor)/86400000)}};
-const today=new Date();$('spRCurrent').value=[today.getFullYear(),String(today.getMonth()+1).padStart(2,'0'),String(today.getDate()).padStart(2,'0')].join('-');
-let formulas={};
-function calc(){
-const start=parse($('start')?.value),ys=$('years')?.value,years=ys==='other'?Number($('customYears')?.value):Number(ys),cur=$('spRCurrent').value?new Date($('spRCurrent').value+'T00:00:00Z'):null;
-const set=(id,v)=>{if($(id))$(id).textContent=v};
-set('spRStart',start?dd(start):'—');set('spRYears',Number.isInteger(years)&&years>0?years+' Years':'—');
-if(!start||!Number.isInteger(years)||years<1||!cur||!Number.isFinite(cur.getTime())){$('spRError').textContent='Enter valid Lease Start, Lease Years and Calculation Date.';return}
-const end=shift(addYears(start,years),-1),renew=shift(end,1),renewEnd=shift(addYears(renew,years),-1);
-set('spREnd',dd(end));set('spRRenewStart',dd(renew));set('spRRenewEnd',dd(renewEnd));
-const elapsed=duration(renew,cur);if(!elapsed){$('spRError').textContent='Calculation Date is before Renewal Start.';return}
-$('spRError').textContent='';
-const manual=$('spRGapMode').value==='manual';$('spRManualWrap').hidden=!manual;
-const gap=Math.min(years,manual?Math.floor(Math.max(0,Number($('spRManualGap').value)||0)):elapsed.y),left=Math.max(0,years-gap);
-const rent=Math.max(0,Number($('spROriginalRent').value)||0)*4;
-const area=Math.max(0,Number($('area')?.value)||0),unit=$('unit')?.value,areaSqft=unit==='sqm'?area*10.7639104167:unit==='acre'?area*43560:area;
-const land=Math.max(0,Number($('guideline')?.value)||0),other=Math.max(0,Number($('spROther').value)||0);
-const gapBase=rent*gap,remainBase=rent*left,premiumBase=land*0.02;
-const gapFee=gapBase*1.18,remainFee=remainBase*1.18,premiumFee=premiumBase*1.18;
-set('spRGap',elapsed.y+' वर्ष, '+elapsed.m+' महीने, '+elapsed.d+' दिन'+(manual?' • Manual '+gap+' वर्ष':''));
-set('spRRemaining',left+' वर्ष');set('spRRent',fmt(rent));set('spRGapTotal',fmt(gapFee));set('spRRemainingTotal',fmt(remainFee));set('spRPremiumTotal',fmt(premiumFee));set('spRLand',fmt(land));set('spROtherResult',fmt(other));set('spRTotal',fmt(gapFee+remainFee+premiumFee+other));
-formulas={rent:'Original Annual Rent × 4 = '+fmt(rent),gap:fmt(rent)+' × '+gap+' completed gap years = '+fmt(gapBase)+'; GST 18% = '+fmt(gapBase*.18),remaining:fmt(rent)+' × '+left+' remaining years = '+fmt(remainBase)+'; GST 18% = '+fmt(remainBase*.18),premium:'Existing Guideline Value '+fmt(land)+' × fixed 2% = '+fmt(premiumBase)+'; GST 18% = '+fmt(premiumBase*.18)+'; Property area '+areaSqft.toLocaleString('en-IN')+' sq.ft. (existing input)'};
-const visible=$('spRInfo').dataset.which;if(visible)$('spRInfo').textContent=formulas[visible]||'';
-}
-root.addEventListener('click',e=>{const b=e.target.closest('[data-sp-r-info]');if(!b)return;const p=$('spRInfo'),id=b.dataset.spRInfo;p.hidden=!p.hidden&&p.dataset.which===id;p.dataset.which=id;p.textContent=formulas[id]||'Fill dates to see the formula.'});
-document.addEventListener('input',e=>{if(e.target.matches('#start,#customYears,#area,#guideline,#spROriginalRent,#spRCurrent,#spRRegistered,#spRManualGap,#spROther'))calc()});
-document.addEventListener('change',e=>{if(e.target.matches('#start,#years,#customYears,#area,#unit,#guideline,#spRCurrent,#spRGapMode,#spRManualGap,#spROriginalRent,#spROther'))calc()});
-const observer=new MutationObserver(()=>calc());if($('end'))observer.observe($('end'),{attributes:true,attributeFilter:['value']});
-calc();
-})();</script></body></html>');w.document.close();w.onload=()=>{w.focus();w.print()};notice('Use Print dialog → Save as PDF for PDF download.')}async function imageExport(type){
+}function refresh(){const rows=summary();$('spRows517').replaceChildren(...rows.map(([name,value])=>{let tr=document.createElement('tr');if(name==='Final Customer Payable'||name==='ग्राहक का कुल देय')tr.className='sp-export-totals';let a=document.createElement('td'),b=document.createElement('td');a.textContent=name;b.textContent=value||'—';tr.append(a,b);return tr}));$('spPageBreak517').hidden=!$('spBreak517').checked;let logo=document.querySelector('header img, .brandlogo, .sp-original-logo img');if(logo)$('spLogo517').src=logo.src;return rows}function content(){return refresh().map(r=>r.join(': ')).join('\n')}function notice(v){$('spExportStatus517').textContent=v}function printPdf(){refresh();let w=window.open('','_blank');if(!w){notice('Allow pop-ups to print or save PDF.');return}let page=$('spPaper517').outerHTML;let styles=`@page{size:A4 portrait;margin:12mm}body{font-family:Arial,'Noto Sans Devanagari',sans-serif;color:#002D9C}#spPaper517{width:100%;box-sizing:border-box}.sp-paper-head{text-align:center;border-bottom:4px solid #00A825}.sp-paper-head img{width:70px;height:70px;object-fit:contain}.sp-paper-head p,.sp-paper-foot strong{color:#FF0000;font-weight:bold}.sp-paper-head h3{color:#002D9C}table{width:100%;border-collapse:collapse;margin:18px 0}td{border-bottom:1px solid #ccd9e9;padding:9px}td:last-child{text-align:right;font-weight:bold}.sp-paper-foot{text-align:center;color:#0000FF;margin-top:24px;font-size:12px}.sp-export-break{border-top:2px dashed #008CFF;margin:20px 0;text-align:center;color:#008CFF}.sp-export-break[hidden]{display:none}`;w.document.open();w.document.write('<!doctype html><html><head><meta charset="utf-8"><title>StartPay JDA A4 Export</title><style>'+styles+'</style></head><body>'+page+'</body></html>');w.document.close();w.onload=()=>{w.focus();w.print()};notice('Use Print dialog → Save as PDF for PDF download.')}async function imageExport(type){
  refresh();const rows=summary(),W=794,scale=2,pad=48,rowH=42;
  const H=Math.max(1123,360+rows.length*rowH+220);
  const canvas=document.createElement('canvas');canvas.width=W*scale;canvas.height=H*scale;
@@ -1030,4 +993,41 @@ area.addEventListener('input',()=>{if(!auto.checked){length.value='0';width.valu
 document.addEventListener('change',e=>{if(e.target===unit&&auto.checked&&unit.value!=='sqft'){auto.checked=false;update(false)}});
 update(false);
 })();
-</script></body></html>
+</script><script id="spRenewalV513Script">(function(){
+'use strict';
+const root=document.getElementById('spRenewalV513');if(!root)return;
+const $=id=>document.getElementById(id),fmt=n=>'₹'+(Number.isFinite(n)?n:0).toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});
+const parse=s=>{const m=String(s||'').match(/^(\d{2})\/(\d{2})\/(\d{4})$/);if(!m)return null;const d=new Date(Date.UTC(+m[3],+m[2]-1,+m[1]));return d.getUTCFullYear()===+m[3]&&d.getUTCMonth()===+m[2]-1&&d.getUTCDate()===+m[1]?d:null};
+const addYears=(d,y)=>{const t=new Date(d.getTime());const day=t.getUTCDate(),month=t.getUTCMonth();t.setUTCDate(1);t.setUTCFullYear(t.getUTCFullYear()+y);t.setUTCMonth(month);t.setUTCDate(Math.min(day,new Date(Date.UTC(t.getUTCFullYear(),month+1,0)).getUTCDate()));return t};
+const shift=(d,n)=>new Date(d.getTime()+n*86400000);
+const dd=d=>d?String(d.getUTCDate()).padStart(2,'0')+'/'+String(d.getUTCMonth()+1).padStart(2,'0')+'/'+d.getUTCFullYear():'—';
+const duration=(a,b)=>{if(b<a)return null;let y=b.getUTCFullYear()-a.getUTCFullYear();if(addYears(a,y)>b)y--;let anchor=addYears(a,y),m=0;while(m<11){let t=new Date(anchor.getTime());t.setUTCMonth(t.getUTCMonth()+1);if(t>b)break;anchor=t;m++}return {y,m,d:Math.round((b-anchor)/86400000)}};
+const today=new Date();$('spRCurrent').value=[today.getFullYear(),String(today.getMonth()+1).padStart(2,'0'),String(today.getDate()).padStart(2,'0')].join('-');
+let formulas={};
+function calc(){
+const start=parse($('start')?.value),ys=$('years')?.value,years=ys==='other'?Number($('customYears')?.value):Number(ys),cur=$('spRCurrent').value?new Date($('spRCurrent').value+'T00:00:00Z'):null;
+const set=(id,v)=>{if($(id))$(id).textContent=v};
+set('spRStart',start?dd(start):'—');set('spRYears',Number.isInteger(years)&&years>0?years+' Years':'—');
+if(!start||!Number.isInteger(years)||years<1||!cur||!Number.isFinite(cur.getTime())){$('spRError').textContent='Enter valid Lease Start, Lease Years and Calculation Date.';return}
+const end=shift(addYears(start,years),-1),renew=shift(end,1),renewEnd=shift(addYears(renew,years),-1);
+set('spREnd',dd(end));set('spRRenewStart',dd(renew));set('spRRenewEnd',dd(renewEnd));
+const elapsed=duration(renew,cur);if(!elapsed){$('spRError').textContent='Calculation Date is before Renewal Start.';return}
+$('spRError').textContent='';
+const manual=$('spRGapMode').value==='manual';$('spRManualWrap').hidden=!manual;
+const gap=Math.min(years,manual?Math.floor(Math.max(0,Number($('spRManualGap').value)||0)):elapsed.y),left=Math.max(0,years-gap);
+const rent=Math.max(0,Number($('spROriginalRent').value)||0)*4;
+const area=Math.max(0,Number($('area')?.value)||0),unit=$('unit')?.value,areaSqft=unit==='sqm'?area*10.7639104167:unit==='acre'?area*43560:area;
+const land=Math.max(0,Number($('guideline')?.value)||0),other=Math.max(0,Number($('spROther').value)||0);
+const gapBase=rent*gap,remainBase=rent*left,premiumBase=land*0.02;
+const gapFee=gapBase*1.18,remainFee=remainBase*1.18,premiumFee=premiumBase*1.18;
+set('spRGap',elapsed.y+' वर्ष, '+elapsed.m+' महीने, '+elapsed.d+' दिन'+(manual?' • Manual '+gap+' वर्ष':''));
+set('spRRemaining',left+' वर्ष');set('spRRent',fmt(rent));set('spRGapTotal',fmt(gapFee));set('spRRemainingTotal',fmt(remainFee));set('spRPremiumTotal',fmt(premiumFee));set('spRLand',fmt(land));set('spROtherResult',fmt(other));set('spRTotal',fmt(gapFee+remainFee+premiumFee+other));
+formulas={rent:'Original Annual Rent × 4 = '+fmt(rent),gap:fmt(rent)+' × '+gap+' completed gap years = '+fmt(gapBase)+'; GST 18% = '+fmt(gapBase*.18),remaining:fmt(rent)+' × '+left+' remaining years = '+fmt(remainBase)+'; GST 18% = '+fmt(remainBase*.18),premium:'Existing Guideline Value '+fmt(land)+' × fixed 2% = '+fmt(premiumBase)+'; GST 18% = '+fmt(premiumBase*.18)+'; Property area '+areaSqft.toLocaleString('en-IN')+' sq.ft. (existing input)'};
+const visible=$('spRInfo').dataset.which;if(visible)$('spRInfo').textContent=formulas[visible]||'';
+}
+root.addEventListener('click',e=>{const b=e.target.closest('[data-sp-r-info]');if(!b)return;const p=$('spRInfo'),id=b.dataset.spRInfo;p.hidden=!p.hidden&&p.dataset.which===id;p.dataset.which=id;p.textContent=formulas[id]||'Fill dates to see the formula.'});
+document.addEventListener('input',e=>{if(e.target.matches('#start,#customYears,#area,#guideline,#spROriginalRent,#spRCurrent,#spRRegistered,#spRManualGap,#spROther'))calc()});
+document.addEventListener('change',e=>{if(e.target.matches('#start,#years,#customYears,#area,#unit,#guideline,#spRCurrent,#spRGapMode,#spRManualGap,#spROriginalRent,#spROther'))calc()});
+const observer=new MutationObserver(()=>calc());if($('end'))observer.observe($('end'),{attributes:true,attributeFilter:['value']});
+calc();
+})();</script></body></html>
