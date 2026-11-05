@@ -1005,10 +1005,10 @@ const dd=d=>d?String(d.getUTCDate()).padStart(2,'0')+'/'+String(d.getUTCMonth()+
 const duration=(a,b)=>{if(b<a)return null;let y=b.getUTCFullYear()-a.getUTCFullYear();if(addYears(a,y)>b)y--;let anchor=addYears(a,y),m=0;while(m<11){let t=new Date(anchor.getTime());t.setUTCMonth(t.getUTCMonth()+1);if(t>b)break;anchor=t;m++}return {y,m,d:Math.round((b-anchor)/86400000)}};
 const today=new Date();$('spRCurrent').value=String(today.getDate()).padStart(2,'0')+'/'+String(today.getMonth()+1).padStart(2,'0')+'/'+today.getFullYear();
 const toISO=d=>d?d.getUTCFullYear()+'-'+String(d.getUTCMonth()+1).padStart(2,'0')+'-'+String(d.getUTCDate()).padStart(2,'0'):'';
-function maskDate(v){const d=String(v).replace(/\\D/g,'').slice(0,8);return d.slice(0,2)+(d.length>2?'/'+d.slice(2,4):'')+(d.length>4?'/'+d.slice(4):'')}
+function maskDate(v){const d=String(v).replace(/\D/g,'').slice(0,8);return d.slice(0,2)+(d.length>2?'/'+d.slice(2,4):'')+(d.length>4?'/'+d.slice(4):'')}
 for(const id of ['spRCurrent','spRRegistered']){
 const field=$(id),picker=$(id+'Picker');
-field.addEventListener('input',()=>{const old=field.value,pos=field.selectionStart??old.length,count=old.slice(0,pos).replace(/\\D/g,'').length;field.value=maskDate(old);let p=0,n=0;while(p<field.value.length&&n<count){if(/\\d/.test(field.value[p]))n++;p++}field.setSelectionRange(p,p);picker.value=toISO(parse(field.value));calc()});
+field.addEventListener('input',()=>{const old=field.value,pos=field.selectionStart??old.length,count=old.slice(0,pos).replace(/\D/g,'').length;field.value=maskDate(old);let p=0,n=0;while(p<field.value.length&&n<count){if(/\d/.test(field.value[p]))n++;p++}field.setSelectionRange(p,p);picker.value=toISO(parse(field.value));calc()});
 field.addEventListener('blur',()=>{const date=parse(field.value);if(date)field.value=dd(date)});
 picker.addEventListener('change',()=>{if(picker.value){const parts=picker.value.split('-');field.value=parts[2]+'/'+parts[1]+'/'+parts[0];calc()}});
 root.querySelector('[data-sp-r-calendar="'+id+'"]').addEventListener('click',()=>{picker.value=toISO(parse(field.value));if(typeof picker.showPicker==='function')picker.showPicker();else picker.focus()});
