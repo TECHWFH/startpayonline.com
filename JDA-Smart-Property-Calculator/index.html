@@ -1017,11 +1017,18 @@ let formulas={};
 function calc(){
 const start=parse($('start')?.value),ys=$('years')?.value,years=ys==='other'?Number($('customYears')?.value):Number(ys),cur=parse($('spRCurrent').value);
 const set=(id,v)=>{if($(id))$(id).textContent=v};
+const area0=Math.max(0,Number($('area')?.value)||0),unit0=$('unit')?.value,areaSqft0=unit0==='sqm'?area0*10.7639104167:unit0==='acre'?area0*43560:area0;
+const rate0=Math.max(0,Number($('spRGuidelineRate').value)||0),land0=areaSqft0*rate0,premiumBase0=land0*.02,premiumFee0=premiumBase0*1.18;
+const rent0=Math.max(0,Number($('spROriginalRent').value)||0)*4,other0=Math.max(0,Number($('spROther').value)||0);
+const resetPeriod=()=>{for(const id of ['spRGap','spRRemaining','spRGapTotal','spRRemainingTotal','spRTotal'])set(id,'—');};
+set('spRLand',fmt(land0));set('spRPremiumTotal',fmt(premiumFee0));set('spRRent',fmt(rent0));set('spROtherResult',fmt(other0));
+formulas={guideline:'Property Area '+areaSqft0.toLocaleString('en-IN')+' Sq.Ft. × JDA Guideline Rate ₹'+rate0.toLocaleString('en-IN')+'/Sq.Ft. = '+fmt(land0)+'. Reference only; not added to Renewal Fees Total.',premium:fmt(land0)+' × 2% = '+fmt(premiumBase0)+'; GST 18% = '+fmt(premiumBase0*.18)+'; Premium + GST = '+fmt(premiumFee0),rent:'Original Annual Rent × 4 = '+fmt(rent0)};
+const visible0=$('spRInfo').dataset.which;if(visible0)$('spRInfo').textContent=formulas[visible0]||'Enter valid dates to see period-based details.';
 set('spRStart',start?dd(start):'—');set('spRYears',Number.isInteger(years)&&years>0?years+' Years':'—');
-if(!start||!Number.isInteger(years)||years<1||!cur||!Number.isFinite(cur.getTime())){$('spRError').textContent='Enter valid Lease Start, Lease Years and Calculation Date.';return}
+if(!start||!Number.isInteger(years)||years<1||!cur||!Number.isFinite(cur.getTime())){$('spRError').textContent='Enter valid Lease Start, Lease Years and Calculation Date. Guideline and Premium calculations remain available.';resetPeriod();return}
 const end=shift(addYears(start,years),-1),renew=shift(end,1),renewEnd=shift(addYears(renew,years),-1);
 set('spREnd',dd(end));set('spRRenewStart',dd(renew));set('spRRenewEnd',dd(renewEnd));
-const elapsed=duration(renew,cur);if(!elapsed){$('spRError').textContent='Calculation Date is before Renewal Start.';return}
+const elapsed=duration(renew,cur);if(!elapsed){$('spRError').textContent='Calculation Date is before Renewal Start ('+dd(renew)+'). Please check the existing Lease Start above or choose a later Calculation Date. Guideline and Premium calculations remain available.';resetPeriod();return}
 $('spRError').textContent='';
 const manual=$('spRGapMode').value==='manual';$('spRManualWrap').hidden=!manual;
 const gap=Math.min(years,manual?Math.floor(Math.max(0,Number($('spRManualGap').value)||0)):elapsed.y),left=Math.max(0,years-gap);
