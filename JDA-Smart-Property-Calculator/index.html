@@ -426,7 +426,7 @@ body{font-size:clamp(12px,3.5vw,15px)}
 <div class="sp-r-field"><label>Original Lease Years • Existing</label><output id="spRYears">—</output></div>
 <div class="sp-r-field"><label>Original Lease End • Auto</label><output id="spREnd">—</output></div>
 <div class="sp-r-field"><label>Renewal Start • Auto</label><output id="spRRenewStart">—</output></div>
-<div class="sp-r-field"><label>Renewal Deed End • Auto</label><output id="spRRenewEnd">—</output></div>
+<div class="sp-r-field"><label>Renewal Deed End • Auto</label><output id="spRRenewEnd">—</output><small id="spRCompletedAtEnd" class="sp-r-hint" style="display:block;margin-top:4px">Completed Years / Months / Days: —</small></div>
 <div class="sp-r-field"><label for="spRCurrent">Calculation / Current Date *</label><div class="sp-r-date-row"><input id="spRCurrent" type="text" maxlength="10" inputmode="numeric" autocomplete="off" placeholder="DD/MM/YYYY" required><button class="sp-r-calendar-btn" type="button" data-sp-r-calendar="spRCurrent" aria-label="Choose Calculation / Current Date *">▦</button><input class="sp-r-native-picker" id="spRCurrentPicker" type="date" tabindex="-1" aria-label="Calendar date picker"></div></div>
 <div class="sp-r-field"><label for="spRRegistered">Earlier Deed Registration Date • Reference</label><div class="sp-r-date-row"><input id="spRRegistered" type="text" maxlength="10" inputmode="numeric" autocomplete="off" placeholder="DD/MM/YYYY" ><button class="sp-r-calendar-btn" type="button" data-sp-r-calendar="spRRegistered" aria-label="Choose Earlier Deed Registration Date • Reference">▦</button><input class="sp-r-native-picker" id="spRRegisteredPicker" type="date" tabindex="-1" aria-label="Calendar date picker"></div></div>
 <div class="sp-r-field"><label for="spRGuidelineRate">JDA Guideline Rate (₹/Sq.Ft.)</label><input id="spRGuidelineRate" type="number" min="0" step="any" inputmode="decimal" value="1151"><small class="sp-r-hint">Default ₹1,151 • Editable • Uses existing Property Area</small></div>
@@ -1028,6 +1028,7 @@ set('spRStart',start?dd(start):'—');set('spRYears',Number.isInteger(years)&&ye
 if(!start||!Number.isInteger(years)||years<1||!cur||!Number.isFinite(cur.getTime())){$('spRError').textContent='Enter valid Lease Start, Lease Years and Calculation Date. Guideline and Premium calculations remain available.';resetPeriod();return}
 const end=shift(addYears(start,years),-1),renew=shift(end,1),renewEnd=shift(addYears(renew,years),-1);
 set('spREnd',dd(end));set('spRRenewStart',dd(renew));set('spRRenewEnd',dd(renewEnd));
+set('spRCompletedAtEnd','Completed Years / Months / Days: —');
 const elapsed=duration(renew,cur);if(!elapsed){$('spRError').textContent='Calculation Date is before Renewal Start ('+dd(renew)+'). Please check the existing Lease Start above or choose a later Calculation Date. Guideline and Premium calculations remain available.';resetPeriod();return}
 $('spRError').textContent='';
 const manual=$('spRGapMode').value==='manual';$('spRManualWrap').hidden=!manual;
@@ -1038,6 +1039,7 @@ const rate=Math.max(0,Number($('spRGuidelineRate').value)||0),land=rate*areaSqft
 const gapBase=rent*gap,remainBase=rent*left,premiumBase=land*0.02;
 const gapFee=gapBase*1.18,remainFee=remainBase*1.18,premiumFee=premiumBase*1.18;
 set('spRGap',elapsed.y+' वर्ष, '+elapsed.m+' महीने, '+elapsed.d+' दिन'+(manual?' • Manual '+gap+' वर्ष':''));
+set('spRCompletedAtEnd','Completed: '+elapsed.y+' वर्ष, '+elapsed.m+' महीने, '+elapsed.d+' दिन'+(manual?' • Billing '+gap+' वर्ष':''));
 set('spRRemaining',left+' वर्ष');set('spRRent',fmt(rent));set('spRGapTotal',fmt(gapFee));set('spRRemainingTotal',fmt(remainFee));set('spRPremiumTotal',fmt(premiumFee));set('spRLand',fmt(land));set('spROtherResult',fmt(other));set('spRTotal',fmt(gapFee+remainFee+premiumFee+other));
 formulas={guideline:'Property Area '+areaSqft.toLocaleString('en-IN')+' Sq.Ft. × JDA Guideline Rate ₹'+rate.toLocaleString('en-IN')+'/Sq.Ft. = '+fmt(land)+'. Reference value only; not added to Renewal Fees Total.',rent:'Original Annual Rent × 4 = '+fmt(rent),gap:fmt(rent)+' × '+gap+' completed gap years = '+fmt(gapBase)+'; GST 18% = '+fmt(gapBase*.18),remaining:fmt(rent)+' × '+left+' remaining years = '+fmt(remainBase)+'; GST 18% = '+fmt(remainBase*.18),premium:'JDA Guideline Rate ₹'+rate.toLocaleString('en-IN')+'/Sq.Ft. × '+areaSqft.toLocaleString('en-IN')+' Sq.Ft. = '+fmt(land)+'; × fixed 2% = '+fmt(premiumBase)+'; GST 18% = '+fmt(premiumBase*.18)+'; Property area '+areaSqft.toLocaleString('en-IN')+' sq.ft. (existing input)'};
 const visible=$('spRInfo').dataset.which;if(visible)$('spRInfo').textContent=formulas[visible]||'';
