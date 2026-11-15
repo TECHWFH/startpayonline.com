@@ -15,7 +15,7 @@ const showHelp=()=>{
 const init=()=>{
  if(standalone())return;
  let b=document.getElementById(ID);
- if(!b){b=document.createElement('button');b.id=ID;b.type='button';b.textContent='Install App';b.setAttribute('aria-label','Install StartPay EMI Calculator app');b.style.cssText='position:fixed;left:12px;bottom:16px;z-index:10001;background:#002D9C;color:#fff;border:2px solid #fff;border-radius:28px;padding:12px 18px;font:700 13px system-ui;box-shadow:0 4px 14px #002d9c44;cursor:pointer';document.body.appendChild(b);}
+ if(!b){b=document.createElement('button');b.id=ID;b.type='button';b.textContent='Install App';b.setAttribute('aria-label','Install StartPay EMI Calculator app');b.style.cssText='position:fixed;right:max(12px,env(safe-area-inset-right));left:auto;top:50%;bottom:auto;transform:translateY(-50%);z-index:10001;background:#002D9C;color:#fff;border:2px solid #fff;border-radius:28px;padding:12px 18px;font:700 13px system-ui;box-shadow:0 4px 14px #002d9c44;cursor:pointer';document.body.appendChild(b);}
  b.hidden=false;
  b.onclick=async()=>{if(deferred){const p=deferred;deferred=null;try{await p.prompt();await p.userChoice;}catch(e){showHelp();}}else showHelp();};
 };
