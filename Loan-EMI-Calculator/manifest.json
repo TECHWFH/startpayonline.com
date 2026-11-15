@@ -2,6 +2,7 @@
   "name": "StartPay Smart Loan EMI Calculator",
   "short_name": "StartPay EMI",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#002D9C",
