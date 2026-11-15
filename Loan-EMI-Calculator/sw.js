@@ -1,5 +1,5 @@
-const CACHE='startpay-emi-v5-32-pwa';
-const ASSETS=['./','./index.html','./manifest.json','./pwa-setup.js','./StartPay_Alternate_Icon_32x32.png','./StartPay_Alternate_Icon_48x48.png','./StartPay_Alternate_Icon_180x180.png','./StartPay_Alternate_Icon_192x192.png','./StartPay_Alternate_Icon_512x512.png','./StartPay_EMI_Social_Preview_1200x630.jpg'];
+const CACHE='startpay-emi-v5-44-pwa-2';
+const ASSETS=['./','./index.html','./manifest.json','./pwa-setup.js','./StartPay_Alternate_Icon_32x32.png','./StartPay_Alternate_Icon_48x48.png','./StartPay_Alternate_Icon_180x180.png','./StartPay_Alternate_Icon_192x192.png','./StartPay_Alternate_Icon_512x512.png','./StartPay_EMI_Clean_Logo_Larger_1200x630.jpg'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>Promise.allSettled(ASSETS.map(x=>c.add(x)))));self.skipWaiting()});
 self.addEventListener('activate',e=>{e.waitUntil((async()=>{for(const k of await caches.keys())if(k.startsWith('startpay-emi-')&&k!==CACHE)await caches.delete(k);await self.clients.claim()})())});
 self.addEventListener('fetch',e=>{const r=e.request;if(r.method!=='GET'||new URL(r.url).origin!==self.location.origin)return;e.respondWith((async()=>{try{const v=await fetch(r);if(v.ok){const c=await caches.open(CACHE);c.put(r,v.clone())}return v}catch(x){return await caches.match(r,{ignoreSearch:true})||((r.mode==='navigate')?await caches.match('./index.html'):undefined)||Response.error()}})())});
