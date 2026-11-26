@@ -310,10 +310,22 @@
         .naksha-boundary-table { width: 95%; margin: 0 auto; border-collapse: collapse; }
         .naksha-boundary-table th { background: #f5f5f5; color: #c00000; font-weight: bold; border: 1px solid #000; padding: 7px; font-size: 14px; text-align: center; }
         .naksha-boundary-table td { border: 1px solid #000; padding: 6px; font-size: 13.5px; color: #000; }
+        [data-cardinal="N"] { --cardinal-color: #801515; }
+        [data-cardinal="S"] { --cardinal-color: #102f78; }
+        [data-cardinal="E"] { --cardinal-color: #0d5129; }
+        [data-cardinal="W"] { --cardinal-color: #542278; }
+        .direction-text [role="textbox"] { display: inline-block; min-width: 2ch; }
+        .naksha-map-area .direction-text[data-cardinal],
+        #naksha-fields [data-cardinal] > span { color: var(--cardinal-color); }
+        .naksha-boundary-table tr[data-cardinal="N"] { --cardinal-color: #680f0f; }
+        .naksha-boundary-table tr[data-cardinal="S"] { --cardinal-color: #0a245e; }
+        .naksha-boundary-table tr[data-cardinal="E"] { --cardinal-color: #093e1f; }
+        .naksha-boundary-table tr[data-cardinal="W"] { --cardinal-color: #41165e; }
+        .naksha-boundary-table tr[data-cardinal] td { color: var(--cardinal-color); }
         .naksha-boundary-table td:first-child { font-weight: bold; width: 25%; }
         .naksha-boundary-table td:nth-child(2) { text-align: center; width: 5%; }
 
-        .naksha-footer-text { display: flex; justify-content: space-between; font-size: 12px; font-weight: bold; margin-top: 15px; color: #444; border-top: 1px dashed #aaa; padding-top: 8px; }
+        .naksha-footer-text { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 8px 12px; margin-top: 15px; font-size: 12px; line-height: 1.4; color: #444; }
 
         /* --- FIXED FOOTER --- */
         .footer {
@@ -364,6 +376,92 @@
             .location-box { margin: 0 0 25px 95px !important; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
+        .compass-controls { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; color: var(--dark-navy); }
+        .compass-controls button, .compass-controls select { font-size: 16px; min-height: 40px; border: 1px solid var(--primary-blue); border-radius: 6px; background: #fff; color: var(--dark-navy); padding: 4px 8px; }
+        .compass-controls select { max-width: 160px; }
+        .compass-controls button { cursor: pointer; }
+        .cad-line-v-left .vertical-box-span { top: 25%; }
+        [hidden] { display: none !important; }
+        .naksha-editor { margin: 16px auto; max-width: 1180px; padding: 12px 16px; background: #fff; border: 1px solid #d9deea; border-radius: 8px; }
+        .naksha-editor summary { cursor: pointer; font-weight: 700; color: var(--dark-navy); }
+        #naksha-fields { margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 10px; }
+        #naksha-fields label { display: grid; gap: 4px; font-size: 13px; min-width: 0; }
+        #naksha-fields input { width: 100%; min-height: 39px; font-size: 16px; border: 1px solid #a6b1c8; border-radius: 5px; padding: 6px 8px; }
+        .naksha-map-area { display: grid; grid-template-columns: minmax(0,1fr) 34px minmax(0,190px) minmax(0,1fr); grid-template-rows: auto auto minmax(220px,auto) auto; gap: 6px; min-height: 0; }
+        .naksha-map-area .direction-text { position: static; width: auto; transform: none; align-self: center; text-align: center; overflow-wrap: anywhere; }
+        .naksha-map-area .north { grid-area: 1 / 2 / 2 / 5; }
+        .naksha-map-area .south { grid-area: 4 / 2 / 5 / 5; }
+        .naksha-map-area .west { grid-area: 3 / 1 / 4 / 2; }
+        .naksha-map-area .east { grid-area: 3 / 4 / 4 / 5; }
+        .naksha-map-area .cad-line-h-container { position: static; grid-area: 2 / 3; transform: none; width: 100% !important; }
+        .naksha-map-area .cad-line-v-left { position: static; grid-area: 3 / 2; transform: none; height: 100% !important; }
+        .cad-line-v-left .vertical-box-span { width: 34px; left: -16px; top: 50%; overflow-wrap: anywhere; }
+        .naksha-map-area .naksha-plot-box { grid-area: 3 / 3; width: 100% !important; height: 100% !important; min-width: 0; justify-self: center; }
+        .naksha-plot-num { overflow-wrap: anywhere; font-size: clamp(25px, 5vw, 44px); }
+        .naksha-card { overflow-wrap: anywhere; }
+        @media(max-width: 520px) { .naksha-map-area { grid-template-columns: minmax(0,1fr) 30px minmax(0,110px) minmax(0,1fr); gap: 4px; } }
+        @media print { .naksha-editor { display: none !important; } }
+        .naksha-brand { display: block; width: min(100%, 300px); height: auto; margin: 0 auto 8px; }
+        .actions .sampada-valuation { display:inline-flex; align-items:center; justify-content:center; min-width:42px; padding:8px; vertical-align:middle; }
+        #naksha-fields select { width:100%; min-height:39px; font-size:16px; border:1px solid #a6b1c8; border-radius:5px; padding:6px 8px; background:#fff; }
+        .area-conversion-note { grid-column: 1 / -1; padding: 6px 0; border-block: 1px solid #ccc; text-align: center; font-size: 13px; font-weight: 700; color: #222; }
+        .area-conversion-note:empty { display: none; }
+        .measurement-unit-note { white-space: nowrap; }
+        @media screen and (max-width: 520px) {
+            .naksha-footer-text { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+            .area-conversion-note { font-size: 12px; }
+        }
+        .naksha-map-area {
+            grid-template-columns: minmax(0,1fr) auto minmax(0,190px) auto minmax(0,1fr);
+            grid-template-rows: auto auto minmax(220px,auto) auto auto;
+        }
+        .naksha-map-area .north { grid-area:1 / 3; }
+        .naksha-map-area .south { grid-area:5 / 3; }
+        .naksha-map-area .west { grid-area:3 / 1; }
+        .naksha-map-area .east { grid-area:3 / 5; }
+        .dimension-slot { display:flex; gap:4px; min-width:0; }
+        .dimension-top { grid-area:2 / 3; flex-direction:column; }
+        .dimension-bottom { grid-area:4 / 3; flex-direction:column; }
+        .dimension-left { grid-area:3 / 2; }
+        .dimension-right { grid-area:3 / 4; }
+        .naksha-map-area .dimension-slot:is(.dimension-left,.dimension-right) {
+            align-self:stretch;
+            align-items:stretch;
+        }
+        .dimension-slot:is(.dimension-left,.dimension-right) .dimension-label {
+            white-space:nowrap;
+            overflow-wrap:normal;
+            justify-self:center;
+            font-size:11px;
+            padding-inline:1px;
+        }
+        .dimension-line { display:grid; place-items:center; position:relative; color:#c00000; font-size:12px; font-weight:800; min-height:23px; }
+        .dimension-slot:is(.dimension-left,.dimension-right) .dimension-line { min-width:47px; max-width:56px; }
+        .dimension-line::before { content:""; position:absolute; inset:50% 0 auto; border-top:1px solid #111; }
+        .dimension-slot:is(.dimension-left,.dimension-right) .dimension-line::before { inset:0 auto 0 50%; border-top:0; border-left:1px solid #111; }
+        .dimension-line::after {
+            content:"";
+            position:absolute;
+            inset:0;
+            pointer-events:none;
+            background:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23111' d='M0 4 8 0v8Z'/%3E%3C/svg%3E") left center / 8px 8px no-repeat,
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23111' d='M8 4 0 0v8Z'/%3E%3C/svg%3E") right center / 8px 8px no-repeat;
+        }
+        .dimension-slot:is(.dimension-left,.dimension-right) .dimension-line::after {
+            background:
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23111' d='M4 0 0 8h8Z'/%3E%3C/svg%3E") center top / 8px 8px no-repeat,
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath fill='%23111' d='M4 8 0 0h8Z'/%3E%3C/svg%3E") center bottom / 8px 8px no-repeat;
+        }
+        .dimension-label { position:relative; background:#fff; padding:2px 3px; text-align:center; overflow-wrap:anywhere; }
+        @media(max-width:520px) { .naksha-map-area { grid-template-columns:minmax(0,1fr) auto minmax(80px,35%) auto minmax(0,1fr); } .dimension-slot:is(.dimension-left,.dimension-right) .dimension-line { min-width:39px; max-width:45px; } }
+        .naksha-records h2 { font-size:17px; margin:0 0 8px; color:var(--dark-navy); }
+        .naksha-record-controls { display:flex; flex-wrap:wrap; align-items:center; gap:8px; }
+        .naksha-record-controls select, .naksha-record-controls button { min-height:40px; font-size:16px; padding:5px 9px; border-radius:5px; }
+        .naksha-record-controls select { max-width:min(200px, 54vw); border:1px solid #a6b1c8; }
+        .naksha-record-controls button { color:#fff; background:#002D9C; border:0; cursor:pointer; }
+        .naksha-record-controls #naksha-delete { background:#b91c1c; }
+        #naksha-record-status { margin:8px 0 0; font-size:13px; }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght=400;600;700;800&display=swap" rel="stylesheet">
 </head>
@@ -372,11 +470,26 @@
     <div class="topbar">🏠 Home</div>
 
     <div class="header">
-        <h1>📊 StartPay Legal & Finance Calculator</h1>
+        <img class="naksha-brand" src="data:image/webp;base64,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" width="600" height="200" alt="StartPay Online">
+        <h1>Editable Property Naksha</h1>
         <p>by Anurag Rai | ☎ 9340726600</p>
     </div>
 
     <div class="actions">
+        <div class="compass-controls" role="group" aria-label="कंपास की दिशा">
+            <label for="compass-angle">नक्शे की दिशा</label>
+            <button type="button" id="compass-left" aria-label="90 डिग्री बाएँ घुमाएँ">↶ 90°</button>
+            <select id="compass-angle"><option value="0">उत्तर ऊपर</option><option value="90">उत्तर दाईं ओर</option><option value="180">उत्तर नीचे</option><option value="270">उत्तर बाईं ओर</option></select>
+            <button type="button" id="compass-right" aria-label="90 डिग्री दाएँ घुमाएँ">↷ 90°</button>
+            <button type="button" id="compass-reset">सीधा करें</button>
+            <label for="relative-type">नाम का प्रकार</label>
+            <select id="relative-type">
+                <option value="पिता">पिता का नाम</option>
+                <option value="पति">पति का नाम</option>
+                <option value="माता">माता का नाम</option>
+                <option value="अभिभावक">अभिभावक का नाम</option>
+            </select>
+        </div>
         <button class="btn print" onclick="window.print()">🖨️ Print A4 Landscape</button>
         <a class="btn help" href="https://wa.me/919340726600" target="_blank">💬 WhatsApp Help</a>
         <button class="btn share" onclick="sharePage()">📤 Auto Share</button>
@@ -384,7 +497,11 @@
         <a class="btn call" href="tel:+919806191822">📞 Call Now</a>
         <button class="btn terms">⚖️ Terms</button>
         <a class="btn web" href="https://startpayonline.com/" target="_blank">🌐 Website</a>
+        <a class="btn web sampada-valuation" href="https://sampada.mpigr.gov.in/#/property-valuation" target="_blank" rel="noopener noreferrer" aria-label="सरकारी मूल्यांकन — संपदा" title="सरकारी मूल्यांकन — संपदा">
+            <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9h18L12 3 3 9Zm2 2v7m5-7v7m4-7v7m5-7v7M3 21h18"/></svg>
+        </a>
         <button class="btn download" onclick="downloadNaksha()">📥 Download PNG (HD)</button>
+        <button class="btn download" onclick="downloadNaksha('jpeg')">Download JPG (HD)</button>
         <button class="btn pdf" onclick="downloadPDF()">📄 Download PDF (HD)</button>
     </div>
 
@@ -393,6 +510,20 @@
     </div>
 
     <div class="main-container">
+        <details class="naksha-editor" open>
+            <summary>संपत्ति विवरण भरें</summary>
+            <div id="naksha-fields"></div>
+        </details>
+        <section class="naksha-editor naksha-records" aria-labelledby="naksha-record-heading">
+            <h2 id="naksha-record-heading">सहेजे गए नक्शे</h2>
+            <div class="naksha-record-controls">
+                <label>नक्शा चुनें <select id="naksha-record-list"><option value="">नया रिकॉर्ड</option></select></label>
+                <button id="naksha-save" type="button">Save</button>
+                <button id="naksha-edit" type="button">Edit</button>
+                <button id="naksha-delete" type="button">Delete</button>
+            </div>
+            <p id="naksha-record-status" role="status">इस ब्राउज़र में 20 नक्शे सहेज सकते हैं।</p>
+        </section>
         <div class="naksha-container" id="visible-container">
 
             <!-- बायाँ पैनल: संपत्ति का विवरण -->
@@ -414,8 +545,8 @@
                     नगर निगम जबलपुर, मध्य प्रदेश
                 </div>
                 
-                <div class="naksha-address naksha-red">
-                    नगर निगम प्रॉपर्टी आईडी नं. <span class="sync-id-txt" contenteditable="true">5555555</span>
+                <div class="naksha-address naksha-red optional-property-id" hidden>
+                    नगर निगम प्रॉपर्टी आईडी नं. <span class="sync-id-txt" contenteditable="true"></span>
                 </div>
                 
                 <hr class="naksha-hr">
@@ -423,7 +554,7 @@
                 <div class="naksha-details-table">
                     <table>
                         <tr><td>• खातेदार का नाम</td><td>:</td><td><span class="sync-owner-txt" contenteditable="true">श्री राम सीता</span></td></tr>
-                        <tr><td>• पिता का नाम</td><td>:</td><td><span class="sync-father-txt" contenteditable="true">श्री राम सीता DEMO</span></td></tr>
+                        <tr><td id="relative-label">• पिता का नाम</td><td>:</td><td><span class="sync-father-txt" contenteditable="true">श्री राम सीता DEMO</span></td></tr>
                         <tr><td>• प्लॉट नंबर</td><td>:</td><td><span class="sync-plot-txt" contenteditable="true">222</span></td></tr>
                         <tr><td>• कॉलोनी का नाम</td><td>:</td><td><span class="sync-colony-txt" contenteditable="true">DEMO नर्मदा VIEW कॉलोनी</span></td></tr>
                         <tr><td>• मौजा</td><td>:</td><td contenteditable="true">चौकीताल</td></tr>
@@ -435,12 +566,12 @@
                         <tr><td>• भूमि विवरण</td><td>:</td><td contenteditable="true">पी-2 खासरा नं. 14/1 (प्लॉट नं. <span class="sync-plot-txt" contenteditable="false">222</span>)</td></tr>
                         <tr><td>• क्षेत्रफल</td><td>:</td><td>
                             <span class="naksha-red">
-                                <span class="size-input sync-w-input" contenteditable="true">30</span>*<span class="size-input sync-h-input" contenteditable="true">50</span> <span class="non-editable">= </span><span class="sync-area-total non-editable">1500</span><span class="non-editable"> वर्गफुट</span>
+                                <span class="size-input sync-w-input" contenteditable="true">30</span>*<span class="size-input sync-h-input" contenteditable="true">50</span> <span class="non-editable">= </span><span class="sync-area-total non-editable">1500</span><span class="area-display-unit non-editable"> SFT</span>
                             </span>
                         </td></tr>
                         <tr><td>• संपत्ति का प्रकार</td><td>:</td><td contenteditable="true">आवासीय (RCC मकान सहित)</td></tr>
-                        <tr><td>• वीर दुर्गादास राठौर वार्ड</td><td>:</td><td contenteditable="true" class="naksha-red">वार्ड नंबर 71</td></tr>
-                        <tr><td>• नगर निगम प्रॉपर्टी आईडी</td><td>:</td><td><span class="sync-id-txt" contenteditable="true">5555555</span></td></tr>
+                        <tr><td>• वार्ड का नाम एवं नंबर</td><td>:</td><td contenteditable="true" class="naksha-red">वीर दुर्गादास राठौर वार्ड (वार्ड नंबर 71)</td></tr>
+                        <tr class="optional-property-id" hidden><td>• नगर निगम प्रॉपर्टी आईडी</td><td>:</td><td><span class="sync-id-txt" contenteditable="true"></span></td></tr>
                     </table>
                 </div>
                 
@@ -485,29 +616,16 @@
                 <div class="naksha-map-area">
                     
                     <!-- चारों दिशाओं की चौहद्दी विवरण -->
-                    <div class="direction-text north" contenteditable="true"><b>उत्तर दिशा</b><br>प्लॉट नं. 207</div>
-                    <div class="direction-text east" contenteditable="true"><b>पूर्व दिशा</b><br><span style="color: green;">साइड रोड</span></div>
+                    <div class="direction-text north" data-cardinal="N"><b>उत्तर दिशा</b><br><span contenteditable="plaintext-only" role="textbox" aria-label="उत्तर दिशा (N)">प्लॉट नं. 207</span></div>
+                    <div class="direction-text east" data-cardinal="E"><b>पूर्व दिशा</b><br><span contenteditable="plaintext-only" role="textbox" aria-label="पूर्व दिशा (E)">साइड रोड</span></div>
                     
                     <!-- 🛠️ पश्चिम दिशा का टेक्स्ट अब डाइमेंशन बॉक्स से नहीं टकराएगा -->
-                    <div class="direction-text west" contenteditable="true"><b>पश्चिम दिशा</b><br>प्लॉट नं. 211</div>
+                    <div class="direction-text west" data-cardinal="W"><b>पश्चिम दिशा</b><br><span contenteditable="plaintext-only" role="textbox" aria-label="पश्चिम दिशा (W)">प्लॉट नं. 211</span></div>
 
-                    <!-- ऊपर की डाइमेंशन लाइन -->
-                    <div class="cad-line-h-container">
-                        <div class="stopper"></div>
-                        <div class="line"><span><span class="sync-w-input" contenteditable="true">30</span>'-0" Foot</span></div>
-                        <div class="stopper"></div>
-                    </div>
-
-                    <!-- 🛠️ पश्चिम तरफ की डाइमेंशन लाइन (सुरक्षित दूरी पर शिफ्टेड) -->
-                    <div class="cad-line-v-left">
-                        <div class="stopper"></div>
-                        <div class="line">
-                            <span class="vertical-box-span">
-                                <span class="sync-h-input" contenteditable="true">50</span>'-0" Foot
-                            </span>
-                        </div>
-                        <div class="stopper"></div>
-                    </div>
+                    <div class="dimension-slot dimension-top"><div class="dimension-line" data-measure="length"><span class="dimension-label"><span class="sync-w-input" contenteditable="true">30</span> फीट</span></div></div>
+                    <div class="dimension-slot dimension-bottom"></div>
+                    <div class="dimension-slot dimension-left"><div class="dimension-line" data-measure="width"><span class="dimension-label"><span class="sync-h-input" contenteditable="true">50</span> फीट</span></div></div>
+                    <div class="dimension-slot dimension-right"></div>
 
                     <!-- बीच का मुख्य प्लॉट बॉक्स -->
                     <div class="naksha-plot-box">
@@ -515,12 +633,12 @@
                         <div class="naksha-plot-num class-sync-plot-main" contenteditable="true">222</div>
                         <div class="naksha-plot-lbl">क्षेत्रफल</div>
                         <div class="naksha-plot-sqft">
-                            <span class="sync-w-input">30</span>*<span class="sync-h-input">50</span> = <span class="sync-area-total">1500</span><br>वर्गफुट
+                            <span class="sync-w-input">30</span>*<span class="sync-h-input">50</span> = <span class="sync-area-total">1500</span><br><span class="area-display-unit">SFT</span>
                         </div>
                     </div>
 
                     <!-- दक्षिण दिशा -->
-                    <div class="direction-text south" contenteditable="true"><b>दक्षिण दिशा</b><br>प्लॉट नं. 209</div>
+                    <div class="direction-text south" data-cardinal="S"><b>दक्षिण दिशा</b><br><span contenteditable="plaintext-only" role="textbox" aria-label="दक्षिण दिशा (S)">प्लॉट नं. 209</span></div>
 
                 </div>
 
@@ -530,24 +648,25 @@
                         <tr>
                             <th colspan="3">सीमांकन विवरण</th>
                         </tr>
-                        <tr>
-                            <td>उत्तर दिशा</td><td>:</td><td contenteditable="true">प्लॉट नं. 207 स्थित है।</td>
+                        <tr data-cardinal="N">
+                            <td>उत्तर दिशा (N)</td><td>:</td><td contenteditable="true">प्लॉट नं. 207 स्थित है।</td>
                         </tr>
-                        <tr>
-                            <td>दक्षिण दिशा</td><td>:</td><td contenteditable="true">प्लॉट नं. 209 स्थित है।</td>
+                        <tr data-cardinal="S">
+                            <td>दक्षिण दिशा (S)</td><td>:</td><td contenteditable="true">प्लॉट नं. 209 स्थित है।</td>
                         </tr>
-                        <tr>
-                            <td>पूर्व दिशा</td><td>:</td><td contenteditable="true" style="color:green; font-weight:bold;">साइड रोड स्थित है।</td>
+                        <tr data-cardinal="E">
+                            <td>पूर्व दिशा (E)</td><td>:</td><td contenteditable="true">साइड रोड स्थित है।</td>
                         </tr>
-                        <tr>
-                            <td>पश्चिम दिशा</td><td>:</td><td contenteditable="true">प्लॉट नं. 211 स्थित है।</td>
+                        <tr data-cardinal="W">
+                            <td>पश्चिम दिशा (W)</td><td>:</td><td contenteditable="true">प्लॉट नं. 211 स्थित है।</td>
                         </tr>
                     </table>
                 </div>
 
                 <div class="naksha-footer-text">
-                    <span contenteditable="true">नोट :- सभी माप अनुमानित हैं। माप फीट-इंच में है।</span>
-                    <span contenteditable="true">1 फीट = 12 inch</span>
+                    <span class="area-conversion-note"></span>
+                    <span contenteditable="true">नोट — सभी माप पंजीकृत विक्रय विलेख के अनुसार हैं।</span>
+                    <span class="measurement-unit-note" contenteditable="true">1 फीट = 12 inch</span>
                 </div>
 
             </div>
@@ -568,7 +687,7 @@
 document.addEventListener("DOMContentLoaded", function() {
     
     // लाइव टेक्स्ट और वैल्यू ऑटो सिंकिंग
-    setupFieldSync(".sync-plot-txt", ".class-sync-plot-main");
+    setupFieldSync(".sync-plot-txt, .class-sync-plot-main");
     setupFieldSync(".sync-colony-txt");
     setupFieldSync(".sync-id-txt");
     setupFieldSync(".sync-owner-txt");
@@ -582,7 +701,7 @@ document.addEventListener("DOMContentLoaded", function() {
         elements.forEach(element => {
             element.addEventListener("input", function() {
                 const text = this.innerText;
-                elements.forEach(el => { if (el !== element) el.innerText = text; });
+                elements.forEach(el => { if (el !== element) { el.innerText = text; el.dispatchEvent(new Event("naksha-sync")); } });
                 if (secondarySelector) {
                     const secEl = document.querySelector(secondarySelector);
                     if (secEl && secEl !== element) secEl.innerText = text;
@@ -672,13 +791,14 @@ function prepareDownloadContainer() {
     cloneDetails.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
     cloneMap.querySelectorAll("[contenteditable]").forEach(el => el.removeAttribute("contenteditable"));
 
+    cloneDetails.querySelectorAll("[hidden]").forEach(el => el.remove());
     hiddenContainer.appendChild(cloneDetails);
     hiddenContainer.appendChild(cloneMap);
 
     return hiddenContainer;
 }
 
-function downloadNaksha(){
+function downloadNaksha(format = "png"){
     const targetArea = prepareDownloadContainer();
     const options = {
         scale: 3,
@@ -689,8 +809,8 @@ function downloadNaksha(){
 
     html2canvas(targetArea, options).then(canvas => {
         const link = document.createElement("a");
-        link.download = "Property-Naksha-Fixed.png";
-        link.href = canvas.toDataURL("image/png");
+        link.download = format === "jpeg" ? "Property-Naksha.jpg" : "Property-Naksha.png";
+        link.href = canvas.toDataURL(`image/${format}`, 0.97);
         link.click();
         targetArea.innerHTML = "";
     });
@@ -726,6 +846,356 @@ function shareWhatsapp(){
         window.open("https://wa.me/919340726600", "_blank");
     }, 1500);
 }
+</script>
+<script>
+(() => {
+    const compass = document.querySelector(".exact-image-compass");
+    const spine = compass.querySelector(".compass-pointer-spine");
+    const angleInput = document.getElementById("compass-angle");
+    const cardinalAngles = { N: -90, E: 0, S: 90, W: 180 };
+    let angle = 0;
+    const sides = ["north", "east", "south", "west"];
+    const boundaryLabels = sides.map(side => document.querySelector(`.direction-text.${side}`));
+    const relationship = document.getElementById("relative-type");
+
+    relationship.addEventListener("change", () => {
+        document.getElementById("relative-label").textContent = `• ${relationship.value} का नाम`;
+    });
+
+    function setAngle(value) {
+        angle = ((Math.round(value) % 360) + 360) % 360;
+        angleInput.value = String(angle);
+        const steps = angle / 90;
+        boundaryLabels.forEach((label, index) => {
+            label.classList.remove(...sides);
+            label.classList.add(sides[(index + steps) % 4]);
+        });
+
+        angleInput.dispatchEvent(new Event("naksha-orientation"));
+        spine.style.transform = `rotate(${angle}deg)`;
+        for (const [direction, baseAngle] of Object.entries(cardinalAngles)) {
+            const label = compass.querySelector(`.compass-txt.${direction}`);
+            const radians = (baseAngle + angle) * Math.PI / 180;
+            label.style.left = `${32.5 + 37 * Math.cos(radians)}px`;
+            label.style.top = `${32.5 + 37 * Math.sin(radians)}px`;
+            label.style.right = "auto";
+            label.style.bottom = "auto";
+            label.style.transform = "translate(-50%, -50%)";
+        }
+    }
+
+    angleInput.addEventListener("change", () => setAngle(Number(angleInput.value)));
+    document.getElementById("compass-left").addEventListener("click", () => setAngle(angle - 90));
+    document.getElementById("compass-right").addEventListener("click", () => setAngle(angle + 90));
+    document.getElementById("compass-reset").addEventListener("click", () => setAngle(0));
+    setAngle(0);
+})();
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const fields = document.getElementById("naksha-fields");
+    const rows = [...document.querySelectorAll(".naksha-details-table tr")];
+    const boundaryRows = [...document.querySelectorAll(".naksha-boundary-table tr")].slice(1);
+    const address = document.querySelectorAll("#source-details .naksha-address");
+    const location = document.querySelector(".location-box p");
+    const note = document.querySelector("#noteTable .note-cell");
+    const propertyId = rows[14].querySelector(".sync-id-txt");
+    const directions = ["north", "south", "east", "west"].map(side => document.querySelector(`.direction-text.${side}`));
+    const cell = i => rows[i].cells[2];
+    const read = i => cell(i).textContent.trim();
+    const setLines = (node, lines) => {
+        node.replaceChildren();
+        lines.filter(Boolean).forEach((line, i) => {
+            if (i) node.append(document.createElement("br"));
+            node.append(document.createTextNode(line));
+        });
+    };
+
+    function refreshDetails() {
+        setLines(address[0], [
+            [read(2) && `प्लॉट नं. ${read(2)}`, read(3), read(4) && `मौजा ${read(4)}`, read(5) && `नं. ${read(5)}`].filter(Boolean).join(", "),
+            read(6) && `पी.एच. नं. ${read(6)}`,
+            read(7) && `आर.एन.एम. ${read(7)}`,
+            [read(8) && `तहसील ${read(8)}`, read(9) && `जिला ${read(9)}`].filter(Boolean).join(", "),
+            read(10)
+        ]);
+        const ward = read(13);
+        address[1].textContent = ward;
+        const city = address[2].textContent.trim();
+        setLines(location, [ward, city]);
+        const noteHeading = note.querySelector("span");
+        note.replaceChildren(noteHeading, document.createTextNode(ward || city ? ` यह संपत्ति ${[ward, city].filter(Boolean).join(", ")} के अंतर्गत स्थित है।` : ""));
+        for (const el of document.querySelectorAll(".optional-property-id")) {
+            el.hidden = !propertyId.textContent.trim();
+        }
+    }
+
+    const recordFields = [];
+    function addField(label, source, onUpdate, numeric = false) {
+        const wrapper = document.createElement("label");
+        const caption = document.createElement("span");
+        caption.textContent = label;
+        const input = document.createElement("input");
+        if (numeric) input.inputMode = "decimal";
+        input.value = source.textContent.trim();
+        recordFields.push({ input, source });
+        input.addEventListener("input", () => {
+            source.textContent = input.value;
+            source.dispatchEvent(new Event("input", { bubbles: true }));
+            onUpdate?.();
+        });
+        const refreshInput = () => { if (document.activeElement !== input) input.value = source.textContent.trim(); };
+        source.addEventListener("input", refreshInput);
+        source.addEventListener("naksha-sync", refreshInput);
+        wrapper.append(caption, input);
+        fields.append(wrapper);
+        return caption;
+    }
+
+    for (let i = 0; i < rows.length; i++) {
+        if (i === 11 || i === 12) continue;
+        const source = cell(i).querySelector("[contenteditable=true]") || cell(i);
+        const label = i === 0 ? "खातेदार / पार्टी का नाम" : rows[i].cells[0].textContent.replace(/^•\s*/, "");
+        const caption = addField(label, source);
+        if (i === 1) document.getElementById("relative-type").addEventListener("change", () => {
+            caption.textContent = `${document.getElementById("relative-type").value} का नाम`;
+        });
+    }
+    function addSelect(label, options) {
+        const wrapper = document.createElement("label");
+        wrapper.append(label);
+        const select = document.createElement("select");
+        for (const [value, text] of options) select.add(new Option(text, value));
+        wrapper.append(select);
+        fields.append(wrapper);
+        return select;
+    }
+
+    const type = addSelect("संपत्ति का प्रकार", [
+        ["Plot","Plot / प्लॉट"], ["House","House / मकान"], ["Building","Building / भवन"],
+        ["Independent Building","Independent Building / स्वतंत्र भवन"],
+        ["Independent Floor","Independent Floor / स्वतंत्र तल"],
+        ["Multistorey","Multistorey / बहुमंजिला भवन"], ["Open Terrace","Open Terrace / खुली छत"],
+        ["Agricultural Land","Agricultural Land / कृषि भूमि"]
+    ]);
+    const use = addSelect("संपत्ति का उपयोग", [
+        ["Residential","Residential / आवासीय"], ["Commercial","Commercial / व्यावसायिक"],
+        ["Agricultural","Agricultural / कृषि"]
+    ]);
+    const areaUnit = addSelect("क्षेत्रफल की इकाई", [
+        ["SFT","Square Feet (SFT)"], ["SQM","Square Meter (SQM)"], ["HA","Hectare (HA)"]
+    ]);
+    const length = cell(11).querySelector(".sync-w-input");
+    const width = cell(11).querySelector(".sync-h-input");
+    const areaOut = document.querySelectorAll(".sync-area-total");
+    const unitOut = document.querySelectorAll(".area-display-unit");
+    const format = (value, digits = 2) => value.toLocaleString("en-IN", {maximumFractionDigits: digits});
+    let nonFarmUnit = "SFT";
+    let nonFarmUse = "Residential";
+    type.value = "House";
+    cell(12).removeAttribute("contenteditable");
+
+    function refreshArea() {
+        const farm = type.value === "Agricultural Land";
+        const floor = type.value === "Independent Floor";
+        use.options[2].disabled = !farm;
+        areaUnit.options[2].disabled = !farm;
+        use.value = farm ? "Agricultural" : floor ? "Residential" : nonFarmUse;
+        areaUnit.value = farm ? "HA" : nonFarmUnit;
+        use.disabled = farm || floor;
+        areaUnit.disabled = farm;
+        cell(12).textContent = farm ? "कृषि भूमि" : `${use.selectedOptions[0].text.split(" / ")[1]} · ${type.selectedOptions[0].text.split(" / ")[1]}`;
+        const l = Number(length.textContent.trim());
+        const w = Number(width.textContent.trim());
+        const sqft = l > 0 && w > 0 ? l * w : 0;
+        const sqm = sqft * 0.09290304;
+        const ha = sqm / 10000;
+        const unit = areaUnit.value;
+        const values = {SFT:sqft, SQM:sqm, HA:ha};
+        for (const output of areaOut) output.textContent = format(values[unit], farm ? 5 : 2);
+        for (const output of unitOut) output.textContent = " " + unit;
+        document.querySelector(".area-conversion-note").textContent = sqft
+            ? `${format(l)} × ${format(w)} फीट = ${format(sqft)} SFT ≈ ${format(sqm)} SQM${farm ? " ≈ " + format(ha,5) + " HA" : ""}`
+            : "";
+    }
+    type.addEventListener("change", refreshArea);
+    use.addEventListener("change", () => { nonFarmUse = use.value; refreshArea(); });
+    areaUnit.addEventListener("change", () => { nonFarmUnit = areaUnit.value; refreshArea(); });
+    for (const measure of document.querySelectorAll("[contenteditable=true].sync-w-input, [contenteditable=true].sync-h-input")) {
+        measure.addEventListener("input", refreshArea);
+    }
+    refreshArea();
+    addField("लंबाई (फीट)", cell(11).querySelector(".sync-w-input"), null, true);
+    addField("चौड़ाई (फीट)", cell(11).querySelector(".sync-h-input"), null, true);
+    const angleControl = document.getElementById("compass-angle");
+    const positionOptions = [
+        ["auto","दिशा के साथ"], ["top","ऊपर"], ["right","दाईं ओर"],
+        ["bottom","नीचे"], ["left","बाईं ओर"]
+    ];
+    const positionControls = [
+        ["length", 2, addSelect("लंबाई की रेखा", positionOptions)],
+        ["width", 1, addSelect("चौड़ाई की रेखा", positionOptions)]
+    ].map(([key, initial, control]) => ({
+        line: document.querySelector(`[data-measure="${key}"]`), initial, control
+    }));
+    const dimensionSides = ["top", "right", "bottom", "left"];
+    function placeMeasurements() {
+        const turns = Number(angleControl.value) / 90;
+        for (const {line, initial, control} of positionControls) {
+            const side = control.value === "auto" ? dimensionSides[(initial + turns) % 4] : control.value;
+            document.querySelector(`.dimension-${side}`).append(line);
+        }
+    }
+    positionControls[0].control.value = "bottom";
+    positionControls[1].control.value = "right";
+    angleControl.addEventListener("naksha-orientation", placeMeasurements);
+    for (const {control} of positionControls) control.addEventListener("change", placeMeasurements);
+    placeMeasurements();
+
+    addField("नगर निगम / शहर", address[2]);
+    boundaryRows.forEach((row, i) => {
+        const valueCell = row.cells[2];
+        const mapValue = directions[i].querySelector('[role="textbox"]');
+        const caption = addField(row.cells[0].textContent, valueCell);
+        caption.parentElement.dataset.cardinal = row.dataset.cardinal;
+        valueCell.contentEditable = "plaintext-only";
+        const updateMap = () => {
+            if (document.activeElement !== mapValue) mapValue.textContent = valueCell.textContent.trim();
+        };
+        valueCell.addEventListener("input", updateMap);
+        mapValue.addEventListener("input", () => {
+            valueCell.textContent = mapValue.textContent.trim();
+            valueCell.dispatchEvent(new Event("input", { bubbles: true }));
+        });
+        updateMap();
+    });
+    document.getElementById("source-details").addEventListener("input", event => {
+        if (rows.some(row => row.contains(event.target)) || event.target === address[2]) refreshDetails();
+    });
+    document.querySelector(".class-sync-plot-main").addEventListener("input", refreshDetails);
+    document.querySelectorAll(".sync-id-txt").forEach(el => el.addEventListener("input", refreshDetails));
+    refreshDetails();
+
+    const recordList = document.getElementById("naksha-record-list");
+    const status = document.getElementById("naksha-record-status");
+    const storageKey = "startpay-property-naksha-records-v1";
+    const notesTable = document.getElementById("noteTable");
+    const footerNotes = [...document.querySelectorAll(".naksha-footer-text [contenteditable=true]")];
+    const relationship = document.getElementById("relative-type");
+    let editing = "";
+    let records;
+    try {
+        records = JSON.parse(localStorage.getItem(storageKey) || "[]");
+        if (!Array.isArray(records)) throw new Error("Invalid records");
+    } catch {
+        status.textContent = "इस ब्राउज़र में सहेजे गए नक्शे उपलब्ध नहीं हैं।";
+        return;
+    }
+
+    function showRecords(selected = "") {
+        recordList.replaceChildren(new Option("नया रिकॉर्ड", ""));
+        for (const record of records) recordList.add(new Option(record.name, record.id));
+        recordList.value = selected;
+    }
+
+    function storeRecords(next) {
+        try {
+            localStorage.setItem(storageKey, JSON.stringify(next));
+            records = next;
+            return true;
+        } catch {
+            status.textContent = "नक्शा सहेजा नहीं जा सका। ब्राउज़र स्टोरेज की जाँच करें।";
+            return false;
+        }
+    }
+
+    function changeSelect(select, value) {
+        if ([...select.options].some(option => option.value === value)) {
+            select.value = value;
+            select.dispatchEvent(new Event("change", { bubbles:true }));
+        }
+    }
+
+    recordList.addEventListener("change", () => {
+        if (!recordList.value) {
+            editing = "";
+            status.textContent = "Save करने पर मौजूदा नक्शा नए रिकॉर्ड में सहेजा जाएगा।";
+        }
+    });
+    document.getElementById("naksha-save").addEventListener("click", () => {
+        if (!editing && records.length >= 20) {
+            status.textContent = "20 नक्शे सहेजे जा चुके हैं। नया नक्शा जोड़ने के लिए एक रिकॉर्ड Delete करें।";
+            return;
+        }
+        const id = editing || (globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36));
+        const record = {
+            id,
+            name: [read(2) && `प्लॉट ${read(2)}`, read(0)].filter(Boolean).join(" · ") || "बिना नाम का नक्शा",
+            fields: recordFields.map(({source}) => source.textContent.trim()),
+            angle: angleControl.value,
+            relationship: relationship.value,
+            type: type.value, use: nonFarmUse, unit: nonFarmUnit,
+            positions: positionControls.map(({control}) => control.value),
+            notes: [...notesTable.querySelectorAll(".note-cell")].map(cell => cell.textContent.trim()),
+            footer: footerNotes.map(el => el.textContent)
+        };
+        const next = editing ? records.map(old => old.id === id ? record : old) : [...records, record];
+        if (!storeRecords(next)) return;
+        editing = id;
+        showRecords(id);
+        status.textContent = `नक्शा सहेजा गया · ${records.length}/20`;
+    });
+
+    document.getElementById("naksha-edit").addEventListener("click", () => {
+        const record = records.find(item => item.id === recordList.value);
+        if (!record) {
+            status.textContent = "Edit करने के लिए सहेजा गया नक्शा चुनें।";
+            return;
+        }
+        recordFields.forEach(({input}, i) => {
+            if (typeof record.fields[i] !== "string") return;
+            input.value = record.fields[i];
+            input.dispatchEvent(new Event("input", {bubbles:true}));
+        });
+        nonFarmUse = record.use || "Residential";
+        nonFarmUnit = record.unit || "SFT";
+        changeSelect(type, record.type);
+        changeSelect(relationship, record.relationship);
+        changeSelect(angleControl, record.angle);
+        positionControls.forEach(({control}, i) => changeSelect(control, record.positions[i]));
+        footerNotes.forEach((el, i) => { if (typeof record.footer[i] === "string") el.textContent = record.footer[i]; });
+        if (record.notes.length) {
+            const noteHeading = note.querySelector("span");
+            const noteText = record.notes[0].replace(/^नोट\s*[:-]+\s*/, "");
+            note.replaceChildren(noteHeading, document.createTextNode(" " + noteText));
+            [...notesTable.rows].slice(1).forEach(row => row.remove());
+            for (const text of record.notes.slice(1)) {
+                const cell = notesTable.tBodies[0].insertRow().insertCell();
+                cell.className = "note-cell";
+                cell.contentEditable = "true";
+                cell.textContent = text;
+            }
+        }
+        editing = record.id;
+        document.querySelector(".naksha-editor").open = true;
+        status.textContent = "नक्शा खुल गया। बदलाव के बाद Save दबाएँ।";
+    });
+
+    document.getElementById("naksha-delete").addEventListener("click", () => {
+        const id = recordList.value;
+        if (!id) {
+            status.textContent = "Delete करने के लिए सहेजा गया नक्शा चुनें।";
+            return;
+        }
+        if (!window.confirm("चुना हुआ नक्शा हटाएँ?")) return;
+        if (!storeRecords(records.filter(record => record.id !== id))) return;
+        if (editing === id) editing = "";
+        showRecords(editing);
+        status.textContent = `नक्शा हटाया गया · ${records.length}/20`;
+    });
+    showRecords();
+});
 </script>
 </body>
 </html>
