@@ -383,6 +383,17 @@
         .cad-line-v-left .vertical-box-span { top: 25%; }
         [hidden] { display: none !important; }
         .naksha-editor { margin: 16px auto; max-width: 1180px; padding: 12px 16px; background: #fff; border: 1px solid #d9deea; border-radius: 8px; }
+        .direction-colors { margin: 14px 0 0; padding: 10px 12px; border: 1px solid #cbd5e1; border-radius: 8px; background: #f8fafc; }
+        .direction-color-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 8px; }
+        .direction-color-options label { display: grid; gap: 4px; font-weight: 600; }
+        .direction-colors select, .direction-color-actions button { min-height: 36px; font: inherit; }
+        .direction-color-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .naksha-map-area .direction-text.has-direction-color,
+        .naksha-boundary-table tr.has-direction-color td {
+            background-color: var(--direction-background);
+            color: #fff;
+        }
+        .naksha-map-area .direction-text.has-direction-color { border-radius: 4px; padding: 3px; }
         .naksha-editor summary { cursor: pointer; font-weight: 700; color: var(--dark-navy); }
         #naksha-fields { margin-top: 12px; display: grid; grid-template-columns: repeat(auto-fit, minmax(185px, 1fr)); gap: 10px; }
         #naksha-fields label { display: grid; gap: 4px; font-size: 13px; min-width: 0; }
@@ -513,6 +524,47 @@
         <details class="naksha-editor" open>
             <summary>संपत्ति विवरण भरें</summary>
             <div id="naksha-fields"></div>
+            <fieldset class="direction-colors">
+                <legend>दिशाओं के रंग</legend>
+                <div class="direction-color-options">
+                    <label>उत्तर (N)
+                        <select data-color-for="N">
+                            <option value="">Default</option>
+                            <option value="#1B4332">Dark Forest Green</option>
+                            <option value="#134E4A">Deep Teal</option>
+                            <option value="#1D3557">Dark Navy</option>
+                        </select>
+                    </label>
+                    <label>दक्षिण (S)
+                        <select data-color-for="S">
+                            <option value="">Default</option>
+                            <option value="#6A1B1A">Deep Maroon</option>
+                            <option value="#7C2D12">Dark Terracotta</option>
+                            <option value="#4A2511">Dark Brown</option>
+                        </select>
+                    </label>
+                    <label>पूर्व (E)
+                        <select data-color-for="E">
+                            <option value="">Default</option>
+                            <option value="#14532D">Emerald Dark Green</option>
+                            <option value="#7C2D12">Burnt Rust</option>
+                            <option value="#1E3A8A">Royal Deep Blue</option>
+                        </select>
+                    </label>
+                    <label>पश्चिम (W)
+                        <select data-color-for="W">
+                            <option value="">Default</option>
+                            <option value="#1E293B">Dark Slate</option>
+                            <option value="#1D3557">Navy Blue</option>
+                            <option value="#3B2314">Dark Walnut</option>
+                        </select>
+                    </label>
+                </div>
+                <div class="direction-color-actions">
+                    <button type="button" id="direction-color-preset">East-Facing Vastu Dark Preset</button>
+                    <button type="button" id="direction-color-reset">Reset</button>
+                </div>
+            </fieldset>
         </details>
         <section class="naksha-editor naksha-records" aria-labelledby="naksha-record-heading">
             <h2 id="naksha-record-heading">सहेजे गए नक्शे</h2>
@@ -1076,6 +1128,33 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector(".class-sync-plot-main").addEventListener("input", refreshDetails);
     document.querySelectorAll(".sync-id-txt").forEach(el => el.addEventListener("input", refreshDetails));
     refreshDetails();
+
+    const directionColorControls = [...document.querySelectorAll(".direction-colors select")];
+
+    function applyDirectionColor(control) {
+        const direction = control.dataset.colorFor;
+        const targets = document.querySelectorAll(
+            `.direction-text[data-cardinal="${direction}"], .naksha-boundary-table tr[data-cardinal="${direction}"]`
+        );
+        for (const target of targets) {
+            target.style.setProperty("--direction-background", control.value);
+            target.classList.toggle("has-direction-color", Boolean(control.value));
+        }
+    }
+
+    for (const control of directionColorControls) {
+        control.addEventListener("change", () => applyDirectionColor(control));
+    }
+
+    function setDirectionColors(optionIndex) {
+        for (const control of directionColorControls) {
+            control.selectedIndex = optionIndex;
+            applyDirectionColor(control);
+        }
+    }
+
+    document.getElementById("direction-color-preset").addEventListener("click", () => setDirectionColors(1));
+    document.getElementById("direction-color-reset").addEventListener("click", () => setDirectionColors(0));
 
     const recordList = document.getElementById("naksha-record-list");
     const status = document.getElementById("naksha-record-status");
